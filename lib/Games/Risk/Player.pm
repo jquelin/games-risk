@@ -16,14 +16,14 @@ use Readonly;
 
 Readonly my @COLORS => (
     '#333333',  # grey20
-    '#FE6F5E',  # bittersweet
-    '#FFFF99',  # canary 
-    '#1560BD',  # denim 
-    '#5FA777',  # forest green 
-    '#FBAED2',  # lavender 
-    '#FFCBA4',  # peach 
-    '#00CCCC',  # robin's egg blue 
-    '#9E5B40',  # sepia 
+    '#FF2052',  # awesome
+    '#1560BD',  # denim
+    '#33CC99',  # shamrock
+    '#FF9966',  # atomic tangerine
+    '#00755E',  # tropical rain forest
+    '#9E5B40',  # sepia
+    '#A50B5E',  # jazzberry jam
+    '#A3E3ED',  # blizzard blue
 );
 my $Color => 0;
 
