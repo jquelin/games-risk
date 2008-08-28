@@ -20,6 +20,7 @@ use Games::Risk::Player;
 use List::Util   qw{ shuffle };
 use Module::Util qw{ find_installed };
 use POE;
+use aliased 'POE::Kernel' => 'K';
 
 
 # Public variables of the module.
@@ -65,9 +66,9 @@ sub spawn {
 # -- public events
 
 sub _onpub_gui_ready {
-    my ($k, $h) = @_[KERNEL, HEAP];
+    my $h = $_[HEAP];
 
-    $k->post('board', 'load_map', $h->map);
+    K->post('board', 'load_map', $h->map);
 
     # create players - FIXME: number of players
     my @players;
@@ -80,12 +81,12 @@ sub _onpub_gui_ready {
 
     #FIXME: broadcast
     foreach my $player ( @players ) {
-        $k->post('board', 'newplayer', $player);
+        K->post('board', 'newplayer', $player);
     }
 
     $h->players(\@players);
 
-    $k->yield( '_phase_game_started' );
+    K->yield( '_phase_game_started' );
 }
 
 
@@ -109,9 +110,9 @@ sub _onpriv_phase_game_started {
 # to %params, same as spawn() received.
 #
 sub _onpriv_start {
-    my ($k, $h) = @_[KERNEL, HEAP];
+    my $h = $_[HEAP];
 
-    $k->alias_set('risk');
+    K->alias_set('risk');
 
     # load model
     # FIXME: hardcoded
