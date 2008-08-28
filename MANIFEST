@@ -4,6 +4,7 @@ Changes
 lib/Games/Risk.pm
 lib/Games/Risk/GUI.pm
 lib/Games/Risk/GUI/Board.pm
+lib/Games/Risk/Heap.pm
 lib/Games/Risk/Map.pm
 lib/Games/Risk/Map/Continent.pm
 lib/Games/Risk/Map/Country.pm
