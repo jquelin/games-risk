@@ -52,6 +52,7 @@ sub spawn {
             _start         => \&_onpriv_start,
             _stop          => sub { warn "GR shutdown\n" },
             _phase_start_assign_countries  => \&_onpriv_phase_start_assign_countries,
+            _phase_start_place_initial_armies => \&_onpriv_phase_start_place_initial_armies,
             # public events
             board_ready      => \&_onpub_gui_ready,
         },
@@ -105,6 +106,16 @@ sub _onpriv_phase_start_assign_countries {
     my $h = $_[HEAP];
 
     $h->distribute_countries;
+    K->yield( '_phase_start_place_initial_armies' );
+}
+
+
+#
+# event: _phase_start_place_initials_armies()
+#
+# require players to place initials armies.
+#
+sub _onpriv_phase_start_place_initial_armies {
 }
 
 
