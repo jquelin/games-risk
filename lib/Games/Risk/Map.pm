@@ -45,7 +45,9 @@ sub load_file {
             }
 
             # further parsing
-            chomp $line;
+            $line =~ s/[\r\n]//g;  # remove all end of lines
+            $line =~ s/^\s+//;     # trim heading whitespaces
+            $line =~ s/\s+$//;     # trim trailing whitespaces
             my $meth = "_parse_file_section_$section";
             my $rv = $self->$meth($line);
             if ( $rv ) {
@@ -75,7 +77,7 @@ sub _parse_file_section_continents {
 
     # get continent params
     $id++;
-    my ($name, $bonus, undef) = split / /, $line;
+    my ($name, $bonus, undef) = split /\s+/, $line;
 
     # create and store continent
     my $continent = Continent->new({id=>$id, name=>$name, bonus=>$bonus});
