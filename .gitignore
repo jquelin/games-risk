@@ -1,0 +1,30 @@
+# Avoid version control files.
+.git
+
+# Avoid Makemaker generated and utility files.
+Makefile
+blib
+MakeMaker-*
+pm_to_blib
+blibdirs
+
+# Avoid Module::Build generated and utility files.
+Build
+Build.bat
+_build
+
+# Avoid Devel::Cover generated files
+cover_db
+
+# Avoid temp and backup files.
+*~
+*#
+*.bak
+*.old
+*.rej
+*.swp
+*.tmp
+
+# Avoid archives of this distribution
+Games-Risk-*
+
