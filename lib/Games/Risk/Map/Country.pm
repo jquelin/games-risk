@@ -19,48 +19,6 @@ use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ armies continent greyval id name owner x y } );
 
 
-#--
-# CLASS METHODS
-
-# -- public methods
-
-#
-# my $country = Games::Risk::Map::Country->new( \%params );
-#
-# Constructor. New object can be tuned with %params:
-#  - armies:     number of armies in the country (optional)
-#  - continent:  GRM:Continent object in which the country is (mandatory)
-#  - greyval:    grey value on the map (mandatory)
-#  - id:         unique id for the country (mandatory)
-#  - name:       country name (mandatory)
-#  - owner:      GR:Player owning the country (optional)
-#  - x:          x coordinate of the country capital (mandatory)
-#  - y:          y coordinate of the country capital (mandatory)
-#
-sub new {
-    my ($pkg, $args) = @_;
-
-    # check params
-    my $id        = $args->{id}        or croak "missing param 'id'";
-    my $name      = $args->{name}      or croak "missing param 'name'";
-    my $continent = $args->{continent} or croak "missing param 'continent'";
-    my $greyval   = $args->{greyval}   or croak "missing param 'greyval'";
-    my $x         = $args->{x}         or croak "missing param 'x'";
-    my $y         = $args->{y}         or croak "missing param 'y'";
-
-    # create object & fill it in
-    my $self = bless {}, $pkg;
-    $self->id       ( $id         );
-    $self->name     ( $name       );
-    $self->continent( $continent  );
-    $self->greyval  ( $greyval    );
-    $self->x        ( $x          );
-    $self->y        ( $y          );
-
-    return $self;
-}
-
-
 
 1;
 
@@ -97,8 +55,8 @@ This module implements a map country, with all its characteristics.
 
 Create a new country. Mandatory params are C<name>, C<continent>,
 C<greyval>, C<x> and C<y> (see below in C<Accessors> section for a quick
-definition of those params). The constructor will die if they aren't
-present). Other attributes are optional, but can be supplied anyway.
+definition of those params). Other attributes are optional, but can be
+supplied anyway.
 
 
 =back
