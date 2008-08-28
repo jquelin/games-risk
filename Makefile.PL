@@ -21,6 +21,7 @@ WriteMakefile(
     EXE_FILES     => [ 'bin/prisk' ],
     LICENSE       => 'gpl',
     PREREQ_PM     => {
+        'aliased'                => 0,
         'Carp'                   => 0,
         'Class::Accessor::Fast'  => 0,
         'File::Basename'         => 0,
