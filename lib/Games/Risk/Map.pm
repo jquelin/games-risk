@@ -26,6 +26,17 @@ __PACKAGE__->mk_accessors( qw{ background _continents _countries _dirname } );
 
 # -- public subs
 
+#
+# my @countries = $map->countries;
+#
+# Return the list of all countries in the $map.
+#
+sub countries {
+    my ($self) = @_;
+    return values %{ $self->_countries };
+}
+
+
 sub load_file {
     my ($self, $file) = @_;
 
@@ -183,6 +194,11 @@ the path to the background image for the board.
 =head2 Object methods
 
 =over 4
+
+=item * my @countries = $map->countries()
+
+Return the list of all countries in the C<$map>.
+
 
 =item * $map->load_file( \%params )
 
