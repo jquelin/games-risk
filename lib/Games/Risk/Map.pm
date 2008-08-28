@@ -17,8 +17,9 @@ use File::Basename qw{ fileparse };
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ dirname background } );
 
+
 #--
-# Subs
+# SUBROUTINES
 
 # -- public subs
 
@@ -107,14 +108,30 @@ Games::Risk::Map - map being played
 
 =head1 DESCRIPTION
 
+This module implements a map, pointing to the continents, the
+countries, etc. of the game currently in play.
 
 
 
 =head1 METHODS
 
+=head2 Constructor
+
+=over 4
+
+=item * my $player = Games::Risk::Map->new( \%params )
+
+=back
 
 
-=head1 EVENTS RECEIVED
+
+=head2 Object methods
+
+=over 4
+
+=item * $map->load_file( \%params )
+
+=back
 
 
 
