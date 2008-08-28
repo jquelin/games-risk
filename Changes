@@ -9,7 +9,10 @@ High-level changelog
 Low-level changelog
 ===================
 
-0.0.1
+0.0.2 Thu Aug 28 12:28:27 CEST 2008
+ - creating continents & countries from jrisk map file
+
+0.0.1 Thu Aug 28 10:05:39 CEST 2008
  - original version
  - main script launching gui
  - gui displays board game (only background picture)
