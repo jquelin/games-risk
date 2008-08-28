@@ -13,8 +13,6 @@ use 5.010;
 use strict;
 use warnings;
 
-use Carp;
-
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ armies continent greyval name owner x y } );
 
