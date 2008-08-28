@@ -100,6 +100,15 @@ sub _onpub_gui_ready {
 # players, the cards... Time to start real things!
 #
 sub _onpriv_phase_game_started {
+    my $h = $_[HEAP];
+
+    # distribute randomly countries to players
+    # FIXME: what in the case of a loaded game?
+    # FIXME: this can be configured so that players pick the countries
+    # of their choice, turn by turn
+    $h->distribute_countries;
+
+
 }
 
 
