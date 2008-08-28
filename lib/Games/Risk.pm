@@ -23,7 +23,7 @@ use POE;
 
 
 # Public variables of the module.
-our $VERSION = '0.0.2';
+our $VERSION = '0.0.3';
 
 
 #--

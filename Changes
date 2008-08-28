@@ -3,11 +3,17 @@ Revision history for Games::Risk.
 High-level changelog
 ====================
 
-0.0.x    initial work, with basic capabilities
+0.0.x    initial work, basic gui display
 
 
 Low-level changelog
 ===================
+
+0.0.3 Thu Aug 28 15:49:11 CEST 2008
+ - displaying capitals & armies on board game
+ - storing continent / countries cross-references
+ - using a custom object for Games::Risk's heap
+ - cleaning public/private spaces of maps & derivatives
 
 0.0.2 Thu Aug 28 12:28:27 CEST 2008
  - creating continents & countries from jrisk map file

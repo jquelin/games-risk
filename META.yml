@@ -1,6 +1,6 @@
 ---
 name: Games-Risk
-version: 0.0.2
+version: 0.0.3
 author:
   - 'Jerome Quelin <jquelin@cpan.org>'
 abstract: classical 'risk' board game
@@ -8,7 +8,6 @@ license: gpl
 resources:
   license: http://www.opensource.org/licenses/gpl-license.php
 requires:
-  Carp: 0
   Class::Accessor::Fast: 0
   File::Basename: 0
   Image::Size: 0
@@ -22,7 +21,6 @@ requires:
   aliased: 0
   perl: 5.010
 build_requires:
-  Carp: 0
   Class::Accessor::Fast: 0
   File::Basename: 0
   Image::Size: 0
@@ -42,13 +40,19 @@ recommends:
 provides:
   Games::Risk:
     file: lib/Games/Risk.pm
-    version: 0.0.2
+    version: 0.0.3
   Games::Risk::GUI:
     file: lib/Games/Risk/GUI.pm
   Games::Risk::GUI::Board:
     file: lib/Games/Risk/GUI/Board.pm
+  Games::Risk::Heap:
+    file: lib/Games/Risk/Heap.pm
   Games::Risk::Map:
     file: lib/Games/Risk/Map.pm
+  Games::Risk::Map::Continent:
+    file: lib/Games/Risk/Map/Continent.pm
+  Games::Risk::Map::Country:
+    file: lib/Games/Risk/Map/Country.pm
   Games::Risk::Player:
     file: lib/Games/Risk/Player.pm
 generated_by: Module::Build version 0.2808
