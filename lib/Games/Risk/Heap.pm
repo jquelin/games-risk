@@ -43,7 +43,7 @@ sub distribute_countries {
         # store new owner & place one army to start with
         $country->chown($player);
         $country->armies(1);
-        K->post('board', 'chown', $country, $player); # FIXME: broadcast
+        K->post('board', 'country_redraw', $country); # FIXME: broadcast
     }
 }
 
