@@ -5,6 +5,8 @@ lib/Games/Risk.pm
 lib/Games/Risk/GUI.pm
 lib/Games/Risk/GUI/Board.pm
 lib/Games/Risk/Map.pm
+lib/Games/Risk/Map/Continent.pm
+lib/Games/Risk/Map/Country.pm
 lib/Games/Risk/maps/risk.map
 lib/Games/Risk/maps/risk_background.jpg
 lib/Games/Risk/maps/risk_map.gif
@@ -17,4 +19,3 @@ README
 t/0-load.t
 t/9-author/pod-coverage.t
 t/9-author/pod.t
-TODO
