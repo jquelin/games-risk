@@ -86,7 +86,7 @@ sub _onpub_load_map {
         my $text_color = defined $owner ? 'white' : 'black';
         $c->createText(
             $x, $y+1,
-            -text => '0',
+            -text => $text,
             -fill => $text_color,
             -tags => [ $country->id, $country->name, 'text' ],
         );
