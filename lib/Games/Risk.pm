@@ -84,7 +84,7 @@ sub _onpub_gui_ready {
         K->post('board', 'newplayer', $player);
     }
 
-    $h->_players(\@players);
+    $h->_players(\@players); # FIXME: private
 
     K->yield( '_phase_game_started' );
 }
