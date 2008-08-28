@@ -86,7 +86,7 @@ sub _onpub_country_redraw {
 
 
 sub _onpub_load_map {
-    my ($k, $h, $map) = @_[KERNEL, HEAP, ARG0];
+    my ($h, $map) = @_[HEAP, ARG0];
     my $c = $h->{canvas};
 
     # remove everything
@@ -124,9 +124,9 @@ sub _onpub_load_map {
 # to %params, same as spawn() received.
 #
 sub _onpriv_start {
-    my ($k, $h, $s, $args) = @_[KERNEL, HEAP, SESSION, ARG0];
+    my ($h, $s, $args) = @_[HEAP, SESSION, ARG0];
 
-    $k->alias_set('board');
+    K->alias_set('board');
 
     # create toplevel
     my $top = $h->{toplevel} = $args->{toplevel};
@@ -135,15 +135,15 @@ sub _onpriv_start {
     $h->{canvas} = $c;
 
     # say that we're done
-    $k->post('risk', 'board_ready');
+    K->post('risk', 'board_ready');
 }
 
 # -- gui events
 
 sub _onpriv_canvas_click_left {
-    my ($k, $h) = @_[KERNEL, HEAP];
+    my $h = $_[HEAP];
     # testing purposes
-    #$k->yield('load_map', '/home/jquelin/tmp/Risk/maps/france-jq.png');
+    #K->yield('load_map', '/home/jquelin/tmp/Risk/maps/france-jq.png');
 }
 
 #--
