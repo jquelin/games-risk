@@ -18,8 +18,6 @@ use Carp;
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ armies continent greyval id name owner x y } );
 
-my $Id = 0;
-
 
 #--
 # CLASS METHODS
@@ -33,6 +31,7 @@ my $Id = 0;
 #  - armies:     number of armies in the country (optional)
 #  - continent:  GRM:Continent object in which the country is (mandatory)
 #  - greyval:    grey value on the map (mandatory)
+#  - id:         unique id for the country (mandatory)
 #  - name:       country name (mandatory)
 #  - owner:      GR:Player owning the country (optional)
 #  - x:          x coordinate of the country capital (mandatory)
@@ -42,6 +41,7 @@ sub new {
     my ($pkg, $args) = @_;
 
     # check params
+    my $id        = $args->{id}        or croak "missing param 'id'";
     my $name      = $args->{name}      or croak "missing param 'name'";
     my $continent = $args->{continent} or croak "missing param 'continent'";
     my $greyval   = $args->{greyval}   or croak "missing param 'greyval'";
@@ -50,7 +50,7 @@ sub new {
 
     # create object & fill it in
     my $self = bless {}, $pkg;
-    $self->id( $Id++ );      # always generate a new unique id
+    $self->id       ( $id         );
     $self->name     ( $name       );
     $self->continent( $continent  );
     $self->greyval  ( $greyval    );
