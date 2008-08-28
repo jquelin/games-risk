@@ -89,7 +89,7 @@ sub _onpriv_start {
     my $path = find_installed(__PACKAGE__);
     $path =~ s/\.pm$//;
     $path .= '/maps/risk.map';
-    my $model = Games::Risk::Model->new;
+    my $model = Games::Risk::Map->new;
     $model->load_file($path);
     $h->{model} = $model;
 

@@ -7,7 +7,7 @@
 #
 #
 
-package Games::Risk::Model;
+package Games::Risk::Map;
 
 use 5.010;
 use strict;
