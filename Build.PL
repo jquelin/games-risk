@@ -15,6 +15,7 @@ use Module::Build;
 
 my %requires = (
     'perl'                   => '5.010',
+    'Carp'                   => 0,
     'Class::Accessor::Fast'  => 0,
     'File::Basename'         => 0,
     'Image::Size'            => 0,
