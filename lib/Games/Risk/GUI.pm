@@ -17,7 +17,9 @@ use POE;
 use Tk;
 
 #--
-# Constructor
+# CLASS METHODS
+
+# -- public methods
 
 sub spawn {
     my ($type, $args) = @_;
@@ -37,7 +39,7 @@ sub spawn {
 
 
 #--
-# Event handlers
+# EVENTS HANDLERS
 
 # -- public events
 # -- private events
@@ -68,7 +70,7 @@ sub _onpriv_start {
 
 
 #--
-# Subs
+# SUBROUTINES
 
 # -- private subs
 
@@ -96,10 +98,20 @@ Games::Risk::GUI - main window
 
 =head1 DESCRIPTION
 
+This module is currently not used by C<Games::Risk>.
 
 
 
 =head1 METHODS
+
+=head2 my $id = Games::Risk->spawn( \%params )
+
+This method will create a POE session responsible for the main window.
+It will return the poe id of the session newly created.
+
+You can tune the session by passing some arguments as a hash reference.
+Currently, no params can be tuned.
+
 
 
 
