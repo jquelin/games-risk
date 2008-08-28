@@ -14,8 +14,10 @@ use strict;
 use warnings;
 
 use File::Basename qw{ fileparse };
+use aliased 'Games::Risk::Map::Continent';
+
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ dirname background } );
+__PACKAGE__->mk_accessors( qw{ dirname background continents } );
 
 
 #--
@@ -69,7 +71,10 @@ sub _parse_file_section_borders {
 
 sub _parse_file_section_continents {
     my ($self, $line) = @_;
-    return 'wtf?';
+    my ($name, $bonus, undef) = split / /, $line;
+    my $continent = Continent->new({name=>$name, bonus=>$bonus});
+    $self->{continents}->{ $continent->id } = $continent;
+    return;
 }
 
 sub _parse_file_section_countries {
