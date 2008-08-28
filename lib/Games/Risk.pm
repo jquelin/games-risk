@@ -64,7 +64,7 @@ sub spawn {
 sub _onpub_gui_ready {
     my ($k, $h) = @_[KERNEL, HEAP];
 
-    $k->post('board', 'load_map', $h->{model}->background);
+    $k->post('board', 'load_map', $h->{map}->background);
 
     # create players - FIXME: number of players
     my @players;
@@ -104,9 +104,9 @@ sub _onpriv_start {
     my $path = find_installed(__PACKAGE__);
     $path =~ s/\.pm$//;
     $path .= '/maps/risk.map';
-    my $model = Games::Risk::Map->new;
-    $model->load_file($path);
-    $h->{model} = $model;
+    my $map = Games::Risk::Map->new;
+    $map->load_file($path);
+    $h->{map} = $map;
 
 
     Games::Risk::GUI::Board->spawn({toplevel=>$poe_main_window});
