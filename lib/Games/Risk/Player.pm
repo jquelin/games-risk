@@ -32,6 +32,17 @@ use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ color } );
 
 
+#--
+# CLASS METHODS
+
+# -- public methods
+
+#
+# my $player = Games::Risk::Player->new( \%params );
+#
+# Constructor. New object can be tuned with %params.
+# Currently, no params can be tuned.
+#
 sub new {
     my ($pkg, $args) = @_;
 
@@ -62,14 +73,30 @@ Games::Risk::Player - risk player
 
 =head1 DESCRIPTION
 
+This module implements a risk player, with all its characteristics.
 
 
 
 =head1 METHODS
 
+=head2 Constructor
 
 
-=head1 EVENTS RECEIVED
+=over 4
+
+=item * my $player = Games::Risk::Player->new( \%params )
+
+
+=back
+
+
+=head2 Object methods
+
+The following methods are available for C<Games::Risk::Player> objects:
+
+=over 4
+
+=back
 
 
 
