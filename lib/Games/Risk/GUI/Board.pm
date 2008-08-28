@@ -60,6 +60,37 @@ sub _onpub_load_map {
     $c->configure(-width => $width, -height => $height);
     #use Data::Dumper; say Dumper($img);
     $c->createImage(0, 0, -anchor=>'nw', -image=>$img, -tags=>['background']);
+
+    # create capitals
+    foreach my $country ( $map->countries ) {
+        my $x = $country->x;
+        my $y = $country->y;
+        my $owner = $country->owner;
+
+        # create circle for country capital
+        my $radius = 7; # FIXME: change radius to reflect number of armies
+        my $x1 = $x - $radius; my $x2 = $x + $radius;
+        my $y1 = $y - $radius; my $y2 = $y + $radius;
+
+        my $fill_color = defined $owner ? $owner->color : 'white';
+        my $line_color = 'black';
+        $c->createOval(
+            $x1, $y1, $x2, $y2,
+            -fill    => $fill_color,
+            -outline => $line_color,
+            -tags    => [ $country->id, $country->name, 'circle' ],
+        );
+
+        # create text for country armies
+        my $text       = defined $owner ? $owner->armies : '';
+        my $text_color = defined $owner ? 'white' : 'black';
+        $c->createText(
+            $x, $y+1,
+            -text => '0',
+            -fill => $text_color,
+            -tags => [ $country->id, $country->name, 'text' ],
+        );
+    }
 }
 
 
