@@ -16,10 +16,21 @@ use warnings;
 use Carp;
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ id name bonus } );
+__PACKAGE__->mk_accessors( qw{ id bonus countries name } );
 
 
+#--
+# METHODS
 
+# -- public methods
+
+#
+sub add_country {
+    my ($self, $country) = @_;
+    my $countries = $self->countries // [];
+    push @$countries, $country;
+    $self->countries($countries);
+}
 
 
 1;
@@ -70,6 +81,17 @@ available for C<Games::Risk::Map::Continent> objects:
 
 =over 4
 
+=item * bonus()
+
+number of bonus armies given when a player controls every country in the
+continent.
+
+
+=item * countries()
+
+list of C<Games::Risk::Map::Country> objects contained in the continent.
+
+
 =item * id()
 
 unique id assigned to the continent.
@@ -79,11 +101,17 @@ unique id assigned to the continent.
 
 continent name.
 
+=back
 
-=item * bonus()
 
-number of bonus armies given when a player controls every country in the
-continent.
+=head2 Public methods
+
+=over 4
+
+=item * $continent->add_country( $country )
+
+Store C<$country> (a C<Games::Risk::Map::Country> object) as a country
+located within the continent.
 
 
 =back
