@@ -51,8 +51,8 @@ sub load_file {
             my $meth = "_parse_file_section_$section";
             my $rv = $self->$meth($line);
             if ( $rv ) {
-                my $prefix = "section [$section]:$.";
-                warn "$prefix - don't know how to parse: '$line'\n";
+                warn "parse error [$section]:$. $rv\n";
+                warn "line was:  '$line'\n";
                 # FIXME: error handling
             }
         }
