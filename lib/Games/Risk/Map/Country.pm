@@ -21,6 +21,8 @@ __PACKAGE__->mk_accessors( qw{ armies continent greyval name owner x y } );
 *id = \&greyval;   # for all intents & purposes, id is an alias to greyval
 
 
+# FIXME: resolve circular references for continents and owner
+
 1;
 
 __END__
@@ -79,10 +81,6 @@ number of armies currently in the country.
 =item * continent()
 
 a C<Games::Risk::Map::Continent> object in which the country is located.
-In order not to leak memory, the value stored should be weakened. This
-applies both when passing a continent object to the constructor or when
-changing it later on (but i don't see why one would want to change it
-during the game).
 
 
 =item * greyval()
@@ -103,10 +101,7 @@ country name.
 
 =item * owner()
 
-a C<Games::Risk::Player> object currently owning the country. In order
-not to leak memory, the value stored should be weakened. This applies
-both when passing a player object to the constructor or when changing it
-later on.
+a C<Games::Risk::Player> object currently owning the country.
 
 
 =item * x()
