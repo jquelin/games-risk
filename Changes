@@ -11,4 +11,6 @@ Low-level changelog
 
 0.0.1
  - original version
+ - main script launching gui
+ - gui displays board game (only background picture)
 

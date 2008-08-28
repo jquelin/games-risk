@@ -3,7 +3,7 @@ name: Games-Risk
 version: 0.0.1
 author:
   - 'Jerome Quelin <jquelin@cpan.org>'
-abstract: a generic funge interpreter
+abstract: classical 'risk' board game
 license: gpl
 resources:
   license: http://www.opensource.org/licenses/gpl-license.php
@@ -11,6 +11,7 @@ requires:
   Class::Accessor::Fast: 0
   File::Basename: 0
   Image::Size: 0
+  List::Util: 0
   Module::Util: 0
   POE: 0
   Readonly: 0
@@ -22,6 +23,7 @@ build_requires:
   Class::Accessor::Fast: 0
   File::Basename: 0
   Image::Size: 0
+  List::Util: 0
   Module::Util: 0
   POE: 0
   Readonly: 0
@@ -41,10 +43,10 @@ provides:
     file: lib/Games/Risk/GUI.pm
   Games::Risk::GUI::Board:
     file: lib/Games/Risk/GUI/Board.pm
-  Games::Risk::Model:
-    file: lib/Games/Risk/Model.pm
+  Games::Risk::Map:
+    file: lib/Games/Risk/Map.pm
   Games::Risk::Player:
-    file: lib/Games/Risk/Model/Player.pm
+    file: lib/Games/Risk/Player.pm
 generated_by: Module::Build version 0.2808
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
