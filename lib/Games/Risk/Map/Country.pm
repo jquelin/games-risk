@@ -16,8 +16,9 @@ use warnings;
 use Carp;
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ armies continent greyval id name owner x y } );
+__PACKAGE__->mk_accessors( qw{ armies continent greyval name owner x y } );
 
+*id = \&greyval;   # for all intents & purposes, id is an alias to greyval
 
 
 1;
@@ -92,7 +93,7 @@ set to C<greyval()>) used to draw the country on the grey-scale map.
 
 =item * id()
 
-internal unique id assigned to the country.
+alias for C<greyval()>.
 
 
 =item * name()
