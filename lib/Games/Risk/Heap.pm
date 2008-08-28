@@ -36,9 +36,13 @@ sub distribute_countries {
     my @players   = $self->players;
     my @countries = shuffle $self->map->countries;
     while ( my $country = shift @countries ) {
+        # rotate players
         my $player = shift @players;
-        $country->chown($player);
         push @players, $player;
+
+        # store new owner & place one army to start with
+        $country->chown($player);
+        $country->armies(1);
         K->post('board', 'chown', $country, $player); # FIXME: broadcast
     }
 }
