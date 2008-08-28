@@ -72,8 +72,9 @@ sub _parse_file_section_borders {
 sub _parse_file_section_continents {
     my ($self, $line) = @_;
     my ($name, $bonus, undef) = split / /, $line;
-    my $continent = Continent->new({name=>$name, bonus=>$bonus});
-    $self->{continents}->{ $continent->id } = $continent;
+    state $id = 1;
+    my $continent = Continent->new({id=>$id++, name=>$name, bonus=>$bonus});
+    $self->{continents}->{ $id } = $continent;
     return;
 }
 

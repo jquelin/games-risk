@@ -18,8 +18,6 @@ use Carp;
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ id name bonus } );
 
-my $Id = 0;
-
 
 #--
 # CLASS METHODS
@@ -30,6 +28,7 @@ my $Id = 0;
 # my $continent = Games::Risk::Map::Continent->new( \%params );
 #
 # Constructor. New object can be tuned with %params:
+#  - id:    continent unique id (mandatory)
 #  - name:  continent name (mandatory)
 #  - bonus: number of bonus armies when a player controls the continent (mandatory)
 #
@@ -37,12 +36,13 @@ sub new {
     my ($pkg, $args) = @_;
 
     # check params
+    my $id    = $args->{id}    or croak "missing param 'id'";
     my $name  = $args->{name}  or croak "missing param 'name'";
     my $bonus = $args->{bonus} or croak "missing param 'bonus'";
 
     # create object & fill it in
     my $self = bless {}, $pkg;
-    $self->id( $Id++ );      # always generate a new unique id
+    $self->id   ( $id    );
     $self->name ( $name  );
     $self->bonus( $bonus );
 
@@ -84,9 +84,10 @@ This module implements a map continent, with all its characteristics.
 
 =item * my $player = Games::Risk::Map::Continent->new( \%params )
 
-Create a new continent. The recognized params are C<name> and C<bonus>
-(see below in C<Accessors> for a quick definition). Those params are
-mandatory, and the constructor will die if they aren't present.
+Create a new continent. The recognized params are C<id>, C<name> and
+C<bonus> (see below in C<Accessors> for a quick definition). Those
+params are mandatory, and the constructor will die if they aren't
+present.
 
 
 =back
@@ -102,7 +103,7 @@ available for C<Games::Risk::Map::Continent> objects:
 
 =item * id()
 
-internal unique id assigned to the continent.
+unique id assigned to the continent.
 
 
 =item * name()
