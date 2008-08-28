@@ -79,3 +79,52 @@ sub _create_gui {
 1;
 
 __END__
+
+
+
+=head1 NAME
+
+Games::Risk::GUI - main window
+
+
+
+=head1 SYNOPSIS
+
+    my $id = Games::Risk::GUI->new(\%params);
+
+
+
+=head1 DESCRIPTION
+
+
+
+
+=head1 METHODS
+
+
+
+=head1 EVENTS RECEIVED
+
+
+
+=head1 SEE ALSO
+
+L<Games::Risk>.
+
+
+
+=head1 AUTHOR
+
+Jerome Quelin, C<< <jquelin at cpan.org> >>
+
+
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright (c) 2008 Jerome Quelin, all rights reserved.
+
+This program is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
+

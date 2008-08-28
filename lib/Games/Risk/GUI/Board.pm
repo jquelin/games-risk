@@ -106,3 +106,55 @@ sub _create_gui {
 
 __END__
 
+
+=head1 NAME
+
+Games::Risk::GUI::Board - board gui component
+
+
+
+=head1 SYNOPSIS
+
+    my $id = Games::Risk::GUI::Board->spawn(\%params);
+
+
+
+=head1 DESCRIPTION
+
+This class implements a poe session responsible for the board part of
+the GUI. It features a map and various controls to drive the action.
+
+
+
+=head1 METHODS
+
+
+=head2 my $id = Games::Risk::GUI::Board->spawn( )
+
+
+
+=head1 EVENTS RECEIVED
+
+
+
+=head1 SEE ALSO
+
+L<Games::Risk>.
+
+
+
+=head1 AUTHOR
+
+Jerome Quelin, C<< <jquelin at cpan.org> >>
+
+
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright (c) 2008 Jerome Quelin, all rights reserved.
+
+This program is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
+
