@@ -16,10 +16,40 @@ use warnings;
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ armies continent greyval name owner x y } );
 
-*id = \&greyval;   # for all intents & purposes, id is an alias to greyval
-
-
 # FIXME: resolve circular references for continents and owner
+
+
+#--
+# METHODS
+
+# -- public methods
+
+#
+# $country->chown( $player );
+#
+# Change the owner of the $country to be $player. This implies updating
+# cross-reference for previous owner and new one.
+#
+sub chown {
+    my ($self, $player) = @_;
+
+    # remove old owner
+    my $previous = $self->owner;
+    $previous->country_del($self) if defined $previous;
+
+    # store new owner
+    $self->owner($player);
+    $player->country_add($self);
+}
+
+
+#
+# my $id = $country->id;
+#
+# For all intents & purposes, id is an alias to greyval
+#
+*id = \&greyval;
+
 
 1;
 
@@ -110,6 +140,19 @@ the x location of the country capital.
 =item * y()
 
 the y location of the country capital.
+
+
+=back
+
+
+=head2 Methods
+
+=over 4
+
+=item * $country->chown( $player )
+
+Change the owner of the C<$country> to be C<$player>. This implies updating
+cross-reference for previous owner and new one.
 
 
 =back
