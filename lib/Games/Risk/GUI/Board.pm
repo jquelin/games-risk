@@ -19,6 +19,9 @@ use Tk;
 use Tk::JPEG;
 use Tk::PNG;
 
+use aliased 'POE::Kernel' => 'K';
+
+
 #--
 # Constructor
 
@@ -34,6 +37,7 @@ sub spawn {
             # gui events
             _canvas_click_left   => \&_onpriv_canvas_click_left,
             # public events
+            country_redraw       => \&_onpub_country_redraw,
             load_map             => \&_onpub_load_map,
         },
     );
@@ -45,6 +49,41 @@ sub spawn {
 # Event handlers
 
 # -- public events
+
+#
+# event: country_redraw( $country )
+#
+# Force C<$country> to be redrawn: owner and number of armies.
+#
+sub _onpub_country_redraw {
+    my ($h, $country) = @_[HEAP, ARG0];
+    my $c = $h->{canvas};
+
+    my $id    = $country->id;
+    my $owner = $country->owner;
+
+    # FIXME: change radius to reflect number of armies
+    my ($radius, $fill_color, $text) = defined $owner
+            ? (7, $owner->color, $country->armies)
+            : (5,       'white', '');
+
+    my $x = $country->x;
+    my $y = $country->y;
+    my $x1 = $x - $radius; my $x2 = $x + $radius;
+    my $y1 = $y - $radius; my $y2 = $y + $radius;
+
+    # update canvas
+    $c->itemconfigure( "$id&&text", -text => $text);
+    $c->delete( "$id&&circle" );
+    $c->createOval(
+        $x1, $y1, $x2, $y2,
+        -fill    => $fill_color,
+        -outline => 'black',
+        -tags    => [ $country->id, 'circle' ],
+    );
+    $c->raise( "$id&&text", "$id&&circle" );
+}
+
 
 sub _onpub_load_map {
     my ($k, $h, $map) = @_[KERNEL, HEAP, ARG0];
@@ -63,33 +102,15 @@ sub _onpub_load_map {
 
     # create capitals
     foreach my $country ( $map->countries ) {
-        my $x = $country->x;
-        my $y = $country->y;
-        my $owner = $country->owner;
-
-        # create circle for country capital
-        my $radius = 7; # FIXME: change radius to reflect number of armies
-        my $x1 = $x - $radius; my $x2 = $x + $radius;
-        my $y1 = $y - $radius; my $y2 = $y + $radius;
-
-        my $fill_color = defined $owner ? $owner->color : 'white';
-        my $line_color = 'black';
-        $c->createOval(
-            $x1, $y1, $x2, $y2,
-            -fill    => $fill_color,
-            -outline => $line_color,
-            -tags    => [ $country->id, $country->name, 'circle' ],
-        );
-
         # create text for country armies
-        my $text       = defined $owner ? $owner->armies : '';
-        my $text_color = defined $owner ? 'white' : 'black';
         $c->createText(
-            $x, $y+1,
-            -text => $text,
-            -fill => $text_color,
-            -tags => [ $country->id, $country->name, 'text' ],
+            $country->x, $country->y+1,
+            -fill => 'white',
+            -tags => [ $country->id, 'text' ],
         );
+
+        # update text values & oval
+        K->yield('country_redraw', $country);
     }
 }
 
@@ -165,7 +186,27 @@ the GUI. It features a map and various controls to drive the action.
 
 
 
-=head1 EVENTS RECEIVED
+=begin quiet_pod_coverage
+
+=item * K
+
+=end quiet_pod_coverage
+
+
+
+=head1 EVENTS
+
+=head2 Events received
+
+
+=over 4
+
+=item * country_redraw( $country )
+
+Force C<$country> to be redrawn: owner and number of armies.
+
+
+=back
 
 
 
