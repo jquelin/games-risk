@@ -14,7 +14,7 @@ use strict;
 use warnings;
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ id bonus countries name } );
+__PACKAGE__->mk_accessors( qw{ id bonus name _countries } );
 
 
 #--
@@ -23,11 +23,26 @@ __PACKAGE__->mk_accessors( qw{ id bonus countries name } );
 # -- public methods
 
 #
+# $continent->add_country( $country );
+#
+# Store C<$country> (a C<Games::Risk::Map::Country> object) as a country
+# located within the continent.
+#
 sub add_country {
     my ($self, $country) = @_;
-    my $countries = $self->countries // [];
+    my $countries = $self->_countries // [];
     push @$countries, $country;
-    $self->countries($countries);
+    $self->_countries($countries);
+}
+
+#
+# my @countries = $continent->countries;
+#
+# Return the list of countries located in $continent.
+#
+sub countries {
+    my ($self) = @_;
+    return @{ $self->_countries };
 }
 
 
@@ -85,11 +100,6 @@ number of bonus armies given when a player controls every country in the
 continent.
 
 
-=item * countries()
-
-list of C<Games::Risk::Map::Country> objects contained in the continent.
-
-
 =item * id()
 
 unique id assigned to the continent.
@@ -109,7 +119,12 @@ continent name.
 =item * $continent->add_country( $country )
 
 Store C<$country> (a C<Games::Risk::Map::Country> object) as a country
-located within the continent.
+located within the C<$continent>.
+
+
+=item * my @countries = $continent->countries()
+
+Return the list of countries located in C<$continent>.
 
 
 =back
