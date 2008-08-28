@@ -48,11 +48,12 @@ sub spawn {
         args          => [ $args ],
         heap          => Games::Risk::Heap->new,
         inline_states => {
-            # private events
+            # private events - session management
             _start         => \&_onpriv_start,
             _stop          => sub { warn "GR shutdown\n" },
-            _phase_start_assign_countries  => \&_onpriv_phase_start_assign_countries,
-            _phase_start_place_initial_armies => \&_onpriv_phase_start_place_initial_armies,
+            # private events - game states
+            _start_assign_countries     => \&_onpriv_start_assign_countries,
+            _start_place_initial_armies => \&_onpriv_start_place_initial_armies,
             # public events
             board_ready      => \&_onpub_gui_ready,
         },
@@ -87,37 +88,38 @@ sub _onpub_gui_ready {
 
     $h->_players(\@players); # FIXME: private
 
-    K->yield( '_phase_start_assign_countries' );
+    K->yield( '_start_assign_countries' );
 }
 
 
-# -- private events
-
+# -- private events - game states
 
 #
-# event: _phase_start_assign_countries()
+# event: _start_assign_countries()
 #
 # distribute randomly countries to players.
 # FIXME: what in the case of a loaded game?
 # FIXME: this can be configured so that players pick the countries
 # of their choice, turn by turn
 #
-sub _onpriv_phase_start_assign_countries {
+sub _onpriv_start_assign_countries {
     my $h = $_[HEAP];
 
     $h->distribute_countries;
-    K->yield( '_phase_start_place_initial_armies' );
+    K->yield( '_start_place_initial_armies' );
 }
 
 
 #
-# event: _phase_start_place_initials_armies()
+# event: _start_place_initials_armies()
 #
 # require players to place initials armies.
 #
-sub _onpriv_phase_start_place_initial_armies {
+sub _onpriv_start_place_initial_armies {
 }
 
+
+# -- private events - session management
 
 #
 # event: _start( \%params )
