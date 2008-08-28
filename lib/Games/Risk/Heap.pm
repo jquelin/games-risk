@@ -13,6 +13,10 @@ use 5.010;
 use strict;
 use warnings;
 
+use List::Util qw{ shuffle };
+use POE;
+use aliased 'POE::Kernel' => 'K';
+
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ map _players } );
 
@@ -20,6 +24,25 @@ __PACKAGE__->mk_accessors( qw{ map _players } );
 # METHODS
 
 # -- public methods
+
+#
+# $h->distribute_countries;
+#
+# Distribute randomly the countries to the players.
+#
+sub distribute_countries {
+    my ($self) = @_;
+
+    my @players   = $self->players;
+    my @countries = shuffle $self->map->countries;
+    while ( my $country = shift @countries ) {
+        my $player = shift @players;
+        $country->chown($player);
+        push @players, $player;
+        K->post('board', 'chown', $country, $player); # FIXME: broadcast
+    }
+}
+
 
 #
 # my @players = $heap->players;
@@ -30,7 +53,6 @@ sub players {
     my ($self) = @_;
     return @{ $self->_players };
 }
-
 
 
 
@@ -99,12 +121,25 @@ the current C<Games::Risk::Map> object of the game.
 
 =over 4
 
+
+=item * $heap->distribute_countries;
+
+Distribute randomly the countries to the players.
+
+
 =item * my @players = $heap->players()
 
 Return the C<Games::Risk::Player> objects of the current game.
 
 
 =back
+
+
+=begin quiet_pod_coverage
+
+=item * K
+
+=end quiet_pod_coverage
 
 
 
