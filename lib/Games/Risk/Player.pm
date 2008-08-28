@@ -29,13 +29,13 @@ my $Color => 0;
 
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ color } );
+__PACKAGE__->mk_accessors( qw{ color _countries } );
 
 
 #--
 # CLASS METHODS
 
-# -- public methods
+# -- constructors
 
 #
 # my $player = Games::Risk::Player->new( \%params );
@@ -49,6 +49,48 @@ sub new {
     my $self = bless {}, $pkg;
     $self->color( $COLORS[ $Color++ ] );
     # FIXME: what if beyond sepia
+}
+
+
+#--
+# METHODS
+
+# -- public methods
+
+#
+# my @countries = $player->countries;
+#
+# Return the list of countries (Games::Risk::Map::Country objects)
+# currently owned by $player.
+#
+sub countries {
+    my ($self) = @_;
+    return @{ $self->_countries // [] };
+}
+
+
+#
+# $player->country_add( $country );
+#
+# Add $country to the set of countries owned by $player.
+#
+sub country_add {
+    my ($self, $country) = @_;
+    my @countries = $self->countries;
+    push @countries, $country;
+    $self->_countries(\@countries);
+}
+
+
+#
+# $player->country_del( $country );
+#
+# Delete $country from the set of countries owned by $player.
+#
+sub country_del {
+    my ($self, $country) = @_;
+    my @countries = grep { $_->id != $country->id } $self->countries;
+    $self->_countries(\@countries);
 }
 
 
@@ -94,7 +136,24 @@ This module implements a risk player, with all its characteristics.
 
 The following methods are available for C<Games::Risk::Player> objects:
 
+
 =over 4
+
+=item * my @countries = $player->countries()
+
+Return the list of countries (c>Games::Risk::Map::Country> objects)
+currently owned by C<$player>.
+
+
+=item * $player->country_add( $country )
+
+Add C<$country> to the set of countries owned by C<$player>.
+
+
+=item * $player->country_del( $country )
+
+Delete C<$country> from the set of countries owned by C<$player>.
+
 
 =back
 
