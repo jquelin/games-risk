@@ -3,11 +3,20 @@ Revision history for Games::Risk.
 High-level changelog
 ====================
 
+0.1.x    phase game_started
 0.0.x    initial work, basic gui display
 
 
 Low-level changelog
 ===================
+
+0.1.0 Thu Aug 28 18:03:17 CEST 2008
+ - phase game_started reached!
+ - countries distributed evenly at game start
+ - board now updates its owner/number of armies if needed
+ - better set of colors for players
+
+**
 
 0.0.3 Thu Aug 28 15:49:11 CEST 2008
  - displaying capitals & armies on board game
