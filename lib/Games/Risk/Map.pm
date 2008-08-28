@@ -30,7 +30,7 @@ sub load_file {
 
     my (undef, $dirname, undef) = fileparse($file);
     $self->dirname( $dirname );
-    say $self->dirname;
+    $self->continents({});
 
     open my $fh, '<', $file; # FIXME: error handling
     my $section = '';
@@ -81,7 +81,7 @@ sub _parse_file_section_continents {
 
     # create and store continent
     my $continent = Continent->new({id=>$id, name=>$name, bonus=>$bonus});
-    $self->{continents}->{ $id } = $continent;
+    $self->continents->{ $id } = $continent;
 
     return;
 }
