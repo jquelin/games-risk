@@ -59,6 +59,9 @@ sub load_file {
             }
         }
     }
+
+    #use Data::Dumper; say Dumper($self);
+    #use YAML; say Dump($self);
 }
 
 # -- private subs
@@ -105,6 +108,9 @@ sub _parse_file_section_countries {
         y         => $y
     });
     $self->countries->{ $greyval } = $country;
+
+    # add cross-references
+    $continent->add_country($country);
 
     return;
 }
