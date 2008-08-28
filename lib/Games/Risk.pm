@@ -51,7 +51,7 @@ sub spawn {
             # private events
             _start         => \&_onpriv_start,
             _stop          => sub { warn "GR shutdown\n" },
-            _phase_game_started  => \&_onpriv_phase_game_started,
+            _phase_start_assign_countries  => \&_onpriv_phase_start_assign_countries,
             # public events
             board_ready      => \&_onpub_gui_ready,
         },
@@ -86,7 +86,7 @@ sub _onpub_gui_ready {
 
     $h->_players(\@players); # FIXME: private
 
-    K->yield( '_phase_game_started' );
+    K->yield( '_phase_start_assign_countries' );
 }
 
 
@@ -94,21 +94,17 @@ sub _onpub_gui_ready {
 
 
 #
-# event: _phase_game_started()
+# event: _phase_start_assign_countries()
 #
-# Notify GR that everything is ready and initialized: the gui, the
-# players, the cards... Time to start real things!
+# distribute randomly countries to players.
+# FIXME: what in the case of a loaded game?
+# FIXME: this can be configured so that players pick the countries
+# of their choice, turn by turn
 #
-sub _onpriv_phase_game_started {
+sub _onpriv_phase_start_assign_countries {
     my $h = $_[HEAP];
 
-    # distribute randomly countries to players
-    # FIXME: what in the case of a loaded game?
-    # FIXME: this can be configured so that players pick the countries
-    # of their choice, turn by turn
     $h->distribute_countries;
-
-
 }
 
 
