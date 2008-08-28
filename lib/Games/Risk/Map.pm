@@ -18,7 +18,7 @@ use aliased 'Games::Risk::Map::Continent';
 use aliased 'Games::Risk::Map::Country';
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ dirname background continents countries } );
+__PACKAGE__->mk_accessors( qw{ background _continents _countries _dirname } );
 
 
 #--
@@ -30,9 +30,9 @@ sub load_file {
     my ($self, $file) = @_;
 
     my (undef, $dirname, undef) = fileparse($file);
-    $self->dirname( $dirname );
-    $self->continents({});
-    $self->countries({});
+    $self->_dirname( $dirname );
+    $self->_continents({});
+    $self->_countries({});
 
     open my $fh, '<', $file; # FIXME: error handling
     my $section = '';
@@ -86,7 +86,7 @@ sub _parse_file_section_continents {
 
     # create and store continent
     my $continent = Continent->new({id=>$id, name=>$name, bonus=>$bonus});
-    $self->continents->{ $id } = $continent;
+    $self->_continents->{ $id } = $continent;
 
     return;
 }
@@ -96,7 +96,7 @@ sub _parse_file_section_countries {
 
     # get country param
     my ($greyval, $name, $idcont, $x, $y) = split /\s+/, $line;
-    my $continent = $self->continents->{$idcont};
+    my $continent = $self->_continents->{$idcont};
     return "continent '$idcont' does not exist" unless defined $continent;
 
     # create and store country
@@ -107,7 +107,7 @@ sub _parse_file_section_countries {
         x         => $x,
         y         => $y
     });
-    $self->countries->{ $greyval } = $country;
+    $self->_countries->{ $greyval } = $country;
 
     # add cross-references
     $continent->add_country($country);
@@ -119,7 +119,7 @@ sub _parse_file_section_files {
     my ($self, $line) = @_;
     given ($line) {
         when (/^pic\s+(.*)$/) {
-            $self->background( $self->dirname . "/$1" );
+            $self->background( $self->_dirname . "/$1" );
             return;
         }
         return 'wtf?';
@@ -159,8 +159,25 @@ countries, etc. of the game currently in play.
 
 =item * my $player = Games::Risk::Map->new( \%params )
 
+
 =back
 
+
+=head2 Accessors
+
+
+The following accessors (acting as mutators, ie getters and setters) are
+available for C<Games::Risk::Map> objects:
+
+
+=over 4
+
+=item * background()
+
+the path to the background image for the board.
+
+
+=back
 
 
 =head2 Object methods
