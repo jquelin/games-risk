@@ -14,6 +14,7 @@ use strict;
 use warnings;
 
 use Games::Risk::GUI::Board;
+use Games::Risk::Heap;
 use Games::Risk::Map;
 use Games::Risk::Player;
 use List::Util   qw{ shuffle };
@@ -44,6 +45,7 @@ sub spawn {
 
     my $session = POE::Session->create(
         args          => [ $args ],
+        heap          => Games::Risk::Heap->new,
         inline_states => {
             # private events
             _start         => \&_onpriv_start,
@@ -64,7 +66,7 @@ sub spawn {
 sub _onpub_gui_ready {
     my ($k, $h) = @_[KERNEL, HEAP];
 
-    $k->post('board', 'load_map', $h->{map}->background);
+    $k->post('board', 'load_map', $h->map->background);
 
     # create players - FIXME: number of players
     my @players;
@@ -80,8 +82,7 @@ sub _onpub_gui_ready {
         $k->post('board', 'newplayer', $player);
     }
 
-    $h->{players}   = \@players;
-    $h->{curplayer} = 0;
+    $h->players(\@players);
 }
 
 
@@ -106,7 +107,7 @@ sub _onpriv_start {
     $path .= '/maps/risk.map';
     my $map = Games::Risk::Map->new;
     $map->load_file($path);
-    $h->{map} = $map;
+    $h->map($map);
 
 
     Games::Risk::GUI::Board->spawn({toplevel=>$poe_main_window});

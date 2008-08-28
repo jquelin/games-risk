@@ -9,11 +9,12 @@
 
 package Games::Risk::Heap;
 
+use 5.010;
 use strict;
 use warnings;
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ } );
+__PACKAGE__->mk_accessors( qw{ map players } );
 
 
 
@@ -74,6 +75,10 @@ available for C<Games::Risk::Heap> objects:
 
 the current C<Games::Risk::Map> object of the game.
 
+
+=item * players()
+
+the C<Games::Risk::Player> objects of the current game.
 
 =back
 
