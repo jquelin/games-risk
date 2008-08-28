@@ -50,6 +50,7 @@ sub spawn {
             # private events
             _start         => \&_onpriv_start,
             _stop          => sub { warn "GR shutdown\n" },
+            _phase_game_started  => \&_onpriv_phase_game_started,
             # public events
             board_ready      => \&_onpub_gui_ready,
         },
@@ -83,10 +84,22 @@ sub _onpub_gui_ready {
     }
 
     $h->players(\@players);
+
+    $k->yield( '_phase_game_started' );
 }
 
 
 # -- private events
+
+
+#
+# event: _phase_game_started()
+#
+# Notify GR that everything is ready and initialized: the gui, the
+# players, the cards... Time to start real things!
+#
+sub _onpriv_phase_game_started {
+}
 
 
 #
