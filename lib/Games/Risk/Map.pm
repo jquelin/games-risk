@@ -15,9 +15,10 @@ use warnings;
 
 use File::Basename qw{ fileparse };
 use aliased 'Games::Risk::Map::Continent';
+use aliased 'Games::Risk::Map::Country';
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ dirname background continents } );
+__PACKAGE__->mk_accessors( qw{ dirname background continents countries } );
 
 
 #--
@@ -31,6 +32,7 @@ sub load_file {
     my (undef, $dirname, undef) = fileparse($file);
     $self->dirname( $dirname );
     $self->continents({});
+    $self->countries({});
 
     open my $fh, '<', $file; # FIXME: error handling
     my $section = '';
@@ -88,7 +90,23 @@ sub _parse_file_section_continents {
 
 sub _parse_file_section_countries {
     my ($self, $line) = @_;
-    return 'wtf?';
+
+    # get country param
+    my ($greyval, $name, $idcont, $x, $y) = split /\s+/, $line;
+    my $continent = $self->continents->{$idcont};
+    return "continent '$idcont' does not exist" unless defined $continent;
+
+    # create and store country
+    my $country = Country->new({
+        greyval   => $greyval,
+        name      => $name,
+        continent => $continent,
+        x         => $x,
+        y         => $y
+    });
+    $self->countries->{ $greyval } = $country;
+
+    return;
 }
 
 sub _parse_file_section_files {
@@ -152,6 +170,8 @@ countries, etc. of the game currently in play.
 =begin quiet_pod_coverage
 
 =item Continent (inserted by aliased)
+
+=item Country (inserted by aliased)
 
 =end quiet_pod_coverage
 
