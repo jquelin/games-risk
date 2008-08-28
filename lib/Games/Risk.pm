@@ -173,6 +173,13 @@ You can tune the session by passing some arguments as a hash reference.
 Currently, no params can be tuned.
 
 
+=begin quiet_pod_coverage
+
+=item * K
+
+=end quiet_pod_coverage
+
+
 
 =head1 BUGS
 
