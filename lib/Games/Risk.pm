@@ -24,6 +24,21 @@ use POE;
 # Public variables of the module.
 our $VERSION = '0.0.1';
 
+
+#--
+# CLASS METHODS
+
+# -- public methods
+
+#
+# my $id = Games::Risk->spawn( \%params )
+#
+# This method will create a POE session responsible for a classical risk
+# game. It will return the poe id of the session newly created.
+#
+# You can tune the session by passing some arguments as a hash reference.
+# Currently, no params can be tuned.
+#
 sub spawn {
     my ($type, $args) = @_;
 
@@ -42,7 +57,7 @@ sub spawn {
 
 
 #--
-# Events
+# EVENTS HANDLERS
 
 # -- public events
 
@@ -74,7 +89,7 @@ sub _onpub_gui_ready {
 
 
 #
-# Event: _start( \%params )
+# event: _start( \%params )
 #
 # Called when the poe session gets initialized. Receive a reference
 # to %params, same as spawn() received.
@@ -103,129 +118,93 @@ sub _onpriv_start {
 1;
 __END__
 
+
 =head1 NAME
 
-Games::Risk - a generic funge interpreter
+Games::Risk - classical 'risk' board game
+
 
 
 =head1 SYNOPSIS
 
     use Games::Risk;
-    my $interp = Games::Risk->new( { file => 'program.bf' } );
-    $interp->run_code( "param", 7, "foo" );
+    Games::Risk->spawn;
+    POE::Kernel->run;
+    exit;
 
-    Or, one can write directly:
-    my $interp = Games::Risk->new;
-    $interp->store_code( <<'END_OF_CODE' );
-    < @,,,,"foo"a
-    END_OF_CODE
-    $interp->run_code;
 
 
 =head1 DESCRIPTION
 
-Enter the realm of topological languages!
+Risk is a strategic turn-based board game. Players control armies, with
+which they attempt to capture territories from other players. The goal
+of the game is to control all the territories (C<conquer the world>)
+through the elimination of the other players. Using area movement, Risk
+ignores realistic limitations, such as the vast size of the world, and
+the logistics of long campaigns.
 
-This module implements the Funge-98 specifications on a 2D field (also
-called Befunge). It can also work as a n-funge implementation (3D and
-more).
+This module implements a graphical interface for this game.
 
-This Befunge-98 interpreters assumes the stack and Funge-Space cells
-of this implementation are 32 bits signed integers (I hope your os
-understand those integers). This means that the torus (or Cartesian
-Lahey-Space topology to be more precise) looks like the following:
-
-              32-bit Befunge-98
-              =================
-                      ^
-                      |-2,147,483,648
-                      |
-                      |         x
-          <-----------+----------->
-  -2,147,483,648      |      2,147,483,647
-                      |
-                     y|2,147,483,647
-                      v
-
-
-This module also implements the Concurrent Funge semantics.
 
 
 =head1 PUBLIC METHODS
 
-=head2 new( [params] )
+=head2 my $id = Games::Risk->spawn( \%params )
 
-Call directly the C<Games::Risk::Interpreter> constructor. Refer
-to L<Games::Risk::Interpreter> for more information.
+This method will create a POE session responsible for a classical risk
+game. It will return the poe id of the session newly created.
 
+You can tune the session by passing some arguments as a hash reference.
+Currently, no params can be tuned.
 
-=head1 TODO
-
-=over 4
-
-=item o
-
-Write standard libraries.
-
-=back
 
 
 =head1 BUGS
 
-Although this module comes with a full set of tests, maybe there are
-subtle bugs - or maybe even I misinterpreted the Funge-98
-specs. Please report them to me.
+Please report any bugs or feature requests to C<bug-games-risk at
+rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Games-Risk>.  I will be
+notified, and then you'll automatically be notified of progress on your
+bug as I make changes.
 
-There are some bugs anyway, but they come from the specs:
-
-=over 4
-
-=item o
-
-About the 18th cell pushed by the C<y> instruction: Funge specs just
-tell to push onto the stack the size of the stacks, but nothing is
-said about how user will retrieve the number of stacks.
-
-=item o
-
-About the load semantics. Once a library is loaded, the interpreter is
-to put onto the TOSS the fingerprint of the just-loaded library. But
-nothing is said if the fingerprint is bigger than the maximum cell
-width (here, 4 bytes). This means that libraries can't have a name
-bigger than C<0x80000000>, ie, more than four letters with the first
-one smaller than C<P> (C<chr(80)>).
-
-Since perl is not so rigid, one can build libraries with more than
-four letters, but perl will issue a warning about non-portability of
-numbers greater than C<0xffffffff>.
-
-=back
-
-
-=head1 ACKNOWLEDGEMENTS
-
-I would like to thank Chris Pressey, creator of Befunge, who gave a
-whole new dimension to both coding and obfuscating.
 
 
 =head1 SEE ALSO
 
+You can find more information on the classical C<risk> game on wikipedia
+at L<http://en.wikipedia.org/wiki/Risk_game>.
+
+You might also want to check jRisk, a java-based implementation of Risk,
+which inspired me quite a lot.
+
+
+You can also look for information on this module at:
+
 =over 4
 
-=item L<perl>
+=item * AnnoCPAN: Annotated CPAN documentation
 
-=item L<http://www.catseye.mb.ca/esoteric/befunge/>
+L<http://annocpan.org/dist/Games-Risk>
 
-=item L<http://dufflebunk.iwarp.com/JSFunge/spec98.html>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/d/Games-Risk>
+
+
+=item * Open bugs
+
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Games-Risk>
+
 
 =back
 
 
+
 =head1 AUTHOR
 
-Jerome Quelin, E<lt>jquelin@cpan.orgE<gt>
+Jerome Quelin, C<< <jquelin@cpan.org> >>
 
-Development is discussed on E<lt>games-risk@mongueurs.netE<gt>
 
 
 =head1 COPYRIGHT & LICENSE
@@ -233,7 +212,8 @@ Development is discussed on E<lt>games-risk@mongueurs.netE<gt>
 Copyright (c) 2008 Jerome Quelin, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU GPLv3+.
+it under the same terms as Perl itself.
 
 
 =cut
+
