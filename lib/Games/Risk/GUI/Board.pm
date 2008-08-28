@@ -47,16 +47,17 @@ sub spawn {
 # -- public events
 
 sub _onpub_load_map {
-    my ($k, $h, $img_path) = @_[KERNEL, HEAP, ARG0];
+    my ($k, $h, $map) = @_[KERNEL, HEAP, ARG0];
     my $c = $h->{canvas};
 
     # remove everything
     $c->delete('all');
 
     # create background image
-    my ($wi,$he) = imgsize($img_path);
+    my $img_path = $map->background;
+    my ($width,$height) = imgsize($img_path);
     my $img = $c->Photo( -file=>$img_path );
-    $c->configure(-width => $wi, -height => $he);
+    $c->configure(-width => $width, -height => $height);
     #use Data::Dumper; say Dumper($img);
     $c->createImage(0, 0, -anchor=>'nw', -image=>$img, -tags=>['background']);
 }

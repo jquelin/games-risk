@@ -66,7 +66,7 @@ sub spawn {
 sub _onpub_gui_ready {
     my ($k, $h) = @_[KERNEL, HEAP];
 
-    $k->post('board', 'load_map', $h->map->background);
+    $k->post('board', 'load_map', $h->map);
 
     # create players - FIXME: number of players
     my @players;
