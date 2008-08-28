@@ -84,7 +84,7 @@ sub _onpub_gui_ready {
         K->post('board', 'newplayer', $player);
     }
 
-    $h->players(\@players);
+    $h->_players(\@players);
 
     K->yield( '_phase_game_started' );
 }

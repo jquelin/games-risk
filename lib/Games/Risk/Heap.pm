@@ -14,7 +14,23 @@ use strict;
 use warnings;
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ map players } );
+__PACKAGE__->mk_accessors( qw{ map _players } );
+
+#--
+# METHODS
+
+# -- public methods
+
+#
+# my @players = $heap->players;
+#
+# Return the list of current players (Games::Risk::Player objects).
+#
+sub players {
+    my ($self) = @_;
+    return @{ $self->_players };
+}
+
 
 
 
@@ -76,16 +92,16 @@ available for C<Games::Risk::Heap> objects:
 the current C<Games::Risk::Map> object of the game.
 
 
-=item * players()
-
-the C<Games::Risk::Player> objects of the current game.
-
 =back
 
 
 =head2 Public methods
 
 =over 4
+
+=item * my @players = $heap->players()
+
+Return the C<Games::Risk::Player> objects of the current game.
 
 
 =back
