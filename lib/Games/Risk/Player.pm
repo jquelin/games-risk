@@ -49,6 +49,7 @@ sub new {
     my $self = bless {}, $pkg;
     $self->color( $COLORS[ $Color++ ] );
     # FIXME: what if beyond sepia
+    return $self;
 }
 
 
