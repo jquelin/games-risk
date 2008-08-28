@@ -42,7 +42,7 @@ sub add_country {
 #
 sub countries {
     my ($self) = @_;
-    return @{ $self->_countries };
+    return @{ $self->_countries // [] };
 }
 
 
