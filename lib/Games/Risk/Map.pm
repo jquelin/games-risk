@@ -140,6 +140,14 @@ countries, etc. of the game currently in play.
 
 
 
+=begin quiet_pod_coverage
+
+=item Continent (inserted by aliased)
+
+=end quiet_pod_coverage
+
+
+
 =head1 SEE ALSO
 
 L<Games::Risk>.
