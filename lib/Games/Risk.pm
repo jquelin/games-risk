@@ -141,6 +141,9 @@ sub _onpriv_start {
     $map->load_file($path);
     $h->map($map);
 
+    # prettyfying tk app.
+    # see http://www.perltk.org/index.php?option=com_content&task=view&id=43&Itemid=37
+    $poe_main_window->optionAdd('*BorderWidth' => 1);
 
     Games::Risk::GUI::Board->spawn({toplevel=>$poe_main_window});
 }
