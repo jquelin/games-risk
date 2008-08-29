@@ -9,6 +9,7 @@
 
 package Games::Risk::Player;
 
+use 5.010;
 use strict;
 use warnings;
 
@@ -54,7 +55,14 @@ sub new {
 
     # create the object
     my $self = bless $args, $pkg;
+
+    # update other object attributes
     $self->color( $color );
+    given ( $self->type ) {
+        when ('human') {
+            $self->name( $ENV{USER} ); # FIXME: portable enough?
+        }
+    }
 
     return $self;
 }
