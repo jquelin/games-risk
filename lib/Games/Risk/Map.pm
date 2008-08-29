@@ -64,8 +64,7 @@ sub load_file {
             my $meth = "_parse_file_section_$section";
             my $rv = $self->$meth($line);
             if ( $rv ) {
-                warn "parse error [$section]:$. $rv\n";
-                warn "line was:  '$line'\n";
+                warn "parse error [$section]:$. $rv \t- line was: '$line'\n";
                 # FIXME: error handling
             }
         }
