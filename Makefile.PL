@@ -33,7 +33,7 @@ WriteMakefile(
         'Tk::Balloon'            => 0,
         'Tk::JPEG'               => 0,
         'Tk::PNG'                => 0,
-        'Test::More'            => 0,
+        'Test::More'             => 0,
     },
     dist          => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean         => { FILES => [

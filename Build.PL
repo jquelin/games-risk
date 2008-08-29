@@ -30,11 +30,11 @@ my %requires = (
 );
 my %build_requires = (
     %requires,
-    'Test::More'            => 0,
+    'Test::More'             => 0,
 );
 my %recommends = (
-    'Test::Pod'                                    => 0,
-    'Test::Pod::Coverage'                          => 0,
+    'Test::Pod'              => 0,
+    'Test::Pod::Coverage'    => 0,
 );
 
 
