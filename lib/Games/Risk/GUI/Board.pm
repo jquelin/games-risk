@@ -127,9 +127,21 @@ sub _onpriv_start {
     my ($h, $s, $args) = @_[HEAP, SESSION, ARG0];
 
     K->alias_set('board');
-
-    # create toplevel
     my $top = $h->{toplevel} = $args->{toplevel};
+
+    # frame for players
+    my $fpl = $top->Frame->pack(-side=>'top', -expand=>1, -fill=>'both');
+    $fpl->Label(-text=>'Players: ')->pack(-side=>'left');
+    $h->{frames}{players} = $fpl;
+
+    # frame for game state
+    #my $fgs = $top->Frame->pack(-side=>'top', -expand=>1, -fill=>'both');
+    #$fgs->Label(-text=>'Game state: ')->pack(-side=>'left');
+    #$fgs->Button(-text=>'place armies')->pack(-side=>'left', -expand=>1, -fill=>'both');
+    #$fgs->Button(-text=>'attack')->pack(-side=>'left', -expand=>1, -fill=>'both');
+    #$fgs->Button(-text=>'move armies')->pack(-side=>'left', -expand=>1, -fill=>'both');
+
+    # create canvas
     my $c = $top->Canvas->pack;
     $c->CanvasBind('<1>', $s->postback('_canvas_click_left') );
     $h->{canvas} = $c;
