@@ -20,7 +20,6 @@ use Tk;
 use Tk::Balloon;
 use Tk::JPEG;
 use Tk::PNG;
-use UNIVERSAL::require;
 
 use aliased 'POE::Kernel' => 'K';
 
@@ -131,10 +130,9 @@ sub _onpub_player_add {
         }
 
         when ('ai') {
-            my $ai_class = $player->ai_class;
-            $ai_class->require;
-            my $difficulty  = $ai_class->difficulty;
-            my $description = $ai_class->description;
+            my $ai = $player->ai;
+            my $difficulty  = $ai->difficulty;
+            my $description = $ai->description;
             $tooltip .= "(computer - $difficulty)\n$description";
         }
 
