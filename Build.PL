@@ -27,6 +27,7 @@ my %requires = (
     'Tk::Balloon'            => 0,
     'Tk::JPEG'               => 0,
     'Tk::PNG'                => 0,
+    'UNIVERSAL::require'     => 0,
 );
 my %build_requires = (
     %requires,

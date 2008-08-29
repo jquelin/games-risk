@@ -20,6 +20,7 @@ use Tk;
 use Tk::Balloon;
 use Tk::JPEG;
 use Tk::PNG;
+use UNIVERSAL::require;
 
 use aliased 'POE::Kernel' => 'K';
 
@@ -109,11 +110,37 @@ sub _onpub_load_map {
     K->post('risk', 'map_loaded');
 }
 
+
+#
+# event: player_add($player)
+#
+# create a label for $player, with tooltip information.
+#
 sub _onpub_player_add {
     my ($h, $player) = @_[HEAP, ARG0];
 
+    # create label
     my $f = $h->{frames}{players};
-    $f->Label(-width=>3, -bg => $player->color)->pack(@LEFT);
+    my $label = $f->Label(-width=>3, -bg => $player->color)->pack(@LEFT);
+
+    # associate tooltip
+    my $tooltip;
+    given ($player->type) {
+        when ('human') {
+            $tooltip = '(human)';
+        }
+
+        when ('ai') {
+            my $ai_class = $player->ai_class;
+            $ai_class->require;
+            my $difficulty  = $ai_class->difficulty;
+            my $description = $ai_class->description;
+            $tooltip = "(computer - $difficulty)\n$description";
+        }
+
+        default { $tooltip = '?'; }
+    }
+    $h->{balloon}->attach($label, -msg=>$tooltip);
 }
 
 
