@@ -50,7 +50,7 @@ sub spawn {
             # gui events
             _canvas_click_left   => \&_onpriv_canvas_click_left,
             # public events
-            chown                => \&_onpub_country_redraw,
+            chown                => \&_onpriv_country_redraw,
             load_map             => \&_onpub_load_map,
             player_add           => \&_onpub_player_add,
         },
@@ -63,41 +63,6 @@ sub spawn {
 # Event handlers
 
 # -- public events
-
-#
-# event: country_redraw( $country )
-#
-# Force C<$country> to be redrawn: owner and number of armies.
-#
-sub _onpub_country_redraw {
-    my ($h, $country) = @_[HEAP, ARG0];
-    my $c = $h->{canvas};
-
-    my $id    = $country->id;
-    my $owner = $country->owner;
-
-    # FIXME: change radius to reflect number of armies
-    my ($radius, $fill_color, $text) = defined $owner
-            ? (7, $owner->color, $country->armies)
-            : (5,       'white', '');
-
-    my $x = $country->x;
-    my $y = $country->y;
-    my $x1 = $x - $radius; my $x2 = $x + $radius;
-    my $y1 = $y - $radius; my $y2 = $y + $radius;
-
-    # update canvas
-    $c->itemconfigure( "$id&&text", -text => $text);
-    $c->delete( "$id&&circle" );
-    $c->createOval(
-        $x1, $y1, $x2, $y2,
-        -fill    => $fill_color,
-        -outline => 'black',
-        -tags    => [ $country->id, 'circle' ],
-    );
-    $c->raise( "$id&&text", "$id&&circle" );
-}
-
 
 sub _onpub_load_map {
     my ($h, $map) = @_[HEAP, ARG0];
@@ -139,6 +104,39 @@ sub _onpub_player_add {
 
 
 # -- private events
+
+#
+# Force C<$country> to be redrawn: owner and number of armies.
+#
+sub _onpriv_country_redraw {
+    my ($h, $country) = @_[HEAP, ARG0];
+    my $c = $h->{canvas};
+
+    my $id    = $country->id;
+    my $owner = $country->owner;
+
+    # FIXME: change radius to reflect number of armies
+    my ($radius, $fill_color, $text) = defined $owner
+            ? (7, $owner->color, $country->armies)
+            : (5,       'white', '');
+
+    my $x = $country->x;
+    my $y = $country->y;
+    my $x1 = $x - $radius; my $x2 = $x + $radius;
+    my $y1 = $y - $radius; my $y2 = $y + $radius;
+
+    # update canvas
+    $c->itemconfigure( "$id&&text", -text => $text);
+    $c->delete( "$id&&circle" );
+    $c->createOval(
+        $x1, $y1, $x2, $y2,
+        -fill    => $fill_color,
+        -outline => 'black',
+        -tags    => [ $country->id, 'circle' ],
+    );
+    $c->raise( "$id&&text", "$id&&circle" );
+}
+
 
 #
 # Event: _start( \%params )
