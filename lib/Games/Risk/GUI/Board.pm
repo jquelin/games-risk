@@ -163,8 +163,14 @@ sub _onpriv_start {
     K->alias_set('board');
     my $top = $h->{toplevel} = $args->{toplevel};
 
+    # top frame
+    my $ftop = $top->Frame->pack(@TOP, @XFILLX);
+
+    # label to display country pointed by mouse
+    $ftop->Label->pack(@RIGHT, @XFILLX);
+
     # frame for players
-    my $fpl = $top->Frame->pack(@TOP, @XFILL2);
+    my $fpl = $ftop->Frame->pack(@LEFT);
     $fpl->Label(-text=>'Players: ')->pack(@LEFT);
     $h->{frames}{players} = $fpl;
 
