@@ -206,23 +206,28 @@ sub _onpriv_start {
 
 # -- gui events
 
+#
+# event: _canvas_motion( undef, [$canvas, $x, $y] );
+#
+# Called when mouse is moving over the $canvas at coords ($x,$y).
+#
 sub _ongui_canvas_motion {
     my ($h, $args) = @_[HEAP, ARG1];
 
     my (undef, $x,$y) = @$args; # first param is canvas
 
-    my ($grey) = $h->{greyscale}->get($x,$y);
-    my $country = $h->{map}->country_get($grey);
+    # get greyscale pointed by mouse, this may die if moving too fast
+    # outside of the canvas. we just need the 'red' component, since
+    # green and blue will be the same.
+    my $grey = 0;
+    eval { ($grey) = $h->{greyscale}->get($x,$y) };
+    my $country    = $h->{map}->country_get($grey);
 
-    if ( defined $country ) {
-        $h->{country}       = $country;
-        $h->{country_label} = join ' - ',
-            $country->continent->name,
-            $country->name;
-    } else {
-        $h->{country}       = undef;
-        $h->{country_label} = '';
-    }
+    # update country and country label
+    $h->{country}       = $country;  # may be undef
+    $h->{country_label} = defined $country
+        ? join(' - ', $country->continent->name, $country->name)
+        : '';
 }
 
 
