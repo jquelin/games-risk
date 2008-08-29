@@ -53,7 +53,8 @@ sub spawn {
             _stop          => sub { warn "GR shutdown\n" },
             # private events - game states
             _started            => \&_onpriv_load_map,
-            _gui_ready          => \&_onpriv_assign_countries,
+            _gui_ready          => \&_onpriv_create_players,
+            _players_created    => \&_onpriv_assign_countries,
             _countries_assigned => \&_onpriv_place_initial_armies,
             # public events
             window_created      => \&_onpub_window_created,
@@ -75,26 +76,7 @@ sub spawn {
 # fired when board has finished loading map.
 #
 sub _onpub_map_loaded {
-    my $h = $_[HEAP];
-
     # FIXME: sync & wait when more than one window
-
-    # create players - FIXME: number of players
-    my @players;
-    push @players, Games::Risk::Player->new;
-    push @players, Games::Risk::Player->new;
-    push @players, Games::Risk::Player->new;
-    push @players, Games::Risk::Player->new;
-    
-    @players = shuffle @players; 
-
-    #FIXME: broadcast
-    foreach my $player ( @players ) {
-        K->post('board', 'newplayer', $player);
-    }
-
-    $h->_players(\@players); # FIXME: private
-
     K->yield('_gui_ready');
 }
 
@@ -147,6 +129,33 @@ sub _onpriv_assign_countries {
 
     # go on to the next phase
     K->yield( '_countries_assigned' );
+}
+
+
+#
+# create the GR::Players that will fight.
+#
+sub _onpriv_create_players {
+    my $h = $_[HEAP];
+
+    # create players - FIXME: number of players
+    my @players;
+    push @players, Games::Risk::Player->new;
+    push @players, Games::Risk::Player->new;
+    push @players, Games::Risk::Player->new;
+    push @players, Games::Risk::Player->new;
+
+    @players = shuffle @players;
+
+    #FIXME: broadcast
+    foreach my $player ( @players ) {
+        K->post('board', 'newplayer', $player);
+    }
+
+    $h->_players(\@players); # FIXME: private
+
+    # go on to the next phase
+    K->yield( '_players_created' );
 }
 
 
