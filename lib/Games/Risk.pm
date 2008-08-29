@@ -57,6 +57,7 @@ sub spawn {
             _countries_assigned => \&_onpriv_place_initial_armies,
             # public events
             window_created      => \&_onpub_window_created,
+            map_loaded          => \&_onpub_map_loaded,
         },
     );
     return $session->ID;
@@ -67,6 +68,36 @@ sub spawn {
 # EVENTS HANDLERS
 
 # -- public events
+
+#
+# event: map_loaded();
+#
+# fired when board has finished loading map.
+#
+sub _onpub_map_loaded {
+    my $h = $_[HEAP];
+
+    # FIXME: sync & wait when more than one window
+
+    # create players - FIXME: number of players
+    my @players;
+    push @players, Games::Risk::Player->new;
+    push @players, Games::Risk::Player->new;
+    push @players, Games::Risk::Player->new;
+    push @players, Games::Risk::Player->new;
+    
+    @players = shuffle @players; 
+
+    #FIXME: broadcast
+    foreach my $player ( @players ) {
+        K->post('board', 'newplayer', $player);
+    }
+
+    $h->_players(\@players); # FIXME: private
+
+    K->yield('_gui_ready');
+}
+
 
 #
 # event: window_created( $window );
@@ -86,24 +117,6 @@ sub _onpub_window_created {
         }
         K->post('board', 'load_map', $h->map);
     }
-
-    # create players - FIXME: number of players
-    my @players;
-    push @players, Games::Risk::Player->new;
-    push @players, Games::Risk::Player->new;
-    push @players, Games::Risk::Player->new;
-    push @players, Games::Risk::Player->new;
-    
-    @players = shuffle @players; 
-
-    #FIXME: broadcast
-    foreach my $player ( @players ) {
-        K->post('board', 'newplayer', $player);
-    }
-
-    $h->_players(\@players); # FIXME: private
-
-    K->yield( '_gui_ready' );
 }
 
 
