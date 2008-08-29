@@ -110,8 +110,6 @@ sub _onpub_window_created {
 # -- private events - game states
 
 #
-# event: _start_assign_countries()
-#
 # distribute randomly countries to players.
 # FIXME: what in the case of a loaded game?
 # FIXME: this can be configured so that players pick the countries
@@ -140,8 +138,6 @@ sub _onpriv_assign_countries {
 
 
 #
-# event: _started()
-#
 # load map in memory.
 #
 sub _onpriv_load_map {
@@ -158,8 +154,6 @@ sub _onpriv_load_map {
 }
 
 
-#
-# event: _countries_assigned()
 #
 # require players to place initials armies.
 #
