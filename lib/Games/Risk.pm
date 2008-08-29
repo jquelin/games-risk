@@ -141,9 +141,9 @@ sub _onpriv_create_players {
     # create players - FIXME: number of players
     my @players;
     push @players, Games::Risk::Player->new({type=>'human'});
-    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::NoAttack'});
-    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::NoAttack'});
-    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::NoAttack'});
+    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Dumb'});
+    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Dumb'});
+    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Dumb'});
 
     @players = shuffle @players;
 
