@@ -22,9 +22,18 @@ use Tk::PNG;
 
 use aliased 'POE::Kernel' => 'K';
 
-Readonly my @TOP     => ( -side => 'top' );
-Readonly my @LEFT    => ( -side => 'left' );
+Readonly my @TOP     => ( -side => 'top'    );
+Readonly my @BOTTOM  => ( -side => 'bottom' );
+Readonly my @LEFT    => ( -side => 'left'   );
+Readonly my @RIGHT   => ( -side => 'right'  );
+
+Readonly my @FILLX   => ( -fill => 'x'    );
+Readonly my @FILL2   => ( -fill => 'both' );
+Readonly my @XFILLX  => ( -expand => 1, -fill => 'x'    );
 Readonly my @XFILL2  => ( -expand => 1, -fill => 'both' );
+
+Readonly my @PAD1    => ( -padx => 1, -pady => 1);
+
 
 #--
 # Constructor
@@ -159,6 +168,14 @@ sub _onpriv_start {
     my $c = $top->Canvas->pack;
     $c->CanvasBind('<1>', $s->postback('_canvas_click_left') );
     $h->{canvas} = $c;
+
+    # status bar
+    $h->{status} = '';
+    my $sb = $top->Frame->pack(@BOTTOM, @FILLX);
+    $sb->Label(
+        -anchor       =>'w',
+        -textvariable => \$h->{status},
+    )->pack(@RIGHT,@XFILLX, @PAD1);
 
     # say that we're done
     K->post('risk', 'window_created', 'board');
