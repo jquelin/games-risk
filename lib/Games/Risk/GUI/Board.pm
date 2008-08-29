@@ -64,6 +64,12 @@ sub spawn {
 
 # -- public events
 
+#
+# event: load_map( $map );
+#
+# load background and greyscale from $map. request countries to display
+# their data.
+#
 sub _onpub_load_map {
     my ($h, $map) = @_[HEAP, ARG0];
     my $c = $h->{canvas};
@@ -91,6 +97,10 @@ sub _onpub_load_map {
         # update text values & oval
         K->yield('country_redraw', $country);
     }
+
+    # load greyscale image
+    $h->{greyscale} = $h->{toplevel}->Photo(-file=>$map->greyscale);
+
 
     K->post('risk', 'map_loaded');
 }
