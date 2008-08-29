@@ -53,7 +53,7 @@ sub new {
     my $color = $COLORS[ $Color_id++ ];
 
     # create the object
-    my $self = bless {}, $pkg;
+    my $self = bless $args, $pkg;
     $self->color( $color );
 
     return $self;
