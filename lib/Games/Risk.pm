@@ -52,8 +52,8 @@ sub spawn {
             _start         => \&_onpriv_start,
             _stop          => sub { warn "GR shutdown\n" },
             # private events - game states
-            _start_assign_countries     => \&_onpriv_start_assign_countries,
-            _start_place_initial_armies => \&_onpriv_start_place_initial_armies,
+            _start_assign_countries     => \&_onpriv_assign_countries,
+            _countries_assigned => \&_onpriv_place_initial_armies,
             # public events
             board_ready      => \&_onpub_gui_ready,
         },
@@ -102,20 +102,21 @@ sub _onpub_gui_ready {
 # FIXME: this can be configured so that players pick the countries
 # of their choice, turn by turn
 #
-sub _onpriv_start_assign_countries {
+sub _onpriv_assign_countries {
     my $h = $_[HEAP];
 
     $h->distribute_countries;
-    K->yield( '_start_place_initial_armies' );
+    K->yield( '_countries_assigned' );
 }
 
 
 #
-# event: _start_place_initials_armies()
+# event: _countries_assigned()
 #
 # require players to place initials armies.
 #
-sub _onpriv_start_place_initial_armies {
+sub _onpriv_place_initial_armies {
+    K->yield( '_initial_armies_placed' );
 }
 
 
