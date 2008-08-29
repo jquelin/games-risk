@@ -30,7 +30,7 @@ my $Color_id = 0;
 
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ color _countries } );
+__PACKAGE__->mk_accessors( qw{ ai_class color name type _countries } );
 
 
 #--
@@ -138,6 +138,40 @@ This module implements a risk player, with all its characteristics.
 
 
 =back
+
+
+
+=head2 Accessors
+
+
+The following accessors (acting as mutators, ie getters and setters) are
+available for C<Games::Risk::Player> objects:
+
+
+=over 4
+
+=item * ai_class
+
+the class of the artificial intelligence, if player is an ai.
+
+
+=item * color
+
+player color to be used in the gui.
+
+
+=item * name
+
+player name.
+
+
+=item * type
+
+player type (human, ai, etc.)
+
+
+=back
+
 
 
 =head2 Object methods
