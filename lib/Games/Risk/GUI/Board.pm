@@ -39,6 +39,7 @@ sub spawn {
             # public events
             chown                => \&_onpub_country_redraw,
             load_map             => \&_onpub_load_map,
+            player_add           => \&_onpub_player_add,
         },
     );
     return $session->ID;
@@ -114,6 +115,13 @@ sub _onpub_load_map {
     }
 
     K->post('risk', 'map_loaded');
+}
+
+sub _onpub_player_add {
+    my ($h, $player) = @_[HEAP, ARG0];
+
+    my $f = $h->{frames}{players};
+    $f->Label(-width=>3, -bg => $player->color)->pack(-side=>'left');
 }
 
 

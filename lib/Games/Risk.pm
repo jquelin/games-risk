@@ -149,7 +149,7 @@ sub _onpriv_create_players {
 
     #FIXME: broadcast
     foreach my $player ( @players ) {
-        K->post('board', 'newplayer', $player);
+        K->post('board', 'player_add', $player);
     }
 
     $h->_players(\@players); # FIXME: private
