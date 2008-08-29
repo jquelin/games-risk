@@ -55,6 +55,21 @@ new armies randomly, and never ever attacks nor move armies.
 
 
 
+=head1 METHODS
+
+This class implements (or inherits) all of those methods (further described in
+C<Games::Risk::AI>):
+
+
+=over 4
+
+=item * description()
+
+=item * difficulty()
+
+=back
+
+
 
 =head1 SEE ALSO
 
