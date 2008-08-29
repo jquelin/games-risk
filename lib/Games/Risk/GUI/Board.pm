@@ -15,12 +15,16 @@ use warnings;
 
 use Image::Size;
 use POE;
+use Readonly;
 use Tk;
 use Tk::JPEG;
 use Tk::PNG;
 
 use aliased 'POE::Kernel' => 'K';
 
+Readonly my @TOP     => ( -side => 'top' );
+Readonly my @LEFT    => ( -side => 'left' );
+Readonly my @XFILL2  => ( -expand => 1, -fill => 'both' );
 
 #--
 # Constructor
@@ -121,7 +125,7 @@ sub _onpub_player_add {
     my ($h, $player) = @_[HEAP, ARG0];
 
     my $f = $h->{frames}{players};
-    $f->Label(-width=>3, -bg => $player->color)->pack(-side=>'left');
+    $f->Label(-width=>3, -bg => $player->color)->pack(@LEFT);
 }
 
 
@@ -140,16 +144,16 @@ sub _onpriv_start {
     my $top = $h->{toplevel} = $args->{toplevel};
 
     # frame for players
-    my $fpl = $top->Frame->pack(-side=>'top', -expand=>1, -fill=>'both');
-    $fpl->Label(-text=>'Players: ')->pack(-side=>'left');
+    my $fpl = $top->Frame->pack(@TOP, @XFILL2);
+    $fpl->Label(-text=>'Players: ')->pack(@LEFT);
     $h->{frames}{players} = $fpl;
 
     # frame for game state
-    #my $fgs = $top->Frame->pack(-side=>'top', -expand=>1, -fill=>'both');
-    #$fgs->Label(-text=>'Game state: ')->pack(-side=>'left');
-    #$fgs->Button(-text=>'place armies')->pack(-side=>'left', -expand=>1, -fill=>'both');
-    #$fgs->Button(-text=>'attack')->pack(-side=>'left', -expand=>1, -fill=>'both');
-    #$fgs->Button(-text=>'move armies')->pack(-side=>'left', -expand=>1, -fill=>'both');
+    #my $fgs = $top->Frame->pack(@TOP, @XFILL2);
+    #$fgs->Label(-text=>'Game state: ')->pack(@LEFT);
+    #$fgs->Button(-text=>'place armies')->pack(@LEFT, @XFILL2);
+    #$fgs->Button(-text=>'attack')->pack(@LEFT, @XFILL2);
+    #$fgs->Button(-text=>'move armies')->pack(@LEFT, @XFILL2);
 
     # create canvas
     my $c = $top->Canvas->pack;
