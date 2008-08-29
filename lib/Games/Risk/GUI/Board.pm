@@ -37,7 +37,7 @@ sub spawn {
             # gui events
             _canvas_click_left   => \&_onpriv_canvas_click_left,
             # public events
-            country_redraw       => \&_onpub_country_redraw,
+            chown                => \&_onpub_country_redraw,
             load_map             => \&_onpub_load_map,
         },
     );

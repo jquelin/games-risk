@@ -26,29 +26,6 @@ __PACKAGE__->mk_accessors( qw{ map _players } );
 # -- public methods
 
 #
-# $h->distribute_countries;
-#
-# Distribute randomly the countries to the players.
-#
-sub distribute_countries {
-    my ($self) = @_;
-
-    my @players   = $self->players;
-    my @countries = shuffle $self->map->countries;
-    while ( my $country = shift @countries ) {
-        # rotate players
-        my $player = shift @players;
-        push @players, $player;
-
-        # store new owner & place one army to start with
-        $country->chown($player);
-        $country->armies(1);
-        K->post('board', 'country_redraw', $country); # FIXME: broadcast
-    }
-}
-
-
-#
 # my @players = $heap->players;
 #
 # Return the list of current players (Games::Risk::Player objects).
@@ -124,11 +101,6 @@ the current C<Games::Risk::Map> object of the game.
 =head2 Public methods
 
 =over 4
-
-
-=item * $heap->distribute_countries;
-
-Distribute randomly the countries to the players.
 
 
 =item * my @players = $heap->players()

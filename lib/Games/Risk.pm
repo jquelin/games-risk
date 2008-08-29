@@ -105,7 +105,21 @@ sub _onpub_gui_ready {
 sub _onpriv_assign_countries {
     my $h = $_[HEAP];
 
-    $h->distribute_countries;
+    # initial random assignment of countries
+    my @players   = $h->players;
+    my @countries = shuffle $h->map->countries;
+    while ( my $country = shift @countries ) {
+        # rotate players
+        my $player = shift @players;
+        push @players, $player;
+
+        # store new owner & place one army to start with
+        $country->chown($player);
+        $country->armies(1);
+        K->post('board', 'chown', $country); # FIXME: broadcast
+    }
+
+    # go on to the next phase
     K->yield( '_countries_assigned' );
 }
 
