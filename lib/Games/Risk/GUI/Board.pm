@@ -167,7 +167,12 @@ sub _onpriv_start {
     my $ftop = $top->Frame->pack(@TOP, @XFILLX);
 
     # label to display country pointed by mouse
-    $ftop->Label->pack(@RIGHT, @XFILLX);
+    $h->{country}       = undef;
+    $h->{country_label} = '';
+    $ftop->Label(
+        -anchor       => 'e',
+        -textvariable => \$h->{country_label},
+    )->pack(@RIGHT, @XFILLX);
 
     # frame for players
     my $fpl = $ftop->Frame->pack(@LEFT);
@@ -209,9 +214,15 @@ sub _ongui_canvas_motion {
     my ($grey) = $h->{greyscale}->get($x,$y);
     my $country = $h->{map}->country_get($grey);
 
-    my $name = defined $country ? $country->name : '';
-    say $name;
-
+    if ( defined $country ) {
+        $h->{country}       = $country;
+        $h->{country_label} = join ' - ',
+            $country->continent->name,
+            $country->name;
+    } else {
+        $h->{country}       = undef;
+        $h->{country_label} = '';
+    }
 }
 
 
