@@ -12,6 +12,7 @@ package Games::Risk::Player;
 use strict;
 use warnings;
 
+use Carp;
 use Readonly;
 
 Readonly my @COLORS => (
@@ -25,7 +26,7 @@ Readonly my @COLORS => (
     '#A50B5E',  # jazzberry jam
     '#A3E3ED',  # blizzard blue
 );
-my $Color => 0;
+my $Color_id = 0;
 
 
 use base qw{ Class::Accessor::Fast };
@@ -46,9 +47,15 @@ __PACKAGE__->mk_accessors( qw{ color _countries } );
 sub new {
     my ($pkg, $args) = @_;
 
+    # assign a new color
+    my $nbcols = scalar(@COLORS);
+    croak "can't assign more than $nbcols colors" if $Color_id >= $nbcols;
+    my $color = $COLORS[ $Color_id++ ];
+
+    # create the object
     my $self = bless {}, $pkg;
-    $self->color( $COLORS[ $Color++ ] );
-    # FIXME: what if beyond sepia
+    $self->color( $color );
+
     return $self;
 }
 
