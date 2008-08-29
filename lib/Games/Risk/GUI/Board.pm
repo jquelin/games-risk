@@ -102,6 +102,8 @@ sub _onpub_load_map {
     $h->{greyscale} = $h->{toplevel}->Photo(-file=>$map->greyscale);
 
 
+    # store map and say we're done
+    $h->{map} = $map;
     K->post('risk', 'map_loaded');
 }
 
