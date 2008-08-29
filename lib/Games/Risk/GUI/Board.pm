@@ -48,7 +48,8 @@ sub spawn {
             _start               => \&_onpriv_start,
             _stop                => sub { warn "gui-board shutdown\n" },
             # gui events
-            _canvas_click_left   => \&_onpriv_canvas_click_left,
+            _canvas_click_left   => \&_ongui_canvas_click_left,
+            _canvas_motion       => \&_ongui_canvas_motion,
             # public events
             chown                => \&_onpriv_country_redraw,
             load_map             => \&_onpub_load_map,
@@ -176,7 +177,8 @@ sub _onpriv_start {
 
     # create canvas
     my $c = $top->Canvas->pack;
-    $c->CanvasBind('<1>', $s->postback('_canvas_click_left') );
+    $c->CanvasBind('<1>',      $s->postback('_canvas_click_left') );
+    $c->CanvasBind('<Motion>', [$s->postback('_canvas_motion'), Ev('x'), Ev('y')] );
     $h->{canvas} = $c;
 
     # status bar
@@ -193,7 +195,21 @@ sub _onpriv_start {
 
 # -- gui events
 
-sub _onpriv_canvas_click_left {
+sub _ongui_canvas_motion {
+    my ($h, $args) = @_[HEAP, ARG1];
+
+    my (undef, $x,$y) = @$args; # first param is canvas
+
+    my ($grey) = $h->{greyscale}->get($x,$y);
+    my $country = $h->{map}->country_get($grey);
+
+    my $name = defined $country ? $country->name : '';
+    say $name;
+
+}
+
+
+sub _ongui_canvas_click_left {
     my $h = $_[HEAP];
     # testing purposes
     #K->yield('load_map', '/home/jquelin/tmp/Risk/maps/france-jq.png');
