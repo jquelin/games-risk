@@ -18,7 +18,7 @@ use aliased 'Games::Risk::Map::Continent';
 use aliased 'Games::Risk::Map::Country';
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ background _continents _countries _dirname } );
+__PACKAGE__->mk_accessors( qw{ background greyscale _continents _countries _dirname } );
 
 
 #--
@@ -128,6 +128,10 @@ sub _parse_file_section_countries {
 sub _parse_file_section_files {
     my ($self, $line) = @_;
     given ($line) {
+        when (/^map\s+(.*)$/) {
+            $self->greyscale( $self->_dirname . "/$1" );
+            return;
+        }
         when (/^pic\s+(.*)$/) {
             $self->background( $self->_dirname . "/$1" );
             return;
