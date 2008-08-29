@@ -37,6 +37,18 @@ sub countries {
 }
 
 
+#
+# my $country = $map->country_get($id);
+#
+# Return the country which id matches $id.
+#
+sub country_get {
+    my ($self, $id) = @_;
+    my ($country) = grep { $_->id == $id } $self->countries;
+    return $country;
+}
+
+
 sub load_file {
     my ($self, $file) = @_;
 
@@ -201,6 +213,11 @@ the path to the background image for the board.
 =item * my @countries = $map->countries()
 
 Return the list of all countries in the C<$map>.
+
+
+=item * my $country = $map->country_get($id)
+
+Return the country which id matches C<$id>.
 
 
 =item * $map->load_file( \%params )
