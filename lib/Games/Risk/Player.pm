@@ -15,6 +15,7 @@ use warnings;
 
 use Carp;
 use Readonly;
+use UNIVERSAL::require;
 
 Readonly my @COLORS => (
     '#333333',  # grey20
@@ -31,7 +32,7 @@ my $Color_id = 0;
 
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ ai_class color name type _countries } );
+__PACKAGE__->mk_accessors( qw{ ai ai_class color name type _countries } );
 
 
 #--
@@ -61,6 +62,12 @@ sub new {
     given ( $self->type ) {
         when ('human') {
             $self->name( $ENV{USER} ); # FIXME: portable enough?
+        }
+        when ('ai') {
+            my $ai_class = $self->ai_class;
+            $ai_class->require;
+            my $ai = $ai_class->new;
+            $self->ai($ai);
         }
     }
 
