@@ -9,8 +9,11 @@
 
 package Games::Risk::AI::Dumb;
 
+use 5.010;
 use strict;
 use warnings;
+
+use base qw{ Games::Risk::AI };
 
 sub description {
     my $descr = q{
