@@ -15,20 +15,34 @@ use warnings;
 
 use base qw{ Games::Risk::AI };
 
-sub description {
-    my $descr = q{
+#--
+# METHODS
+
+# -- public methods
+
+#
+# my $difficulty = $ai->difficulty;
+#
+# Return a difficulty level for the ai.
+#
+sub difficulty { return 'very easy' }
+
+
+# -- private methods
+
+#
+# my $descr = $ai->_description;
+#
+# Return a brief description of the ai and the way it operates.
+#
+sub _description {
+    return q{
 
         This artificial intelligence does nothing: it just piles up new armies
         randomly, and never ever attacks nor move armies.
 
     };
-
-    $descr =~ s/[\n\s]+\z//;
-    $descr =~ s/\A\n+//;
-    return $descr;
 }
-
-sub difficulty { return 'very easy' }
 
 1;
 
