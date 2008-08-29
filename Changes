@@ -3,12 +3,17 @@ Revision history for Games::Risk.
 High-level changelog
 ====================
 
-0.1.x    phase game_started
+0.1.x    player & gui work, first ai
 0.0.x    initial work, basic gui display
 
 
 Low-level changelog
 ===================
+
+0.1.1 Fri Aug 29 14:27:56 CEST 2008
+ - display player's label in gui
+ - separate session initialization from game initialization
+ - better flow and atomic events for game states
 
 0.1.0 Thu Aug 28 18:03:17 CEST 2008
  - phase game_started reached!

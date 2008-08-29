@@ -24,7 +24,7 @@ use aliased 'POE::Kernel' => 'K';
 
 
 # Public variables of the module.
-our $VERSION = '0.1.0';
+our $VERSION = '0.1.1';
 
 
 #--
