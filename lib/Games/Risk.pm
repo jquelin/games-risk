@@ -52,10 +52,11 @@ sub spawn {
             _start         => \&_onpriv_start,
             _stop          => sub { warn "GR shutdown\n" },
             # private events - game states
-            _start_assign_countries     => \&_onpriv_assign_countries,
+            _started            => \&_onpriv_load_map,
+            _gui_ready          => \&_onpriv_assign_countries,
             _countries_assigned => \&_onpriv_place_initial_armies,
             # public events
-            board_ready      => \&_onpub_gui_ready,
+            window_created      => \&_onpub_window_created,
         },
     );
     return $session->ID;
@@ -67,10 +68,24 @@ sub spawn {
 
 # -- public events
 
-sub _onpub_gui_ready {
-    my $h = $_[HEAP];
+#
+# event: window_created( $window );
+#
+# fired when a gui window has finished initialized.
+#
+sub _onpub_window_created {
+    my ($h, $state, $win) = @_[HEAP, STATE, ARG0];
 
-    K->post('board', 'load_map', $h->map);
+    # board needs to load the map
+    if ( $win eq 'board' ) {
+        if ( not defined $h->map ) {
+            # map is not yet loaded, let's give it some more time
+            # by just re-firing current event
+            K->yield($state, $win);
+            return;
+        }
+        K->post('board', 'load_map', $h->map);
+    }
 
     # create players - FIXME: number of players
     my @players;
@@ -88,7 +103,7 @@ sub _onpub_gui_ready {
 
     $h->_players(\@players); # FIXME: private
 
-    K->yield( '_start_assign_countries' );
+    K->yield( '_gui_ready' );
 }
 
 
@@ -125,6 +140,25 @@ sub _onpriv_assign_countries {
 
 
 #
+# event: _started()
+#
+# load map in memory.
+#
+sub _onpriv_load_map {
+    my $h = $_[HEAP];
+
+    # load model
+    # FIXME: hardcoded
+    my $path = find_installed(__PACKAGE__);
+    $path =~ s/\.pm$//;
+    $path .= '/maps/risk.map';
+    my $map = Games::Risk::Map->new;
+    $map->load_file($path);
+    $h->map($map);
+}
+
+
+#
 # event: _countries_assigned()
 #
 # require players to place initials armies.
@@ -147,22 +181,13 @@ sub _onpriv_start {
 
     K->alias_set('risk');
 
-    # load model
-    # FIXME: hardcoded
-    my $path = find_installed(__PACKAGE__);
-    $path =~ s/\.pm$//;
-    $path .= '/maps/risk.map';
-    my $map = Games::Risk::Map->new;
-    $map->load_file($path);
-    $h->map($map);
-
     # prettyfying tk app.
     # see http://www.perltk.org/index.php?option=com_content&task=view&id=43&Itemid=37
     $poe_main_window->optionAdd('*BorderWidth' => 1);
 
     Games::Risk::GUI::Board->spawn({toplevel=>$poe_main_window});
+    K->yield( '_started' );
 }
-
 
 
 

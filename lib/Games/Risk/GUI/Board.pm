@@ -147,7 +147,7 @@ sub _onpriv_start {
     $h->{canvas} = $c;
 
     # say that we're done
-    K->post('risk', 'board_ready');
+    K->post('risk', 'window_created', 'board');
 }
 
 # -- gui events
