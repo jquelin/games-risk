@@ -17,6 +17,7 @@ use Image::Size;
 use POE;
 use Readonly;
 use Tk;
+use Tk::Balloon;
 use Tk::JPEG;
 use Tk::PNG;
 
@@ -199,6 +200,9 @@ sub _onpriv_start {
         -anchor       =>'w',
         -textvariable => \$h->{status},
     )->pack(@RIGHT,@XFILLX, @PAD1);
+
+    # ballon
+    $h->{balloon} = $top->Balloon;
 
     # say that we're done
     K->post('risk', 'window_created', 'board');

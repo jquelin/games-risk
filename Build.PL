@@ -24,6 +24,7 @@ my %requires = (
     'POE'                    => 0,
     'Readonly'               => 0,
     'Tk'                     => 0,
+    'Tk::Balloon'            => 0,
     'Tk::JPEG'               => 0,
     'Tk::PNG'                => 0,
 );
