@@ -124,10 +124,10 @@ sub _onpub_player_add {
     my $label = $f->Label(-width=>3, -bg => $player->color)->pack(@LEFT);
 
     # associate tooltip
-    my $tooltip;
+    my $tooltip = $player->name // '';
     given ($player->type) {
         when ('human') {
-            $tooltip = '(human)';
+            $tooltip .= ' (human)';
         }
 
         when ('ai') {
@@ -135,7 +135,7 @@ sub _onpub_player_add {
             $ai_class->require;
             my $difficulty  = $ai_class->difficulty;
             my $description = $ai_class->description;
-            $tooltip = "(computer - $difficulty)\n$description";
+            $tooltip .= "(computer - $difficulty)\n$description";
         }
 
         default { $tooltip = '?'; }
