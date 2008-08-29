@@ -16,6 +16,14 @@ use warnings;
 use base qw{ Class::Accessor::Fast };
 
 
+sub description {
+    my ($self) = @_;
+    my $descr = $self->_description;
+    $descr =~ s/[\n\s]+\z//;
+    $descr =~ s/\A\n+//;
+    return $descr;
+}
+
 
 1;
 
@@ -38,6 +46,32 @@ Games::Risk::AI - base class for all ais
 =head1 DESCRIPTION
 
 This module is the base class for all artificial intelligence.
+
+
+
+=head1 METHODS
+
+=head2 Object methods
+
+An AI object will typically implements the following methods:
+
+
+=over 4
+
+=item * my $str = $ai->description()
+
+Return a short description of the ai and how it works.
+
+
+=item * my $str = $ai->difficulty()
+
+Return a difficulty level for the ai.
+
+
+=back
+
+Note that some of those methods may be inherited from the base class, when it
+provide sane defaults.
 
 
 
