@@ -3,12 +3,16 @@ Revision history for Games::Risk.
 High-level changelog
 ====================
 
-0.1.x    player & gui work, first ai
+0.1.x    gui enhancements, internal cleanups
 0.0.x    initial work, basic gui display
 
 
 Low-level changelog
 ===================
+
+0.1.2 Fri Aug 29 15:56:50 CEST 2008
+ - gui gains a status bar
+ - gui displays country pointed by mouse
 
 0.1.1 Fri Aug 29 14:27:56 CEST 2008
  - display player's label in gui
