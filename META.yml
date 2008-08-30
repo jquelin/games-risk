@@ -1,6 +1,6 @@
 ---
 name: Games-Risk
-version: 0.1.2
+version: 0.1.3
 author:
   - 'Jerome Quelin <jquelin@cpan.org>'
 abstract: classical 'risk' board game
@@ -16,8 +16,10 @@ requires:
   POE: 0
   Readonly: 0
   Tk: 0
+  Tk::Balloon: 0
   Tk::JPEG: 0
   Tk::PNG: 0
+  UNIVERSAL::require: 0
   aliased: 0
   perl: 5.010
 build_requires:
@@ -30,8 +32,10 @@ build_requires:
   Readonly: 0
   Test::More: 0
   Tk: 0
+  Tk::Balloon: 0
   Tk::JPEG: 0
   Tk::PNG: 0
+  UNIVERSAL::require: 0
   aliased: 0
   perl: 5.010
 recommends:
@@ -40,7 +44,11 @@ recommends:
 provides:
   Games::Risk:
     file: lib/Games/Risk.pm
-    version: 0.1.2
+    version: 0.1.3
+  Games::Risk::AI:
+    file: lib/Games/Risk/AI.pm
+  Games::Risk::AI::Dumb:
+    file: lib/Games/Risk/AI/Dumb.pm
   Games::Risk::GUI:
     file: lib/Games/Risk/GUI.pm
   Games::Risk::GUI::Board:
