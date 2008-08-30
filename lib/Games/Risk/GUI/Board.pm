@@ -51,12 +51,13 @@ sub spawn {
             _start               => \&_onpriv_start,
             _stop                => sub { warn "gui-board shutdown\n" },
             # gui events
-            _canvas_click_left   => \&_ongui_canvas_click_left,
+            _canvas_click_place_armies   => \&_ongui_canvas_click_place_armies,
             _canvas_motion       => \&_ongui_canvas_motion,
             # public events
             chnum                => \&_onpriv_country_redraw,
             chown                => \&_onpriv_country_redraw,
             load_map             => \&_onpub_load_map,
+            place_armies         => \&_onpub_place_armies,
             player_active        => \&_onpub_player_active,
             player_add           => \&_onpub_player_add,
         },
@@ -111,6 +112,29 @@ sub _onpub_load_map {
     # store map and say we're done
     $h->{map} = $map;
     K->post('risk', 'map_loaded');
+}
+
+
+#
+# event: place_armies( $how [, $continent] );
+#
+# request user to place $how much armies on her countries (maybe within
+# $continent if supplied).
+sub _onpub_place_armies {
+    my ($h, $s, $how, $continent) = @_[HEAP, SESSION, ARG0, ARG1];
+
+    my $name = defined $continent ? $continent->name : 'free';
+    $h->{armies}{$name} += $how;
+
+
+    my $c = $h->{canvas};
+    $c->CanvasBind('<1>', $s->postback('_canvas_click_place_armies', 1) );
+    $c->CanvasBind('<2>', $s->postback('_canvas_click_place_armies', -1) );
+
+    # update status msg
+    my $nb = 0;
+    $nb += $_ for values %{ $h->{armies} };
+    $h->{status} = "$nb armies left to place";
 }
 
 
@@ -240,7 +264,6 @@ sub _onpriv_start {
 
     # create canvas
     my $c = $top->Canvas->pack;
-    $c->CanvasBind('<1>',      $s->postback('_canvas_click_left') );
     $c->CanvasBind('<Motion>', [$s->postback('_canvas_motion'), Ev('x'), Ev('y')] );
     $h->{canvas} = $c;
 
@@ -293,10 +316,48 @@ sub _ongui_canvas_motion {
 }
 
 
-sub _ongui_canvas_click_left {
-    my $h = $_[HEAP];
-    # testing purposes
-    #K->yield('load_map', '/home/jquelin/tmp/Risk/maps/france-jq.png');
+sub _ongui_canvas_click_place_armies {
+    my ($h, $args) = @_[HEAP, ARG0];
+
+    my $curplayer = $h->{curplayer};
+    my $country   = $h->{country};
+
+    # check country owner
+    return if $country->owner->name ne $curplayer->name;
+
+    # 
+    my ($diff) = @$args;
+    my $name = $country->continent->name;
+    if ( exists $h->{armies}{$name} ) {
+        $h->{armies}{$name} -= $diff;
+        # FIXME: check if possible, otherwise default to free
+    } else {
+        $h->{armies}{free}  -= $diff;
+        # FIXME: check if possible
+    }
+
+    # redraw country.
+    $h->{fake_armies}{ $country->id } += $diff;
+    K->yield( 'chnum', $country );
+
+    # check if we're done
+    # FIXME: >=2 armies to place should have a validation
+    my $nb = 0;
+    $nb += $_ for values %{ $h->{armies} };
+    if ( $nb == 0 ) {
+        $h->{status} = '';
+        my $c = $h->{canvas};
+        $c->CanvasBind('<1>', undef);
+        $c->CanvasBind('<2>', undef);
+
+        foreach my $id ( keys %{ $h->{fake_armies} } ) {
+            my $country = $h->{map}->country_get($id);
+            K->post('risk', 'armies_placed', $country, $h->{fake_armies}{$id});
+        }
+        $h->{fake_armies} = {};
+    } else {
+        $h->{status} = "$nb armies left to place";
+    }
 }
 
 #--
