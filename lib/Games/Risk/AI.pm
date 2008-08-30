@@ -73,6 +73,11 @@ sub new {
 
 # -- public methods
 
+#
+# my $str = $ai->description;
+#
+# Format the subclass description.
+#
 sub description {
     my ($self) = @_;
     my $descr = $self->_description;
