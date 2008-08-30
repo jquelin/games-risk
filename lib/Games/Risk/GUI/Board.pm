@@ -54,6 +54,7 @@ sub spawn {
             _canvas_click_left   => \&_ongui_canvas_click_left,
             _canvas_motion       => \&_ongui_canvas_motion,
             # public events
+            chnum                => \&_onpriv_country_redraw,
             chown                => \&_onpriv_country_redraw,
             load_map             => \&_onpub_load_map,
             player_active        => \&_onpub_player_active,
