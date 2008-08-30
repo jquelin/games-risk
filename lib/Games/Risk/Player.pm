@@ -14,6 +14,7 @@ use strict;
 use warnings;
 
 use Carp;
+use Games::Risk::AI;
 use Readonly;
 use UNIVERSAL::require;
 
@@ -67,6 +68,7 @@ sub new {
             my $ai_class = $self->ai_class;
             $ai_class->require;
             my $ai = $ai_class->new({ player=>$self });
+            Games::Risk::AI->spawn($ai);
             $self->ai($ai);
         }
     }
