@@ -56,6 +56,7 @@ sub spawn {
             _gui_ready          => \&_onpriv_create_players,
             _players_created    => \&_onpriv_assign_countries,
             _countries_assigned => \&_onpriv_place_initial_armies,
+            _place_initial_armies   => \&_onpriv_place_initial_armies,
             # public events
             window_created      => \&_onpub_window_created,
             map_loaded          => \&_onpub_map_loaded,
@@ -182,9 +183,23 @@ sub _onpriv_load_map {
 sub _onpriv_place_initial_armies {
     my $h = $_[HEAP];
 
-    my $player = ($h->players)[0];
-    K->post('board', 'player_active', $player); # FIXME: broadcast
-    K->yield( '_initial_armies_placed' );
+    my $left = $h->armies;
+    given ($left) {
+        when (undef) {
+            $h->players_reset;
+            $h->armies(7); # FIXME: hardcoded
+            K->yield('_place_initial_armies');
+        }
+        when (0) {
+            # go on to the next phase
+            K->yield( '_initial_armies_placed' );
+        }
+        default {
+            my $player = $h->players_next;
+            $player  //= $h->players_next; # eot doesn't mean anything here
+            K->post('board', 'player_active', $player); # FIXME: broadcast
+        }
+    }
 }
 
 
