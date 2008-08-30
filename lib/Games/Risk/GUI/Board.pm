@@ -56,6 +56,7 @@ sub spawn {
             # public events
             chown                => \&_onpriv_country_redraw,
             load_map             => \&_onpub_load_map,
+            player_active        => \&_onpub_player_active,
             player_add           => \&_onpub_player_add,
         },
     );
@@ -109,6 +110,22 @@ sub _onpub_load_map {
     # store map and say we're done
     $h->{map} = $map;
     K->post('risk', 'map_loaded');
+}
+
+
+#
+# event: player_active( $player );
+#
+# change player labels so that previous player is inactive, and new
+# active one is $player.
+#
+sub _onpub_player_active {
+    my ($h, $new) = @_[HEAP, ARG0];
+
+    my $plabels = $h->{labels}{players};
+    my $old = $h->{curplayer};
+    $plabels->{ $old->name }->configure(-image=>$h->{images}{inactive}) if defined $old;
+    $plabels->{ $new->name }->configure(-image=>$h->{images}{active});
 }
 
 
