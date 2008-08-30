@@ -18,7 +18,7 @@ use POE;
 use aliased 'POE::Kernel' => 'K';
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ map _players } );
+__PACKAGE__->mk_accessors( qw{ armies map _players } );
 
 #--
 # METHODS
@@ -89,6 +89,11 @@ available for C<Games::Risk::Heap> objects:
 
 
 =over 4
+
+=item * armies()
+
+armies left to be placed.
+
 
 =item * map()
 
