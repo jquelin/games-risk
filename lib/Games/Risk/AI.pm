@@ -125,7 +125,7 @@ sub _onpub_place_armies {
 
     foreach my $where ( $ai->place_armies($how, $continent) ) {
         my ($country, $nb) = @$where;
-        K->post('risk', 'army_placed', $country, $nb);
+        K->post('risk', 'armies_placed', $country, $nb);
     }
 }
 
