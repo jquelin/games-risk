@@ -183,6 +183,9 @@ sub _onpriv_load_map {
 sub _onpriv_place_initial_armies {
     my $h = $_[HEAP];
 
+    # FIXME: possibility to place armies randomly by server
+    # FIXME: possibility to place armies according to map scenario
+
     my $left = $h->armies;
     given ($left) {
         when (undef) {
