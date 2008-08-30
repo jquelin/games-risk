@@ -89,7 +89,7 @@ sub _onpub_army_placed {
     say $country->name, " $nb";
     $country->armies( $country->armies + $nb );
     K->post('board', 'chnum', $country); # FIXME: broadcast
-    K->yield( '_place_initial_armies' );
+    K->delay_set( '_place_initial_armies' => 0.350 ); # FIXME: hardcoded
 }
 
 
