@@ -236,10 +236,16 @@ sub _onpriv_place_initial_armies {
             my $player = $h->players_next;
             if ( not defined $player ) {
                 $player = $h->players_next;
-                $h->armies( $left-1 );
+                $left--;               # 1 army placed for everyone, that's
+                $h->armies( $left );   # one left for everyone to place
+                break if $left == 0;   # hey, we've finished!
             }
+
+            # update various guis with current player
             $h->curplayer( $player );
             K->post('board', 'player_active', $player); # FIXME: broadcast
+
+            # request army to be placed.
             my $session;
             given ($player->type) {
                 when ('ai')    { $session = $player->name; }
