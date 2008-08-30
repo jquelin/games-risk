@@ -125,8 +125,8 @@ sub description {
 # Called when the poe session gets initialized. Receive a reference
 # to %params, same as spawn() received.
 #
-sub _start {
-    my $ai = $_->[HEAP];
+sub _onpriv_start {
+    my $ai = $_[HEAP];
     K->alias_set( $ai->player->name );
 }
 
