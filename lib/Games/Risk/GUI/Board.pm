@@ -133,7 +133,7 @@ sub _onpub_player_add {
             my $ai = $player->ai;
             my $difficulty  = $ai->difficulty;
             my $description = $ai->description;
-            $tooltip .= "(computer - $difficulty)\n$description";
+            $tooltip .= " (computer - $difficulty)\n$description";
         }
 
         default { $tooltip = '?'; }
