@@ -88,6 +88,7 @@ sub spawn {
             _start         => \&_onpriv_start,
             _stop          => sub { warn "AI shutdown\n" },
             # public events
+            place_armies     => \&_onpub_place_armies,
         },
     );
     return $session->ID;
@@ -116,6 +117,18 @@ sub description {
 
 #--
 # EVENTS HANDLERS
+
+# -- public events
+
+sub _onpub_place_armies {
+    my ($ai, $how, $continent) = @_[HEAP, ARG0, ARG1];
+
+    foreach my $where ( $ai->place_armies($how, $continent) ) {
+        my ($country, $nb) = @$where;
+        K->post('risk', 'army_placed', $country, $nb);
+    }
+}
+
 
 # -- private events - session management
 
