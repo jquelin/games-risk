@@ -18,7 +18,7 @@ use POE;
 use aliased 'POE::Kernel' => 'K';
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ armies map _players } );
+__PACKAGE__->mk_accessors( qw{ armies map _players _players_turn_done _players_turn_todo } );
 
 #--
 # METHODS
@@ -35,6 +35,49 @@ sub players {
     my ($self) = @_;
     return @{ $self->_players };
 }
+
+
+#
+# my $player = $heap->players_next;
+#
+# Return the next player to play, or undef if the turn is over.
+#
+sub players_next {
+    my ($self) = @_;
+
+    my @done = @{ $self->_players_turn_done };
+    my @todo = @{ $self->_players_turn_todo };
+    my $next = shift @todo;
+
+    if ( defined $next ) {
+        push @done, $next;
+    } else {
+        # turn is finished, start anew
+        @todo = @done;
+        @done = ();
+    }
+
+    # store new state
+    $self->_players_turn_done( \@done );
+    $self->_players_turn_todo( \@todo );
+
+    return $next;
+}
+
+
+#
+# $heap->players_reset;
+#
+# Mark all players to be in "turn to do". Typically called during
+# initial army placing, or real game start.
+#
+sub players_reset {
+    my ($self) = @_;
+    my @players = $self->players;
+    $self->_players_turn_done([]);
+    $self->_players_turn_todo( \@players );
+}
+
 
 
 
@@ -113,6 +156,19 @@ the current C<Games::Risk::Map> object of the game.
 
 Return the C<Games::Risk::Player> objects of the current game. Note that
 some of those players may have already lost.
+
+
+=item * my $player = $heap->players_next()
+
+Return the next player to play, or undef if the turn is over. Of course,
+players that have lost will never be returned.
+
+
+=item * $heap->players_reset()
+
+Mark all players to be in "turn to do", effectively marking them as
+still in play. Typically called during initial army placing, or real
+game start.
 
 
 =back
