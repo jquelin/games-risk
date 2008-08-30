@@ -13,7 +13,9 @@ use 5.010;
 use strict;
 use warnings;
 
+use File::Basename qw{ fileparse };
 use Image::Size;
+use Module::Util   qw{ find_installed };
 use POE;
 use Readonly;
 use Tk;
@@ -120,7 +122,11 @@ sub _onpub_player_add {
 
     # create label
     my $f = $h->{frames}{players};
-    my $label = $f->Label(-width=>3, -bg => $player->color)->pack(@LEFT);
+    my $label = $f->Label(
+        -bg    => $player->color,
+        -image => $h->{images}{inactive},
+    )->pack(@LEFT);
+    $h->{labels}{players}{ $player->name } = $label;
 
     # associate tooltip
     my $tooltip = $player->name // '';
@@ -228,6 +234,13 @@ sub _onpriv_start {
 
     # ballon
     $h->{balloon} = $top->Balloon;
+
+    # images
+    # FIXME: this should be in a sub/method somewhere
+    my $path = find_installed(__PACKAGE__);
+    my (undef, $dirname, undef) = fileparse($path);
+    $h->{images}{inactive} = $top->Photo(-file=>"$dirname/icons/player-inactive.png");
+    $h->{images}{active}   = $top->Photo(-file=>"$dirname/icons/player-active.png");
 
     # say that we're done
     K->post('risk', 'window_created', 'board');
