@@ -28,6 +28,31 @@ use base qw{ Games::Risk::AI };
 sub difficulty { return 'very easy' }
 
 
+#
+# my @where = $ai->place_armies($how, [$continent]);
+#
+# See pod in Games::Risk::AI for information on the goal of this method.
+#
+# This implementation will place the armies randomly on the continent owned by
+# the AI, maybe restricted by $continent if it is specified.
+#
+sub place_armies {
+    my ($self, $how, $continent) = @_;
+
+    # get list of countries eligible.
+    my $player = $self->player;
+
+    my @countries = defined $continent
+        ? grep { $_->continent->id == $continent } $player->countries
+        : $player->countries;
+
+    # assign armies randomly.
+    my @where = ();
+    push @where, [ $countries[ rand @countries ], 1 ] while $how--;
+    return @where;
+}
+
+
 # -- private methods
 
 #
@@ -80,6 +105,8 @@ C<Games::Risk::AI>):
 =item * description()
 
 =item * difficulty()
+
+=item * place_armies()
 
 =back
 
