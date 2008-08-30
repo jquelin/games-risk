@@ -66,7 +66,7 @@ sub new {
         when ('ai') {
             my $ai_class = $self->ai_class;
             $ai_class->require;
-            my $ai = $ai_class->new;
+            my $ai = $ai_class->new({ player=>$self });
             $self->ai($ai);
         }
     }
