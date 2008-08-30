@@ -180,6 +180,10 @@ sub _onpriv_load_map {
 # require players to place initials armies.
 #
 sub _onpriv_place_initial_armies {
+    my $h = $_[HEAP];
+
+    my $player = ($h->players)[0];
+    K->post('board', 'player_active', $player); # FIXME: broadcast
     K->yield( '_initial_armies_placed' );
 }
 
