@@ -61,6 +61,7 @@ sub spawn {
             window_created      => \&_onpub_window_created,
             map_loaded          => \&_onpub_map_loaded,
             player_created      => \&_onpub_player_created,
+            army_placed         => \&_onpub_army_placed,
         },
     );
     return $session->ID;
@@ -71,6 +72,26 @@ sub spawn {
 # EVENTS HANDLERS
 
 # -- public events
+
+#
+# event: army_placed($country, $nb);
+#
+# fired to place $nb additional armies on $country.
+#
+sub _onpub_army_placed {
+    my ($h, $country, $nb) = @_[HEAP,ARG0, ARG1];
+
+    # FIXME: check player is curplayer
+    # FIXME: check country belongs to curplayer
+    # FIXME: check validity regarding total number
+    # FIXME: check validity regarding continent
+
+    say $country->name, " $nb";
+    $country->armies( $country->armies + $nb );
+    K->post('board', 'chnum', $country); # FIXME: broadcast
+    K->yield( '_place_initial_armies' );
+}
+
 
 #
 # event: map_loaded();
@@ -214,8 +235,13 @@ sub _onpriv_place_initial_armies {
         }
         default {
             my $player = $h->players_next;
-            $player  //= $h->players_next; # eot doesn't mean anything here
+            if ( not defined $player ) {
+                $player = $h->players_next;
+                $h->armies( $left-1 );
+            }
+            $h->curplayer( $player );
             K->post('board', 'player_active', $player); # FIXME: broadcast
+            K->post($player->name, 'place_armies', 1); #FIXME: broadcast
         }
     }
 }
