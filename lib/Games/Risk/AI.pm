@@ -15,7 +15,9 @@ use warnings;
 
 use Carp;
 use List::Util qw{ shuffle };
+use POE;
 use Readonly;
+use aliased 'POE::Kernel' => 'K';
 
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ player } );
@@ -68,6 +70,31 @@ sub new {
 }
 
 
+
+#
+# my $id = Games::Risk::AI->spawn( $ai )
+#
+# This method will create a POE session responsible for the artificial
+# intelligence $ai. It will return the poe id of the session newly created. The
+# session will also react to the ai's player name (poe alias).
+#
+sub spawn {
+    my ($type, $ai) = @_;
+
+    my $session = POE::Session->create(
+        heap          => $ai,
+        inline_states => {
+            # private events - session management
+            _start         => \&_onpriv_start,
+            _stop          => sub { warn "AI shutdown\n" },
+            # public events
+        },
+    );
+    return $session->ID;
+
+}
+
+
 #--
 # METHODS
 
@@ -84,6 +111,23 @@ sub description {
     $descr =~ s/[\n\s]+\z//;
     $descr =~ s/\A\n+//;
     return $descr;
+}
+
+
+#--
+# EVENTS HANDLERS
+
+# -- private events - session management
+
+#
+# event: _start( \%params )
+#
+# Called when the poe session gets initialized. Receive a reference
+# to %params, same as spawn() received.
+#
+sub _start {
+    my $ai = $_->[HEAP];
+    K->alias_set( $ai->player->name );
 }
 
 
@@ -107,7 +151,9 @@ Games::Risk::AI - base class for all ais
 
 =head1 DESCRIPTION
 
-This module is the base class for all artificial intelligence.
+This module is the base class for all artificial intelligence. It implements
+also a POE session representing an AI player. This POE session will retain the
+C<Games::Risk::AI::*> object as heap.
 
 
 
@@ -116,15 +162,14 @@ This module is the base class for all artificial intelligence.
 =head2 Constructor
 
 
-Note that you should not instantiate a C<Games::Risk::AI> object directly:
-instantiate an AI subclass.
-
-
 =over 4
 
 =item * my $ai = Games::Risk::AI::$AItype->new( \%params )
 
-Create a new AI of type C<$AItype>. All subclasses accept the following parameters:
+Create a new AI of type C<$AItype>. Note that you should not instantiate a
+C<Games::Risk::AI> object directly: instantiate an AI subclass instead. All
+subclasses accept the following parameters:
+
 
 =over 4
 
@@ -134,6 +179,13 @@ Create a new AI of type C<$AItype>. All subclasses accept the following paramete
 
 
 Note that the AI will automatically get a name, and update the player object.
+
+
+=item * my $id = Games::Risk::AI->spawn( $ai )
+
+This method will create a POE session responsible for the artificial
+intelligence C<$ai>. It will return the poe id of the session newly created.
+The session will also react to the ai's player name (poe alias).
 
 
 =back
@@ -160,6 +212,13 @@ Return a difficulty level for the ai.
 
 Note that some of those methods may be inherited from the base class, when it
 provide sane defaults.
+
+
+=begin quiet_pod_coverage
+
+=item * K
+
+=end quiet_pod_coverage
 
 
 
