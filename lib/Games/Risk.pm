@@ -86,7 +86,6 @@ sub _onpub_armies_placed {
     # FIXME: check validity regarding total number
     # FIXME: check validity regarding continent
 
-    say $country->name, " $nb";
     $country->armies( $country->armies + $nb );
     K->post('board', 'chnum', $country); # FIXME: broadcast
     K->delay_set( '_place_initial_armies' => 0.350 ); # FIXME: hardcoded
@@ -241,7 +240,12 @@ sub _onpriv_place_initial_armies {
             }
             $h->curplayer( $player );
             K->post('board', 'player_active', $player); # FIXME: broadcast
-            K->post($player->name, 'place_armies', 1); #FIXME: broadcast
+            my $session;
+            given ($player->type) {
+                when ('ai')    { $session = $player->name; }
+                when ('human') { $session = 'board'; } #FIXME: broadcast
+            }
+            K->post($session, 'place_armies', 1);
         }
     }
 }
