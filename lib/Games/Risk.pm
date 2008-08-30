@@ -60,6 +60,7 @@ sub spawn {
             # public events
             window_created      => \&_onpub_window_created,
             map_loaded          => \&_onpub_map_loaded,
+            player_created      => \&_onpub_player_created,
         },
     );
     return $session->ID;
@@ -79,6 +80,21 @@ sub spawn {
 sub _onpub_map_loaded {
     # FIXME: sync & wait when more than one window
     K->yield('_gui_ready');
+}
+
+
+#
+# event: player_created($player);
+#
+# fired when a player is ready. used as a checkpoint to be sure everyone
+# is ready before moving on to next phase (assign countries).
+#
+sub _onpub_player_created {
+    my ($h, $player) = @_[HEAP, ARG0];
+    delete $h->wait_for->{ $player->name };
+
+    # go on to the next phase
+    K->yield( '_players_created' ) if scalar keys %{ $h->wait_for } == 0;
 }
 
 
@@ -149,14 +165,13 @@ sub _onpriv_create_players {
     @players = shuffle @players;
 
     #FIXME: broadcast
+    $h->wait_for( {} );
     foreach my $player ( @players ) {
+        $h->wait_for->{ $player->name } = 1;
         K->post('board', 'player_add', $player);
     }
 
     $h->_players(\@players); # FIXME: private
-
-    # go on to the next phase
-    K->yield( '_players_created' );
 }
 
 
