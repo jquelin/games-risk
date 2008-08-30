@@ -128,6 +128,7 @@ sub description {
 sub _onpriv_start {
     my $ai = $_[HEAP];
     K->alias_set( $ai->player->name );
+    K->post('risk', 'player_created', $ai->player);
 }
 
 

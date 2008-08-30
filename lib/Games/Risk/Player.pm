@@ -15,8 +15,10 @@ use warnings;
 
 use Carp;
 use Games::Risk::AI;
+use POE;
 use Readonly;
 use UNIVERSAL::require;
+use aliased 'POE::Kernel' => 'K';
 
 Readonly my @COLORS => (
     '#333333',  # grey20
@@ -63,6 +65,7 @@ sub new {
     given ( $self->type ) {
         when ('human') {
             $self->name( $ENV{USER} ); # FIXME: portable enough?
+            K->post('risk', 'player_created', $self);
         }
         when ('ai') {
             my $ai_class = $self->ai_class;
@@ -215,6 +218,13 @@ Delete C<$country> from the set of countries owned by C<$player>.
 
 
 =back
+
+
+=begin quiet_pod_coverage
+
+=item * K
+
+=end quiet_pod_coverage
 
 
 
