@@ -127,6 +127,7 @@ sub _onpub_player_active {
     my $old = $h->{curplayer};
     $plabels->{ $old->name }->configure(-image=>$h->{images}{inactive}) if defined $old;
     $plabels->{ $new->name }->configure(-image=>$h->{images}{active});
+    $h->{curplayer} = $new;
 }
 
 
