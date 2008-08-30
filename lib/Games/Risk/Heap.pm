@@ -29,6 +29,7 @@ __PACKAGE__->mk_accessors( qw{ armies map _players } );
 # my @players = $heap->players;
 #
 # Return the list of current players (Games::Risk::Player objects).
+# Note that some of those players may have already lost.
 #
 sub players {
     my ($self) = @_;
@@ -110,7 +111,8 @@ the current C<Games::Risk::Map> object of the game.
 
 =item * my @players = $heap->players()
 
-Return the C<Games::Risk::Player> objects of the current game.
+Return the C<Games::Risk::Player> objects of the current game. Note that
+some of those players may have already lost.
 
 
 =back
