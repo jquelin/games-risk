@@ -133,10 +133,12 @@ sub _onpub_place_armies {
     my $name = defined $continent ? $continent->name : 'free';
     $h->{armies}{$name} += $nb;
 
-
+    # update the gui to reflect the new state.
     my $c = $h->{canvas};
     $c->CanvasBind('<1>', $s->postback('_canvas_click_place_armies', 1) );
     $c->CanvasBind('<2>', $s->postback('_canvas_click_place_armies', -1) );
+    $h->{labels}{place_armies}->configure(-state => 'normal');
+    $h->{buttons}{place_armies_done}->configure(-state => 'normal');
 
     # update status msg
     my $count = 0;
