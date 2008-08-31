@@ -11,6 +11,10 @@ High-level changelog
 Low-level changelog
 ===================
 
+0.2.2 Sun Aug 31 16:24:17 CEST 2008
+ - ai place reinforcements at beginning of their turn
+ - user interaction to place reinforcements
+
 0.2.1 Sun Aug 31 11:26:10 CEST 2008
  - updating gui with initial army count to place
 
