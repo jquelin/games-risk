@@ -71,6 +71,7 @@ sub spawn {
             map_loaded          => \&_onpub_map_loaded,
             player_created      => \&_onpub_player_created,
             initial_armies_placed       => \&_onpub_initial_armies_placed,
+            armies_placed       => \&_onpub_armies_placed,
         },
     );
     return $session->ID;
@@ -84,6 +85,30 @@ sub spawn {
 
 #
 # event: armies_placed($country, $nb);
+#
+# fired to place $nb additional armies on $country.
+#
+sub _onpub_armies_placed {
+    my ($h, $country, $nb) = @_[HEAP,ARG0, ARG1];
+
+    # FIXME: check player is curplayer
+    # FIXME: check country belongs to curplayer
+    # FIXME: check validity regarding total number
+    # FIXME: check validity regarding continent
+    my $left = $h->armies - $nb;
+    $h->armies($left);
+
+    $country->armies( $country->armies + $nb );
+    K->post('board', 'chnum', $country); # FIXME: broadcast
+
+    if ( $left == 0 ) {
+        K->delay_set( '_place_armies_' => $WAIT );
+    }
+}
+
+
+#
+# event: initial_armies_placed($country, $nb);
 #
 # fired to place $nb additional armies on $country.
 #
