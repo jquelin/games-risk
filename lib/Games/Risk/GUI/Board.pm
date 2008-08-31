@@ -137,7 +137,7 @@ sub _onpub_place_armies {
     # update the gui to reflect the new state.
     my $c = $h->{canvas};
     $c->CanvasBind('<1>', $s->postback('_canvas_click_place_armies', 1) );
-    $c->CanvasBind('<2>', $s->postback('_canvas_click_place_armies', -1) );
+    $c->CanvasBind('<3>', $s->postback('_canvas_click_place_armies', -1) );
     $h->{labels}{place_armies}->configure(@ENON);
 
     # update status msg
