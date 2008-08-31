@@ -21,6 +21,19 @@ use base qw{ Games::Risk::AI };
 # -- public methods
 
 #
+# my ($action, [$from, $country]) = $ai->attack;
+#
+# See pod in Games::Risk::AI for information on the goal of this method.
+#
+# This implementation never attacks anything, it ends its attack turn as soon
+# as it begins. Therefore, it always returns ('attack_end', undef, undef).
+#
+sub attack {
+    return ('attack_end', undef, undef);
+}
+
+
+#
 # my $difficulty = $ai->difficulty;
 #
 # Return a difficulty level for the ai.
@@ -101,6 +114,8 @@ C<Games::Risk::AI>):
 
 
 =over 4
+
+=item * attack()
 
 =item * description()
 
