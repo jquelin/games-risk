@@ -320,7 +320,7 @@ sub _onpriv_start {
     my $fgs = $top->Frame->pack(@TOP, @XFILL2);
     $fgs->Label(-text=>'Game state: ')->pack(@LEFT);
     my $lab1 = $fgs->Label(-text=>'place armies', @ENOFF)->pack(@LEFT, @XFILL2);
-    my $but1 = $fgs->Button(
+    my $but_done = $fgs->Button(
         -command => $s->postback('_but_place_armies_done'),
         -image   => $h->{images}{navforward16},
         @ENOFF,
@@ -328,7 +328,7 @@ sub _onpriv_start {
     #$fgs->Button(-text=>'attack')->pack(@LEFT, @XFILL2);
     #$fgs->Button(-text=>'move armies')->pack(@LEFT, @XFILL2);
     $h->{labels}{place_armies} = $lab1;
-    $h->{buttons}{place_armies_done} = $but1;
+    $h->{buttons}{place_armies_done} = $but_done;
 
     # create canvas
     my $c = $top->Canvas->pack;
