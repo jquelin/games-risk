@@ -391,6 +391,8 @@ sub _ongui_but_place_armies_done {
         my $country = $h->{map}->country_get($id);
         K->post('risk', 'armies_placed', $country, $h->{fake_armies}{$id});
     }
+    $h->{armies} = {};
+    $h->{armies_backup} = {};
     $h->{fake_armies} = {};
 }
 
