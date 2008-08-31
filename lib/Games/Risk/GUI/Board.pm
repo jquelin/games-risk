@@ -96,7 +96,7 @@ sub _onpub_attack {
     $h->{buttons}{attack_done}->configure(@ENON);
 
     # update status msg
-    $h->{status} = 'Attacking from';
+    $h->{status} = 'Attacking from ...';
 }
 
 
