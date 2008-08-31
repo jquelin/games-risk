@@ -65,7 +65,7 @@ sub spawn {
             _begin_turn             => \&_onpriv_turn_begin,
             _turn_began             => \&_onpriv_player_next,
             _place_armies           => \&_onpriv_place_armies,
-            _armies_placed          => \&_onpriv_turn_begin,
+            _armies_placed          => \&_onpriv_player_next,
             # public events
             window_created      => \&_onpub_window_created,
             map_loaded          => \&_onpub_map_loaded,
@@ -102,7 +102,7 @@ sub _onpub_armies_placed {
     K->post('board', 'chnum', $country); # FIXME: broadcast
 
     if ( $left == 0 ) {
-        K->delay_set( '_place_armies_' => $WAIT );
+        K->delay_set( '_armies_placed' => $WAIT );
     }
 }
 
