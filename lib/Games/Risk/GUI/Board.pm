@@ -92,13 +92,11 @@ sub _onpub_attack {
     my $c = $h->{canvas};
     #$c->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies',  1) );
     #$c->CanvasBind( '<3>', $s->postback('_canvas_click_place_armies', -1) );
-    #$c->CanvasBind( '<4>', $s->postback('_canvas_click_place_armies',  1) );
-    #$c->CanvasBind( '<5>', $s->postback('_canvas_click_place_armies', -1) );
     $h->{labels}{attack}->configure(@ENON);
     $h->{buttons}{attack_done}->configure(@ENON);
 
     # update status msg
-    $h->{status} = 'Attacking';
+    $h->{status} = 'Attacking from';
 }
 
 
