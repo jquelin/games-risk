@@ -51,7 +51,7 @@ sub spawn {
             _start               => \&_onpriv_start,
             _stop                => sub { warn "gui-board shutdown\n" },
             # gui events
-            _canvas_click_place_initial_armies   => \&_ongui_canvas_click_place_initial_armies,
+            _canvas_click_place_armies_initial   => \&_ongui_canvas_click_place_armies_initial,
             _canvas_motion       => \&_ongui_canvas_motion,
             # public events
             chnum                => \&_onpriv_country_redraw,
@@ -127,7 +127,7 @@ sub _onpub_place_armies_initial {
     my ($h, $s) = @_[HEAP, SESSION, ARG0];
 
     my $c = $h->{canvas};
-    $c->CanvasBind('<1>', $s->postback('_canvas_click_place_initial_armies') );
+    $c->CanvasBind('<1>', $s->postback('_canvas_click_place_armies_initial') );
 }
 
 
@@ -328,12 +328,12 @@ sub _ongui_canvas_motion {
 
 
 #
-# event: _canvas_click_place_initial_armies();
+# event: _canvas_click_place_armies_initial();
 #
 # Called when mouse click on the canvas during initial armies placement.
 # Will request controller to place one army on the current country.
 #
-sub _ongui_canvas_click_place_initial_armies {
+sub _ongui_canvas_click_place_armies_initial {
     my $h = $_[HEAP];
 
     my $curplayer = $h->{curplayer};

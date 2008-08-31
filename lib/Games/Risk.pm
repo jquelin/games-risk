@@ -55,8 +55,8 @@ sub spawn {
             _started            => \&_onpriv_load_map,
             _gui_ready          => \&_onpriv_create_players,
             _players_created    => \&_onpriv_assign_countries,
-            _countries_assigned => \&_onpriv_place_initial_armies,
-            _place_initial_armies   => \&_onpriv_place_initial_armies,
+            _countries_assigned => \&_onpriv_place_armies_initial,
+            _place_armies_initial   => \&_onpriv_place_armies_initial,
             _initial_armies_placed  => \&_onpriv_turn_begin,
             _begin_turn             => \&_onpriv_turn_begin,
             _turn_began             => \&_onpriv_player_next,
@@ -92,7 +92,7 @@ sub _onpub_armies_placed {
 
     $country->armies( $country->armies + $nb );
     K->post('board', 'chnum', $country); # FIXME: broadcast
-    K->delay_set( '_place_initial_armies' => 0.250 ); # FIXME: hardcoded
+    K->delay_set( '_place_armies_initial' => 0.250 ); # FIXME: hardcoded
 }
 
 
@@ -227,7 +227,7 @@ sub _onpriv_place_armies {
 #
 # require players to place initials armies.
 #
-sub _onpriv_place_initial_armies {
+sub _onpriv_place_armies_initial {
     my $h = $_[HEAP];
 
     # FIXME: possibility to place armies randomly by server
