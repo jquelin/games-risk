@@ -359,10 +359,18 @@ sub _onpriv_start {
     $h->{balloon}->attach($but_adone, -msg=>'consolidate');
     $h->{balloon}->attach($but_mdone, -msg=>'turn finished');
 
-    # create canvas
+    # create canvas, removing class bindings
     my $c = $top->Canvas->pack;
-    $c->CanvasBind( '<Motion>', [$s->postback('_canvas_motion'), Ev('x'), Ev('y')] );
     $h->{canvas} = $c;
+    $c->CanvasBind( '<Motion>', [$s->postback('_canvas_motion'), Ev('x'), Ev('y')] );
+    foreach my $button ( qw{ 4 5 6 7 } ) {
+        $top->bind('Tk::Canvas', "<Button-$button>",       undef);
+        $top->bind('Tk::Canvas', "<Shift-Button-$button>", undef);
+    }
+    foreach my $key ( qw{ Down End Home Left Next Prior Right Up } ) {
+        $top->bind('Tk::Canvas', "<Key-$key>", undef);
+        $top->bind('Tk::Canvas', "<Control-Key-$key>", undef);
+    }
 
     # status bar
     $h->{status} = '';
