@@ -57,6 +57,8 @@ sub spawn {
             _but_attack_done               => \&_ongui_but_attack_done,
             _but_place_armies_done               => \&_ongui_but_place_armies_done,
             _but_place_armies_redo               => \&_ongui_but_place_armies_redo,
+            _canvas_attack_cancel          => \&_ongui_canvas_attack_cancel,
+            _canvas_attack_from            => \&_ongui_canvas_attack_from,
             _canvas_place_armies           => \&_ongui_canvas_place_armies,
             _canvas_place_armies_initial   => \&_ongui_canvas_place_armies_initial,
             _canvas_motion       => \&_ongui_canvas_motion,
@@ -91,8 +93,8 @@ sub _onpub_attack {
 
     # update the gui to reflect the new state.
     my $c = $h->{canvas};
-    #$c->CanvasBind( '<1>', $s->postback('_canvas_place_armies',  1) );
-    #$c->CanvasBind( '<3>', $s->postback('_canvas_place_armies', -1) );
+    $c->CanvasBind( '<1>', $s->postback('_canvas_attack_from') );
+    $c->CanvasBind( '<3>', $s->postback('_canvas_attack_cancel') );
     $h->{labels}{attack}->configure(@ENON);
     $h->{buttons}{attack_done}->configure(@ENON);
 
@@ -508,6 +510,45 @@ sub _ongui_but_place_armies_redo {
 
     # updatee status
     $h->{status} = "$nb armies left to place";
+}
+
+
+#
+# event: _canvas_attack_from();
+#
+# Called when user wants to select a country to attack from.
+#
+sub _ongui_canvas_attack_from {
+    my $h = $_[HEAP];
+
+    my $curplayer = $h->{curplayer};
+    my $country   = $h->{country};
+
+    # checks...
+    return unless defined $country;
+    return if $country->owner->name ne $curplayer->name; # country owner
+
+    # record attack source
+    $h->{from} = $country;
+
+    # update status msg
+    $h->{status} = 'Attacking ... from ' . $country->name;
+}
+
+
+#
+# event: _canvas_attack_cancel();
+#
+# Called when user wants to deselect a country to attack.
+#
+sub _ongui_canvas_attack_cancel {
+    my $h = $_[HEAP];
+
+    # cancel attack source
+    $h->{from} = undef;
+
+    # update status msg
+    $h->{status} = 'Attacking from ...';
 }
 
 
