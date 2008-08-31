@@ -60,6 +60,7 @@ sub spawn {
             _canvas_click_place_armies_initial   => \&_ongui_canvas_click_place_armies_initial,
             _canvas_motion       => \&_ongui_canvas_motion,
             # public events
+            attack                     => \&_onpub_attack,
             chnum                => \&_onpriv_country_redraw,
             chown                => \&_onpriv_country_redraw,
             load_map             => \&_onpub_load_map,
@@ -78,6 +79,28 @@ sub spawn {
 # Event handlers
 
 # -- public events
+
+#
+# event: attack();
+#
+# request user to start attacking at will.
+#
+sub _onpub_attack {
+    my ($h, $s) = @_[HEAP, SESSION];
+
+    # update the gui to reflect the new state.
+    my $c = $h->{canvas};
+    #$c->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies',  1) );
+    #$c->CanvasBind( '<3>', $s->postback('_canvas_click_place_armies', -1) );
+    #$c->CanvasBind( '<4>', $s->postback('_canvas_click_place_armies',  1) );
+    #$c->CanvasBind( '<5>', $s->postback('_canvas_click_place_armies', -1) );
+    $h->{labels}{attack}->configure(@ENON);
+    $h->{buttons}{attack_done}->configure(@ENON);
+
+    # update status msg
+    $h->{status} = 'Attacking';
+}
+
 
 #
 # event: load_map( $map );
@@ -356,6 +379,8 @@ sub _onpriv_start {
     $h->{labels}{move_armies}  = $labm;
     $h->{buttons}{place_armies_redo} = $but_predo;
     $h->{buttons}{place_armies_done} = $but_pdone;
+    $h->{buttons}{attack_done}       = $but_adone;
+    $h->{buttons}{move_armies_done}  = $but_mdone;
     $h->{balloon}->attach($but_predo, -msg=>'undo all');
     $h->{balloon}->attach($but_pdone, -msg=>'ready for attack');
     $h->{balloon}->attach($but_adone, -msg=>'consolidate');
