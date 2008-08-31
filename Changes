@@ -11,6 +11,9 @@ High-level changelog
 Low-level changelog
 ===================
 
+0.2.1 Sun Aug 31 11:26:10 CEST 2008
+ - updating gui with initial army count to place
+
 0.2.0 Sat Aug 30 18:44:23 CEST 2008
  - gr::ai is also a session now
  - ai players have a poe session (gr::ai) to control it
