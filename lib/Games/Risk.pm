@@ -221,40 +221,48 @@ sub _onpriv_place_initial_armies {
     # FIXME: possibility to place armies randomly by server
     # FIXME: possibility to place armies according to map scenario
 
+    # get number of armies to place left
     my $left = $h->armies;
-    given ($left) {
-        when (undef) {
-            $h->players_reset;
-            $h->armies(7); # FIXME: hardcoded
-            K->post('board', 'place_armies_initial_count', $h->armies); # FIXME: broadcast & ai (?)
-            K->yield('_place_initial_armies');
-        }
-        when (0) {
-            # go on to the next phase
+
+    if ( not defined $left ) {
+        # undef means that we are just beginning initial armies
+        # placement. let's initialize list of players.
+        $h->players_reset;
+
+        $h->armies(2); # FIXME: hardcoded
+        $left = $h->{armies};
+        K->post('board', 'place_armies_initial_count', $left); # FIXME: broadcast & ai (?)
+    }
+
+    # get next player that should place an army
+    my $player = $h->players_next;
+
+    if ( not defined $player ) {
+        # all players have placed an army once. so let's just decrease
+        # count of armies to be placed, and start again.
+
+        $player = $h->players_next;
+        $left--;
+        $h->armies( $left );
+
+        if ( $left == 0 ) {
+            # hey, we've finished! move on to the next phase.
             K->yield( '_initial_armies_placed' );
-        }
-        default {
-            my $player = $h->players_next;
-            if ( not defined $player ) {
-                $player = $h->players_next;
-                $left--;               # 1 army placed for everyone, that's
-                $h->armies( $left );   # one left for everyone to place
-                break if $left == 0;   # hey, we've finished!
-            }
-
-            # update various guis with current player
-            $h->curplayer( $player );
-            K->post('board', 'player_active', $player); # FIXME: broadcast
-
-            # request army to be placed.
-            my $session;
-            given ($player->type) {
-                when ('ai')    { $session = $player->name; }
-                when ('human') { $session = 'board'; } #FIXME: broadcast
-            }
-            K->post($session, 'place_armies_initial', 1);
+            return;
         }
     }
+
+    # update various guis with current player
+    $h->curplayer( $player );
+    K->post('board', 'player_active', $player); # FIXME: broadcast
+
+    # request army to be placed.
+    my $session;
+    given ($player->type) {
+        when ('ai')    { $session = $player->name; }
+        when ('human') { $session = 'board'; } #FIXME: broadcast
+    }
+    K->post($session, 'place_armies_initial', 1);
 }
 
 
