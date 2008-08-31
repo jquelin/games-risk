@@ -65,7 +65,8 @@ sub spawn {
             _begin_turn             => \&_onpriv_turn_begin,
             _turn_begun             => \&_onpriv_player_next,
             _player_begun           => \&_onpriv_place_armies,
-            _armies_placed          => \&_onpriv_player_next,
+            _armies_placed          => \&_onpriv_attack,
+            _attack_done            => \&_onpriv_player_next,
             # public events
             window_created      => \&_onpub_window_created,
             map_loaded          => \&_onpub_map_loaded,
@@ -201,6 +202,22 @@ sub _onpriv_assign_countries {
 
     # go on to the next phase
     K->yield( '_countries_assigned' );
+}
+
+
+#
+# start the attack phase for curplayer
+#
+sub _onpriv_attack {
+    my $h = $_[HEAP];
+
+    my $player = $h->curplayer;
+    my $session;
+    given ($player->type) {
+        when ('ai')    { $session = $player->name; }
+        when ('human') { $session = 'board'; } #FIXME: broadcast
+    }
+    K->post($session, 'attack');
 }
 
 
