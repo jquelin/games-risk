@@ -58,6 +58,7 @@ sub spawn {
             _countries_assigned => \&_onpriv_place_initial_armies,
             _place_initial_armies   => \&_onpriv_place_initial_armies,
             _initial_armies_placed  => \&_onpriv_turn_begin,
+            _turn_began             => \&_onpriv_player_next,
             # public events
             window_created      => \&_onpub_window_created,
             map_loaded          => \&_onpub_map_loaded,
@@ -268,6 +269,21 @@ sub _onpriv_place_initial_armies {
 
 
 #
+# get next player & update people.
+#
+sub _onpriv_player_next {
+    my $h = $_[HEAP];
+
+    # get next player
+    my $player = $h->players_next;
+    $h->curplayer( $player );
+
+    # update various guis with current player
+    K->post('board', 'player_active', $player); # FIXME: broadcast
+}
+
+
+#
 # initialize list of players for next turn.
 #
 sub _onpriv_turn_begin {
@@ -275,8 +291,6 @@ sub _onpriv_turn_begin {
 
     # get next player
     $h->players_reset;
-    my $player = $h->players_next;
-    $h->curplayer( $player );
 
     # placing armies
     K->yield('_turn_began');
