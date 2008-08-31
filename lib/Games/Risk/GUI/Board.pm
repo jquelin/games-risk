@@ -302,6 +302,9 @@ sub _onpriv_start {
     }
 	close $fh;
 
+    # ballon
+    $h->{balloon} = $top->Balloon;
+
     # top frame
     my $ftop = $top->Frame->pack(@TOP, @XFILLX);
 
@@ -337,6 +340,8 @@ sub _onpriv_start {
     $h->{labels}{place_armies} = $lab1;
     $h->{buttons}{place_armies_redo} = $but_redo;
     $h->{buttons}{place_armies_done} = $but_done;
+    $h->{balloon}->attach($but_redo, -msg=>'undo all');
+    $h->{balloon}->attach($but_done, -msg=>'ready for attack');
 
     # create canvas
     my $c = $top->Canvas->pack;
@@ -350,9 +355,6 @@ sub _onpriv_start {
         -anchor       =>'w',
         -textvariable => \$h->{status},
     )->pack(@RIGHT,@XFILLX, @PAD1);
-
-    # ballon
-    $h->{balloon} = $top->Balloon;
 
     # say that we're done
     K->post('risk', 'window_created', 'board');
