@@ -88,8 +88,8 @@ sub spawn {
             _start         => \&_onpriv_start,
             _stop          => sub { warn "AI shutdown\n" },
             # public events
-            place_armies     => \&_onpub_place_armies,
-            place_armies_initial     => \&_onpub_place_armies,
+            #place_armies     => \&_onpub_place_armies,
+            place_armies_initial     => \&_onpub_place_armies_initial,
         },
     );
     return $session->ID;
@@ -121,12 +121,12 @@ sub description {
 
 # -- public events
 
-sub _onpub_place_armies {
+sub _onpub_place_armies_initial {
     my ($ai, $how, $continent) = @_[HEAP, ARG0, ARG1];
 
     foreach my $where ( $ai->place_armies($how, $continent) ) {
         my ($country, $nb) = @$where;
-        K->post('risk', 'armies_placed', $country, $nb);
+        K->post('risk', 'initial_armies_placed', $country, $nb);
     }
 }
 

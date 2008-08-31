@@ -68,7 +68,7 @@ sub spawn {
             window_created      => \&_onpub_window_created,
             map_loaded          => \&_onpub_map_loaded,
             player_created      => \&_onpub_player_created,
-            armies_placed       => \&_onpub_armies_placed,
+            initial_armies_placed       => \&_onpub_initial_armies_placed,
         },
     );
     return $session->ID;
@@ -85,7 +85,7 @@ sub spawn {
 #
 # fired to place $nb additional armies on $country.
 #
-sub _onpub_armies_placed {
+sub _onpub_initial_armies_placed {
     my ($h, $country, $nb) = @_[HEAP,ARG0, ARG1];
 
     # FIXME: check player is curplayer

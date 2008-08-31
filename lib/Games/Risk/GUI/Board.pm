@@ -352,7 +352,7 @@ sub _ongui_canvas_click_place_armies_initial {
 
     # tell controller that we've placed an army. controller will then
     # ask us to redraw the country.
-    K->post('risk', 'armies_placed', $country, 1);
+    K->post('risk', 'initial_armies_placed', $country, 1);
 }
 
 #--
