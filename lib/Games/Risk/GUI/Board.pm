@@ -367,7 +367,6 @@ sub _ongui_but_place_armies_done {
     my $h = $_[HEAP];
 
     # check if we're done
-    # FIXME: >=2 armies to place should have a validation
     my $nb = 0;
     $nb += $_ for values %{ $h->{armies} };
     if ( $nb != 0 ) {
