@@ -138,8 +138,10 @@ sub _onpub_place_armies {
 
     # update the gui to reflect the new state.
     my $c = $h->{canvas};
-    $c->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies', 1) );
+    $c->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies',  1) );
     $c->CanvasBind( '<3>', $s->postback('_canvas_click_place_armies', -1) );
+    $c->CanvasBind( '<4>', $s->postback('_canvas_click_place_armies',  1) );
+    $c->CanvasBind( '<5>', $s->postback('_canvas_click_place_armies', -1) );
     $h->{labels}{place_armies}->configure(@ENON);
 
     # update status msg
@@ -407,6 +409,8 @@ sub _ongui_but_place_armies_done {
     my $c = $h->{canvas};
     $c->CanvasBind('<1>', undef);
     $c->CanvasBind('<3>', undef);
+    $c->CanvasBind('<4>', undef);
+    $c->CanvasBind('<5>', undef);
     $h->{labels}{place_armies}->configure(@ENOFF);
     $h->{buttons}{place_armies_redo}->configure(@ENOFF);
     $h->{buttons}{place_armies_done}->configure(@ENOFF);
@@ -442,6 +446,7 @@ sub _ongui_but_place_armies_redo {
     $h->{buttons}{place_armies_done}->configure(@ENOFF);
     # allow adding armies
     $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies', 1) );
+    $h->{canvas}->CanvasBind( '<4>', $s->postback('_canvas_click_place_armies', 1) );
 
     # reset initials
     my $nb = 0;
@@ -527,12 +532,14 @@ sub _ongui_canvas_click_place_armies {
         $h->{buttons}{place_armies_done}->configure(@ENON);
         # forbid adding armies
         $h->{canvas}->CanvasBind('<1>', undef);
+        $h->{canvas}->CanvasBind('<4>', undef);
 
     } else {
         # forbid button next phase to be clicked
         $h->{buttons}{place_armies_done}->configure(@ENOFF);
         # allow adding armies
         $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies', 1) );
+        $h->{canvas}->CanvasBind( '<4>', $s->postback('_canvas_click_place_armies', 1) );
     }
 }
 #
