@@ -55,6 +55,7 @@ sub spawn {
             _stop                => sub { warn "gui-board shutdown\n" },
             # gui events
             _but_place_armies_done               => \&_ongui_but_place_armies_done,
+            _but_place_armies_redo               => \&_ongui_but_place_armies_redo,
             _canvas_click_place_armies           => \&_ongui_canvas_click_place_armies,
             _canvas_click_place_armies_initial   => \&_ongui_canvas_click_place_armies_initial,
             _canvas_motion       => \&_ongui_canvas_motion,
@@ -132,7 +133,8 @@ sub _onpub_place_armies {
     my ($h, $s, $nb, $continent) = @_[HEAP, SESSION, ARG0, ARG1];
 
     my $name = defined $continent ? $continent->name : 'free';
-    $h->{armies}{$name} += $nb;
+    $h->{armies}{$name}        += $nb;
+    $h->{armies_backup}{$name} += $nb;   # to allow reinforcements redo
 
     # update the gui to reflect the new state.
     my $c = $h->{canvas};
@@ -389,6 +391,40 @@ sub _ongui_but_place_armies_done {
         K->post('risk', 'armies_placed', $country, $h->{fake_armies}{$id});
     }
     $h->{fake_armies} = {};
+}
+
+
+#
+# event: _but_place_armies_redo();
+#
+# Called when user wants to restart from scratch reinforcements placing.
+#
+sub _ongui_but_place_armies_redo {
+    my ($h, $s) = @_[HEAP, SESSION];
+
+    foreach my $id ( keys %{ $h->{fake_armies} } ) {
+        next if $h->{fake_armies}{$id} == 0;
+        delete $h->{fake_armies}{$id};
+        my $country = $h->{map}->country_get($id);
+        K->yield('chnum', $country);
+    }
+
+    # forbid button next phase to be clicked
+    $h->{buttons}{place_armies_done}->configure(@ENOFF);
+    # allow adding armies
+    $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies', 1) );
+
+    # reset initials
+    my $nb = 0;
+    foreach my $k ( keys %{ $h->{armies_backup} } ) {
+        my $v = $h->{armies_backup}{$k};
+        $h->{armies}{$k} = $v; # restore initial value
+        $nb += $v;
+    }
+    $h->{fake_armies} = {};
+
+    # updatee status
+    $h->{status} = "$nb armies left to place";
 }
 
 
