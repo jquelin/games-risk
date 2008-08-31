@@ -451,6 +451,9 @@ sub _ongui_canvas_click_place_armies {
     $h->{fake_armies}{ $country->id } += $diff;
     K->yield( 'chnum', $country );
 
+    # allow redo button
+    $h->{buttons}{place_armies_redo}->configure(@ENON);
+
     # check if we're done
     my $nb = 0;
     $nb += $_ for values %{ $h->{armies} };
