@@ -73,6 +73,7 @@ sub spawn {
             player_created      => \&_onpub_player_created,
             initial_armies_placed       => \&_onpub_initial_armies_placed,
             armies_placed       => \&_onpub_armies_placed,
+            attack_end              => \&_onpub_attack_end,
         },
     );
     return $session->ID;
@@ -106,6 +107,16 @@ sub _onpub_armies_placed {
     if ( $left == 0 ) {
         K->delay_set( '_armies_placed' => $WAIT );
     }
+}
+
+
+#
+# event: attack_done();
+#
+# fired when a player does not want to attack anymor eduring her turn.
+#
+sub _onpub_attack_end {
+    K->delay_set( '_attack_done' => $WAIT );
 }
 
 
