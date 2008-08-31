@@ -60,6 +60,7 @@ sub spawn {
             _initial_armies_placed  => \&_onpriv_turn_begin,
             _begin_turn             => \&_onpriv_turn_begin,
             _turn_began             => \&_onpriv_player_next,
+            _place_armies           => \&_onpriv_place_armies,
             # public events
             window_created      => \&_onpub_window_created,
             map_loaded          => \&_onpub_map_loaded,
@@ -216,6 +217,14 @@ sub _onpriv_load_map {
 
 
 #
+# require curplayer to place its reinforcements.
+#
+sub _onpriv_place_armies {
+    say "ici";
+}
+
+
+#
 # require players to place initials armies.
 #
 sub _onpriv_place_initial_armies {
@@ -285,6 +294,8 @@ sub _onpriv_player_next {
 
     # update various guis with current player
     K->post('board', 'player_active', $player); # FIXME: broadcast
+
+    K->yield('_place_armies');
 }
 
 
