@@ -543,6 +543,8 @@ sub _ongui_canvas_click_place_armies {
         $h->{canvas}->CanvasBind( '<4>', $s->postback('_canvas_click_place_armies', 1) );
     }
 }
+
+
 #
 # event: _canvas_click_place_armies_initial();
 #
@@ -556,6 +558,7 @@ sub _ongui_canvas_click_place_armies_initial {
     my $country   = $h->{country};
 
     # check country owner
+    return unless defined $country;
     return if $country->owner->name ne $curplayer->name;
 
     # change canvas bindings
