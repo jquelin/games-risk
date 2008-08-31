@@ -89,6 +89,7 @@ sub spawn {
             _stop          => sub { warn "AI shutdown\n" },
             # public events
             place_armies     => \&_onpub_place_armies,
+            place_armies_initial     => \&_onpub_place_armies,
         },
     );
     return $session->ID;

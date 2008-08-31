@@ -252,7 +252,7 @@ sub _onpriv_place_initial_armies {
                 when ('ai')    { $session = $player->name; }
                 when ('human') { $session = 'board'; } #FIXME: broadcast
             }
-            K->post($session, 'place_armies', 1);
+            K->post($session, 'place_armies_initial', 1);
         }
     }
 }

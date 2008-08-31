@@ -57,8 +57,8 @@ sub spawn {
             chnum                => \&_onpriv_country_redraw,
             chown                => \&_onpriv_country_redraw,
             load_map             => \&_onpub_load_map,
+            place_armies_inital        => \&_onpub_place_armies,
             place_armies_initial_count => \&_onpub_place_armies_initial_count,
-            place_armies         => \&_onpub_place_armies,
             player_active        => \&_onpub_player_active,
             player_add           => \&_onpub_player_add,
         },
@@ -117,12 +117,12 @@ sub _onpub_load_map {
 
 
 #
-# event: place_armies( $how [, $continent] );
+# event: place_armies_initial( $how [, $continent] );
 #
 # request user to place $how much armies on her countries (maybe within
 # $continent if supplied).
 #
-sub _onpub_place_armies {
+sub _onpub_place_armies_initial {
     my ($h, $s, $how, $continent) = @_[HEAP, SESSION, ARG0, ARG1];
 
     my $name = defined $continent ? $continent->name : 'free';
