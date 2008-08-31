@@ -61,8 +61,8 @@ sub spawn {
             _canvas_motion       => \&_ongui_canvas_motion,
             # public events
             attack                     => \&_onpub_attack,
-            chnum                => \&_onpriv_country_redraw,
-            chown                => \&_onpriv_country_redraw,
+            chnum                      => \&_onpub_country_redraw,
+            chown                      => \&_onpub_country_redraw,
             load_map             => \&_onpub_load_map,
             place_armies               => \&_onpub_place_armies,
             place_armies_initial       => \&_onpub_place_armies_initial,
@@ -98,6 +98,44 @@ sub _onpub_attack {
     # update status msg
     $h->{status} = 'Attacking from';
 }
+
+
+#
+# event: chnum($country);
+# event: chown($country);
+#
+# Force C<$country> to be redrawn: owner and number of armies.
+#
+sub _onpub_country_redraw {
+    my ($h, $country) = @_[HEAP, ARG0];
+    my $c = $h->{canvas};
+
+    my $id    = $country->id;
+    my $owner = $country->owner;
+    my $fake  = $h->{fake_armies}{$id} // 0;
+
+    # FIXME: change radius to reflect number of armies
+    my ($radius, $fill_color, $text) = defined $owner
+            ? (7, $owner->color, $country->armies + $fake )
+            : (5,       'white', '');
+
+    my $x = $country->x;
+    my $y = $country->y;
+    my $x1 = $x - $radius; my $x2 = $x + $radius;
+    my $y1 = $y - $radius; my $y2 = $y + $radius;
+
+    # update canvas
+    $c->itemconfigure( "$id&&text", -text => $text);
+    $c->delete( "$id&&circle" );
+    $c->createOval(
+        $x1, $y1, $x2, $y2,
+        -fill    => $fill_color,
+        -outline => 'black',
+        -tags    => [ $country->id, 'circle' ],
+    );
+    $c->raise( "$id&&text", "$id&&circle" );
+}
+
 
 
 #
@@ -259,40 +297,6 @@ sub _onpub_player_add {
 
 
 # -- private events
-
-#
-# Force C<$country> to be redrawn: owner and number of armies.
-#
-sub _onpriv_country_redraw {
-    my ($h, $country) = @_[HEAP, ARG0];
-    my $c = $h->{canvas};
-
-    my $id    = $country->id;
-    my $owner = $country->owner;
-    my $fake  = $h->{fake_armies}{$id} // 0;
-
-    # FIXME: change radius to reflect number of armies
-    my ($radius, $fill_color, $text) = defined $owner
-            ? (7, $owner->color, $country->armies + $fake )
-            : (5,       'white', '');
-
-    my $x = $country->x;
-    my $y = $country->y;
-    my $x1 = $x - $radius; my $x2 = $x + $radius;
-    my $y1 = $y - $radius; my $y2 = $y + $radius;
-
-    # update canvas
-    $c->itemconfigure( "$id&&text", -text => $text);
-    $c->delete( "$id&&circle" );
-    $c->createOval(
-        $x1, $y1, $x2, $y2,
-        -fill    => $fill_color,
-        -outline => 'black',
-        -tags    => [ $country->id, 'circle' ],
-    );
-    $c->raise( "$id&&text", "$id&&circle" );
-}
-
 
 #
 # Event: _start( \%params )
