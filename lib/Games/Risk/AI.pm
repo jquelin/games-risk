@@ -88,7 +88,7 @@ sub spawn {
             _start         => \&_onpriv_start,
             _stop          => sub { warn "AI shutdown\n" },
             # public events
-            #place_armies     => \&_onpub_place_armies,
+            place_armies     => \&_onpub_place_armies,
             place_armies_initial     => \&_onpub_place_armies_initial,
         },
     );
@@ -120,6 +120,21 @@ sub description {
 # EVENTS HANDLERS
 
 # -- public events
+
+#
+# event: place_armies($nb, $continent);
+#
+# request the ai to place $nb armies, possibly within $continent (if defined).
+#
+sub _onpub_place_armies {
+    my ($ai, $nb, $continent) = @_[HEAP, ARG0, ARG1];
+
+    foreach my $where ( $ai->place_armies($nb, $continent) ) {
+        my ($country, $nb) = @$where;
+        K->post('risk', 'armies_placed', $country, $nb);
+    }
+}
+
 
 #
 # event: place_armies_initial();
