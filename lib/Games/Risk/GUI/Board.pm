@@ -334,7 +334,7 @@ sub _ongui_canvas_motion {
 # Will request controller to place one army on the current country.
 #
 sub _ongui_canvas_click_place_initial_armies {
-    my $h = @_[HEAP];
+    my $h = $_[HEAP];
 
     my $curplayer = $h->{curplayer};
     my $country   = $h->{country};
