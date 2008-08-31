@@ -420,7 +420,7 @@ sub _ongui_canvas_motion {
 # current country.
 #
 sub _ongui_canvas_click_place_armies {
-    my ($h, $args) = @_[HEAP, ARG0];
+    my ($h, $s, $args) = @_[HEAP, SESSION, ARG0];
 
     my $curplayer = $h->{curplayer};
     my $country   = $h->{country};
@@ -452,9 +452,14 @@ sub _ongui_canvas_click_place_armies {
     if ( $nb == 0 ) {
         # allow button next phase to be clicked
         $h->{buttons}{place_armies_done}->configure(@ENON);
+        # forbid adding armies
+        $h->{canvas}->CanvasBind('<1>', undef);
 
     } else {
+        # forbid button next phase to be clicked
         $h->{buttons}{place_armies_done}->configure(@ENOFF);
+        # allow adding armies
+        $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies', 1) );
     }
 }
 #
