@@ -379,6 +379,7 @@ sub _ongui_but_place_armies_done {
 
     # request controller to update
     foreach my $id ( keys %{ $h->{fake_armies} } ) {
+        next if $h->{fake_armies}{$id} == 0; # don't send null reinforcements
         my $country = $h->{map}->country_get($id);
         K->post('risk', 'armies_placed', $country, $h->{fake_armies}{$id});
     }
