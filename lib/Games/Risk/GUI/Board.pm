@@ -169,7 +169,7 @@ sub _onpub_load_map {
         );
 
         # update text values & oval
-        K->yield('country_redraw', $country);
+        K->yield('chown', $country);
     }
 
     # load greyscale image
