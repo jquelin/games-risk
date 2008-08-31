@@ -65,6 +65,7 @@ sub spawn {
             _begin_turn             => \&_onpriv_turn_begin,
             _turn_began             => \&_onpriv_player_next,
             _place_armies           => \&_onpriv_place_armies,
+            _armies_placed          => \&_onpriv_turn_begin,
             # public events
             window_created      => \&_onpub_window_created,
             map_loaded          => \&_onpub_map_loaded,
