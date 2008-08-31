@@ -63,7 +63,7 @@ sub spawn {
             _place_armies_initial   => \&_onpriv_place_armies_initial,
             _initial_armies_placed  => \&_onpriv_turn_begin,
             _begin_turn             => \&_onpriv_turn_begin,
-            _turn_began             => \&_onpriv_player_next,
+            _turn_begun             => \&_onpriv_player_next,
             _player_begun           => \&_onpriv_place_armies,
             _armies_placed          => \&_onpriv_player_next,
             # public events
@@ -356,7 +356,7 @@ sub _onpriv_turn_begin {
     $h->players_reset;
 
     # placing armies
-    K->yield('_turn_began');
+    K->yield('_turn_begun');
 }
 
 
