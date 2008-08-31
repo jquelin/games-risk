@@ -499,6 +499,7 @@ sub _ongui_canvas_click_place_armies {
 
     my $curplayer = $h->{curplayer};
     my $country   = $h->{country};
+    return unless defined $country;
     my $id        = $country->id;
     my ($diff)    = @$args;
 
