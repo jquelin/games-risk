@@ -37,6 +37,9 @@ Readonly my @XFILL2  => ( -expand => 1, -fill => 'both' );
 
 Readonly my @PAD1    => ( -padx => 1, -pady => 1);
 
+Readonly my @ENON    => ( -state => 'normal' );
+Readonly my @ENOFF   => ( -state => 'disabled' );
+
 
 #--
 # Constructor
@@ -276,6 +279,25 @@ sub _onpriv_start {
     K->alias_set('board');
     my $top = $h->{toplevel} = $args->{toplevel};
 
+    # load images
+    # FIXME: this should be in a sub/method somewhere
+    my $path = find_installed(__PACKAGE__);
+    my (undef, $dirname, undef) = fileparse($path);
+    $h->{images}{inactive} = $top->Photo(-file=>"$dirname/icons/player-inactive.png");
+    $h->{images}{active}   = $top->Photo(-file=>"$dirname/icons/player-active.png");
+
+    # load icons
+    # code & artwork taken from Tk::ToolBar
+    $path = "$dirname/icons/tk_icons";
+    open my $fh, '<', $path or die "can't open '$path': $!";
+    while (<$fh>) {
+        chomp;
+        last if /^#/; # skip rest of file
+        my ($n, $d) = (split /:/)[0, 4];
+        $h->{images}{$n} = $top->Photo(-data => $d);
+    }
+	close fh;
+
     # top frame
     my $ftop = $top->Frame->pack(@TOP, @XFILLX);
 
@@ -293,11 +315,17 @@ sub _onpriv_start {
     $h->{frames}{players} = $fpl;
 
     # frame for game state
-    #my $fgs = $top->Frame->pack(@TOP, @XFILL2);
-    #$fgs->Label(-text=>'Game state: ')->pack(@LEFT);
-    #$fgs->Button(-text=>'place armies')->pack(@LEFT, @XFILL2);
+    my $fgs = $top->Frame->pack(@TOP, @XFILL2);
+    $fgs->Label(-text=>'Game state: ')->pack(@LEFT);
+    my $lab1 = $fgs->Label(-text=>'place armies', @ENOFF)->pack(@LEFT, @XFILL2);
+    my $but1 = $fgs->Button(
+        -image => $h->{images}{navforward16},
+        @ENOFF,
+    )->pack(@LEFT);
     #$fgs->Button(-text=>'attack')->pack(@LEFT, @XFILL2);
     #$fgs->Button(-text=>'move armies')->pack(@LEFT, @XFILL2);
+    $h->{labels}{place_armies} = $lab1;
+    $h->{buttons}{place_armies_done} = $but1;
 
     # create canvas
     my $c = $top->Canvas->pack;
@@ -314,13 +342,6 @@ sub _onpriv_start {
 
     # ballon
     $h->{balloon} = $top->Balloon;
-
-    # images
-    # FIXME: this should be in a sub/method somewhere
-    my $path = find_installed(__PACKAGE__);
-    my (undef, $dirname, undef) = fileparse($path);
-    $h->{images}{inactive} = $top->Photo(-file=>"$dirname/icons/player-inactive.png");
-    $h->{images}{active}   = $top->Photo(-file=>"$dirname/icons/player-active.png");
 
     # say that we're done
     K->post('risk', 'window_created', 'board');

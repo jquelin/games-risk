@@ -8,6 +8,7 @@ lib/Games/Risk/GUI.pm
 lib/Games/Risk/GUI/Board.pm
 lib/Games/Risk/GUI/icons/player-active.png
 lib/Games/Risk/GUI/icons/player-inactive.png
+lib/Games/Risk/GUI/icons/tk_icons
 lib/Games/Risk/Heap.pm
 lib/Games/Risk/Map.pm
 lib/Games/Risk/Map/Continent.pm
