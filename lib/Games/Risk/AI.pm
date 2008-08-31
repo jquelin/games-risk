@@ -121,13 +121,17 @@ sub description {
 
 # -- public events
 
+#
+# event: place_armies_initial();
+#
+# request the ai to place 1 army on a country.
+#
 sub _onpub_place_armies_initial {
-    my ($ai, $how, $continent) = @_[HEAP, ARG0, ARG1];
+    my $ai = $_[HEAP];
 
-    foreach my $where ( $ai->place_armies($how, $continent) ) {
-        my ($country, $nb) = @$where;
-        K->post('risk', 'initial_armies_placed', $country, $nb);
-    }
+    my ($where) = $ai->place_armies(1);
+    my ($country, $nb) = @$where;
+    K->post('risk', 'initial_armies_placed', $country, $nb);
 }
 
 
