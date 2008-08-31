@@ -325,12 +325,12 @@ sub _onpriv_start {
     my $fgs = $top->Frame->pack(@TOP, @XFILL2);
     $fgs->Label(-text=>'Game state: ')->pack(@LEFT);
     my $lab1 = $fgs->Label(-text=>'place armies', @ENOFF)->pack(@LEFT, @XFILL2);
-    my $but_redo = $fgs->Button(
+    my $but_predo = $fgs->Button(
         -command => $s->postback('_but_place_armies_redo'),
         -image   => $h->{images}{actreload16},
         @ENOFF,
     )->pack(@LEFT);
-    my $but_done = $fgs->Button(
+    my $but_pdone = $fgs->Button(
         -command => $s->postback('_but_place_armies_done'),
         -image   => $h->{images}{navforward16},
         @ENOFF,
@@ -338,10 +338,10 @@ sub _onpriv_start {
     #$fgs->Button(-text=>'attack')->pack(@LEFT, @XFILL2);
     #$fgs->Button(-text=>'move armies')->pack(@LEFT, @XFILL2);
     $h->{labels}{place_armies} = $lab1;
-    $h->{buttons}{place_armies_redo} = $but_redo;
-    $h->{buttons}{place_armies_done} = $but_done;
-    $h->{balloon}->attach($but_redo, -msg=>'undo all');
-    $h->{balloon}->attach($but_done, -msg=>'ready for attack');
+    $h->{buttons}{place_armies_redo} = $but_predo;
+    $h->{buttons}{place_armies_done} = $but_pdone;
+    $h->{balloon}->attach($but_predo, -msg=>'undo all');
+    $h->{balloon}->attach($but_pdone, -msg=>'ready for attack');
 
     # create canvas
     my $c = $top->Canvas->pack;
