@@ -324,7 +324,7 @@ sub _onpriv_start {
     # frame for game state
     my $fgs = $top->Frame->pack(@TOP, @XFILL2);
     $fgs->Label(-text=>'Game state: ')->pack(@LEFT);
-    my $lab1 = $fgs->Label(-text=>'place armies', @ENOFF)->pack(@LEFT, @XFILL2);
+    my $labp = $fgs->Label(-text=>'place armies', @ENOFF)->pack(@LEFT, @XFILL2);
     my $but_predo = $fgs->Button(
         -command => $s->postback('_but_place_armies_redo'),
         -image   => $h->{images}{actreload16},
@@ -335,13 +335,13 @@ sub _onpriv_start {
         -image   => $h->{images}{navforward16},
         @ENOFF,
     )->pack(@LEFT);
-    my $lab2 = $fgs->Label(-text=>'attack', @ENOFF)->pack(@LEFT, @XFILL2);
+    my $laba = $fgs->Label(-text=>'attack', @ENOFF)->pack(@LEFT, @XFILL2);
     my $but_adone = $fgs->Button(
         -command => $s->postback('_but_attack_done'),
         -image   => $h->{images}{navforward16},
         @ENOFF,
     )->pack(@LEFT);
-    my $lab3 = $fgs->Label(-text=>'move armies', @ENOFF)->pack(@LEFT, @XFILL2);
+    my $labm = $fgs->Label(-text=>'move armies', @ENOFF)->pack(@LEFT, @XFILL2);
     my $but_mdone = $fgs->Button(
         -command => $s->postback('_but_move_armies_done'),
         -image   => $h->{images}{playstop16},
@@ -349,7 +349,9 @@ sub _onpriv_start {
     )->pack(@LEFT);
     #$fgs->Button(-text=>'attack')->pack(@LEFT, @XFILL2);
     #$fgs->Button(-text=>'move armies')->pack(@LEFT, @XFILL2);
-    $h->{labels}{place_armies} = $lab1;
+    $h->{labels}{place_armies} = $labp;
+    $h->{labels}{attack}       = $laba;
+    $h->{labels}{move_armies}  = $labm;
     $h->{buttons}{place_armies_redo} = $but_predo;
     $h->{buttons}{place_armies_done} = $but_pdone;
     $h->{balloon}->attach($but_predo, -msg=>'undo all');
