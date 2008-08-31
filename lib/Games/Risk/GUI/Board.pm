@@ -56,8 +56,8 @@ sub spawn {
             # gui events
             _but_place_armies_done               => \&_ongui_but_place_armies_done,
             _but_place_armies_redo               => \&_ongui_but_place_armies_redo,
-            _canvas_click_place_armies           => \&_ongui_canvas_click_place_armies,
-            _canvas_click_place_armies_initial   => \&_ongui_canvas_click_place_armies_initial,
+            _canvas_place_armies           => \&_ongui_canvas_place_armies,
+            _canvas_place_armies_initial   => \&_ongui_canvas_place_armies_initial,
             _canvas_motion       => \&_ongui_canvas_motion,
             # public events
             attack                     => \&_onpub_attack,
@@ -90,8 +90,8 @@ sub _onpub_attack {
 
     # update the gui to reflect the new state.
     my $c = $h->{canvas};
-    #$c->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies',  1) );
-    #$c->CanvasBind( '<3>', $s->postback('_canvas_click_place_armies', -1) );
+    #$c->CanvasBind( '<1>', $s->postback('_canvas_place_armies',  1) );
+    #$c->CanvasBind( '<3>', $s->postback('_canvas_place_armies', -1) );
     $h->{labels}{attack}->configure(@ENON);
     $h->{buttons}{attack_done}->configure(@ENON);
 
@@ -197,10 +197,10 @@ sub _onpub_place_armies {
 
     # update the gui to reflect the new state.
     my $c = $h->{canvas};
-    $c->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies',  1) );
-    $c->CanvasBind( '<3>', $s->postback('_canvas_click_place_armies', -1) );
-    $c->CanvasBind( '<4>', $s->postback('_canvas_click_place_armies',  1) );
-    $c->CanvasBind( '<5>', $s->postback('_canvas_click_place_armies', -1) );
+    $c->CanvasBind( '<1>', $s->postback('_canvas_place_armies',  1) );
+    $c->CanvasBind( '<3>', $s->postback('_canvas_place_armies', -1) );
+    $c->CanvasBind( '<4>', $s->postback('_canvas_place_armies',  1) );
+    $c->CanvasBind( '<5>', $s->postback('_canvas_place_armies', -1) );
     $h->{labels}{place_armies}->configure(@ENON);
 
     # update status msg
@@ -221,7 +221,7 @@ sub _onpub_place_armies_initial {
     my ($h, $s) = @_[HEAP, SESSION, ARG0];
 
     my $c = $h->{canvas};
-    $c->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies_initial') );
+    $c->CanvasBind( '<1>', $s->postback('_canvas_place_armies_initial') );
 }
 
 
@@ -472,8 +472,8 @@ sub _ongui_but_place_armies_redo {
     # forbid button next phase to be clicked
     $h->{buttons}{place_armies_done}->configure(@ENOFF);
     # allow adding armies
-    $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies', 1) );
-    $h->{canvas}->CanvasBind( '<4>', $s->postback('_canvas_click_place_armies', 1) );
+    $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_place_armies', 1) );
+    $h->{canvas}->CanvasBind( '<4>', $s->postback('_canvas_place_armies', 1) );
 
     # reset initials
     my $nb = 0;
@@ -515,13 +515,13 @@ sub _ongui_canvas_motion {
 
 
 #
-# event: _canvas_click_place_armies( [ $diff ] );
+# event: _canvas_place_armies( [ $diff ] );
 #
 # Called when mouse click on the canvas during armies placement.
 # Update "fake armies" to place $diff (may be negative) army on the
 # current country.
 #
-sub _ongui_canvas_click_place_armies {
+sub _ongui_canvas_place_armies {
     my ($h, $s, $args) = @_[HEAP, SESSION, ARG0];
 
     my $curplayer = $h->{curplayer};
@@ -566,17 +566,17 @@ sub _ongui_canvas_click_place_armies {
         # forbid button next phase to be clicked
         $h->{buttons}{place_armies_done}->configure(@ENOFF);
         # allow adding armies
-        $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies', 1) );
-        $h->{canvas}->CanvasBind( '<4>', $s->postback('_canvas_click_place_armies', 1) );
+        $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_place_armies', 1) );
+        $h->{canvas}->CanvasBind( '<4>', $s->postback('_canvas_place_armies', 1) );
     }
 }
 #
-# event: _canvas_click_place_armies_initial();
+# event: _canvas_place_armies_initial();
 #
 # Called when mouse click on the canvas during initial armies placement.
 # Will request controller to place one army on the current country.
 #
-sub _ongui_canvas_click_place_armies_initial {
+sub _ongui_canvas_place_armies_initial {
     my $h = $_[HEAP];
 
     my $curplayer = $h->{curplayer};
