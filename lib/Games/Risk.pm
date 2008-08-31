@@ -232,6 +232,7 @@ sub _onpriv_place_armies {
     my @countries = $player->countries;
     my $nb = int( scalar(@countries) / 3 );
     $nb = 3 if $nb < 3;
+    $h->armies($nb);
 
     # FIXME: continent bonus
 
