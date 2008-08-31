@@ -139,7 +139,6 @@ sub _onpub_place_armies {
     $c->CanvasBind('<1>', $s->postback('_canvas_click_place_armies', 1) );
     $c->CanvasBind('<2>', $s->postback('_canvas_click_place_armies', -1) );
     $h->{labels}{place_armies}->configure(@ENON);
-    $h->{buttons}{place_armies_done}->configure(@ENON);
 
     # update status msg
     my $count = 0;
@@ -444,14 +443,15 @@ sub _ongui_canvas_click_place_armies {
     K->yield( 'chnum', $country );
 
     # check if we're done
-    # FIXME: >=2 armies to place should have a validation
     my $nb = 0;
     $nb += $_ for values %{ $h->{armies} };
     if ( $nb == 0 ) {
         # allow button next phase to be clicked
+        $h->{buttons}{place_armies_done}->configure(@ENON);
 
     } else {
         $h->{status} = "$nb armies left to place";
+        $h->{buttons}{place_armies_done}->configure(@ENOFF);
     }
 }
 #
