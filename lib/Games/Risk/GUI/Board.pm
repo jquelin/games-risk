@@ -136,8 +136,8 @@ sub _onpub_place_armies {
 
     # update the gui to reflect the new state.
     my $c = $h->{canvas};
-    $c->CanvasBind('<1>', $s->postback('_canvas_click_place_armies', 1) );
-    $c->CanvasBind('<3>', $s->postback('_canvas_click_place_armies', -1) );
+    $c->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies', 1) );
+    $c->CanvasBind( '<3>', $s->postback('_canvas_click_place_armies', -1) );
     $h->{labels}{place_armies}->configure(@ENON);
 
     # update status msg
@@ -158,7 +158,7 @@ sub _onpub_place_armies_initial {
     my ($h, $s) = @_[HEAP, SESSION, ARG0];
 
     my $c = $h->{canvas};
-    $c->CanvasBind('<1>', $s->postback('_canvas_click_place_armies_initial') );
+    $c->CanvasBind( '<1>', $s->postback('_canvas_click_place_armies_initial') );
 }
 
 
@@ -332,7 +332,7 @@ sub _onpriv_start {
 
     # create canvas
     my $c = $top->Canvas->pack;
-    $c->CanvasBind('<Motion>', [$s->postback('_canvas_motion'), Ev('x'), Ev('y')] );
+    $c->CanvasBind( '<Motion>', [$s->postback('_canvas_motion'), Ev('x'), Ev('y')] );
     $h->{canvas} = $c;
 
     # status bar
