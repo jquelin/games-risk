@@ -242,11 +242,11 @@ Return a short description of the ai and how it works.
 Return a difficulty level for the ai.
 
 
-=item * my @where = place_armies($how, [$continent])
+=item * my @where = place_armies($nb, [$continent])
 
 Return a list of C<[ $country, $nb ]> tuples (a C<Games::Risk::Map::Country>
-and an integer) defining where to place C<$how> many armies. If C<$continent>
-(a C<Games::Risk::Map::Continent>) is defined, all the returned C<$countries>
+and an integer) defining where to place C<$nb> armies. If C<$continent> (a
+C<Games::Risk::Map::Continent>) is defined, all the returned C<$countries>
 should be within this continent.
 
 

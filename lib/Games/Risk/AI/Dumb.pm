@@ -29,7 +29,7 @@ sub difficulty { return 'very easy' }
 
 
 #
-# my @where = $ai->place_armies($how, [$continent]);
+# my @where = $ai->place_armies($nb, [$continent]);
 #
 # See pod in Games::Risk::AI for information on the goal of this method.
 #
@@ -37,7 +37,7 @@ sub difficulty { return 'very easy' }
 # the AI, maybe restricted by $continent if it is specified.
 #
 sub place_armies {
-    my ($self, $how, $continent) = @_;
+    my ($self, $nb, $continent) = @_;
 
     # get list of countries eligible.
     my $player = $self->player;
@@ -48,7 +48,7 @@ sub place_armies {
 
     # assign armies randomly.
     my @where = ();
-    push @where, [ $countries[ rand @countries ], 1 ] while $how--;
+    push @where, [ $countries[ rand @countries ], 1 ] while $nb--;
     return @where;
 }
 

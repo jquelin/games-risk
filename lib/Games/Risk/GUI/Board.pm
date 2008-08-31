@@ -119,8 +119,8 @@ sub _onpub_load_map {
 #
 # event: place_armies_initial;
 #
-# request user to place $how much armies on her countries. this is
-# initial reinforcement, so there's no limit on where to put the army, and
+# request user to place 1 armies on her countries. this is initial
+# reinforcement, so there's no limit on where to put the army, and
 # armies are put one by one.
 #
 sub _onpub_place_armies_initial {
@@ -132,9 +132,9 @@ sub _onpub_place_armies_initial {
 
 
 #
-# event: place_armies_initial_count( $how );
+# event: place_armies_initial_count( $nb );
 #
-# request user to place $how much armies on her countries. this is
+# request user to place $nb armies on her countries. this is
 # initial armies placement:
 #  - no restriction on where
 #  - armies get placed one by one
