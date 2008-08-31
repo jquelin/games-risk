@@ -54,6 +54,7 @@ sub spawn {
             _start               => \&_onpriv_start,
             _stop                => sub { warn "gui-board shutdown\n" },
             # gui events
+            _but_attack_done               => \&_ongui_but_attack_done,
             _but_place_armies_done               => \&_ongui_but_place_armies_done,
             _but_place_armies_redo               => \&_ongui_but_place_armies_redo,
             _canvas_place_armies           => \&_ongui_canvas_place_armies,
@@ -414,6 +415,27 @@ sub _onpriv_start {
 }
 
 # -- gui events
+
+#
+# event: _but_attack_done();
+#
+# Called when all planned attacks are finished.
+#
+sub _ongui_but_attack_done {
+    my $h = $_[HEAP];
+
+    # update gui
+    $h->{status} = '';
+    my $c = $h->{canvas};
+    $c->CanvasBind('<1>', undef);
+    $c->CanvasBind('<3>', undef);
+    $h->{labels}{attack}->configure(@ENOFF);
+    $h->{buttons}{attack_done}->configure(@ENOFF);
+
+    # signal controller
+    K->post('risk', 'attack_end');
+}
+
 
 #
 # event: _but_place_armies_done();
