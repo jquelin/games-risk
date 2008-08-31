@@ -25,20 +25,20 @@ use Tk::PNG;
 
 use aliased 'POE::Kernel' => 'K';
 
-Readonly my @TOP     => ( -side => 'top'    );
-Readonly my @BOTTOM  => ( -side => 'bottom' );
-Readonly my @LEFT    => ( -side => 'left'   );
-Readonly my @RIGHT   => ( -side => 'right'  );
+my @TOP     = ( -side => 'top'    );
+my @BOTTOM  = ( -side => 'bottom' );
+my @LEFT    = ( -side => 'left'   );
+my @RIGHT   = ( -side => 'right'  );
 
-Readonly my @FILLX   => ( -fill => 'x'    );
-Readonly my @FILL2   => ( -fill => 'both' );
-Readonly my @XFILLX  => ( -expand => 1, -fill => 'x'    );
-Readonly my @XFILL2  => ( -expand => 1, -fill => 'both' );
+my @FILLX   = ( -fill => 'x'    );
+my @FILL2   = ( -fill => 'both' );
+my @XFILLX  = ( -expand => 1, -fill => 'x'    );
+my @XFILL2  = ( -expand => 1, -fill => 'both' );
 
-Readonly my @PAD1    => ( -padx => 1, -pady => 1);
+my @PAD1    = ( -padx => 1, -pady => 1);
 
-Readonly my @ENON    => ( -state => 'normal' );
-Readonly my @ENOFF   => ( -state => 'disabled' );
+my @ENON    = ( -state => 'normal' );
+my @ENOFF   = ( -state => 'disabled' );
 
 
 #--
