@@ -27,7 +27,8 @@ use aliased 'POE::Kernel' => 'K';
 # Public variables of the module.
 our $VERSION = '0.2.1';
 
-Readonly my $WAIT => 0.300; # FIXME: hardcoded
+Readonly my $TURN_WAIT => 0.300; # FIXME: hardcoded
+Readonly my $WAIT      => 0.100; # FIXME: hardcoded
 
 
 #--
@@ -95,7 +96,7 @@ sub _onpub_initial_armies_placed {
 
     $country->armies( $country->armies + $nb );
     K->post('board', 'chnum', $country); # FIXME: broadcast
-    K->delay_set( '_place_armies_initial' => $WAIT );
+    K->delay_set( '_place_armies_initial' => $TURN_WAIT );
 }
 
 
