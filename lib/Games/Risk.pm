@@ -223,7 +223,22 @@ sub _onpriv_load_map {
 # require curplayer to place its reinforcements.
 #
 sub _onpriv_place_armies {
-    say "ici";
+    my $h = $_[HEAP];
+    my $player = $h->curplayer;
+
+    # compute number of armies to be placed.
+    my @countries = $player->countries;
+    my $nb = int( scalar(@countries) / 3 );
+    $nb = 3 if $nb < 3;
+
+    # FIXME: continent bonus
+
+    my $session;
+    given ($player->type) {
+        when ('ai')    { $session = $player->name; }
+        when ('human') { $session = 'board'; } #FIXME: broadcast
+    }
+    K->post($session, 'place_armies', $nb);
 }
 
 
