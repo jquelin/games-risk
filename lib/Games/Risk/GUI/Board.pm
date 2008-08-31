@@ -51,6 +51,7 @@ sub spawn {
             _start               => \&_onpriv_start,
             _stop                => sub { warn "gui-board shutdown\n" },
             # gui events
+            _canvas_click_place_armies           => \&_ongui_canvas_click_place_armies,
             _canvas_click_place_armies_initial   => \&_ongui_canvas_click_place_armies_initial,
             _canvas_motion       => \&_ongui_canvas_motion,
             # public events
@@ -352,6 +353,48 @@ sub _ongui_canvas_motion {
 }
 
 
+#
+# event: _canvas_click_place_armies( [ $diff ] );
+#
+# Called when mouse click on the canvas during armies placement.
+# Update "fake armies" to place $diff (may be negative) army on the
+# current country.
+#
+sub _ongui_canvas_click_place_armies {
+    my ($h, $args) = @_[HEAP, ARG0];
+
+    my $curplayer = $h->{curplayer};
+    my $country   = $h->{country};
+
+    # check country owner
+    return if $country->owner->name ne $curplayer->name;
+
+    # update armies count
+    my ($diff) = @$args;
+    my $name = $country->continent->name;
+    if ( exists $h->{armies}{$name} ) {
+        $h->{armies}{$name} -= $diff;
+        # FIXME: check if possible, otherwise default to free
+    } else {
+        $h->{armies}{free}  -= $diff;
+        # FIXME: check if possible
+    }
+
+    # redraw country.
+    $h->{fake_armies}{ $country->id } += $diff;
+    K->yield( 'chnum', $country );
+
+    # check if we're done
+    # FIXME: >=2 armies to place should have a validation
+    my $nb = 0;
+    $nb += $_ for values %{ $h->{armies} };
+    if ( $nb == 0 ) {
+        # allow button next phase to be clicked
+
+    } else {
+        $h->{status} = "$nb armies left to place";
+    }
+}
 #
 # event: _canvas_click_place_armies_initial();
 #
