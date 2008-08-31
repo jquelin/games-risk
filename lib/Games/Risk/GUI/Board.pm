@@ -54,6 +54,7 @@ sub spawn {
             _start               => \&_onpriv_start,
             _stop                => sub { warn "gui-board shutdown\n" },
             # gui events
+            _but_place_armies_done               => \&_ongui_but_place_armies_done,
             _canvas_click_place_armies           => \&_ongui_canvas_click_place_armies,
             _canvas_click_place_armies_initial   => \&_ongui_canvas_click_place_armies_initial,
             _canvas_motion       => \&_ongui_canvas_motion,
@@ -321,7 +322,8 @@ sub _onpriv_start {
     $fgs->Label(-text=>'Game state: ')->pack(@LEFT);
     my $lab1 = $fgs->Label(-text=>'place armies', @ENOFF)->pack(@LEFT, @XFILL2);
     my $but1 = $fgs->Button(
-        -image => $h->{images}{navforward16},
+        -command => $s->postback('_but_place_armies_done'),
+        -image   => $h->{images}{navforward16},
         @ENOFF,
     )->pack(@LEFT);
     #$fgs->Button(-text=>'attack')->pack(@LEFT, @XFILL2);
@@ -350,6 +352,40 @@ sub _onpriv_start {
 }
 
 # -- gui events
+
+#
+# event: _but_place_armies_done();
+#
+# Called when all armies are placed correctly.
+#
+sub _ongui_but_place_armies_done {
+    my $h = $_[HEAP];
+
+    # check if we're done
+    # FIXME: >=2 armies to place should have a validation
+    my $nb = 0;
+    $nb += $_ for values %{ $h->{armies} };
+    if ( $nb != 0 ) {
+        warn 'should not be there!';
+        return;
+    }
+
+    # update gui
+    $h->{status} = '';
+    my $c = $h->{canvas};
+    $c->CanvasBind('<1>', undef);
+    $c->CanvasBind('<2>', undef);
+    $h->{labels}{place_armies}->configure(@ENOFF);
+    $h->{buttons}{place_armies_done}->configure(@ENOFF);
+
+    # request controller to update
+    foreach my $id ( keys %{ $h->{fake_armies} } ) {
+        my $country = $h->{map}->country_get($id);
+        K->post('risk', 'armies_placed', $country, $h->{fake_armies}{$id});
+    }
+    $h->{fake_armies} = {};
+}
+
 
 #
 # event: _canvas_motion( undef, [$canvas, $x, $y] );
