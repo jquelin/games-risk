@@ -3,13 +3,18 @@ Revision history for Games::Risk.
 High-level changelog
 ====================
 
-0.2.x
+0.2.x    turn reinforcements
 0.1.x    gui enhancements, internal cleanups, some ai work, initial armies placement
 0.0.x    initial work, basic gui display
 
 
 Low-level changelog
 ===================
+
+0.2.3 Sun Aug 31 17:00:55 CEST 2008
+ - allowing user to undo its reinforcements and start anew
+ - tooltip for action buttons
+ - first cpan release
 
 0.2.2 Sun Aug 31 16:24:17 CEST 2008
  - ai place reinforcements at beginning of their turn
