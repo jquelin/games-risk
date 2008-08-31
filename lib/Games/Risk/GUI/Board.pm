@@ -445,12 +445,12 @@ sub _ongui_canvas_click_place_armies {
     # check if we're done
     my $nb = 0;
     $nb += $_ for values %{ $h->{armies} };
+    $h->{status} = "$nb armies left to place";
     if ( $nb == 0 ) {
         # allow button next phase to be clicked
         $h->{buttons}{place_armies_done}->configure(@ENON);
 
     } else {
-        $h->{status} = "$nb armies left to place";
         $h->{buttons}{place_armies_done}->configure(@ENOFF);
     }
 }
