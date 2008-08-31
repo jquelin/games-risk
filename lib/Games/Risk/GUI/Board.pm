@@ -373,7 +373,7 @@ sub _ongui_but_place_armies_done {
     $h->{status} = '';
     my $c = $h->{canvas};
     $c->CanvasBind('<1>', undef);
-    $c->CanvasBind('<2>', undef);
+    $c->CanvasBind('<3>', undef);
     $h->{labels}{place_armies}->configure(@ENOFF);
     $h->{buttons}{place_armies_done}->configure(@ENOFF);
 
