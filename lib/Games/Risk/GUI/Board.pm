@@ -423,12 +423,14 @@ sub _ongui_canvas_click_place_armies {
 
     my $curplayer = $h->{curplayer};
     my $country   = $h->{country};
+    my $id        = $country->id;
+    my ($diff)    = @$args;
 
-    # check country owner
-    return if $country->owner->name ne $curplayer->name;
+    # checks...
+    return if $country->owner->name ne $curplayer->name; # country owner
+    return if $diff + ($h->{fake_armies}{$id}//0) < 0;   # negative count (free army move! :-) )
 
     # update armies count
-    my ($diff) = @$args;
     my $name = $country->continent->name;
     if ( exists $h->{armies}{$name} ) {
         $h->{armies}{$name} -= $diff;
