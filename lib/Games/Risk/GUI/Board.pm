@@ -139,9 +139,9 @@ sub _onpub_place_armies {
     $c->CanvasBind('<2>', $s->postback('_canvas_click_place_armies', -1) );
 
     # update status msg
-    my $nb = 0;
-    $nb += $_ for values %{ $h->{armies} };
-    $h->{status} = "$nb armies left to place";
+    my $count = 0;
+    $count += $_ for values %{ $h->{armies} };
+    $h->{status} = "$count armies left to place";
 }
 
 
@@ -296,7 +296,7 @@ sub _onpriv_start {
         my ($n, $d) = (split /:/)[0, 4];
         $h->{images}{$n} = $top->Photo(-data => $d);
     }
-	close fh;
+	close $fh;
 
     # top frame
     my $ftop = $top->Frame->pack(@TOP, @XFILLX);
