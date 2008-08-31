@@ -95,6 +95,7 @@ sub _onpub_armies_placed {
     # FIXME: check country belongs to curplayer
     # FIXME: check validity regarding total number
     # FIXME: check validity regarding continent
+    # FIXME: check negative values
     my $left = $h->armies - $nb;
     $h->armies($left);
 
