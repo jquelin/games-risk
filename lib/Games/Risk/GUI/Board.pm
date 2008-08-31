@@ -335,6 +335,18 @@ sub _onpriv_start {
         -image   => $h->{images}{navforward16},
         @ENOFF,
     )->pack(@LEFT);
+    my $lab2 = $fgs->Label(-text=>'attack', @ENOFF)->pack(@LEFT, @XFILL2);
+    my $but_adone = $fgs->Button(
+        -command => $s->postback('_but_attack_done'),
+        -image   => $h->{images}{navforward16},
+        @ENOFF,
+    )->pack(@LEFT);
+    my $lab3 = $fgs->Label(-text=>'move armies', @ENOFF)->pack(@LEFT, @XFILL2);
+    my $but_mdone = $fgs->Button(
+        -command => $s->postback('_but_move_armies_done'),
+        -image   => $h->{images}{playstop16},
+        @ENOFF,
+    )->pack(@LEFT);
     #$fgs->Button(-text=>'attack')->pack(@LEFT, @XFILL2);
     #$fgs->Button(-text=>'move armies')->pack(@LEFT, @XFILL2);
     $h->{labels}{place_armies} = $lab1;
@@ -342,6 +354,8 @@ sub _onpriv_start {
     $h->{buttons}{place_armies_done} = $but_pdone;
     $h->{balloon}->attach($but_predo, -msg=>'undo all');
     $h->{balloon}->attach($but_pdone, -msg=>'ready for attack');
+    $h->{balloon}->attach($but_adone, -msg=>'consolidate');
+    $h->{balloon}->attach($but_mdone, -msg=>'turn finished');
 
     # create canvas
     my $c = $top->Canvas->pack;
