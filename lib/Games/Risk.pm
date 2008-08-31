@@ -475,6 +475,17 @@ L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Games-Risk>
 
 
 
+=head1 ACKNOWLEDGEMENTS
+
+I definitely recommend you to buy a C<risk> board game and play with
+friends, you'll have an exciting time!
+
+Some ideas taken from project C<jrisk>, available at
+L<http://risk.sourceforge.net/>. Others taken from teg, available at
+L<http://teg.sourceforge.net/>
+
+
+
 =head1 AUTHOR
 
 Jerome Quelin, C<< <jquelin@cpan.org> >>
