@@ -64,7 +64,7 @@ sub spawn {
             _initial_armies_placed  => \&_onpriv_turn_begin,
             _begin_turn             => \&_onpriv_turn_begin,
             _turn_began             => \&_onpriv_player_next,
-            _place_armies           => \&_onpriv_place_armies,
+            _player_begun           => \&_onpriv_place_armies,
             _armies_placed          => \&_onpriv_player_next,
             # public events
             window_created      => \&_onpub_window_created,
@@ -342,7 +342,7 @@ sub _onpriv_player_next {
     # update various guis with current player
     K->post('board', 'player_active', $player); # FIXME: broadcast
 
-    K->delay_set('_place_armies'=>$TURN_WAIT);
+    K->delay_set('_player_begun'=>$TURN_WAIT);
 }
 
 
