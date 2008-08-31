@@ -341,7 +341,7 @@ sub _onpriv_player_next {
     # update various guis with current player
     K->post('board', 'player_active', $player); # FIXME: broadcast
 
-    K->yield('_place_armies');
+    K->delay_set('_place_armies'=>$TURN_WAIT);
 }
 
 
