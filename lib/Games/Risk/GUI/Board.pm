@@ -57,7 +57,7 @@ sub spawn {
             chnum                => \&_onpriv_country_redraw,
             chown                => \&_onpriv_country_redraw,
             load_map             => \&_onpub_load_map,
-            place_armies_inital        => \&_onpub_place_armies,
+            place_armies_initial       => \&_onpub_place_armies_initial,
             place_armies_initial_count => \&_onpub_place_armies_initial_count,
             player_active        => \&_onpub_player_active,
             player_add           => \&_onpub_player_add,
