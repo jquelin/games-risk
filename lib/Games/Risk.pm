@@ -57,6 +57,7 @@ sub spawn {
             _players_created    => \&_onpriv_assign_countries,
             _countries_assigned => \&_onpriv_place_initial_armies,
             _place_initial_armies   => \&_onpriv_place_initial_armies,
+            _initial_armies_placed  => \&_onpriv_turn_begin,
             # public events
             window_created      => \&_onpub_window_created,
             map_loaded          => \&_onpub_map_loaded,
@@ -263,6 +264,22 @@ sub _onpriv_place_initial_armies {
         when ('human') { $session = 'board'; } #FIXME: broadcast
     }
     K->post($session, 'place_armies_initial', 1);
+}
+
+
+#
+# initialize list of players for next turn.
+#
+sub _onpriv_turn_begin {
+    my $h = $_[HEAP];
+
+    # get next player
+    $h->players_reset;
+    my $player = $h->players_next;
+    $h->curplayer( $player );
+
+    # placing armies
+    K->yield('_turn_began');
 }
 
 
