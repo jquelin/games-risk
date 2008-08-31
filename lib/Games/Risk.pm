@@ -58,6 +58,7 @@ sub spawn {
             _countries_assigned => \&_onpriv_place_initial_armies,
             _place_initial_armies   => \&_onpriv_place_initial_armies,
             _initial_armies_placed  => \&_onpriv_turn_begin,
+            _begin_turn             => \&_onpriv_turn_begin,
             _turn_began             => \&_onpriv_player_next,
             # public events
             window_created      => \&_onpub_window_created,
@@ -277,6 +278,10 @@ sub _onpriv_player_next {
     # get next player
     my $player = $h->players_next;
     $h->curplayer( $player );
+    if ( not defined $player ) {
+        K->yield('_begin_turn');
+        return;
+    }
 
     # update various guis with current player
     K->post('board', 'player_active', $player); # FIXME: broadcast
