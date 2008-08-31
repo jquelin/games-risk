@@ -57,6 +57,7 @@ sub spawn {
             chnum                => \&_onpriv_country_redraw,
             chown                => \&_onpriv_country_redraw,
             load_map             => \&_onpub_load_map,
+            place_armies_initial_count => \&_onpub_place_armies_initial_count,
             place_armies         => \&_onpub_place_armies,
             player_active        => \&_onpub_player_active,
             player_add           => \&_onpub_player_add,
@@ -135,6 +136,23 @@ sub _onpub_place_armies {
     # update status msg
     my $nb = 0;
     $nb += $_ for values %{ $h->{armies} };
+    $h->{status} = "$nb armies left to place";
+}
+
+
+#
+# event: place_armies_initial_count( $how );
+#
+# request user to place $how much armies on her countries. this is
+# initial armies placement:
+#  - no restriction on where
+#  - armies get placed one by one
+#
+# this event just allows the gui to inform user how many armies will be
+# placed initially.
+#
+sub _onpub_place_armies_initial_count {
+    my ($h, $nb) = @_[HEAP, ARG0];
     $h->{status} = "$nb armies left to place";
 }
 

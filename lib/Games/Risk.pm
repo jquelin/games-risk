@@ -226,6 +226,7 @@ sub _onpriv_place_initial_armies {
         when (undef) {
             $h->players_reset;
             $h->armies(7); # FIXME: hardcoded
+            K->post('board', 'place_armies_initial_count', $h->armies); # FIXME: broadcast
             K->yield('_place_initial_armies');
         }
         when (0) {
