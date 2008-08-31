@@ -117,26 +117,17 @@ sub _onpub_load_map {
 
 
 #
-# event: place_armies_initial( $how [, $continent] );
+# event: place_armies_initial;
 #
-# request user to place $how much armies on her countries (maybe within
-# $continent if supplied).
+# request user to place $how much armies on her countries. this is
+# initial reinforcement, so there's no limit on where to put the army, and
+# armies are put one by one.
 #
 sub _onpub_place_armies_initial {
-    my ($h, $s, $how, $continent) = @_[HEAP, SESSION, ARG0, ARG1];
-
-    my $name = defined $continent ? $continent->name : 'free';
-    $h->{armies}{$name} += $how;
-
+    my ($h, $s) = @_[HEAP, SESSION, ARG0];
 
     my $c = $h->{canvas};
-    $c->CanvasBind('<1>', $s->postback('_canvas_click_place_initial_armies', 1) );
-    $c->CanvasBind('<2>', $s->postback('_canvas_click_place_initial_armies', -1) );
-
-    # update status msg
-    my $nb = 0;
-    $nb += $_ for values %{ $h->{armies} };
-    $h->{status} = "$nb armies left to place";
+    $c->CanvasBind('<1>', $s->postback('_canvas_click_place_initial_armies') );
 }
 
 
@@ -154,6 +145,7 @@ sub _onpub_place_armies_initial {
 sub _onpub_place_armies_initial_count {
     my ($h, $nb) = @_[HEAP, ARG0];
     $h->{status} = "$nb armies left to place";
+    $h->{armies_initial} = $nb;
 }
 
 
@@ -335,8 +327,14 @@ sub _ongui_canvas_motion {
 }
 
 
+#
+# event: _canvas_click_place_initial_armies();
+#
+# Called when mouse click on the canvas during initial armies placement.
+# Will request controller to place one army on the current country.
+#
 sub _ongui_canvas_click_place_initial_armies {
-    my ($h, $args) = @_[HEAP, ARG0];
+    my $h = @_[HEAP];
 
     my $curplayer = $h->{curplayer};
     my $country   = $h->{country};
@@ -344,39 +342,17 @@ sub _ongui_canvas_click_place_initial_armies {
     # check country owner
     return if $country->owner->name ne $curplayer->name;
 
-    # 
-    my ($diff) = @$args;
-    my $name = $country->continent->name;
-    if ( exists $h->{armies}{$name} ) {
-        $h->{armies}{$name} -= $diff;
-        # FIXME: check if possible, otherwise default to free
-    } else {
-        $h->{armies}{free}  -= $diff;
-        # FIXME: check if possible
-    }
+    # change canvas bindings
+    $h->{canvas}->CanvasBind('<1>', undef);
 
-    # redraw country.
-    $h->{fake_armies}{ $country->id } += $diff;
-    K->yield( 'chnum', $country );
+    # update gui
+    $h->{armies_initial}--;
+    my $nb = $h->{armies_initial};
+    $h->{status} = $nb ? "$nb armies left to place" : '';
 
-    # check if we're done
-    # FIXME: >=2 armies to place should have a validation
-    my $nb = 0;
-    $nb += $_ for values %{ $h->{armies} };
-    if ( $nb == 0 ) {
-        $h->{status} = '';
-        my $c = $h->{canvas};
-        $c->CanvasBind('<1>', undef);
-        $c->CanvasBind('<2>', undef);
-
-        foreach my $id ( keys %{ $h->{fake_armies} } ) {
-            my $country = $h->{map}->country_get($id);
-            K->post('risk', 'armies_placed', $country, $h->{fake_armies}{$id});
-        }
-        $h->{fake_armies} = {};
-    } else {
-        $h->{status} = "$nb armies left to place";
-    }
+    # tell controller that we've placed an army. controller will then
+    # ask us to redraw the country.
+    K->post('risk', 'armies_placed', $country, 1);
 }
 
 #--
