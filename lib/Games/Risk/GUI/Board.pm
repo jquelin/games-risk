@@ -51,7 +51,7 @@ sub spawn {
             _start               => \&_onpriv_start,
             _stop                => sub { warn "gui-board shutdown\n" },
             # gui events
-            _canvas_click_place_armies   => \&_ongui_canvas_click_place_armies,
+            _canvas_click_place_initial_armies   => \&_ongui_canvas_click_place_initial_armies,
             _canvas_motion       => \&_ongui_canvas_motion,
             # public events
             chnum                => \&_onpriv_country_redraw,
@@ -120,6 +120,7 @@ sub _onpub_load_map {
 #
 # request user to place $how much armies on her countries (maybe within
 # $continent if supplied).
+#
 sub _onpub_place_armies {
     my ($h, $s, $how, $continent) = @_[HEAP, SESSION, ARG0, ARG1];
 
@@ -128,8 +129,8 @@ sub _onpub_place_armies {
 
 
     my $c = $h->{canvas};
-    $c->CanvasBind('<1>', $s->postback('_canvas_click_place_armies', 1) );
-    $c->CanvasBind('<2>', $s->postback('_canvas_click_place_armies', -1) );
+    $c->CanvasBind('<1>', $s->postback('_canvas_click_place_initial_armies', 1) );
+    $c->CanvasBind('<2>', $s->postback('_canvas_click_place_initial_armies', -1) );
 
     # update status msg
     my $nb = 0;
@@ -316,7 +317,7 @@ sub _ongui_canvas_motion {
 }
 
 
-sub _ongui_canvas_click_place_armies {
+sub _ongui_canvas_click_place_initial_armies {
     my ($h, $args) = @_[HEAP, ARG0];
 
     my $curplayer = $h->{curplayer};
