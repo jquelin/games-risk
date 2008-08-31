@@ -57,6 +57,7 @@ sub spawn {
             chnum                => \&_onpriv_country_redraw,
             chown                => \&_onpriv_country_redraw,
             load_map             => \&_onpub_load_map,
+            place_armies               => \&_onpub_place_armies,
             place_armies_initial       => \&_onpub_place_armies_initial,
             place_armies_initial_count => \&_onpub_place_armies_initial_count,
             player_active        => \&_onpub_player_active,
@@ -113,6 +114,30 @@ sub _onpub_load_map {
     # store map and say we're done
     $h->{map} = $map;
     K->post('risk', 'map_loaded');
+}
+
+
+#
+# event: place_armies( $nb [, $continent] );
+#
+# request user to place $nb armies on her countries (maybe within
+# $continent if supplied).
+#
+sub _onpub_place_armies {
+    my ($h, $s, $nb, $continent) = @_[HEAP, SESSION, ARG0, ARG1];
+
+    my $name = defined $continent ? $continent->name : 'free';
+    $h->{armies}{$name} += $nb;
+
+
+    my $c = $h->{canvas};
+    $c->CanvasBind('<1>', $s->postback('_canvas_click_place_armies', 1) );
+    $c->CanvasBind('<2>', $s->postback('_canvas_click_place_armies', -1) );
+
+    # update status msg
+    my $nb = 0;
+    $nb += $_ for values %{ $h->{armies} };
+    $h->{status} = "$nb armies left to place";
 }
 
 
