@@ -13,8 +13,11 @@ use 5.010;
 use strict;
 use warnings;
 
+use List::Util qw{ first };
+
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ armies continent greyval name owner x y } );
+__PACKAGE__->mk_accessors( qw{ armies continent greyval name owner x y
+    _neighbours } );
 
 # FIXME: resolve circular references for continents and owner
 
@@ -49,6 +52,18 @@ sub chown {
 # For all intents & purposes, id is an alias to greyval
 #
 *id = \&greyval;
+
+
+#
+# my $bool = $country->is_neighbour($id);
+#
+# Return true if $country is a neighbour of country with id $id, false
+# otherwise.
+#
+sub is_neighbour {
+    my ($self, $id) = @_;
+    return first { $_ == $id } @{ $self->_neighbours };
+}
 
 
 1;
@@ -153,6 +168,12 @@ the y location of the country capital.
 
 Change the owner of the C<$country> to be C<$player>. This implies updating
 cross-reference for previous owner and new one.
+
+
+=item * my $bool = $country->is_neighbour( $id )
+
+Return true if $country is a neighbour of country with id $id, false
+otherwise.
 
 
 =back
