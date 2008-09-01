@@ -527,6 +527,7 @@ sub _ongui_canvas_attack_from {
     # checks...
     return unless defined $country;
     return if $country->owner->name ne $curplayer->name; # country owner
+    return if $country->armies == 1;
 
     # record attack source
     $h->{from} = $country;
