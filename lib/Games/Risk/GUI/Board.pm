@@ -609,13 +609,17 @@ sub _ongui_canvas_attack_target {
     }
     return unless $country->is_neighbour( $h->{from}->id );
 
-    # record attack source
-    #$h->{to} = $country;
-
     # update status msg
     $h->{status} = 'Attacking ' . $country->name . ' from ' . $h->{from}->name;
 
-    #$h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_attack_target') );
+    # update gui to reflect new state
+    $h->{canvas}->CanvasBind('<1>', undef);
+    $h->{canvas}->CanvasBind('<3>', undef);
+    $h->{buttons}{attack_done}->configure(@ENOFF);
+    $h->{toplevel}->bind('<Key-Return>', undef);
+
+    # signal controller
+    K->post('risk', 'conflict_start', $h->{from}, $country);
 }
 
 
