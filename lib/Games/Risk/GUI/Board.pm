@@ -59,6 +59,7 @@ sub spawn {
             _but_place_armies_redo               => \&_ongui_but_place_armies_redo,
             _canvas_attack_cancel          => \&_ongui_canvas_attack_cancel,
             _canvas_attack_from            => \&_ongui_canvas_attack_from,
+            _canvas_attack_target          => \&_ongui_canvas_attack_target,
             _canvas_place_armies           => \&_ongui_canvas_place_armies,
             _canvas_place_armies_initial   => \&_ongui_canvas_place_armies_initial,
             _canvas_motion       => \&_ongui_canvas_motion,
@@ -519,7 +520,7 @@ sub _ongui_but_place_armies_redo {
 # Called when user wants to select a country to attack from.
 #
 sub _ongui_canvas_attack_from {
-    my $h = $_[HEAP];
+    my ($h, $s) = @_[HEAP, SESSION];
 
     my $curplayer = $h->{curplayer};
     my $country   = $h->{country};
@@ -534,6 +535,8 @@ sub _ongui_canvas_attack_from {
 
     # update status msg
     $h->{status} = 'Attacking ... from ' . $country->name;
+
+    $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_attack_target') );
 }
 
 
@@ -550,6 +553,34 @@ sub _ongui_canvas_attack_cancel {
 
     # update status msg
     $h->{status} = 'Attacking from ...';
+}
+
+#
+# event: _canvas_attack_target();
+#
+# Called when user wants to select target for her attack.
+#
+sub _ongui_canvas_attack_target {
+   my $h = $_[HEAP];
+
+    my $curplayer = $h->{curplayer};
+    my $country   = $h->{country};
+
+    # checks...
+    return unless defined $country;
+    if ( $country->owner->name eq $curplayer->name ) {
+        # we own this country too, let's just change source of attack.
+        K->yield('_canvas_attack_from');
+        return;
+    }
+
+    # record attack source
+    #$h->{to} = $country;
+
+    # update status msg
+    $h->{status} = 'Attacking ' . $country->name . ' from ' . $h->{from}->name;
+
+    #$h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_attack_target') );
 }
 
 
