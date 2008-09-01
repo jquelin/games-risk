@@ -607,6 +607,7 @@ sub _ongui_canvas_attack_target {
         K->yield('_canvas_attack_from');
         return;
     }
+    return unless $country->is_neighbour( $h->{from}->id );
 
     # record attack source
     #$h->{to} = $country;
