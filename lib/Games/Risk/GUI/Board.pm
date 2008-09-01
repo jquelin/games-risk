@@ -339,8 +339,9 @@ sub _onpriv_start {
     # ballon
     $h->{balloon} = $top->Balloon;
 
-    # top frame
-    my $ftop = $top->Frame->pack(@TOP, @XFILLX);
+
+    #-- top frame
+    my $ftop = $top->Frame->pack(@TOP, @FILLX);
 
     # label to display country pointed by mouse
     $h->{country}       = undef;
@@ -350,13 +351,14 @@ sub _onpriv_start {
         -textvariable => \$h->{country_label},
     )->pack(@RIGHT, @XFILLX);
 
-    # frame for players
+
+    #-- players frame
     my $fpl = $ftop->Frame->pack(@LEFT);
     $fpl->Label(-text=>'Players: ')->pack(@LEFT);
     $h->{frames}{players} = $fpl;
 
     # frame for game state
-    my $fgs = $top->Frame->pack(@TOP, @XFILL2);
+    my $fgs = $top->Frame->pack(@TOP, @FILLX);
     $fgs->Label(-text=>'Game state: ')->pack(@LEFT);
     my $labp = $fgs->Label(-text=>'place armies', @ENOFF)->pack(@LEFT, @XFILL2);
     my $but_predo = $fgs->Button(
@@ -395,10 +397,15 @@ sub _onpriv_start {
     $h->{balloon}->attach($but_adone, -msg=>'consolidate');
     $h->{balloon}->attach($but_mdone, -msg=>'turn finished');
 
-    # create canvas, removing class bindings
-    my $c = $top->Canvas->pack;
+
+    #-- the mid-frame
+    my $fmid = $top->Frame->pack(@TOP, @XFILL2);
+
+    # canvas
+    my $c = $fmid->Canvas->pack(@LEFT);
     $h->{canvas} = $c;
     $c->CanvasBind( '<Motion>', [$s->postback('_canvas_motion'), Ev('x'), Ev('y')] );
+    # removing class bindings
     foreach my $button ( qw{ 4 5 6 7 } ) {
         $top->bind('Tk::Canvas', "<Button-$button>",       undef);
         $top->bind('Tk::Canvas', "<Shift-Button-$button>", undef);
@@ -408,7 +415,43 @@ sub _onpriv_start {
         $top->bind('Tk::Canvas', "<Control-Key-$key>", undef);
     }
 
-    # status bar
+    # left mid-frame
+    my $fleft = $fmid->Frame->pack(@LEFT,@FILL2);
+    # dices
+
+    my $fdice = $fleft->Frame->pack(@TOP,@FILL2);
+    $fdice->Label(-text=>'dice arena')->pack(@TOP,@FILLX);
+    my $fd1 = $fdice->Frame->pack(@TOP,@FILL2);
+    $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
+    $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
+    $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
+    my $fd2 = $fdice->Frame->pack(@TOP,@FILL2);
+    $fd2->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
+    $fd2->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
+
+
+=pod
+
+    # vertical
+
+    my $fdice = $fleft->Frame(-bg=>'yellow')->pack(@TOP,@FILL2);
+    $fdice->Label(-text=>'dice arena')->pack(@TOP,@FILLX);
+    $fdice->Frame->pack(@LEFT,@XFILL2);
+    my $fd1 = $fdice->Frame->pack(@LEFT,@FILL2);
+    $fd1->Label(-image=>$h->{images}{dice_0})->pack(@TOP);
+    $fd1->Label(-image=>$h->{images}{dice_0})->pack(@TOP);
+    $fd1->Label(-image=>$h->{images}{dice_0})->pack(@TOP);
+    $fdice->Frame->pack(@LEFT,@XFILL2);
+    my $fd2 = $fdice->Frame->pack(@LEFT,@FILL2);
+    $fd2->Label(-image=>$h->{images}{dice_0})->pack(@TOP);
+    $fd2->Label(-image=>$h->{images}{dice_0})->pack(@TOP);
+    $fdice->Frame->pack(@LEFT,@XFILL2);
+
+=cut
+
+
+
+    #-- the status bar
     $h->{status} = '';
     my $sb = $top->Frame->pack(@BOTTOM, @FILLX);
     $sb->Label(
@@ -416,7 +459,8 @@ sub _onpriv_start {
         -textvariable => \$h->{status},
     )->pack(@RIGHT,@XFILLX, @PAD1);
 
-    # say that we're done
+
+    #-- say that we're done
     K->post('risk', 'window_created', 'board');
 }
 
