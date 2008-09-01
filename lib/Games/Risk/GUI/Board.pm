@@ -498,6 +498,8 @@ sub _ongui_but_place_armies_done {
     $h->{labels}{place_armies}->configure(@ENOFF);
     $h->{buttons}{place_armies_redo}->configure(@ENOFF);
     $h->{buttons}{place_armies_done}->configure(@ENOFF);
+    $h->{toplevel}->bind('<Key-Escape>', undef); # redo armies placement
+    $h->{toplevel}->bind('<Key-Return>', undef); # done armies placement
 
     # request controller to update
     foreach my $id ( keys %{ $h->{fake_armies} } ) {
@@ -677,6 +679,7 @@ sub _ongui_canvas_place_armies {
 
     # allow redo button
     $h->{buttons}{place_armies_redo}->configure(@ENON);
+    $h->{toplevel}->bind('<Key-Escape>', $s->postback('_but_place_armies_redo'));
 
     # check if we're done
     my $nb = 0;
@@ -685,6 +688,7 @@ sub _ongui_canvas_place_armies {
     if ( $nb == 0 ) {
         # allow button next phase to be clicked
         $h->{buttons}{place_armies_done}->configure(@ENON);
+        $h->{toplevel}->bind('<Key-Return>', $s->postback('_but_place_armies_done'));
         # forbid adding armies
         $h->{canvas}->CanvasBind('<1>', undef);
         $h->{canvas}->CanvasBind('<4>', undef);
