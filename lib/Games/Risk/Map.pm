@@ -95,7 +95,11 @@ sub _parse_file_section_ {
 
 sub _parse_file_section_borders {
     my ($self, $line) = @_;
-    return 'wtf?';
+    my ($id, @neighbours) = split /\s+/, $line;
+    my $country = $self->country_get($id);
+    return "country $id doesn't exist" unless defined $country;
+    $country->_neighbours(\@neighbours);
+    return;
 }
 
 sub _parse_file_section_continents {
