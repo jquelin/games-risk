@@ -113,7 +113,7 @@ sub _onpub_armies_placed {
 #
 # event: attack_done();
 #
-# fired when a player does not want to attack anymor eduring her turn.
+# fired when a player does not want to attack anymore during her turn.
 #
 sub _onpub_attack_end {
     K->delay_set( '_attack_done' => $WAIT );
