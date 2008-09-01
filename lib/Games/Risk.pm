@@ -25,7 +25,7 @@ use aliased 'POE::Kernel' => 'K';
 
 
 # Public variables of the module.
-our $VERSION = '0.2.4';
+our $VERSION = '0.2.5';
 
 Readonly my $TURN_WAIT => 0.300; # FIXME: hardcoded
 Readonly my $WAIT      => 0.100; # FIXME: hardcoded
