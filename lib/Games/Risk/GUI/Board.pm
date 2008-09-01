@@ -340,25 +340,12 @@ sub _onpriv_start {
     $h->{balloon} = $top->Balloon;
 
 
-    #-- top frame
-    my $ftop = $top->Frame->pack(@TOP, @FILLX);
+    #-- main frames
+    my $fleft  = $top->Frame->pack(@LEFT,  @XFILL2);
+    my $fright = $top->Frame->pack(@RIGHT, @FILL2);
 
-    # label to display country pointed by mouse
-    $h->{country}       = undef;
-    $h->{country_label} = '';
-    $ftop->Label(
-        -anchor       => 'e',
-        -textvariable => \$h->{country_label},
-    )->pack(@RIGHT, @XFILLX);
-
-
-    #-- players frame
-    my $fpl = $ftop->Frame->pack(@LEFT);
-    $fpl->Label(-text=>'Players: ')->pack(@LEFT);
-    $h->{frames}{players} = $fpl;
-
-    # frame for game state
-    my $fgs = $top->Frame->pack(@TOP, @FILLX);
+    #-- frame for game state
+    my $fgs = $fleft->Frame->pack(@TOP, @FILLX);
     $fgs->Label(-text=>'Game state: ')->pack(@LEFT);
     my $labp = $fgs->Label(-text=>'place armies', @ENOFF)->pack(@LEFT, @XFILL2);
     my $but_predo = $fgs->Button(
@@ -383,8 +370,6 @@ sub _onpriv_start {
         -image   => $h->{images}{playstop16},
         @ENOFF,
     )->pack(@LEFT);
-    #$fgs->Button(-text=>'attack')->pack(@LEFT, @XFILL2);
-    #$fgs->Button(-text=>'move armies')->pack(@LEFT, @XFILL2);
     $h->{labels}{place_armies} = $labp;
     $h->{labels}{attack}       = $laba;
     $h->{labels}{move_armies}  = $labm;
@@ -398,11 +383,8 @@ sub _onpriv_start {
     $h->{balloon}->attach($but_mdone, -msg=>'turn finished');
 
 
-    #-- the mid-frame
-    my $fmid = $top->Frame->pack(@TOP, @XFILL2);
-
-    # canvas
-    my $c = $fmid->Canvas->pack(@LEFT);
+    #-- canvas
+    my $c = $fleft->Canvas->pack(@TOP);
     $h->{canvas} = $c;
     $c->CanvasBind( '<Motion>', [$s->postback('_canvas_motion'), Ev('x'), Ev('y')] );
     # removing class bindings
@@ -415,12 +397,33 @@ sub _onpriv_start {
         $top->bind('Tk::Canvas', "<Control-Key-$key>", undef);
     }
 
-    # left mid-frame
-    my $fleft = $fmid->Frame->pack(@LEFT,@FILL2);
-    # dices
+    #-- bottom frame
+    # the status bar
+    $h->{status} = '';
+    my $fbot = $fleft->Frame->pack(@BOTTOM, @FILLX);
+    $fbot->Label(
+        -anchor       =>'w',
+        -textvariable => \$h->{status},
+    )->pack(@LEFT,@XFILLX, @PAD1);
 
-    my $fdice = $fleft->Frame->pack(@TOP,@FILL2);
-    $fdice->Label(-text=>'dice arena')->pack(@TOP,@FILLX);
+    # label to display country pointed by mouse
+    $h->{country}       = undef;
+    $h->{country_label} = '';
+    $fbot->Label(
+        -anchor       => 'e',
+        -textvariable => \$h->{country_label},
+    )->pack(@RIGHT, @XFILLX, @PAD1);
+
+
+     #-- players frame
+    my $fpl = $fright->Frame->pack(@TOP);
+    $fpl->Label(-text=>'Players')->pack(@TOP);
+    my $fplist = $fpl->Frame->pack(@TOP);
+    $h->{frames}{players} = $fplist;
+
+    #-- dices frame
+    my $fdice = $fright->Frame->pack(@TOP,@FILLX, -pady=>10);
+    $fdice->Label(-text=>'Dice arena')->pack(@TOP,@FILLX);
     my $fd1 = $fdice->Frame->pack(@TOP,@FILL2);
     $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
     $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
@@ -429,35 +432,6 @@ sub _onpriv_start {
     $fd2->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
     $fd2->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
 
-
-=pod
-
-    # vertical
-
-    my $fdice = $fleft->Frame(-bg=>'yellow')->pack(@TOP,@FILL2);
-    $fdice->Label(-text=>'dice arena')->pack(@TOP,@FILLX);
-    $fdice->Frame->pack(@LEFT,@XFILL2);
-    my $fd1 = $fdice->Frame->pack(@LEFT,@FILL2);
-    $fd1->Label(-image=>$h->{images}{dice_0})->pack(@TOP);
-    $fd1->Label(-image=>$h->{images}{dice_0})->pack(@TOP);
-    $fd1->Label(-image=>$h->{images}{dice_0})->pack(@TOP);
-    $fdice->Frame->pack(@LEFT,@XFILL2);
-    my $fd2 = $fdice->Frame->pack(@LEFT,@FILL2);
-    $fd2->Label(-image=>$h->{images}{dice_0})->pack(@TOP);
-    $fd2->Label(-image=>$h->{images}{dice_0})->pack(@TOP);
-    $fdice->Frame->pack(@LEFT,@XFILL2);
-
-=cut
-
-
-
-    #-- the status bar
-    $h->{status} = '';
-    my $sb = $top->Frame->pack(@BOTTOM, @FILLX);
-    $sb->Label(
-        -anchor       =>'w',
-        -textvariable => \$h->{status},
-    )->pack(@RIGHT,@XFILLX, @PAD1);
 
 
     #-- say that we're done
