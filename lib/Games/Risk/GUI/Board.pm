@@ -425,12 +425,12 @@ sub _onpriv_start {
     my $fdice = $fright->Frame->pack(@TOP,@FILLX, -pady=>10);
     $fdice->Label(-text=>'Dice arena')->pack(@TOP,@FILLX);
     my $fd1 = $fdice->Frame->pack(@TOP,@FILL2);
-    $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
-    $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
-    $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
+    my $a1 = $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
+    my $a2 = $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
+    my $a3 = $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
     my $fd2 = $fdice->Frame->pack(@TOP,@FILL2);
-    $fd2->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
-    $fd2->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
+    my $d1 = $fd2->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
+    my $d2 = $fd2->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
     my $fd3 = $fdice->Frame->pack(@TOP,@FILL2, -pady=>3);
     my $but_reattack = $fd3->Button(
         -image => $h->{images}{actredo22},
@@ -442,7 +442,11 @@ sub _onpriv_start {
         @ENOFF)->pack(@LEFT,@FILLX);
     $h->{balloon}->attach($but_reattack, -msg=>'Attack again');
     $h->{balloon}->attach($but_retreat,  -msg=>'Retreat');
-
+    $h->{labels}{attack_1}  = $a1;
+    $h->{labels}{attack_2}  = $a2;
+    $h->{labels}{attack_3}  = $a3;
+    $h->{labels}{defence_1} = $d1;
+    $h->{labels}{defence_2} = $d2;
 
 
     #-- say that we're done
