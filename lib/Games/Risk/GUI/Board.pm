@@ -508,6 +508,10 @@ sub _onpriv_start {
 sub _ongui_but_attack_done {
     my $h = $_[HEAP];
 
+    # reset src & dst
+    $h->{src} = undef;
+    $h->{dst} = undef;
+
     # update gui
     $h->{status} = '';
     my $c = $h->{canvas};
@@ -614,7 +618,7 @@ sub _ongui_canvas_attack_from {
     return if $country->armies == 1;
 
     # record attack source
-    $h->{from} = $country;
+    $h->{src} = $country;
 
     # update status msg
     $h->{status} = 'Attacking ... from ' . $country->name;
@@ -632,7 +636,7 @@ sub _ongui_canvas_attack_cancel {
     my $h = $_[HEAP];
 
     # cancel attack source
-    $h->{from} = undef;
+    $h->{src} = undef;
 
     # update status msg
     $h->{status} = 'Attacking from ...';
@@ -656,10 +660,13 @@ sub _ongui_canvas_attack_target {
         K->yield('_canvas_attack_from');
         return;
     }
-    return unless $country->is_neighbour( $h->{from}->id );
+    return unless $country->is_neighbour( $h->{src}->id );
 
     # update status msg
-    $h->{status} = 'Attacking ' . $country->name . ' from ' . $h->{from}->name;
+    $h->{status} = 'Attacking ' . $country->name . ' from ' . $h->{src}->name;
+
+    # store opponent
+    $h->{dst} = $country;
 
     # update gui to reflect new state
     $h->{canvas}->CanvasBind('<1>', undef);
@@ -668,7 +675,7 @@ sub _ongui_canvas_attack_target {
     $h->{toplevel}->bind('<Key-Return>', undef);
 
     # signal controller
-    K->post('risk', 'attack', $h->{from}, $country);
+    K->post('risk', 'attack', $h->{src}, $country);
 }
 
 
