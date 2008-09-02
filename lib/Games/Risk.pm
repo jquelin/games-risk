@@ -67,7 +67,7 @@ sub spawn {
             _turn_begun             => \&_onpriv_player_next,
             _player_begun           => \&_onpriv_place_armies,
             _armies_placed          => \&_onpriv_attack,
-            _attack_done            => \&_onpriv_player_next,
+            _attack_end             => \&_onpriv_player_next,
             # public events
             window_created      => \&_onpub_window_created,
             map_loaded          => \&_onpub_map_loaded,
@@ -179,12 +179,12 @@ sub _onpub_attack {
 
 
 #
-# event: attack_done();
+# event: attack_end();
 #
 # fired when a player does not want to attack anymore during her turn.
 #
 sub _onpub_attack_end {
-    K->delay_set( '_attack_done' => $WAIT );
+    K->delay_set( '_attack_end' => $WAIT );
 }
 
 
