@@ -99,6 +99,7 @@ sub _onpub_attack {
     $c->CanvasBind( '<3>', $s->postback('_canvas_attack_cancel') );
     $h->{labels}{attack}->configure(@ENON);
     $h->{buttons}{attack_done}->configure(@ENON);
+    $h->{toplevel}->bind('<Key-Return>', $s->postback('_but_attack_done'));
 
     # update status msg
     $h->{status} = 'Attacking from ...';
