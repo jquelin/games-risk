@@ -135,7 +135,7 @@ sub _onpub_initial_armies_placed {
 
     $country->armies( $country->armies + $nb );
     K->post('board', 'chnum', $country); # FIXME: broadcast
-    K->delay_set( '_place_armies_initial' => $TURN_WAIT );
+    K->delay_set( '_place_armies_initial' => $WAIT );
 }
 
 
