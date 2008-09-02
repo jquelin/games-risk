@@ -65,6 +65,7 @@ sub spawn {
             _canvas_motion       => \&_ongui_canvas_motion,
             # public events
             attack                     => \&_onpub_attack,
+            attack_info                => \&_onpub_attack_info,
             chnum                      => \&_onpub_country_redraw,
             chown                      => \&_onpub_country_redraw,
             load_map             => \&_onpub_load_map,
@@ -101,6 +102,30 @@ sub _onpub_attack {
 
     # update status msg
     $h->{status} = 'Attacking from ...';
+}
+
+
+#
+# event: attack_info($src, $dst, \@attack, \@defence, $loss_src, $loss_dst);
+#
+# Give the result of $dst attack from $src: @attack and @defence dices
+sub _onpub_attack_info {
+    my ($h, $src, $dst, $attack, $defence, $loss_src, $loss_dst) = @_[HEAP, ARG0..$#_];
+
+    # update status msg
+    $h->{status} = 'Attacking ' . $dst->name . ' from ' . $src->name;
+
+    # update attack dices
+    foreach my $i ( 1 .. 3 ) {
+        my $d = $attack->[$i-1] // 0;
+        $h->{labels}{"attack_$i"}->configure(-image=>$h->{images}{"dice_$d"});
+    }
+
+    # update defence dices
+    foreach my $i ( 1 .. 2 ) {
+        my $d = $defence->[$i-1] // 0;
+        $h->{labels}{"defence_$i"}->configure(-image=>$h->{images}{"dice_$d"});
+    }
 }
 
 
