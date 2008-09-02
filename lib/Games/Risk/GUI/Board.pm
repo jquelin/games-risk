@@ -55,6 +55,7 @@ sub spawn {
             _stop                => sub { warn "gui-board shutdown\n" },
             # gui events
             _but_attack_done               => \&_ongui_but_attack_done,
+            _but_attack_redo               => \&_ongui_but_attack_redo,
             _but_place_armies_done               => \&_ongui_but_place_armies_done,
             _but_place_armies_redo               => \&_ongui_but_place_armies_redo,
             _canvas_attack_cancel          => \&_ongui_canvas_attack_cancel,
@@ -534,6 +535,19 @@ sub _ongui_but_attack_done {
 
     # signal controller
     K->post('risk', 'attack_end');
+}
+
+
+#
+# event: _but_attack_redo();
+#
+# attack again the same destination from the same source.
+#
+sub _ongui_but_attack_redo {
+    my $h = $_[HEAP];
+
+    # signal controller
+    K->post('risk', 'attack', $h->{src}, $h->{dst});
 }
 
 
