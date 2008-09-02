@@ -106,7 +106,7 @@ sub _onpub_attack {
 
 
 #
-# event: attack_info($src, $dst, \@attack, \@defence, $loss_src, $loss_dst);
+# event: attack_info($src, $dst, \@attack, \@defence);
 #
 # Give the result of $dst attack from $src: @attack and @defence dices
 sub _onpub_attack_info {
@@ -126,6 +126,18 @@ sub _onpub_attack_info {
         my $d = $defence->[$i-1] // 0;
         $h->{labels}{"defence_$i"}->configure(-image=>$h->{images}{"dice_$d"});
     }
+
+    # update result labels
+    my $ok  = $h->{images}{actcheck16};
+    my $nok = $h->{images}{actcross16};
+    my $nul = $h->{images}{empty16};
+    my $r1 = $attack->[0] <= $defence->[0] ? $nok : $ok;
+    my $r2 = scalar(@$defence) == 2
+        ? $attack->[1] <= $defence->[1] ? $nok : $ok
+        : $nul;
+    $h->{labels}{result_1}->configure( -image => $r1 );
+    $h->{labels}{result_2}->configure( -image => $r2 );
+
 }
 
 
