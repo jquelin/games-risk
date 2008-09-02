@@ -623,7 +623,7 @@ sub _ongui_canvas_attack_target {
     $h->{toplevel}->bind('<Key-Return>', undef);
 
     # signal controller
-    K->post('risk', 'conflict_start', $h->{from}, $country);
+    K->post('risk', 'attack', $h->{from}, $country);
 }
 
 
