@@ -345,7 +345,7 @@ sub _onpriv_start {
     # FIXME: this should be in a sub/method somewhere
     my $path = find_installed(__PACKAGE__);
     my (undef, $dirname, undef) = fileparse($path);
-    $h->{images}{inactive}  = $top->Photo(-file=>"$dirname/icons/player-inactive.png");
+    $h->{images}{inactive}  = $top->Photo(-file=>"$dirname/icons/empty16.png");
     $h->{images}{active}    = $top->Photo(-file=>"$dirname/icons/player-active.png");
     $h->{images}{"dice_$_"} = $top->Photo(-file=>"$dirname/icons/dice-$_.png") for 0..6;
 

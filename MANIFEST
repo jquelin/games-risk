@@ -13,8 +13,8 @@ lib/Games/Risk/GUI/icons/dice-3.png
 lib/Games/Risk/GUI/icons/dice-4.png
 lib/Games/Risk/GUI/icons/dice-5.png
 lib/Games/Risk/GUI/icons/dice-6.png
+lib/Games/Risk/GUI/icons/empty16.png
 lib/Games/Risk/GUI/icons/player-active.png
-lib/Games/Risk/GUI/icons/player-inactive.png
 lib/Games/Risk/GUI/icons/tk_icons
 lib/Games/Risk/Heap.pm
 lib/Games/Risk/Map.pm
