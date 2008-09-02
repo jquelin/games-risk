@@ -101,6 +101,14 @@ sub _onpub_attack {
     $h->{buttons}{attack_done}->configure(@ENON);
     $h->{toplevel}->bind('<Key-Return>', $s->postback('_but_attack_done'));
 
+    if ( defined($h->{src}) && defined($h->{dst}) && $h->{src}->armies>1 ) {
+        $h->{buttons}{attack_redo}->configure(@ENON);
+        $h->{toplevel}->bind('<Key-space>', $s->postback('_but_attack_redo'));
+    } else {
+        $h->{buttons}{attack_redo}->configure(@ENOFF);
+        $h->{toplevel}->bind('<Key-space>', undef);
+    }
+
     # update status msg
     $h->{status} = 'Attacking from ...';
 }
@@ -516,9 +524,12 @@ sub _ongui_but_attack_done {
     # update gui
     $h->{status} = '';
     my $c = $h->{canvas};
+    $h->{toplevel}->bind('<Key-space>', undef);  # can't re-attack
+    $h->{toplevel}->bind('<Key-Return>', undef); # done attack
     $c->CanvasBind('<1>', undef);
     $c->CanvasBind('<3>', undef);
     $h->{labels}{attack}->configure(@ENOFF);
+    $h->{buttons}{attack_redo}->configure(@ENOFF);
     $h->{buttons}{attack_done}->configure(@ENOFF);
 
     # signal controller
