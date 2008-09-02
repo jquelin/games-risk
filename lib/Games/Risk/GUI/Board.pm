@@ -454,12 +454,23 @@ sub _onpriv_start {
     my $a1 = $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
     my $a2 = $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
     my $a3 = $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
+    my $fd3 = $fdice->Frame->pack(@TOP,@FILL2);
+    my $r1 = $fd3->Label(
+        -image => $h->{images}{empty16},
+        -width => 38,
+    )->pack(@LEFT);
+    my $r2 = $fd3->Label(
+        -image => $h->{images}{empty16},
+        -width => 38,
+    )->pack(@LEFT);
     my $fd2 = $fdice->Frame->pack(@TOP,@FILL2);
     my $d1 = $fd2->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
     my $d2 = $fd2->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
     $h->{labels}{attack_1}  = $a1;
     $h->{labels}{attack_2}  = $a2;
     $h->{labels}{attack_3}  = $a3;
+    $h->{labels}{result_1}  = $r1;
+    $h->{labels}{result_2}  = $r2;
     $h->{labels}{defence_1} = $d1;
     $h->{labels}{defence_2} = $d2;
 
