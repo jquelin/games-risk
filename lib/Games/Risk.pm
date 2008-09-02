@@ -67,6 +67,7 @@ sub spawn {
             _turn_begun             => \&_onpriv_player_next,
             _player_begun           => \&_onpriv_place_armies,
             _armies_placed          => \&_onpriv_attack,
+            _attack_done            => \&_onpriv_attack_done,
             _attack_end             => \&_onpriv_player_next,
             # public events
             window_created      => \&_onpub_window_created,
@@ -137,6 +138,7 @@ sub _onpub_attack {
     my @attack;
     push( @attack, int(rand(6)+1) ) for 1 .. $nbdice_src;
     @attack = reverse sort @attack;
+    $h->nbdice($nbdice_src); # store number of attack dice, needed for invading
 
     # roll the dices for the defender. don't defend with 2nd dice if we
     # don't have at least 50% luck to win with it. FIXME: customizable?
@@ -155,26 +157,15 @@ sub _onpub_attack {
     $losses[ $attack[0] <= $defence[0] ? 0 : 1 ]++;
     $losses[ $attack[0] <= $defence[0] ? 0 : 1 ]++ if $nbdice_dst == 2;
 
-    say "a=@attack";
-    say "d=@defence";
-    say "==> @losses";
+    # update countries
+    $src->armies( $src->armies - $losses[0] );
+    $dst->armies( $dst->armies - $losses[1] );
 
     # post damages
     # FIXME: only for human player?
-    K->post('board', 'attack_info', $src, $dst, \@attack, \@defence, @losses); # FIXME: broadcast
-    K->delay_set('chnum' => $ATTACK_WAIT, $src) if $losses[0];
-    K->delay_set('chnum' => $ATTACK_WAIT, $dst) if $losses[1];
+    K->post('board', 'attack_info', $src, $dst, \@attack, \@defence); # FIXME: broadcast
 
-    # check outcome
-    if ( $dst->armies - $losses[1] <= 0 ) {
-        # all your base are belong to us! :-)
-        my $session;
-        given ($player->type) {
-            when ('ai')    { $session = $player->name; }
-            when ('human') { $session = 'board'; } #FIXME: broadcast
-        }
-        K->delay_set('board'=>$ATTACK_WAIT, 'attack_move', $src, $dst, $nbdice_dst);
-    }
+    K->delay_set( '_attack_done' => $ATTACK_WAIT, $src, $dst );
 }
 
 
@@ -297,6 +288,43 @@ sub _onpriv_attack {
         when ('human') { $session = 'board'; } #FIXME: broadcast
     }
     K->post($session, 'attack');
+}
+
+
+#
+# event: _attack_done($src, $dst)
+#
+# check the outcome of attack of $dst from $src only used as a
+# temporization, so this handler will always serve the same event.
+#
+sub _onpriv_attack_done {
+    my ($h, $src, $dst) = @_[HEAP, ARG0..$#_];
+
+    # update gui
+    K->post('board', 'chnum', $src); # FIXME: broadcast
+    K->post('board', 'chnum', $dst); # FIXME: broadcast
+
+    # get who to send msg to
+    my $player = $h->curplayer;
+    my $session;
+    given ($player->type) {
+        when ('ai')    { $session = $player->name; }
+        when ('human') { $session = 'board'; } #FIXME: broadcast
+    }
+
+    # check outcome
+    if ( $dst->armies <= 0 ) {
+        # all your base are belong to us! :-)
+        my $session;
+        given ($player->type) {
+            when ('ai')    { $session = $player->name; }
+            when ('human') { $session = 'board'; } #FIXME: broadcast
+        }
+        K->post($session, 'attack_move', $src, $dst, $h->nbdice);
+    } else {
+        K->post($session, 'attack');
+    }
+
 }
 
 
