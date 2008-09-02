@@ -17,7 +17,7 @@ use Games::Risk::GUI::Board;
 use Games::Risk::Heap;
 use Games::Risk::Map;
 use Games::Risk::Player;
-use List::Util   qw{ shuffle };
+use List::Util   qw{ min shuffle };
 use Module::Util qw{ find_installed };
 use POE;
 use Readonly;
@@ -27,6 +27,7 @@ use aliased 'POE::Kernel' => 'K';
 # Public variables of the module.
 our $VERSION = '0.2.4';
 
+Readonly my $ATTACK_WAIT => 0.300; # FIXME: hardcoded
 Readonly my $TURN_WAIT => 0.300; # FIXME: hardcoded
 Readonly my $WAIT      => 0.100; # FIXME: hardcoded
 
@@ -73,6 +74,7 @@ sub spawn {
             player_created      => \&_onpub_player_created,
             initial_armies_placed       => \&_onpub_initial_armies_placed,
             armies_placed       => \&_onpub_armies_placed,
+            attack                  => \&_onpub_attack,
             attack_end              => \&_onpub_attack_end,
         },
     );
@@ -106,6 +108,72 @@ sub _onpub_armies_placed {
 
     if ( $left == 0 ) {
         K->delay_set( '_armies_placed' => $WAIT );
+    }
+}
+
+
+#
+# event: attack( $src, $dst );
+#
+# fired when a player wants to attack country $dst from $src.
+#
+sub _onpub_attack {
+    my ($h, $src, $dst) = @_[HEAP, ARG0, ARG1];
+
+    my $player = $h->curplayer;
+
+    # FIXME: check player is curplayer
+    # FIXME: check src belongs to curplayer
+    # FIXME: check dst doesn't belong to curplayer
+    # FIXME: check countries src & dst are neighbours
+    # FIXME: check src has at least 1 army
+
+    my $armies_src = $src->armies - 1; # 1 army to hold $src
+    my $armies_dst = $dst->armies;
+
+
+    # roll the dices for the attacker
+    my $nbdice_src = min $armies_src, 3; # don't attack with more than 3 armies
+    my @attack;
+    push( @attack, int(rand(6)+1) ) for 1 .. $nbdice_src;
+    @attack = reverse sort @attack;
+
+    # roll the dices for the defender. don't defend with 2nd dice if we
+    # don't have at least 50% luck to win with it. FIXME: customizable?
+    my $nbdice_dst = $attack[1] > 4 ? 1 : 2;
+    $nbdice_dst = min $armies_dst, $nbdice_dst;
+    my @defence;
+    push( @defence, int(rand(6)+1) ) for 1 .. $nbdice_dst;
+    @defence = reverse sort @defence;
+
+    # compute losses
+    my @results;
+    my @losses  = (0, 0);
+        $attack[0] <= $defence[0] ? 0 : 1,
+        $attack[1] <= $defence[0] ? 0 : 1,
+
+    $losses[ $attack[0] <= $defence[0] ? 0 : 1 ]++;
+    $losses[ $attack[0] <= $defence[0] ? 0 : 1 ]++ if $nbdice_dst == 2;
+
+    say "a=@attack";
+    say "d=@defence";
+    say "==> @losses";
+
+    # post damages
+    # FIXME: only for human player?
+    K->post('board', 'attack_info', $src, $dst, \@attack, \@defence, @losses); # FIXME: broadcast
+    K->delay_set('chnum' => $ATTACK_WAIT, $src) if $losses[0];
+    K->delay_set('chnum' => $ATTACK_WAIT, $dst) if $losses[1];
+
+    # check outcome
+    if ( $dst->armies - $losses[1] <= 0 ) {
+        # all your base are belong to us! :-)
+        my $session;
+        given ($player->type) {
+            when ('ai')    { $session = $player->name; }
+            when ('human') { $session = 'board'; } #FIXME: broadcast
+        }
+        K->delay_set('board'=>$ATTACK_WAIT, 'attack_move', $src, $dst, $nbdice_dst);
     }
 }
 
