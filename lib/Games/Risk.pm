@@ -142,7 +142,9 @@ sub _onpub_attack {
 
     # roll the dices for the defender. don't defend with 2nd dice if we
     # don't have at least 50% luck to win with it. FIXME: customizable?
-    my $nbdice_dst = $attack[1] > 4 ? 1 : 2;
+    my $nbdice_dst = $nbdice_src > 1
+        ? $attack[1] > 4 ? 1 : 2
+        : 2; # defend with 2 dices if attacker has only one
     $nbdice_dst = min $armies_dst, $nbdice_dst;
     my @defence;
     push( @defence, int(rand(6)+1) ) for 1 .. $nbdice_dst;
