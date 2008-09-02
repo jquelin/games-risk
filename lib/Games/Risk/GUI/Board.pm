@@ -397,6 +397,11 @@ sub _onpriv_start {
         @ENOFF,
     )->pack(@LEFT);
     my $laba = $fgs->Label(-text=>'attack', @ENOFF)->pack(@LEFT, @XFILL2);
+    my $but_aredo = $fgs->Button(
+        -command => $s->postback('_but_attack_redo'),
+        -image   => $h->{images}{actredo16},
+        @ENOFF,
+    )->pack(@LEFT);
     my $but_adone = $fgs->Button(
         -command => $s->postback('_but_attack_done'),
         -image   => $h->{images}{navforward16},
@@ -413,10 +418,12 @@ sub _onpriv_start {
     $h->{labels}{move_armies}  = $labm;
     $h->{buttons}{place_armies_redo} = $but_predo;
     $h->{buttons}{place_armies_done} = $but_pdone;
+    $h->{buttons}{attack_redo}       = $but_aredo;
     $h->{buttons}{attack_done}       = $but_adone;
     $h->{buttons}{move_armies_done}  = $but_mdone;
     $h->{balloon}->attach($but_predo, -msg=>'undo all');
     $h->{balloon}->attach($but_pdone, -msg=>'ready for attack');
+    $h->{balloon}->attach($but_aredo, -msg=>'attack again');
     $h->{balloon}->attach($but_adone, -msg=>'consolidate');
     $h->{balloon}->attach($but_mdone, -msg=>'turn finished');
 
