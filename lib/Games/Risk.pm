@@ -603,6 +603,8 @@ in the future for C<Games::Risk>:
 
 =item * screen to customize the new game to be played
 
+=item * config save / restore
+
 =item * saving / loading game
 
 =item * network play
@@ -615,13 +617,17 @@ in the future for C<Games::Risk>:
 
 =item * country cards
 
-=item * continents bonus
+=item * continents bonus, maybe localized?
+
+=item * statistics
 
 =item * prettier map coloring
 
 =item * missions
 
-=item * others to be defined...
+=item * remove all the FIXMEs in the code :-)
+
+=item * other...
 
 =back
 
