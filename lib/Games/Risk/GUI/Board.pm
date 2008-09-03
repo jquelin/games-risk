@@ -73,6 +73,7 @@ sub spawn {
             # public events
             attack                     => \&_onpub_attack,
             attack_info                => \&_onpub_attack_info,
+            attack_move                => \&_onpub_attack_move,
             chnum                      => \&_onpub_country_redraw,
             chown                      => \&_onpub_country_redraw,
             load_map             => \&_onpub_load_map,
@@ -88,7 +89,7 @@ sub spawn {
 
 
 #--
-# Event handlers
+# EVENT HANDLERS
 
 # -- public events
 
@@ -154,6 +155,12 @@ sub _onpub_attack_info {
     $h->{labels}{result_1}->configure( -image => $r1 );
     $h->{labels}{result_2}->configure( -image => $r2 );
 
+}
+
+
+sub _onpub_attack_move {
+    my $h = $_[HEAP];
+    say "move";
 }
 
 
