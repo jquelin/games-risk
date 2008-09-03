@@ -105,10 +105,10 @@ sub _onpriv_start {
     $top->protocol( WM_DELETE_WINDOW => sub{} );
 
     #-- enforce geometry
-    $top->update;               # force redraw
-    $top->resizable(0,0);
-    my ($maxw,$maxh) = $top->geometry =~ /^(\d+)x(\d+)/;
-    $top->maxsize($maxw,$maxh); # bug in resizable: minsize in effet but not maxsize
+    #$top->update;               # force redraw
+    #$top->resizable(0,0);
+    #my ($maxw,$maxh) = $top->geometry =~ /^(\d+)x(\d+)/;
+    #$top->maxsize($maxw,$maxh); # bug in resizable: minsize in effet but not maxsize
 }
 
 
