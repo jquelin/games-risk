@@ -1,6 +1,6 @@
 ---
 name: Games-Risk
-version: 0.3.1
+version: 0.3.2
 author:
   - 'Jerome Quelin <jquelin@cpan.org>'
 abstract: classical 'risk' board game
@@ -44,7 +44,7 @@ recommends:
 provides:
   Games::Risk:
     file: lib/Games/Risk.pm
-    version: 0.3.1
+    version: 0.3.2
   Games::Risk::AI:
     file: lib/Games/Risk/AI.pm
   Games::Risk::AI::Dumb:
@@ -53,6 +53,8 @@ provides:
     file: lib/Games/Risk/GUI.pm
   Games::Risk::GUI::Board:
     file: lib/Games/Risk/GUI/Board.pm
+  Games::Risk::GUI::Invasion:
+    file: lib/Games/Risk/GUI/Invasion.pm
   Games::Risk::Heap:
     file: lib/Games/Risk/Heap.pm
   Games::Risk::Map:

@@ -12,6 +12,11 @@ High-level changelog
 Low-level changelog
 ===================
 
+0.3.2 Wed Sep  3 19:06:37 CEST 2008
+ - gui now prompts for number of armies to invade country
+ - controller updates everyone of invasion + resume attack
+ - some gui enhancements
+
 0.3.1 Wed Sep  3 17:06:58 CEST 2008
  - oops, licence was not consistent between header and pod. fixed: this
    module is available under the terms of the GNU GPL version 3 or later.
