@@ -196,7 +196,7 @@ sub _onpub_attack_move {
     # update the countries
     $src->armies( $src->armies - $nb );
     $dst->armies( $nb );
-    $dst->owner( $src->owner );
+    $dst->chown( $src->owner );
 
     # update the gui
     K->post('board', 'chnum', $src); # FIXME: broadcast
