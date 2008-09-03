@@ -29,6 +29,7 @@ my @XFILLX  = ( -expand => 1, -fill => 'x'    );
 my @XFILL2  = ( -expand => 1, -fill => 'both' );
 
 my @PAD1    = ( -padx => 1, -pady => 1);
+my @PAD20   = ( -padx => 20, -pady => 20);
 
 my @ENON    = ( -state => 'normal' );
 my @ENOFF   = ( -state => 'disabled' );
@@ -99,7 +100,28 @@ sub _onpriv_start {
     $top->withdraw;           # window is hidden first
     $h->{toplevel} = $top;
 
-    $top->Label(-text=>'A country has been conquered!')->pack(@TOP,@XFILL2);
+    my $font = $top->Font(-size=>16);
+    my $title = $top->Label(
+        -text => 'A country has been conquered!',
+        -bg   => 'black',
+        -fg   => 'white',
+        -font => $font,
+    )->pack(@TOP,@PAD20,@XFILL2);
+    my $lab = $top->Label->pack(@TOP,@XFILL2);
+    my $fs  = $top->Frame->pack(@TOP,@XFILL2);
+    $fs->Label(-text=>'Armies to move')->pack(@LEFT);
+    $h->{armies} = 0;  # nb of armies to move
+    my $sld = $fs->Scale(
+        -orient    => 'horizontal',
+        -width     => 5, # height since we're horizontal
+        -showvalue => 1,
+        -variable  => \$h->{armies},
+    )->pack(@LEFT,@XFILL2);
+    my $but = $top->Button(-text=>'Move armies')->pack(@TOP);
+    $h->{lab_info} = $lab;
+    $h->{but_move} = $but;
+    $h->{scale}    = $sld;
+
 
     #-- trap some events
     $top->protocol( WM_DELETE_WINDOW => sub{} );
