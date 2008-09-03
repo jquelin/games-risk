@@ -654,7 +654,7 @@ Jerome Quelin, C<< <jquelin@cpan.org> >>
 Copyright (c) 2008 Jerome Quelin, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+it under the terms of the GNU GPLv3+.
 
 
 =cut
