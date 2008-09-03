@@ -14,6 +14,11 @@ Low-level changelog
  - ais react to attack events (ai:dumb doesn't attack)
  - user interaction to stop attack
 
+**
+
+0.2.5 Mon Sep  1 13:30:10 CEST 2008
+- fix crash when adding army during initial placement on non territory (ocean, ...)
+
 0.2.4 Sun Aug 31 18:19:09 CEST 2008
  - added other game states to top frame
  - removed canvas class bindings: canvas can't be scrolled anymore
