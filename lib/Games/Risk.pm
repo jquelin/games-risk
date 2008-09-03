@@ -186,11 +186,30 @@ sub _onpub_attack_end {
 # request to invade $dst from $src with $nb armies.
 #
 sub _onpub_attack_move {
+    my ($h, $src, $dst, $nb) = @_[HEAP, ARG0..$#_];
+
     # FIXME: check player is curplayer
     # FIXME: check $src & $dst
     # FIXME: check $nb is more than min
     # FIXME: check $nb is less than max - 1
-    say "move";
+
+    # update the countries
+    $src->armies( $src->armies - $nb );
+    $dst->armies( $nb );
+    $dst->owner( $src->owner );
+
+    # update the gui
+    K->post('board', 'chnum', $src); # FIXME: broadcast
+    K->post('board', 'chown', $dst); # FIXME: broadcast
+
+    # continue attack
+    my $session;
+    my $player = $h->curplayer;
+    given ($player->type) {
+        when ('ai')    { $session = $player->name; }
+        when ('human') { $session = 'board'; } #FIXME: broadcast
+    }
+    K->post($session, 'attack');
 }
 
 
