@@ -14,6 +14,7 @@ use strict;
 use warnings;
 
 use File::Basename qw{ fileparse };
+use Games::Risk::GUI::Invasion;
 use Image::Size;
 use Module::Util   qw{ find_installed };
 use POE;
@@ -516,6 +517,9 @@ sub _onpriv_start {
     $h->{labels}{defence_1} = $d1;
     $h->{labels}{defence_2} = $d2;
 
+
+    #-- other window
+    Games::Risk::GUI::Invasion->spawn({parent=>$top});
 
     #-- say that we're done
     K->post('risk', 'window_created', 'board');
