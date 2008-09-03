@@ -55,7 +55,7 @@ sub spawn {
             _start     => \&_onpriv_start,
             _stop                => sub { warn "gui-invasion shutdown\n" },
             # gui events
-            _b_breakpoint_remove   => \&_on_b_breakpoint_remove,
+            _slide_wheel => \&_onpriv_slide_wheel,
             # public events
             move       => \&_onpub_move,
         },
@@ -128,6 +128,9 @@ sub _onpriv_start {
     $h->{but_move} = $but;
     $h->{scale}    = $sld;
 
+    $sld->bind('<4>', $s->postback('_slide_wheel',  1));
+    $sld->bind('<5>', $s->postback('_slide_wheel', -1));
+
 
     #-- trap some events
     $top->protocol( WM_DELETE_WINDOW => sub{} );
@@ -141,6 +144,17 @@ sub _onpriv_start {
 
 
 # -- gui events
+
+#
+# event: _slide_wheel([$diff])
+#
+# mouse wheel on the slider, with an increment of $diff (can be negative
+# too).
+#
+sub _onpriv_slide_wheel {
+    my ($h, $args) = @_[HEAP, ARG0];
+    $h->{armies} += $args->[0];
+}
 
 
 1;
