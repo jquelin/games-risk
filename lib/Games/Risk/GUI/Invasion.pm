@@ -59,7 +59,7 @@ sub spawn {
             _but_move    => \&_onpriv_but_move,
             _slide_wheel => \&_onpriv_slide_wheel,
             # public events
-            move       => \&_onpub_move,
+            attack_move  => \&_onpub_attack_move,
         },
     );
     return $session->ID;
@@ -72,12 +72,12 @@ sub spawn {
 # -- public events
 
 #
-# event: move( $src, $dst, $min );
+# event: attack_move( $src, $dst, $min );
 #
 # request how many armies to move from $src to $dst (minimum $dst,
 # according to the number of attack dices).
 #
-sub _onpub_move {
+sub _onpub_attack_move {
     my ($h, $src, $dst, $min) = @_[HEAP, ARG0..$#_];
 
     # update gui

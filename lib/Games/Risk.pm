@@ -316,9 +316,10 @@ sub _onpriv_attack_done {
         my $session;
         given ($player->type) {
             when ('ai')    { $session = $player->name; }
-            when ('human') { $session = 'board'; } #FIXME: broadcast
+            when ('human') { $session = 'invasion'; } #FIXME: broadcast
         }
         K->post($session, 'attack_move', $src, $dst, $h->nbdice);
+
     } else {
         K->post($session, 'attack');
     }

@@ -74,7 +74,6 @@ sub spawn {
             # public events
             attack                     => \&_onpub_attack,
             attack_info                => \&_onpub_attack_info,
-            attack_move                => \&_onpub_attack_move,
             chnum                      => \&_onpub_country_redraw,
             chown                      => \&_onpub_country_redraw,
             load_map             => \&_onpub_load_map,
@@ -127,6 +126,7 @@ sub _onpub_attack {
 # event: attack_info($src, $dst, \@attack, \@defence);
 #
 # Give the result of $dst attack from $src: @attack and @defence dices
+#
 sub _onpub_attack_info {
     my ($h, $src, $dst, $attack, $defence, $loss_src, $loss_dst) = @_[HEAP, ARG0..$#_];
 
@@ -156,12 +156,6 @@ sub _onpub_attack_info {
     $h->{labels}{result_1}->configure( -image => $r1 );
     $h->{labels}{result_2}->configure( -image => $r2 );
 
-}
-
-
-sub _onpub_attack_move {
-    my ($h, $src, $dst, $min) = @_[HEAP, ARG0..$#_];
-    K->post('invasion', 'move', $src, $dst, $min);
 }
 
 
