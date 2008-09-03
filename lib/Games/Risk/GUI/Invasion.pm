@@ -164,7 +164,8 @@ sub _onpriv_start {
 #
 sub _onpriv_but_move {
     my $h = $_[HEAP];
-    say $h->{armies};
+    K->post('risk', 'attack_move', $h->{armies});
+    $h->{toplevel}->withdraw;
 }
 
 

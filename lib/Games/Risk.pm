@@ -76,6 +76,7 @@ sub spawn {
             initial_armies_placed       => \&_onpub_initial_armies_placed,
             armies_placed       => \&_onpub_armies_placed,
             attack                  => \&_onpub_attack,
+            attack_move             => \&_onpub_attack_move,
             attack_end              => \&_onpub_attack_end,
         },
     );
@@ -176,6 +177,20 @@ sub _onpub_attack {
 #
 sub _onpub_attack_end {
     K->delay_set( '_attack_end' => $WAIT );
+}
+
+
+#
+# event: attack_move($src, $dst, $nb)
+#
+# request to invade $dst from $src with $nb armies.
+#
+sub _onpub_attack_move {
+    # FIXME: check player is curplayer
+    # FIXME: check $src & $dst
+    # FIXME: check $nb is more than min
+    # FIXME: check $nb is less than max - 1
+    say "move";
 }
 
 
