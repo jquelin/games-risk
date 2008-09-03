@@ -13,6 +13,7 @@ use 5.010;
 use strict;
 use warnings;
 
+use List::Util qw{ max };
 use POE;
 use Tk;
 
@@ -79,13 +80,26 @@ sub spawn {
 sub _onpub_move {
     my ($h, $src, $dst, $min) = @_[HEAP, ARG0..$#_];
 
+    # update gui
     my $title = sprintf 'You have conquered %s while attacking from %s.',
         $dst->name, $src->name;
     my $max = $src->armies - 1; # 1 army should guard $src
     $h->{scale}->configure(-from=>$min,-to=>$max);
     $h->{lab_info}->configure(-text=>$title);
     $h->{armies} = $min;
+
+    # move window & enforce geometry
+    my $top = $h->{toplevel};
+    $top->update;               # force redraw
+    my ($x,$y) = $top->parent->geometry =~ /\+(\d+)\+(\d+)$/;
+    $x += max $src->x, $dst->x; $x += 50;
+    $y += max $src->y, $dst->y; $y += 50;
+    $top->geometry("+$x+$y");
     $h->{toplevel}->deiconify;
+
+    #$top->resizable(0,0);
+    #my ($maxw,$maxh) = $top->geometry =~ /^(\d+)x(\d+)/;
+    #$top->maxsize($maxw,$maxh); # bug in resizable: minsize in effet but not maxsize
 }
 
 
@@ -138,12 +152,6 @@ sub _onpriv_start {
 
     #-- trap some events
     $top->protocol( WM_DELETE_WINDOW => sub{} );
-
-    #-- enforce geometry
-    #$top->update;               # force redraw
-    #$top->resizable(0,0);
-    #my ($maxw,$maxh) = $top->geometry =~ /^(\d+)x(\d+)/;
-    #$top->maxsize($maxw,$maxh); # bug in resizable: minsize in effet but not maxsize
 }
 
 
