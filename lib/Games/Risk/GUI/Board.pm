@@ -44,6 +44,12 @@ my @ENOFF   = ( -state => 'disabled' );
 #--
 # Constructor
 
+#
+# my $id = Games::Risk::GUI->spawn( \%params );
+#
+# create a new window containing the board used for the game. refer
+# to the embedded pod for an explanation of the supported options.
+#
 sub spawn {
     my ($type, $args) = @_;
 
