@@ -80,6 +80,10 @@ sub spawn {
 sub _onpub_attack_move {
     my ($h, $src, $dst, $min) = @_[HEAP, ARG0..$#_];
 
+    # store countries
+    $h->{src} = $src;
+    $h->{dst} = $dst;
+
     # update gui
     my $title = sprintf 'You have conquered %s while attacking from %s.',
         $dst->name, $src->name;
@@ -164,7 +168,7 @@ sub _onpriv_start {
 #
 sub _onpriv_but_move {
     my $h = $_[HEAP];
-    K->post('risk', 'attack_move', $h->{armies});
+    K->post('risk', 'attack_move', $h->{src}, $h->{dst}, $h->{armies});
     $h->{toplevel}->withdraw;
 }
 
