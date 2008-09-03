@@ -131,6 +131,8 @@ sub _onpub_attack {
 
     my $armies_src = $src->armies - 1; # 1 army to hold $src
     my $armies_dst = $dst->armies;
+    $h->src($src);
+    $h->dst($dst);
 
 
     # roll the dices for the attacker
