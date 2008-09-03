@@ -55,6 +55,7 @@ sub spawn {
             _start     => \&_onpriv_start,
             _stop                => sub { warn "gui-invasion shutdown\n" },
             # gui events
+            _but_move    => \&_onpriv_but_move,
             _slide_wheel => \&_onpriv_slide_wheel,
             # public events
             move       => \&_onpub_move,
@@ -123,7 +124,10 @@ sub _onpriv_start {
         -showvalue => 1,
         -variable  => \$h->{armies},
     )->pack(@LEFT,@XFILL2);
-    my $but = $top->Button(-text=>'Move armies')->pack(@TOP);
+    my $but = $top->Button(
+        -text    => 'Move armies',
+        -command => $s->postback('_but_move'),
+    )->pack(@TOP);
     $h->{lab_info} = $lab;
     $h->{but_move} = $but;
     $h->{scale}    = $sld;
@@ -144,6 +148,17 @@ sub _onpriv_start {
 
 
 # -- gui events
+
+#
+# event: _but_move()
+#
+# click on the move button, decide to move armies.
+#
+sub _onpriv_but_move {
+    my $h = $_[HEAP];
+    say $h->{armies};
+}
+
 
 #
 # event: _slide_wheel([$diff])
