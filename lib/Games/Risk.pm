@@ -25,7 +25,7 @@ use aliased 'POE::Kernel' => 'K';
 
 
 # Public variables of the module.
-our $VERSION = '0.3.0';
+our $VERSION = '0.3.1';
 
 Readonly my $ATTACK_WAIT => 0.300; # FIXME: hardcoded
 Readonly my $TURN_WAIT => 0.300; # FIXME: hardcoded
@@ -556,6 +556,40 @@ Currently, no params can be tuned.
 
 
 
+=head1 TODO
+
+This is a work in progress. While there are steady improvements, here's
+a rough list (with no order implied whatsoever) of what you can expect
+in the future for C<Games::Risk>:
+
+=over 4
+
+=item * screen to customize the new game to be played
+
+=item * saving / loading game
+
+=item * network play
+
+=item * maps theming
+
+=item * i18n
+
+=item * better ais
+
+=item * country cards
+
+=item * continents bonus
+
+=item * prettier map coloring
+
+=item * missions
+
+=item * others to be defined...
+
+=back
+
+
+
 =head1 BUGS
 
 Please report any bugs or feature requests to C<bug-games-risk at
@@ -603,9 +637,9 @@ L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Games-Risk>
 I definitely recommend you to buy a C<risk> board game and play with
 friends, you'll have an exciting time!
 
-Some ideas taken from project C<jrisk>, available at
-L<http://risk.sourceforge.net/>. Others taken from teg, available at
-L<http://teg.sourceforge.net/>
+Some ideas  & artwork taken from project C<jrisk>, available at
+L<http://risk.sourceforge.net/>. Others (ideas & artwork once again)
+taken from teg, available at L<http://teg.sourceforge.net/>
 
 
 
@@ -620,7 +654,7 @@ Jerome Quelin, C<< <jquelin@cpan.org> >>
 Copyright (c) 2008 Jerome Quelin, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+it under the terms of the GNU GPLv3+.
 
 
 =cut
