@@ -160,8 +160,8 @@ sub _onpub_attack_info {
 
 
 sub _onpub_attack_move {
-    my $h = $_[HEAP];
-    say "move";
+    my ($h, $src, $dst, $min) = @_[HEAP, ARG0..$#_];
+    K->post('invasion', 'move', $src, $dst, $min);
 }
 
 

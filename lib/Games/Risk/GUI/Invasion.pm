@@ -78,7 +78,13 @@ sub spawn {
 sub _onpub_move {
     my ($h, $src, $dst, $min) = @_[HEAP, ARG0..$#_];
 
-    #my $method = $h->{mw}->state eq 'normal' ? 'withdraw' : 'deiconify';
+    my $title = sprintf 'You have conquered %s while attacking from %s.',
+        $dst->name, $src->name;
+    my $max = $src->armies - 1; # 1 army should guard $src
+    $h->{scale}->configure(-from=>$min,-to=>$max);
+    $h->{lab_info}->configure(-text=>$title);
+    $h->{armies} = $min;
+    $h->{toplevel}->deiconify;
 }
 
 
