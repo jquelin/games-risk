@@ -52,6 +52,7 @@ sub spawn {
         args          => [ $args ],
         inline_states => {
             _start     => \&_onpriv_start,
+            _stop                => sub { warn "gui-invasion shutdown\n" },
             # gui events
             _b_breakpoint_remove   => \&_on_b_breakpoint_remove,
             # public events
