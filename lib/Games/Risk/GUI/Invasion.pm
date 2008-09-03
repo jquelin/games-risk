@@ -16,6 +16,8 @@ use warnings;
 use POE;
 use Tk;
 
+use aliased 'POE::Kernel' => 'K';
+
 my @TOP     = ( -side => 'top'    );
 my @BOTTOM  = ( -side => 'bottom' );
 my @LEFT    = ( -side => 'left'   );
@@ -88,6 +90,8 @@ sub _onpub_move {
 sub _onpriv_start {
     my ($h, $s, $opts) = @_[HEAP, SESSION, ARG0];
 
+    K->alias_set('invasion');
+
     #-- create gui
 
     my $top = $opts->{parent}->Toplevel(-title => 'Country invasion');
@@ -153,6 +157,13 @@ parameter is mandatory.
 
 
 =back
+
+
+=begin quiet_pod_coverage
+
+=item * K
+
+=end quiet_pod_coverage
 
 
 
