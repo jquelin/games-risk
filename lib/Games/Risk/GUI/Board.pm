@@ -109,7 +109,9 @@ sub _onpub_attack {
     $h->{buttons}{attack_done}->configure(@ENON);
     $h->{toplevel}->bind('<Key-Return>', $s->postback('_but_attack_done'));
 
-    if ( defined($h->{src}) && defined($h->{dst}) && $h->{src}->armies>1 ) {
+    if ( defined($h->{src}) && defined($h->{dst})
+        && $h->{src}->owner ne $h->{dst}->owner
+        && $h->{src}->armies > 1 ) {
         $h->{buttons}{attack_redo}->configure(@ENON);
         $h->{toplevel}->bind('<Key-space>', $s->postback('_but_attack_redo'));
     } else {
