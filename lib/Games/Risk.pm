@@ -425,16 +425,26 @@ sub _onpriv_place_armies {
     my @countries = $player->countries;
     my $nb = int( scalar(@countries) / 3 );
     $nb = 3 if $nb < 3;
-    $h->armies($nb);
 
-    # FIXME: continent bonus
-
+    # signal player
     my $session;
     given ($player->type) {
         when ('ai')    { $session = $player->name; }
         when ('human') { $session = 'board'; } #FIXME: broadcast
     }
     K->post($session, 'place_armies', $nb);
+
+    # continent bonus
+    my $bonus = 0;
+    foreach my $c( $h->map->continents ) {
+        next unless $c->is_owned($player);
+
+        my $bonus = $c->bonus;
+        $nb += $bonus;
+        K->post($session, 'place_armies', $bonus, $c); # FIXME: broadcast
+    }
+
+    $h->armies($nb);
 }
 
 
