@@ -69,16 +69,18 @@ sub spawn {
             _armies_placed          => \&_onpriv_attack,
             _attack_done            => \&_onpriv_attack_done,
             _attack_end             => \&_onpriv_move_armies,
-            _move_end               => \&_onpriv_player_next,
+            _armies_moved           => \&_onpriv_player_next,
             # public events
             window_created      => \&_onpub_window_created,
             map_loaded          => \&_onpub_map_loaded,
             player_created      => \&_onpub_player_created,
             initial_armies_placed       => \&_onpub_initial_armies_placed,
+            armies_moved                => \&_onpub_armies_moved,
             armies_placed       => \&_onpub_armies_placed,
             attack                  => \&_onpub_attack,
             attack_move             => \&_onpub_attack_move,
             attack_end              => \&_onpub_attack_end,
+            move_armies                 => \&_onpub_move_armies,
         },
     );
     return $session->ID;
@@ -89,6 +91,19 @@ sub spawn {
 # EVENTS HANDLERS
 
 # -- public events
+
+#
+# event: armies_moved();
+#
+# fired when player has finished moved armies at the end of the turn.
+#
+sub _onpub_armies_moved {
+    my $h = $_[HEAP];
+
+    # FIXME: check player is curplayer
+    K->delay_set( '_armies_moved' => $WAIT );
+}
+
 
 #
 # event: armies_placed($country, $nb);
@@ -242,6 +257,23 @@ sub _onpub_initial_armies_placed {
 sub _onpub_map_loaded {
     # FIXME: sync & wait when more than one window
     K->yield('_gui_ready');
+}
+
+
+#
+# event: move_armies( $src, $dst, $nb )
+#
+# fired when player wants to move $nb armies from $src to $dst.
+#
+sub _onpub_move_armies {
+    # FIXME: check player is curplayer
+    # FIXME: check $src & $dst belong to curplayer
+    # FIXME: check $src & $dst are adjacent
+    # FIXME: check $src keeps one army
+    # FIXME: check if army has not yet moved
+    # FIXME: check negative values
+    # FIXME: check max values
+
 }
 
 
