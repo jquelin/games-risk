@@ -75,8 +75,8 @@ sub spawn {
 #
 # event: attack_move( $src, $dst, $min );
 #
-# request how many armies to move from $src to $dst (minimum $dst,
-# according to the number of attack dices).
+# request how many armies to move from $src to $dst (minimum $min,
+# according to the number of attack dices) during invasion.
 #
 sub _onpub_attack_move {
     my ($h, $src, $dst, $min) = @_[HEAP, ARG0..$#_];
@@ -203,7 +203,7 @@ Games::Risk::GUI::MoveArmies - window to move armies
 =head1 SYNOPSYS
 
     my $id = Games::Risk::GUI::MoveArmies->spawn(%opts);
-    Poe::Kernel->post( $id, 'move', $src, $dst, $min );
+    Poe::Kernel->post( $id, 'attack_move', $src, $dst, $min );
 
 
 
@@ -249,7 +249,7 @@ The newly created POE session accepts the following events:
 
 =over 4
 
-=item move( $src, $dst, $min )
+=item attack_move( $src, $dst, $min )
 
 Show window and request how many armies to move from C<$src> to C<$dst>.
 This number should be at least C<$min>, matching the number of dices
