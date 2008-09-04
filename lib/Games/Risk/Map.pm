@@ -27,6 +27,17 @@ __PACKAGE__->mk_accessors( qw{ background greyscale _continents _countries _dirn
 # -- public subs
 
 #
+# my @continents = $map->continents;
+#
+# Return the list of all continents in the $map.
+#
+sub continents {
+    my ($self) = @_;
+    return values %{ $self->_continents };
+}
+
+
+#
 # my @countries = $map->countries;
 #
 # Return the list of all countries in the $map.
@@ -213,6 +224,11 @@ the path to the background image for the board.
 =head2 Object methods
 
 =over 4
+
+=item * my @continents = $map->continents()
+
+Return the list of all continents in the C<$map>.
+
 
 =item * my @countries = $map->countries()
 
