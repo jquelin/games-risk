@@ -68,7 +68,8 @@ sub spawn {
             _player_begun           => \&_onpriv_place_armies,
             _armies_placed          => \&_onpriv_attack,
             _attack_done            => \&_onpriv_attack_done,
-            _attack_end             => \&_onpriv_player_next,
+            _attack_end             => \&_onpriv_move_armies,
+            _move_end               => \&_onpriv_player_next,
             # public events
             window_created      => \&_onpub_window_created,
             map_loaded          => \&_onpub_map_loaded,
@@ -411,6 +412,22 @@ sub _onpriv_load_map {
     my $map = Games::Risk::Map->new;
     $map->load_file($path);
     $h->map($map);
+}
+
+
+#
+# request current player to move armies
+#
+sub _onpriv_move_armies {
+    my $h = $_[HEAP];
+
+    my $player = $h->curplayer;
+    my $session;
+    given ($player->type) {
+        when ('ai')    { $session = $player->name; }
+        when ('human') { $session = 'board'; } #FIXME: broadcast
+    }
+    K->post($session, 'move_armies');
 }
 
 
