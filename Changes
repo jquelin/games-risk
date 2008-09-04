@@ -12,6 +12,14 @@ High-level changelog
 Low-level changelog
 ===================
 
+0.3.3 Thu Sep  4 17:02:26 CEST 2008
+ - continent bonus armies
+ - fix warnings when attacking with only one dice
+ - fix bug due to space launching attacks while current attack not done
+ - bindings enhancements in invasion window
+ - game does not prompt anymore for army move if no choice in number of
+   armies to move
+
 0.3.2 Wed Sep  3 19:06:37 CEST 2008
  - gui now prompts for number of armies to invade country
  - controller updates everyone of invasion + resume attack
