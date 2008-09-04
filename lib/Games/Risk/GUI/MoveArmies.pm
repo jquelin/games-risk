@@ -86,6 +86,9 @@ sub _onpub_attack_move {
     $h->{dst} = $dst;
 
     # update gui
+    my $top = $h->{toplevel};
+    $top->title('Country invasion');
+    $h->{lab_title}->configure(-text => 'A country has been conquered!');
     my $title = sprintf 'You have conquered %s while attacking from %s.',
         $dst->name, $src->name;
     my $max = $src->armies - 1; # 1 army should guard $src
@@ -94,7 +97,6 @@ sub _onpub_attack_move {
     $h->{armies} = $min;
 
     # move window & enforce geometry
-    my $top = $h->{toplevel};
     $top->update;               # force redraw
     my ($x,$y) = $top->parent->geometry =~ /\+(\d+)\+(\d+)$/;
     $x += max $src->x, $dst->x; $x += 50;
@@ -122,13 +124,12 @@ sub _onpriv_start {
 
     #-- create gui
 
-    my $top = $opts->{parent}->Toplevel(-title => 'Country invasion');
+    my $top = $opts->{parent}->Toplevel;
     $top->withdraw;           # window is hidden first
     $h->{toplevel} = $top;
 
     my $font = $top->Font(-size=>16);
     my $title = $top->Label(
-        -text => 'A country has been conquered!',
         -bg   => 'black',
         -fg   => 'white',
         -font => $font,
@@ -147,9 +148,10 @@ sub _onpriv_start {
         -text    => 'Move armies',
         -command => $s->postback('_but_move'),
     )->pack(@TOP);
-    $h->{lab_info} = $lab;
-    $h->{but_move} = $but;
-    $h->{scale}    = $sld;
+    $h->{lab_title} = $title;
+    $h->{lab_info}  = $lab;
+    $h->{but_move}  = $but;
+    $h->{scale}     = $sld;
 
     # window bindings.
     $top->bind('<4>', $s->postback('_slide_wheel',  1));
