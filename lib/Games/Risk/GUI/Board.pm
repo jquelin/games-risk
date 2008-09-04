@@ -560,6 +560,7 @@ sub _ongui_but_attack_redo {
     my $h = $_[HEAP];
 
     # signal controller
+    $h->{toplevel}->bind('<Key-space>', undef);
     K->post('risk', 'attack', $h->{src}, $h->{dst});
 }
 
