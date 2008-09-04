@@ -42,6 +42,19 @@ sub difficulty { return 'very easy' }
 
 
 #
+# my @where = $ai->move_armies;
+#
+# See pod in Games::Risk::AI for information on the goal of this method.
+#
+# This implementation will not move any armies at all.
+#
+sub move_armies {
+    my ($self) = @_;
+    return;
+}
+
+
+#
 # my @where = $ai->place_armies($nb, [$continent]);
 #
 # See pod in Games::Risk::AI for information on the goal of this method.
@@ -120,6 +133,8 @@ C<Games::Risk::AI>):
 =item * description()
 
 =item * difficulty()
+
+=item * move_armies()
 
 =item * place_armies()
 
