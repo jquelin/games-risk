@@ -349,12 +349,19 @@ sub _onpriv_attack_done {
     # check outcome
     if ( $dst->armies <= 0 ) {
         # all your base are belong to us! :-)
-        my $session;
-        given ($player->type) {
-            when ('ai')    { $session = $player->name; }
-            when ('human') { $session = 'invasion'; } #FIXME: broadcast
+        if ( $src->armies - 1 == $h->nbdice ) {
+            # erm, no choice but move all remaining armies
+            K->yield( 'attack_move', $src, $dst, $h->nbdice );
+
+        } else {
+            # ask how many armies to move
+            my $session;
+            given ($player->type) {
+                when ('ai')    { $session = $player->name; }
+                when ('human') { $session = 'invasion'; } #FIXME: broadcast
+            }
+            K->post($session, 'attack_move', $src, $dst, $h->nbdice);
         }
-        K->post($session, 'attack_move', $src, $dst, $h->nbdice);
 
     } else {
         K->post($session, 'attack');
