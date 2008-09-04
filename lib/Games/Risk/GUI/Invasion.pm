@@ -150,8 +150,10 @@ sub _onpriv_start {
     $h->{but_move} = $but;
     $h->{scale}    = $sld;
 
-    $sld->bind('<4>', $s->postback('_slide_wheel',  1));
-    $sld->bind('<5>', $s->postback('_slide_wheel', -1));
+    # window bindings.
+    $top->bind('<4>', $s->postback('_slide_wheel',  1));
+    $top->bind('<5>', $s->postback('_slide_wheel', -1));
+    $top->bind('<Key-Return>', $s->postback('_but_move'));
 
 
     #-- trap some events
