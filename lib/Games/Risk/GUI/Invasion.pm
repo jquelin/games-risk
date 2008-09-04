@@ -154,6 +154,7 @@ sub _onpriv_start {
     $top->bind('<4>', $s->postback('_slide_wheel',  1));
     $top->bind('<5>', $s->postback('_slide_wheel', -1));
     $top->bind('<Key-Return>', $s->postback('_but_move'));
+    $top->bind('<Key-space>', $s->postback('_but_move'));
 
 
     #-- trap some events
