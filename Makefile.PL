@@ -25,6 +25,7 @@ WriteMakefile(
         'Class::Accessor::Fast'  => 0,
         'File::Basename'         => 0,
         'Image::Size'            => 0,
+        'List::MoreUtils'        => 0,
         'List::Util'             => 0,
         'Module::Util'           => 0,
         'POE'                    => 0,

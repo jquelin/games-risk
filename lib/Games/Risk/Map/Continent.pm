@@ -13,6 +13,8 @@ use 5.010;
 use strict;
 use warnings;
 
+use List::MoreUtils qw{ all };
+
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ id bonus name _countries } );
 
@@ -43,6 +45,18 @@ sub add_country {
 sub countries {
     my ($self) = @_;
     return @{ $self->_countries // [] };
+}
+
+
+#
+# my $p0wned = $continent->is_owned( $player );
+#
+# Return true if $player is the owner of all $continent's countries.
+#
+sub is_owned {
+    my ($self, $player) = @_;
+
+    return all { $_->owner eq $player } $self->countries;
 }
 
 
@@ -125,6 +139,11 @@ located within the C<$continent>.
 =item * my @countries = $continent->countries()
 
 Return the list of countries located in C<$continent>.
+
+
+=item * my $p0wned = $continent->is_owned( $player )
+
+Return true if C<$player> is the owner of all C<$continent>'s countries.
 
 
 =back
