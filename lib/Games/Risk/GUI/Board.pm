@@ -77,6 +77,7 @@ sub spawn {
             chnum                      => \&_onpub_country_redraw,
             chown                      => \&_onpub_country_redraw,
             load_map             => \&_onpub_load_map,
+            move_armies                   => \&_onpub_move_armies,
             place_armies               => \&_onpub_place_armies,
             place_armies_initial       => \&_onpub_place_armies_initial,
             place_armies_initial_count => \&_onpub_place_armies_initial_count,
@@ -240,6 +241,29 @@ sub _onpub_load_map {
     # store map and say we're done
     $h->{map} = $map;
     K->post('risk', 'map_loaded');
+}
+
+
+#
+# event: move_armies()
+#
+# request user to move armies if he wants to.
+#
+sub _onpub_move_armies {
+    my ($h, $s) = @_[HEAP, SESSION];
+
+    # initialiaze moves
+    $h->{move_armies} = [];
+    $h->{fake_armies_in}  = {};
+    $h->{fake_armies_out} = {};
+
+   # update the gui to reflect the new state.
+    my $c = $h->{canvas};
+    $c->CanvasBind( '<1>', $s->postback('_canvas_move_armies') );
+    $c->CanvasBind( '<3>', $s->postback('_canvas_move_armies') );
+    $h->{labels}{move_armies}->configure(@ENON);
+    $h->{buttons}{move_armies_done}->configure(@ENON);
+    $h->{status} = 'Moving armies from...';
 }
 
 
