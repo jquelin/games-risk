@@ -7,7 +7,7 @@
 #
 #
 
-package Games::Risk::GUI::Invasion;
+package Games::Risk::GUI::MoveArmies;
 
 use 5.010;
 use strict;
@@ -43,10 +43,10 @@ my @ENOFF   = ( -state => 'disabled' );
 # Constructor
 
 #
-# my $id = Games::Risk::GUI::Invasion->spawn( \%params );
+# my $id = Games::Risk::GUI::MoveArmies->spawn( \%params );
 #
-# create a new window to prompt for armies moved during invasion. refer
-# to the embedded pod for an explanation of the supported options.
+# create a new window to prompt for armies to move. refer to the
+# embedded pod for an explanation of the supported options.
 #
 sub spawn {
     my ($class, $args) = @_;
@@ -55,7 +55,7 @@ sub spawn {
         args          => [ $args ],
         inline_states => {
             _start     => \&_onpriv_start,
-            _stop                => sub { warn "gui-invasion shutdown\n" },
+            _stop                => sub { warn "gui-movearmies shutdown\n" },
             # gui events
             _but_move    => \&_onpriv_but_move,
             _slide_wheel => \&_onpriv_slide_wheel,
@@ -118,7 +118,7 @@ sub _onpub_attack_move {
 sub _onpriv_start {
     my ($h, $s, $opts) = @_[HEAP, SESSION, ARG0];
 
-    K->alias_set('invasion');
+    K->alias_set('move-armies');
 
     #-- create gui
 
@@ -196,29 +196,29 @@ __END__
 
 =head1 NAME
 
-Games::Risk::GUI::Invasion - window to move armies
+Games::Risk::GUI::MoveArmies - window to move armies
 
 
 
 =head1 SYNOPSYS
 
-    my $id = Games::Risk::GUI::Invasion->spawn(%opts);
+    my $id = Games::Risk::GUI::MoveArmies->spawn(%opts);
     Poe::Kernel->post( $id, 'move', $src, $dst, $min );
 
 
 
 =head1 DESCRIPTION
 
-LBD::Breakpoints implements a POE session, creating a Tk window listing
-the breakpoints set in a debugger session. The window can be hidden at
-will.
+C<GR::GUI::MoveArmies> implements a POE session, creating a Tk window to
+ask the number of armies to move between adjacent countries. Once used,
+the window is hidden to be reused later on.
 
 
 
 =head1 CLASS METHODS
 
 
-=head2 my $id = Games::Risk::GUI::Invasion->spawn( %opts );
+=head2 my $id = Games::Risk::GUI::MoveArmies->spawn( %opts );
 
 Create a window requesting for amies move, and return the associated POE
 session ID. One can pass the following options:

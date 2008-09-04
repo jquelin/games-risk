@@ -18,6 +18,7 @@ requires:
   Readonly: 0
   Tk: 0
   Tk::Balloon: 0
+  Tk::Font: 0
   Tk::JPEG: 0
   Tk::PNG: 0
   UNIVERSAL::require: 0
@@ -35,6 +36,7 @@ build_requires:
   Test::More: 0
   Tk: 0
   Tk::Balloon: 0
+  Tk::Font: 0
   Tk::JPEG: 0
   Tk::PNG: 0
   UNIVERSAL::require: 0
@@ -55,8 +57,8 @@ provides:
     file: lib/Games/Risk/GUI.pm
   Games::Risk::GUI::Board:
     file: lib/Games/Risk/GUI/Board.pm
-  Games::Risk::GUI::Invasion:
-    file: lib/Games/Risk/GUI/Invasion.pm
+  Games::Risk::GUI::MoveArmies:
+    file: lib/Games/Risk/GUI/MoveArmies.pm
   Games::Risk::Heap:
     file: lib/Games/Risk/Heap.pm
   Games::Risk::Map:

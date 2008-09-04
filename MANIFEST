@@ -16,7 +16,7 @@ lib/Games/Risk/GUI/icons/dice-6.png
 lib/Games/Risk/GUI/icons/empty16.png
 lib/Games/Risk/GUI/icons/player-active.png
 lib/Games/Risk/GUI/icons/tk_icons
-lib/Games/Risk/GUI/Invasion.pm
+lib/Games/Risk/GUI/MoveArmies.pm
 lib/Games/Risk/Heap.pm
 lib/Games/Risk/Map.pm
 lib/Games/Risk/Map/Continent.pm

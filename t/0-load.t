@@ -19,7 +19,7 @@ BEGIN { use_ok( 'Games::Risk::AI' ); }
 BEGIN { use_ok( 'Games::Risk::AI::Dumb' ); }
 BEGIN { use_ok( 'Games::Risk::GUI' ); }
 BEGIN { use_ok( 'Games::Risk::GUI::Board' ); }
-BEGIN { use_ok( 'Games::Risk::GUI::Invasion' ); }
+BEGIN { use_ok( 'Games::Risk::GUI::MoveArmies' ); }
 BEGIN { use_ok( 'Games::Risk::Heap' ); }
 BEGIN { use_ok( 'Games::Risk::Map' ); }
 BEGIN { use_ok( 'Games::Risk::Map::Continent' ); }
