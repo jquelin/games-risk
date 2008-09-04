@@ -89,6 +89,7 @@ sub spawn {
             _stop          => sub { warn "AI shutdown\n" },
             # public events
             attack                   => \&_onpub_attack,
+            move_armies              => \&_onpub_move_armies,
             place_armies     => \&_onpub_place_armies,
             place_armies_initial     => \&_onpub_place_armies_initial,
         },
@@ -131,6 +132,24 @@ sub _onpub_attack {
     my $ai = $_[HEAP];
     my ($action, @params) = $ai->attack;
     K->post('risk', $action, @params);
+}
+
+
+#
+# event: move_armies();
+#
+# request the ai to move armies between adjacent countries, or to end
+# its move turn.
+#
+sub _onpub_move_armies {
+    my $ai = $_[HEAP];
+
+    foreach my $move ( $ai->move_armies ) {
+        my ($src, $dst, $nb) = @$move;
+        K->post('risk', 'move_armies', $src, $dst, $nb);
+    }
+
+    K->post('risk', 'armies_moved');
 }
 
 
@@ -260,6 +279,13 @@ Return a short description of the ai and how it works.
 =item * my $str = $ai->difficulty()
 
 Return a difficulty level for the ai.
+
+
+=item * my @moves = $ai->move_armies()
+
+Return a list of C<[ $src, $dst, $nb ]> tuples (two
+C<Games::Risk::Map::Country> and an integer), each defining a move of
+C<$nb> armies from $dst to C<$src>.
 
 
 =item * my @where = $ai->place_armies($nb, [$continent])
