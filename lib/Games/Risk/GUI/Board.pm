@@ -63,6 +63,7 @@ sub spawn {
             # gui events
             _but_attack_done               => \&_ongui_but_attack_done,
             _but_attack_redo               => \&_ongui_but_attack_redo,
+            _but_move_armies_done          => \&_ongui_but_move_armies_done,
             _but_place_armies_done               => \&_ongui_but_place_armies_done,
             _but_place_armies_redo               => \&_ongui_but_place_armies_redo,
             _canvas_attack_cancel          => \&_ongui_canvas_attack_cancel,
@@ -586,6 +587,37 @@ sub _ongui_but_attack_redo {
     # signal controller
     $h->{toplevel}->bind('<Key-space>', undef);
     K->post('risk', 'attack', $h->{src}, $h->{dst});
+}
+
+
+#
+# event: _but_move_armies_done()
+#
+# moving armies at the end of the turn is finished.
+#
+sub _ongui_but_move_armies_done {
+    my $h = $_[HEAP];
+
+    # update gui
+    my $c = $h->{canvas};
+    $h->{toplevel}->bind('<Key-Return>', undef);
+    $c->CanvasBind( '<1>', undef );
+    $c->CanvasBind( '<3>', undef );
+    $h->{labels}{move_armies}->configure(@ENOFF);
+    $h->{buttons}{move_armies_done}->configure(@ENOFF);
+    $h->{status} = '';
+
+    # signal controller
+    foreach my $move ( @{ $h->{move_armies} } ) {
+        my ($src, $dst, $nb) = @$move;
+        K->post('risk', 'move_armies', $src, $dst, $nb);
+    }
+    K->post('risk', 'armies_moved');
+
+    # reset internals
+    $h->{move_armies} = [];
+    $h->{fake_armies_in}  = {};
+    $h->{fake_armies_out} = {};
 }
 
 
