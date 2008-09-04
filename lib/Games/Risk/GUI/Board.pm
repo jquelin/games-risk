@@ -265,6 +265,7 @@ sub _onpub_move_armies {
     $h->{labels}{move_armies}->configure(@ENON);
     $h->{buttons}{move_armies_done}->configure(@ENON);
     $h->{status} = 'Moving armies from...';
+    $h->{toplevel}->bind('<Key-Return>', $s->postback('_but_move_armies_done'));
 }
 
 
