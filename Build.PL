@@ -26,6 +26,7 @@ my %requires = (
     'Readonly'               => 0,
     'Tk'                     => 0,
     'Tk::Balloon'            => 0,
+    'Tk::Font'               => 0,
     'Tk::JPEG'               => 0,
     'Tk::PNG'                => 0,
     'UNIVERSAL::require'     => 0,

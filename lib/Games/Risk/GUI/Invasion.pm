@@ -16,6 +16,7 @@ use warnings;
 use List::Util qw{ max };
 use POE;
 use Tk;
+use Tk::Font;
 
 use aliased 'POE::Kernel' => 'K';
 
