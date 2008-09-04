@@ -173,7 +173,7 @@ sub _onpub_country_redraw {
 
     my $id    = $country->id;
     my $owner = $country->owner;
-    my $fake  = $h->{fake_armies}{$id} // 0;
+    my $fake  = $h->{fake_armies_in}{$id} // 0;
 
     # FIXME: change radius to reflect number of armies
     my ($radius, $fill_color, $text) = defined $owner
@@ -595,14 +595,14 @@ sub _ongui_but_place_armies_done {
     $h->{toplevel}->bind('<Key-Return>', undef); # done armies placement
 
     # request controller to update
-    foreach my $id ( keys %{ $h->{fake_armies} } ) {
-        next if $h->{fake_armies}{$id} == 0; # don't send null reinforcements
+    foreach my $id ( keys %{ $h->{fake_armies_in} } ) {
+        next if $h->{fake_armies_in}{$id} == 0; # don't send null reinforcements
         my $country = $h->{map}->country_get($id);
-        K->post('risk', 'armies_placed', $country, $h->{fake_armies}{$id});
+        K->post('risk', 'armies_placed', $country, $h->{fake_armies_in}{$id});
     }
     $h->{armies} = {};
     $h->{armies_backup} = {};
-    $h->{fake_armies} = {};
+    $h->{fake_armies_in} = {};
 }
 
 
@@ -614,9 +614,9 @@ sub _ongui_but_place_armies_done {
 sub _ongui_but_place_armies_redo {
     my ($h, $s) = @_[HEAP, SESSION];
 
-    foreach my $id ( keys %{ $h->{fake_armies} } ) {
-        next if $h->{fake_armies}{$id} == 0;
-        delete $h->{fake_armies}{$id};
+    foreach my $id ( keys %{ $h->{fake_armies_in} } ) {
+        next if $h->{fake_armies_in}{$id} == 0;
+        delete $h->{fake_armies_in}{$id};
         my $country = $h->{map}->country_get($id);
         K->yield('chnum', $country);
     }
@@ -634,7 +634,7 @@ sub _ongui_but_place_armies_redo {
         $h->{armies}{$k} = $v; # restore initial value
         $nb += $v;
     }
-    $h->{fake_armies} = {};
+    $h->{fake_armies_in} = {};
 
     # updatee status
     $h->{status} = "$nb armies left to place";
@@ -681,6 +681,7 @@ sub _ongui_canvas_attack_cancel {
     # update status msg
     $h->{status} = 'Attacking from ...';
 }
+
 
 #
 # event: _canvas_attack_target();
@@ -762,7 +763,7 @@ sub _ongui_canvas_place_armies {
 
     # checks...
     return if $country->owner->name ne $curplayer->name; # country owner
-    return if $diff + ($h->{fake_armies}{$id}//0) < 0;   # negative count (free army move! :-) )
+    return if $diff + ($h->{fake_armies_in}{$id}//0) < 0;   # negative count (free army move! :-) )
 
     # update armies count
     my $name = $country->continent->name;
@@ -775,7 +776,7 @@ sub _ongui_canvas_place_armies {
     }
 
     # redraw country.
-    $h->{fake_armies}{ $country->id } += $diff;
+    $h->{fake_armies_in}{ $country->id } += $diff;
     K->yield( 'chnum', $country );
 
     # allow redo button
