@@ -156,7 +156,8 @@ sub _onpub_attack {
     # compute losses
     my @losses  = (0, 0);
     $losses[ $attack[0] <= $defence[0] ? 0 : 1 ]++;
-    $losses[ $attack[1] <= $defence[1] ? 0 : 1 ]++ if $nbdice_dst == 2;
+    $losses[ $attack[1] <= $defence[1] ? 0 : 1 ]++
+        if $nbdice_src >= 2 && $nbdice_dst == 2;
 
     # update countries
     $src->armies( $src->armies - $losses[0] );

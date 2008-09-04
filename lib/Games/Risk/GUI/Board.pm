@@ -152,7 +152,7 @@ sub _onpub_attack_info {
     my $nok = $h->{images}{actcross16};
     my $nul = $h->{images}{empty16};
     my $r1 = $attack->[0] <= $defence->[0] ? $nok : $ok;
-    my $r2 = scalar(@$defence) == 2
+    my $r2 = scalar(@$attack) >= 2 && scalar(@$defence) == 2
         ? $attack->[1] <= $defence->[1] ? $nok : $ok
         : $nul;
     $h->{labels}{result_1}->configure( -image => $r1 );
