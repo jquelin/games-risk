@@ -71,6 +71,7 @@ sub spawn {
             _canvas_attack_target          => \&_ongui_canvas_attack_target,
             _canvas_move_armies_cancel     => \&_ongui_canvas_move_armies_cancel,
             _canvas_move_armies_from       => \&_ongui_canvas_move_armies_from,
+            _canvas_move_armies_target     => \&_ongui_canvas_move_armies_target,
             _canvas_place_armies           => \&_ongui_canvas_place_armies,
             _canvas_place_armies_initial   => \&_ongui_canvas_place_armies_initial,
             _canvas_motion       => \&_ongui_canvas_motion,
@@ -843,6 +844,41 @@ sub _ongui_canvas_move_armies_from {
     $h->{status} = 'Moving armies from ' . $country->name . ' to ...';
 
     $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_move_armies_target') );
+}
+
+
+#
+# event: _canvas_move_armies_target();
+#
+# Called when user wants to select target for her armies move.
+#
+sub _ongui_canvas_move_armies_target {
+   my $h = $_[HEAP];
+
+    my $curplayer = $h->{curplayer};
+    my $country   = $h->{country};
+
+    # checks...
+    return unless defined $country;
+    return if $country->owner->name ne $curplayer->name;
+    return unless $country->is_neighbour( $h->{src}->id );
+
+    # update status msg
+    $h->{status} = 'Moving armies from ' . $h->{src}->name . ' to ' .  $country->name;
+
+    # store opponent
+    $h->{dst} = $country;
+
+    # update gui to reflect new state
+    $h->{canvas}->CanvasBind('<1>', undef);
+    $h->{canvas}->CanvasBind('<3>', undef);
+    $h->{buttons}{move_armies_done}->configure(@ENOFF);
+    $h->{toplevel}->bind('<Key-Return>', undef);
+
+    # signal controller
+    my $src = $h->{src};
+    my $max = $src->armies - 1 - $h->{fake_armies_out}{ $src->id }//0;
+    K->post('move-armies', 'move_armies', $h->{src}, $country, $max);
 }
 
 

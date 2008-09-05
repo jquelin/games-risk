@@ -61,6 +61,7 @@ sub spawn {
             _slide_wheel => \&_onpriv_slide_wheel,
             # public events
             attack_move  => \&_onpub_attack_move,
+            move_armies  => \&_onpub_move_armies,
         },
     );
     return $session->ID;
@@ -95,6 +96,43 @@ sub _onpub_attack_move {
     $h->{scale}->configure(-from=>$min,-to=>$max);
     $h->{lab_info}->configure(-text=>$title);
     $h->{armies} = $min;
+
+    # move window & enforce geometry
+    $top->update;               # force redraw
+    my ($x,$y) = $top->parent->geometry =~ /\+(\d+)\+(\d+)$/;
+    $x += max $src->x, $dst->x; $x += 50;
+    $y += max $src->y, $dst->y; $y += 50;
+    $top->geometry("+$x+$y");
+    $h->{toplevel}->deiconify;
+
+    #$top->resizable(0,0);
+    #my ($maxw,$maxh) = $top->geometry =~ /^(\d+)x(\d+)/;
+    #$top->maxsize($maxw,$maxh); # bug in resizable: minsize in effet but not maxsize
+}
+
+
+#
+# event: move_armies( $src, $dst, $max );
+#
+# request how many armies to move from $src to $dst, but no more than
+# $max (armies having already travelled this turn.
+#
+sub _onpub_move_armies {
+    my ($h, $src, $dst, $max) = @_[HEAP, ARG0..$#_];
+
+    # store countries
+    $h->{src} = $src;
+    $h->{dst} = $dst;
+
+    # update gui
+    my $top = $h->{toplevel};
+    $top->title('Moving armies');
+    $h->{lab_title}->configure(-text => 'Consolidate your positions');
+    my $title = sprintf 'Moving armies from %s to %s.',
+        $dst->name, $src->name;
+    $h->{scale}->configure(-from=>0,-to=>$max);
+    $h->{lab_info}->configure(-text=>$title);
+    $h->{armies} = 0;
 
     # move window & enforce geometry
     $top->update;               # force redraw
@@ -206,6 +244,7 @@ Games::Risk::GUI::MoveArmies - window to move armies
 
     my $id = Games::Risk::GUI::MoveArmies->spawn(%opts);
     Poe::Kernel->post( $id, 'attack_move', $src, $dst, $min );
+    Poe::Kernel->post( $id, 'move_armies', $src, $dst, $max );
 
 
 
