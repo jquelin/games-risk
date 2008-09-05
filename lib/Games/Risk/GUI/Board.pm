@@ -289,6 +289,9 @@ sub _onpub_move_armies_move {
     $h->{fake_armies_out}{$srcid} += $nb;
     $h->{fake_armies_in}{$dstid}  += $nb;
 
+    # save move for later
+    push @{ $h->{move_armies} }, [$src, $dst, $nb];
+
     # update the gui
     K->yield('chnum', $src);
     K->yield('chnum', $dst);
