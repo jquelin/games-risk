@@ -295,6 +295,8 @@ sub _onpub_move_armies_move {
     my $c = $h->{canvas};
     $c->CanvasBind( '<1>', $s->postback('_canvas_move_armies_from') );
     $c->CanvasBind( '<3>', $s->postback('_canvas_move_armies_cancel') );
+    $h->{buttons}{move_armies_done}->configure(@ENON);
+    $h->{toplevel}->bind('<Key-Return>', $s->postback('_but_move_armies_done'));
     $h->{status} = 'Moving armies from...';
 }
 
