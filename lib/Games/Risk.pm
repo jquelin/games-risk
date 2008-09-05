@@ -542,13 +542,13 @@ sub _onpriv_place_armies_initial {
     }
 
     # get next player that should place an army
-    my $player = $h->players_next;
+    my $player = $h->player_next;
 
     if ( not defined $player ) {
         # all players have placed an army once. so let's just decrease
         # count of armies to be placed, and start again.
 
-        $player = $h->players_next;
+        $player = $h->player_next;
         $left--;
         $h->armies( $left );
 
@@ -580,7 +580,7 @@ sub _onpriv_player_next {
     my $h = $_[HEAP];
 
     # get next player
-    my $player = $h->players_next;
+    my $player = $h->player_next;
     $h->curplayer( $player );
     if ( not defined $player ) {
         K->yield('_begin_turn');

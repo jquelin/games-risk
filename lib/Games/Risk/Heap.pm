@@ -29,18 +29,6 @@ __PACKAGE__->mk_accessors( qw{
 # -- public methods
 
 #
-# my @players = $heap->players;
-#
-# Return the list of current players (Games::Risk::Player objects).
-# Note that some of those players may have already lost.
-#
-sub players {
-    my ($self) = @_;
-    return @{ $self->_players };
-}
-
-
-#
 # $heap->player_lost( $player );
 #
 # Remove a player from the list of active players.
@@ -55,11 +43,11 @@ sub player_lost {
 
 
 #
-# my $player = $heap->players_next;
+# my $player = $heap->player_next;
 #
 # Return the next player to play, or undef if the turn is over.
 #
-sub players_next {
+sub player_next {
     my ($self) = @_;
 
     my @done = @{ $self->_players_turn_done };
@@ -79,6 +67,18 @@ sub players_next {
     $self->_players_turn_todo( \@todo );
 
     return $next;
+}
+
+
+#
+# my @players = $heap->players;
+#
+# Return the list of current players (Games::Risk::Player objects).
+# Note that some of those players may have already lost.
+#
+sub players {
+    my ($self) = @_;
+    return @{ $self->_players };
 }
 
 
@@ -180,7 +180,7 @@ some of those players may have already lost.
 Remove $player from the list of active players.
 
 
-=item * my $player = $heap->players_next()
+=item * my $player = $heap->player_next()
 
 Return the next player to play, or undef if the turn is over. Of course,
 players that have lost will never be returned.
