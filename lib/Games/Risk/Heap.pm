@@ -20,7 +20,7 @@ use aliased 'POE::Kernel' => 'K';
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{
     armies curplayer dst map move_in move_out nbdice src wait_for
-    _players _players_turn_done _players_turn_todo
+    _players _players_active _players_turn_done _players_turn_todo
 } );
 
 #--
@@ -35,10 +35,16 @@ __PACKAGE__->mk_accessors( qw{
 #
 sub player_lost {
     my ($self, $player) = @_;
+
+    # remove from current turn
     my @done = grep { $_ ne $player } @{ $self->_players_turn_done };
     my @todo = grep { $_ ne $player } @{ $self->_players_turn_todo };
     $self->_players_turn_done( \@done );
     $self->_players_turn_todo( \@todo );
+
+    # remove from active list
+    my @active = grep { $_ ne $player } @{ $self->_players_active };
+    $self->_players_active( \@active );
 }
 
 
@@ -90,7 +96,8 @@ sub players {
 #
 sub players_reset {
     my ($self) = @_;
-    my @players = $self->players;
+
+    my @players = @{ $self->_players_active };
     $self->_players_turn_done([]);
     $self->_players_turn_todo( \@players );
 }

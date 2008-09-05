@@ -445,6 +445,7 @@ sub _onpriv_create_players {
     }
 
     $h->_players(\@players); # FIXME: private
+    $h->_players_active(\@players); # FIXME: private
 }
 
 
