@@ -266,6 +266,8 @@ sub _onpub_map_loaded {
 # fired when player wants to move $nb armies from $src to $dst.
 #
 sub _onpub_move_armies {
+    my ($h, $src, $dst, $nb) = @_[HEAP, ARG0..$#_];
+
     # FIXME: check player is curplayer
     # FIXME: check $src & $dst belong to curplayer
     # FIXME: check $src & $dst are adjacent
@@ -274,6 +276,14 @@ sub _onpub_move_armies {
     # FIXME: check negative values
     # FIXME: check max values
 
+    $h->move_out->{ $src->id } += $nb;
+    $h->move_in->{  $dst->id } += $nb;
+
+    $src->armies( $src->armies - $nb );
+    $dst->armies( $dst->armies + $nb );
+
+    K->post('board', 'chnum', $src); # FIXME: broadcast
+    K->post('board', 'chnum', $dst); # FIXME: broadcast
 }
 
 
@@ -453,6 +463,11 @@ sub _onpriv_load_map {
 sub _onpriv_move_armies {
     my $h = $_[HEAP];
 
+    # reset counters
+    $h->move_in( {} );
+    $h->move_out( {} );
+
+    # add current player to move
     my $player = $h->curplayer;
     my $session;
     given ($player->type) {

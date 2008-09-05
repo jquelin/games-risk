@@ -19,7 +19,7 @@ use aliased 'POE::Kernel' => 'K';
 
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{
-    armies curplayer dst map nbdice src wait_for
+    armies curplayer dst map move_in move_out nbdice src wait_for
     _players _players_turn_done _players_turn_todo
 } );
 
