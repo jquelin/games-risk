@@ -85,6 +85,8 @@ sub _onpub_attack_move {
     # store countries
     $h->{src} = $src;
     $h->{dst} = $dst;
+    $h->{reply}   = 'attack_move';
+    $h->{replyto} = 'risk'; # FIXME: from?
 
     # update gui
     my $top = $h->{toplevel};
@@ -123,6 +125,8 @@ sub _onpub_move_armies {
     # store countries
     $h->{src} = $src;
     $h->{dst} = $dst;
+    $h->{reply}   = 'move_armies_move';
+    $h->{replyto} = 'board'; # FIXME: from?
 
     # update gui
     my $top = $h->{toplevel};
@@ -212,7 +216,7 @@ sub _onpriv_start {
 #
 sub _onpriv_but_move {
     my $h = $_[HEAP];
-    K->post('risk', 'attack_move', $h->{src}, $h->{dst}, $h->{armies});
+    K->post($h->{replyto}, $h->{reply}, $h->{src}, $h->{dst}, $h->{armies});
     $h->{toplevel}->withdraw;
 }
 
