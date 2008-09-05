@@ -178,11 +178,12 @@ sub _onpub_country_redraw {
 
     my $id    = $country->id;
     my $owner = $country->owner;
-    my $fake  = $h->{fake_armies_in}{$id} // 0;
+    my $fakein  = $h->{fake_armies_in}{$id}  // 0;
+    my $fakeout = $h->{fake_armies_out}{$id} // 0;
 
     # FIXME: change radius to reflect number of armies
     my ($radius, $fill_color, $text) = defined $owner
-            ? (7, $owner->color, $country->armies + $fake )
+            ? (7, $owner->color, $country->armies + $fakein - $fakeout )
             : (5,       'white', '');
 
     my $x = $country->x;
