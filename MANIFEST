@@ -15,6 +15,7 @@ lib/Games/Risk/GUI/icons/dice-5.png
 lib/Games/Risk/GUI/icons/dice-6.png
 lib/Games/Risk/GUI/icons/empty16.png
 lib/Games/Risk/GUI/icons/player-active.png
+lib/Games/Risk/GUI/icons/player-lost.png
 lib/Games/Risk/GUI/icons/tk_icons
 lib/Games/Risk/GUI/MoveArmies.pm
 lib/Games/Risk/Heap.pm
