@@ -877,9 +877,9 @@ sub _ongui_canvas_move_armies_target {
     $h->{buttons}{move_armies_done}->configure(@ENOFF);
     $h->{toplevel}->bind('<Key-Return>', undef);
 
-    # signal controller
+    # request user how many armies to move
     my $src = $h->{src};
-    my $max = $src->armies - 1 - $h->{fake_armies_out}{ $src->id }//0;
+    my $max = $src->armies - 1 - ($h->{fake_armies_out}{ $src->id }//0);
     K->post('move-armies', 'move_armies', $h->{src}, $country, $max);
 }
 
