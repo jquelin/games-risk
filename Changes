@@ -3,7 +3,8 @@ Revision history for Games::Risk.
 High-level changelog
 ====================
 
-0.3.x    attack
+0.4.x    move armies
+0.3.x    attack, bonus, gui enhancements
 0.2.x    turn reinforcements, gui enhancements
 0.1.x    gui enhancements, internal cleanups, some ai work, initial armies placement
 0.0.x    initial work, basic gui display
@@ -11,6 +12,11 @@ High-level changelog
 
 Low-level changelog
 ===================
+
+0.4.0 Fri Sep  5 16:06:21 CEST 2008
+ - possibility to move armies at the end of turn
+
+**
 
 0.3.3 Thu Sep  4 17:02:26 CEST 2008
  - continent bonus armies
