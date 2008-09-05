@@ -16,14 +16,6 @@ To install this module, run the following commands:
     make install
 
 
-Or, using Module::Builder:
-
-    perl Build.PL
-    ./Build
-    ./Build test
-    ./Build install
-
-
 
 SUPPORT AND DOCUMENTATION
 =========================
