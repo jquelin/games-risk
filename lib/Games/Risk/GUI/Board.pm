@@ -832,11 +832,12 @@ sub _ongui_canvas_move_armies_from {
 
     my $curplayer = $h->{curplayer};
     my $country   = $h->{country};
+    my $id        = $country->id;
 
     # checks...
     return unless defined $country;
     return if $country->owner->name ne $curplayer->name; # country owner
-    return if $country->armies == 1;
+    return if $country->armies - ($h->{fake_armies_out}{$id}//0) == 1;
 
     # record move source
     $h->{src} = $country;
