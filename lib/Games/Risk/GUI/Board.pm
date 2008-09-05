@@ -427,9 +427,10 @@ sub _onpub_player_add {
 sub _onpub_player_lost {
     my ($h, $player) = @_[HEAP, ARG0];
 
-    # update player label
-    $h->{labels}{players}{ $player->name }
-        ->configure( -image => $h->{images}{lost} );
+    # update gui
+    my $name = $player->name;
+    $h->{labels}{players}{$name} ->configure( -image => $h->{images}{lost} );
+    $h->{status} = "Player $name has lost";
 }
 
 
