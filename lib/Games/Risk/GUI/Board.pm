@@ -88,6 +88,7 @@ sub spawn {
             place_armies_initial_count => \&_onpub_place_armies_initial_count,
             player_active        => \&_onpub_player_active,
             player_add           => \&_onpub_player_add,
+            player_lost          => \&_onpub_player_lost,
         },
     );
     return $session->ID;
@@ -418,6 +419,20 @@ sub _onpub_player_add {
 }
 
 
+#
+# event: player_lost($player)
+#
+# mark $player as lost.
+#
+sub _onpub_player_lost {
+    my ($h, $player) = @_[HEAP, ARG0];
+
+    # update player label
+    $h->{labels}{players}{ $player->name }
+        ->configure( -image => $h->{images}{lost} );
+}
+
+
 # -- private events
 
 #
@@ -439,6 +454,7 @@ sub _onpriv_start {
     my $path = find_installed(__PACKAGE__);
     my (undef, $dirname, undef) = fileparse($path);
     $h->{images}{empty16}   = $top->Photo(-file=>"$dirname/icons/empty16.png");
+    $h->{images}{lost}      = $top->Photo(-file=>"$dirname/icons/player-lost.png");
     $h->{images}{active}    = $top->Photo(-file=>"$dirname/icons/player-active.png");
     $h->{images}{inactive}  = $h->{images}{empty16};
     $h->{images}{"dice_$_"} = $top->Photo(-file=>"$dirname/icons/dice-$_.png") for 0..6;

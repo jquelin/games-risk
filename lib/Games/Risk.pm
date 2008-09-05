@@ -215,6 +215,7 @@ sub _onpub_attack_move {
     if ( scalar($looser->countries) == 1 ) {
         # omg! one player left
         $h->player_lost($looser);
+        K->post('board', 'player_lost', $looser); # FIXME: broadcast
     }
 
     # update the countries
