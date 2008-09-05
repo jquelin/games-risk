@@ -203,7 +203,7 @@ The following methods are available for C<Games::Risk::Player> objects:
 
 =item * my @countries = $player->countries()
 
-Return the list of countries (c>Games::Risk::Map::Country> objects)
+Return the list of countries (C<Games::Risk::Map::Country> objects)
 currently owned by C<$player>.
 
 
