@@ -69,6 +69,8 @@ sub spawn {
             _canvas_attack_cancel          => \&_ongui_canvas_attack_cancel,
             _canvas_attack_from            => \&_ongui_canvas_attack_from,
             _canvas_attack_target          => \&_ongui_canvas_attack_target,
+            _canvas_move_armies_cancel     => \&_ongui_canvas_move_armies_cancel,
+            _canvas_move_armies_from       => \&_ongui_canvas_move_armies_from,
             _canvas_place_armies           => \&_ongui_canvas_place_armies,
             _canvas_place_armies_initial   => \&_ongui_canvas_place_armies_initial,
             _canvas_motion       => \&_ongui_canvas_motion,
@@ -260,8 +262,8 @@ sub _onpub_move_armies {
 
    # update the gui to reflect the new state.
     my $c = $h->{canvas};
-    $c->CanvasBind( '<1>', $s->postback('_canvas_move_armies') );
-    $c->CanvasBind( '<3>', $s->postback('_canvas_move_armies') );
+    $c->CanvasBind( '<1>', $s->postback('_canvas_move_armies_from') );
+    $c->CanvasBind( '<3>', $s->postback('_canvas_move_armies_cancel') );
     $h->{labels}{move_armies}->configure(@ENON);
     $h->{buttons}{move_armies_done}->configure(@ENON);
     $h->{status} = 'Moving armies from...';
@@ -799,6 +801,48 @@ sub _ongui_canvas_motion {
     $h->{country_label} = defined $country
         ? join(' - ', $country->continent->name, $country->name)
         : '';
+}
+
+
+#
+# event: _canvas_move_armies_cancel();
+#
+# Called when user wants to deselect a country to move from.
+#
+sub _ongui_canvas_move_armies_cancel {
+    my $h = $_[HEAP];
+
+    # cancel attack source
+    $h->{src} = undef;
+
+    # update status msg
+    $h->{status} = 'Moving armies from ...';
+}
+
+
+#
+# event: _canvas_move_armies_from();
+#
+# Called when user selects country to move armies from.
+#
+sub _ongui_canvas_move_armies_from {
+    my ($h, $s) = @_[HEAP, SESSION];
+
+    my $curplayer = $h->{curplayer};
+    my $country   = $h->{country};
+
+    # checks...
+    return unless defined $country;
+    return if $country->owner->name ne $curplayer->name; # country owner
+    return if $country->armies == 1;
+
+    # record move source
+    $h->{src} = $country;
+
+    # update status msg
+    $h->{status} = 'Moving armies from ' . $country->name . ' to ...';
+
+    $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_move_armies_target') );
 }
 
 
