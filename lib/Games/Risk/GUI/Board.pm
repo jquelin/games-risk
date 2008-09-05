@@ -82,6 +82,7 @@ sub spawn {
             chown                      => \&_onpub_country_redraw,
             load_map             => \&_onpub_load_map,
             move_armies                   => \&_onpub_move_armies,
+            move_armies_move              => \&_onpub_move_armies_move,
             place_armies               => \&_onpub_place_armies,
             place_armies_initial       => \&_onpub_place_armies_initial,
             place_armies_initial_count => \&_onpub_place_armies_initial_count,
@@ -270,6 +271,31 @@ sub _onpub_move_armies {
     $h->{buttons}{move_armies_done}->configure(@ENON);
     $h->{status} = 'Moving armies from...';
     $h->{toplevel}->bind('<Key-Return>', $s->postback('_but_move_armies_done'));
+}
+
+
+#
+# event: move_armies_move($src, $dst, $nb);
+#
+# request user to move $nb armies from $src to $dst.
+#
+sub _onpub_move_armies_move {
+    my ($h, $s, $src, $dst, $nb) = @_[HEAP, SESSION, ARG0..$#_];
+
+    my $srcid = $src->id;
+    my $dstid = $dst->id;
+
+    # update the countries
+    $h->{fake_armies_out}{$srcid} += $nb;
+    $h->{fake_armies_in}{$dstid}  += $nb;
+
+    # update the gui
+    K->yield('chnum', $src);
+    K->yield('chnum', $dst);
+    my $c = $h->{canvas};
+    $c->CanvasBind( '<1>', $s->postback('_canvas_move_armies_from') );
+    $c->CanvasBind( '<3>', $s->postback('_canvas_move_armies_cancel') );
+    $h->{status} = 'Moving armies from...';
 }
 
 
