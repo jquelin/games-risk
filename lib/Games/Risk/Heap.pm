@@ -41,6 +41,20 @@ sub players {
 
 
 #
+# $heap->player_lost( $player );
+#
+# Remove a player from the list of active players.
+#
+sub player_lost {
+    my ($self, $player) = @_;
+    my @done = grep { $_ ne $player } @{ $self->_players_turn_done };
+    my @todo = grep { $_ ne $player } @{ $self->_players_turn_todo };
+    $self->_players_turn_done( \@done );
+    $self->_players_turn_todo( \@todo );
+}
+
+
+#
 # my $player = $heap->players_next;
 #
 # Return the next player to play, or undef if the turn is over.
@@ -159,6 +173,11 @@ the current C<Games::Risk::Map> object of the game.
 
 Return the C<Games::Risk::Player> objects of the current game. Note that
 some of those players may have already lost.
+
+
+=item * $heap->player_lost( $player )
+
+Remove $player from the list of active players.
 
 
 =item * my $player = $heap->players_next()
