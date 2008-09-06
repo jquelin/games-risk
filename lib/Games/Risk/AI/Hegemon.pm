@@ -13,7 +13,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use List::Util qw{ shuffle };
+use List::MoreUtils qw{ all };
 
 use base qw{ Games::Risk::AI };
 
@@ -145,6 +145,19 @@ sub _description {
         players.
 
     };
+}
+
+
+#
+# my $bool = $self->_own_neighbours($country);
+#
+# Return true if ai also owns all the neighbours of $country.
+#
+sub _own_neighbours {
+    my ($self, $country) = @_;
+
+    my $player = $self->player;
+    return all { $_->owner eq $player } $country->neighbours;
 }
 
 
