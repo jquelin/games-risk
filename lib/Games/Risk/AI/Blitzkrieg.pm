@@ -107,14 +107,11 @@ sub place_armies {
     #    : $player->countries;
 
     # find a country that can be used as an attack base.
-    # note that since we don't shuffle countries, and that GR:Player and
-    # GR:Map:Country both return the countries in the same order, this
-    # will effectively pile up new armies on the same territory.
     my $where;
     COUNTRY:
-    foreach my $country ( $player->countries )  {
+    foreach my $country ( shuffle $player->countries )  {
         NEIGHBOUR:
-        foreach my $neighbour ( $country->neighbours ) {
+        foreach my $neighbour ( shuffle $country->neighbours ) {
             # don't attack ourself
             next NEIGHBOUR if $neighbour->owner eq $player;
             $where = $country;
