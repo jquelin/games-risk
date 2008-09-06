@@ -38,7 +38,7 @@ sub attack {
 #
 # Return a difficulty level for the ai.
 #
-sub difficulty { return 'very easy' }
+sub difficulty { return 'easy' }
 
 
 #
