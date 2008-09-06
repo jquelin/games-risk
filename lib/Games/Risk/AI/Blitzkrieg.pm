@@ -27,8 +27,9 @@ use base qw{ Games::Risk::AI };
 #
 # See pod in Games::Risk::AI for information on the goal of this method.
 #
-# This implementation never attacks anything, it ends its attack turn as soon
-# as it begins. Therefore, it always returns ('attack_end', undef, undef).
+# This implementation attacks starting from its attack base (where it
+# has piled new armies). It tries not to suicide itself by always
+# requiring 4 armies at least in the attacking country.
 #
 sub attack {
     my ($self) = @_;
@@ -94,8 +95,8 @@ sub move_armies {
 #
 # See pod in Games::Risk::AI for information on the goal of this method.
 #
-# This implementation will place the armies randomly on the continent owned by
-# the AI, maybe restricted by $continent if it is specified.
+# This implementation will place all the armies on the same country,
+# which will be its attack base during attack phase.
 #
 sub place_armies {
     my ($self, $nb, $continent) = @_;
