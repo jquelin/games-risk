@@ -89,6 +89,7 @@ sub spawn {
             _stop          => sub { warn "AI shutdown\n" },
             # public events
             attack                   => \&_onpub_attack,
+            attack_move              => \&_onpub_attack_move,
             move_armies              => \&_onpub_move_armies,
             place_armies     => \&_onpub_place_armies,
             place_armies_initial     => \&_onpub_place_armies_initial,
@@ -132,6 +133,19 @@ sub _onpub_attack {
     my $ai = $_[HEAP];
     my ($action, @params) = $ai->attack;
     K->post('risk', $action, @params);
+}
+
+
+#
+# event: attack_move($src, $dst, $min);
+#
+# request the ai to move some armies from $src to $dst (minimum $min)
+# after a succesful attack.
+#
+sub _onpub_attack_move {
+    my ($ai, $src, $dst, $min) = @_[HEAP, ARG0..$#_];
+    my $nb = $ai->attack_move($src, $dst, $min);
+    K->post('risk', 'attack_move', $src, $dst, $nb);
 }
 
 
@@ -269,6 +283,12 @@ An AI object will typically implements the following methods:
 Return the attack plan, which can be either C<attack> or C<attack_end> to stop
 this step of the ai's turn. If C<attack> is returned, then it should also
 supply C<$from> and C<$country> parameters to know the attack parameters.
+
+
+=item * my $nb = $ai->attack_move($src, $dst, $min)
+
+Return the number of armies to move from C<$src> to C<$dst> after a
+successful attack (minimum C<$nb> to match the number of attack dices).
 
 
 =item * my $str = $ai->description()
