@@ -27,9 +27,10 @@ use aliased 'POE::Kernel' => 'K';
 # Public variables of the module.
 our $VERSION = '0.4.2';
 
-Readonly my $ATTACK_WAIT => 0.300; # FIXME: hardcoded
-Readonly my $TURN_WAIT => 0.300; # FIXME: hardcoded
-Readonly my $WAIT      => 0.100; # FIXME: hardcoded
+Readonly my $ATTACK_WAIT_AI    => 1.250; # FIXME: hardcoded
+Readonly my $ATTACK_WAIT_HUMAN => 0.300; # FIXME: hardcoded
+Readonly my $TURN_WAIT         => 1.800; # FIXME: hardcoded
+Readonly my $WAIT              => 0.100; # FIXME: hardcoded
 
 
 #--
@@ -183,7 +184,8 @@ sub _onpub_attack {
     # FIXME: only for human player?
     K->post('board', 'attack_info', $src, $dst, \@attack, \@defence); # FIXME: broadcast
 
-    K->delay_set( '_attack_done' => $ATTACK_WAIT, $src, $dst );
+    my $wait = $player->type eq 'ai' ? $ATTACK_WAIT_AI : $ATTACK_WAIT_HUMAN;
+    K->delay_set( '_attack_done' => $wait, $src, $dst );
 }
 
 

@@ -27,6 +27,9 @@ use Tk::PNG;
 
 use aliased 'POE::Kernel' => 'K';
 
+Readonly my $WAIT_CLEAN_AI    => 1.000;
+Readonly my $WAIT_CLEAN_HUMAN => 0.250;
+
 my @TOP     = ( -side => 'top'    );
 my @BOTTOM  = ( -side => 'bottom' );
 my @LEFT    = ( -side => 'left'   );
@@ -175,7 +178,8 @@ sub _onpub_attack_info {
     $c->lower('attack',"text&&$srcid");
     $c->raise('attack',"circle&&$dstid");
     $c->raise('attack',"text&&$dstid");
-    K->delay_set('_clean_attack' => 0.250, $i);
+    my $wait = $h->{curplayer}->type eq 'ai' ? $WAIT_CLEAN_AI : $WAIT_CLEAN_HUMAN;
+    K->delay_set('_clean_attack' => $wait, $i);
     $i++;
 
     # update result labels
