@@ -119,6 +119,20 @@ sub description {
 }
 
 
+#
+# my @where = $ai->move_armies;
+#
+# See pod in Games::Risk::AI for information on the goal of this method.
+#
+# This implementation will not move any armies at all.
+#
+sub move_armies {
+    my ($self) = @_;
+    return;
+}
+
+
+
 #--
 # EVENTS HANDLERS
 

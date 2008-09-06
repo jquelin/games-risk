@@ -46,12 +46,9 @@ sub difficulty { return 'very easy' }
 #
 # See pod in Games::Risk::AI for information on the goal of this method.
 #
-# This implementation will not move any armies at all.
+# This implementation will not move any armies at all, and thus inherits
+# this method from Games::Risk::AI.
 #
-sub move_armies {
-    my ($self) = @_;
-    return;
-}
 
 
 #
