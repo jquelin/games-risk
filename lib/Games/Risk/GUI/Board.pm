@@ -169,8 +169,10 @@ sub _onpub_attack_info {
         -fill  => $h->{curplayer}->color,
         -width => 2,
     );
-    my $id = $src->id;
-    $c->lower('attack',"circle&&$id");
+    my $srcid = $src->id;
+    my $dstid = $dst->id;
+    $c->lower('attack',"circle&&$srcid");
+    $c->raise('attack',"circle&&$dstid");
     K->delay_set('_clean_attack' => 0.250, $i);
     $i++;
 
