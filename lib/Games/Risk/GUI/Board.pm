@@ -172,7 +172,9 @@ sub _onpub_attack_info {
     my $srcid = $src->id;
     my $dstid = $dst->id;
     $c->lower('attack',"circle&&$srcid");
+    $c->lower('attack',"text&&$srcid");
     $c->raise('attack',"circle&&$dstid");
+    $c->raise('attack',"text&&$dstid");
     K->delay_set('_clean_attack' => 0.250, $i);
     $i++;
 
