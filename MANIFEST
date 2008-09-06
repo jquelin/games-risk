@@ -2,6 +2,7 @@ bin/prisk
 Changes
 lib/Games/Risk.pm
 lib/Games/Risk/AI.pm
+lib/Games/Risk/AI/Blitzkrieg.pm
 lib/Games/Risk/AI/Dumb.pm
 lib/Games/Risk/GUI.pm
 lib/Games/Risk/GUI/Board.pm
