@@ -55,14 +55,38 @@ sub chown {
 
 
 #
-# my $bool = $country->is_neighbour($id);
+# my $bool = $country->is_neighbour($c);
 #
-# Return true if $country is a neighbour of country with id $id, false
+# Return true if $country is a neighbour of country $c, false
 # otherwise.
 #
 sub is_neighbour {
-    my ($self, $id) = @_;
-    return first { $_ == $id } @{ $self->_neighbours };
+    my ($self, $c) = @_;
+    return first { $_ == $c } $self->neighbours;
+}
+
+
+#
+# $country->neighbour_add( $c );
+#
+# Add $c to the list of $country's neighbours. This is not reciprocical.
+#
+sub neighbour_add {
+    my ($self, $c) = @_;
+    my @neighbours = $self->neighbours;
+    push @neighbours, $c;
+    $self->_neighbours( \@neighbours );
+}
+
+
+#
+# my @neighbours = $country->neighbours;
+#
+# Return the list of the country's neighbours.
+#
+sub neighbours {
+    my ($self) = @_;
+    return @{ $self->_neighbours // [] };
 }
 
 
@@ -170,10 +194,20 @@ Change the owner of the C<$country> to be C<$player>. This implies updating
 cross-reference for previous owner and new one.
 
 
-=item * my $bool = $country->is_neighbour( $id )
+=item * my $bool = $country->is_neighbour( $c )
 
-Return true if $country is a neighbour of country with id $id, false
+Return true if $country is a neighbour of country C<$c>, false
 otherwise.
+
+
+=item * my @neighbours = $country->neighbours()
+
+Return the list of C<$country>'s neighbours.
+
+
+=item * $country->neighbour_add( $c )
+
+Add C<$c> to the list of C<$country>'s neighbours. This is not reciprocical.
 
 
 =back

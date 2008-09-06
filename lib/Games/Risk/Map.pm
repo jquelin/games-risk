@@ -109,7 +109,11 @@ sub _parse_file_section_borders {
     my ($id, @neighbours) = split /\s+/, $line;
     my $country = $self->country_get($id);
     return "country $id doesn't exist" unless defined $country;
-    $country->_neighbours(\@neighbours);
+    foreach my $n ( @neighbours ) {
+        my $neighbour = $self->country_get($n);
+        return "country $n doesn't exist" unless defined $neighbour;
+        $country->neighbour_add($neighbour);
+    }
     return;
 }
 

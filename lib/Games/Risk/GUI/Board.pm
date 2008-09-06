@@ -847,7 +847,7 @@ sub _ongui_canvas_attack_target {
         K->yield('_canvas_attack_from');
         return;
     }
-    return unless $country->is_neighbour( $h->{src}->id );
+    return unless $country->is_neighbour( $h->{src} );
 
     # update status msg
     $h->{status} = 'Attacking ' . $country->name . ' from ' . $h->{src}->name;
@@ -948,7 +948,7 @@ sub _ongui_canvas_move_armies_target {
     # checks...
     return unless defined $country;
     return if $country->owner->name ne $curplayer->name;
-    return unless $country->is_neighbour( $h->{src}->id );
+    return unless $country->is_neighbour( $h->{src} );
 
     # update status msg
     $h->{status} = 'Moving armies from ' . $h->{src}->name . ' to ' .  $country->name;
