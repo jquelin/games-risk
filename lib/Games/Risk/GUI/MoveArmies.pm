@@ -97,7 +97,7 @@ sub _onpub_attack_move {
     my $max = $src->armies - 1; # 1 army should guard $src
     $h->{scale}->configure(-from=>$min,-to=>$max);
     $h->{lab_info}->configure(-text=>$title);
-    $h->{armies} = $min;
+    $h->{armies} = $max;
 
     # move window & enforce geometry
     $top->update;               # force redraw
