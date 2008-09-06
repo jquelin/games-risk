@@ -3,7 +3,8 @@ Revision history for Games::Risk.
 High-level changelog
 ====================
 
-0.4.x    move armies
+0.5.x    new ai
+0.4.x    move armies, gui enhancements
 0.3.x    attack, bonus, gui enhancements
 0.2.x    turn reinforcements, gui enhancements
 0.1.x    gui enhancements, internal cleanups, some ai work, initial armies placement
@@ -12,6 +13,12 @@ High-level changelog
 
 Low-level changelog
 ===================
+
+0.5.0 Sat Sep  6 15:54:57 CEST 2008
+ - new ai "blitzkrieg" available, less braindead than GR:AI:Dumb. idea
+   taken from jrisk
+
+**
 
 0.4.2 Sat Sep  6 13:54:53 CEST 2008
  - change size of circle depending on army size

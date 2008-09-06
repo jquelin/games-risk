@@ -25,7 +25,7 @@ use aliased 'POE::Kernel' => 'K';
 
 
 # Public variables of the module.
-our $VERSION = '0.4.2';
+our $VERSION = '0.5.0';
 
 Readonly my $ATTACK_WAIT_AI    => 1.250; # FIXME: hardcoded
 Readonly my $ATTACK_WAIT_HUMAN => 0.300; # FIXME: hardcoded
