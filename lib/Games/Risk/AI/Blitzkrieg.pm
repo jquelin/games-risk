@@ -55,6 +55,20 @@ sub attack {
 
 
 #
+# my $nb = $ai->attack_move($src, $dst, $min);
+#
+# See pod in Games::Risk::AI for information on the goal of this method.
+#
+# This implementation always move the maximum possible from $src to
+# $dst.
+#
+sub attack_move {
+    my ($self, $src, $dst, $min) = @_;
+    return $src->armies - 1;
+}
+
+
+#
 # my $difficulty = $ai->difficulty;
 #
 # Return a difficulty level for the ai.
@@ -171,6 +185,8 @@ C<Games::Risk::AI>):
 =over 4
 
 =item * attack()
+
+=item * attack_move()
 
 =item * description()
 
