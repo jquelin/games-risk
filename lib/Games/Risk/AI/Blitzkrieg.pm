@@ -13,6 +13,8 @@ use 5.010;
 use strict;
 use warnings;
 
+use List::Util qw{ shuffle };
+
 use base qw{ Games::Risk::AI };
 
 #--
@@ -29,6 +31,25 @@ use base qw{ Games::Risk::AI };
 # as it begins. Therefore, it always returns ('attack_end', undef, undef).
 #
 sub attack {
+    my ($self) = @_;
+    my $player = $self->player;
+
+    # find first possible attack
+    my ($src, $dst);
+    COUNTRY:
+    foreach my $country ( shuffle $player->countries )  {
+        # don't attack unless there's somehow a chance to win
+        next COUNTRY if $country->armies < 4;
+
+        NEIGHBOUR:
+        foreach my $neighbour ( shuffle $country->neighbours ) {
+            # don't attack ourself
+            next NEIGHBOUR if $neighbour->owner eq $player;
+            return ('attack', $country, $neighbour);
+        }
+    }
+
+    # hum. we don't have that much choice, do we?
     return ('attack_end', undef, undef);
 }
 
