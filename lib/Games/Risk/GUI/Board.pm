@@ -16,6 +16,7 @@ use warnings;
 use File::Basename qw{ fileparse };
 use Games::Risk::GUI::MoveArmies;
 use Image::Size;
+use List::Util     qw{ min };
 use Module::Util   qw{ find_installed };
 use POE;
 use Readonly;
@@ -182,12 +183,14 @@ sub _onpub_country_redraw {
     my $owner = $country->owner;
     my $fakein  = $h->{fake_armies_in}{$id}  // 0;
     my $fakeout = $h->{fake_armies_out}{$id} // 0;
+    my $armies  = ($country->armies // 0) + $fakein - $fakeout;
 
     # FIXME: change radius to reflect number of armies
     my ($radius, $fill_color, $text) = defined $owner
-            ? (7, $owner->color, $country->armies + $fakein - $fakeout )
+            ? (7, $owner->color, $armies)
             : (5,       'white', '');
 
+    $radius += min(12,$armies-1)/2;
     my $x = $country->x;
     my $y = $country->y;
     my $x1 = $x - $radius; my $x2 = $x + $radius;
