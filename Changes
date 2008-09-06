@@ -13,6 +13,10 @@ High-level changelog
 Low-level changelog
 ===================
 
+0.4.2 Sat Sep  6 13:54:53 CEST 2008
+ - change size of circle depending on army size
+ - draw attack vector when attacking
+
 0.4.1 Fri Sep  5 19:20:49 CEST 2008
  - removed Build.PL since it does not install images - relying on EUMM
    only by now (spotted by slanning)
