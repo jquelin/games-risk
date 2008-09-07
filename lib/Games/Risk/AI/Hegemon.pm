@@ -99,12 +99,6 @@ sub move_armies {
 #
 sub place_armies {
     my ($self, $nb, $continent) = @_;
-    my $me   = $self->player;
-    my $game = $self->game;
-    my $map  = $game->map;
-
-    my @continents   = $map->continents;
-    my @my_countries = $me->countries;
 
     # FIXME: restrict to continent if strict placing
     #my @countries = defined $continent
@@ -132,6 +126,9 @@ sub place_armies {
 
     # 5- if no base found, default to any suitable attack base.
     $where //= $self->_country_to_attack_from(10_000); # 10_000 armies should never be reached!
+
+    # 6- if still no base found (?), pick first owned country.
+    $where //= ($self->countries)[0];
 
 
     # assign all of our armies in one country
