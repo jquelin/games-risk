@@ -129,6 +129,34 @@ sub attack {
         }
     }
 
+    # 4- check continents to break
+    my @to_break = $self->_continents_to_break;
+
+    if ( scalar(@to_break) ) {
+        RANGE:
+        foreach my $range ( 1 .. 4 ) {
+            foreach my $continent ( @to_break ) {
+                foreach my $country ( @my_countries ) {
+                    NEIGHBOUR:
+                    foreach my $neighbour ( $country->neighbours ) {
+                        # fight to death on the last step of breaking a
+                        # continent bonus.
+                        next unless $country->armies - 1 > $neighbour->armies
+                            || ( $range == 1 && $country->armies > 1 );
+
+                        my $freeable = _short_path_to_continent(
+                            $continent, $country, $neighbour, $range);
+                        next NEIGHBOUR if not $freeable;
+                        # eheh, we found a path!
+                        @attack = ( $country, $neighbour );
+                        last RANGE;
+                    }
+                }
+            }
+        }
+    }
+
+
 
     # hum. we don't have that much choice, do we?
     #return ('attack', $country, $neighbour);
