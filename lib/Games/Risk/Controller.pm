@@ -14,7 +14,6 @@ use strict;
 use warnings;
 
 use Games::Risk::GUI::Board;
-use Games::Risk::Heap;
 use Games::Risk::Map;
 use Games::Risk::Player;
 use List::Util   qw{ min shuffle };
@@ -36,7 +35,7 @@ Readonly my $WAIT              => 0.100; # FIXME: hardcoded
 # -- public methods
 
 #
-# my $id = Games::Risk->spawn( \%params )
+# my $id = Games::Risk::Controller->spawn( \%params )
 #
 # This method will create a POE session responsible for a classical risk
 # game. It will return the poe id of the session newly created.
