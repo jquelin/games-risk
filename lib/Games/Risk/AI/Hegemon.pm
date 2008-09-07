@@ -132,6 +132,22 @@ sub place_armies {
 # -- private methods
 
 #
+# my $bool = $self->_almost_owned( $player, $continent );
+#
+# Return true if $continent is almost (as in "all countries but 2")
+# owned by $player.
+#
+sub _almost_owned {
+    my ($self, $player, $continent) = @_;
+
+    my @countries = $continent->countries;
+    my @owned     = grep { $_->owner eq $player } @countries;
+
+    return scalar(@owner) >= scalar(@countries) - 2;
+}
+
+
+#
 # my $descr = $ai->_description;
 #
 # Return a brief description of the ai and the way it operates.
