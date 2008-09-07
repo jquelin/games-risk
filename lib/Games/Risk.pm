@@ -7,7 +7,7 @@
 #
 #
 
-package Games::Risk::Heap;
+package Games::Risk;
 
 use 5.010;
 use strict;
@@ -116,7 +116,7 @@ __END__
 
 =head1 NAME
 
-Games::Risk::Heap - poe session heap for Games::Risk 
+Games::Risk - classical 'risk' board game
 
 
 
