@@ -150,7 +150,7 @@ sub _almost_owned {
     my @countries = $continent->countries;
     my @owned     = grep { $_->owner eq $player } @countries;
 
-    return scalar(@owner) >= scalar(@countries) - 2;
+    return scalar(@owned) >= scalar(@countries) - 2;
 }
 
 
@@ -270,14 +270,15 @@ sub _country_to_crush_weak_enemy {
 sub _country_to_free_continent {
     my ($self) = @_;
 
-    my @to_break = $self->_continents_to_break;
+    my @to_break     = $self->_continents_to_break;
+    my @my_countries = $self->player->countries;
 
     RANGE:
     foreach my $range ( 1 .. 4 ) {
         foreach my $continent ( @to_break ) {
             foreach my $country ( @my_countries ) {
                 NEIGHBOUR:
-                foreach my $neighbour ( $coutry->neighbours ) {
+                foreach my $neighbour ( $country->neighbours ) {
                     my $freeable = _short_path_to_continent(
                         $continent, $country, $neighbour, $range);
                     next NEIGHBOUR if not $freeable;
