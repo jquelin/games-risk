@@ -32,24 +32,25 @@ use base qw{ Games::Risk::AI };
 #
 sub attack {
     my ($self) = @_;
-    my $player = $self->player;
+    my $me = $self->player;
+    my @my_countries = $me->countries;
 
-    # find first possible attack
-    my ($src, $dst);
-    COUNTRY:
-    foreach my $country ( shuffle $player->countries )  {
-        # don't attack unless there's somehow a chance to win
-        next COUNTRY if $country->armies < 4;
+    # get all possible attacks
+    my @options;
+    foreach my $country ( @my_countries ) {
+        next if $country->armies == 1;
 
-        NEIGHBOUR:
-        foreach my $neighbour ( shuffle $country->neighbours ) {
-            # don't attack ourself
-            next NEIGHBOUR if $neighbour->owner eq $player;
-            return ('attack', $country, $neighbour);
+        # attack ratio of 50% min
+        my $max = $country->armies / 2;
+        foreach my $neighbour ( $country->neighbours ) {
+            next if $neighbour->owner eq $me;
+            next if $neighbour->armies >= $max;
+            push @options, [ $country, $neighbour ];
         }
     }
 
     # hum. we don't have that much choice, do we?
+    #return ('attack', $country, $neighbour);
     return ('attack_end', undef, undef);
 }
 
