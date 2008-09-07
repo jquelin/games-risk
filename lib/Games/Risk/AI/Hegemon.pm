@@ -156,10 +156,28 @@ sub attack {
         }
     }
 
+    # 5- check to see if we can crush a player
+    # find weak players
+    my @weaks =
+        grep { scalar($_->countries) < 4 }  # less than 4 countries
+        grep { $_ ne $me }
+        $self->game->players_active;
+    foreach my $weak ( @weaks ) {
+        foreach my $country ( $weak->countries ) {
+            foreach my $neighbour ( $country->neighbours ) {
+                next unless $neighbour->owner eq $me;
+                next unless $country->armies - 2 < $neighbour->armies;
+                next unless $neighbour->armies > 1;
 
+                @attack = ( $neighbour, $country );
+                last; # FIXME: last outer foreach?
+            }
+        }
+    }
+
+    return ( 'attack', @attack ) if @attack;
 
     # hum. we don't have that much choice, do we?
-    #return ('attack', $country, $neighbour);
     return ('attack_end', undef, undef);
 }
 
