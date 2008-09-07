@@ -192,7 +192,20 @@ sub attack {
 #
 sub attack_move {
     my ($self, $src, $dst, $min) = @_;
-    return $src->armies - 1;
+
+    my $nbsrc = $src->armies;
+    my $max   = $nbsrc - 1;
+
+    my $continent = $src->continent;
+    return $max unless $continent->is_owned($self->player);
+    return $max unless $self->_owns_mostly($continent);
+
+    # attempt to safeguard critical areas when moving armies.
+    given ( $nbsrc ) {
+        when($_>6)            { return $max; }
+        when($_>3 && $_<=6)   { return $max; } # FIXME: always $max
+        default               { return $max; } # FIXME: always $max
+    }
 }
 
 
