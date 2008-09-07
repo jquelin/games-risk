@@ -582,6 +582,12 @@ C<Games::Risk::AI>):
 
 
 
+=head1 ACKNOWLEDGEMENTS
+
+This AI is freely adapted from jRisk.
+
+
+
 =head1 SEE ALSO
 
 L<Games::Risk::AI>, L<Games::Risk>.
