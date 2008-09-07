@@ -17,6 +17,9 @@ use List::Util qw{ shuffle };
 use POE;
 use aliased 'POE::Kernel' => 'K';
 
+# Public variables of the module.
+our $VERSION = '0.5.0';
+
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{
     armies curplayer dst map move_in move_out nbdice src wait_for
