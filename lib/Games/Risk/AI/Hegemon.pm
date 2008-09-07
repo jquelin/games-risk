@@ -150,8 +150,26 @@ sub place_armies {
     }
 
     # 3- even more urgent: try to remove a continent from the greedy
-    # hands of another player.
+    # hands of another player. ai will try to free continent as far as 4
+    # countries! prefer to free closer continents - if range equals,
+    # decision is taken based on continent worth.
     my @to_break = $self->_continents_to_break;
+    RANGE:
+    foreach my $range ( 1 .. 4 ) {
+        foreach my $continent ( @to_break ) {
+            foreach my $country ( @my_countries ) {
+                NEIGHBOUR:
+                foreach my $neighbour ( $coutry->neighbours ) {
+                    my $freeable = _short_path_to_continent(
+                        $continent, $country, $neighbour, $range);
+                    next NEIGHBOUR if not $freeable;
+                    # eheh, we found a path!
+                    $where = $country;
+                    last RANGE;
+                }
+            }
+        }
+    }
 
 
     # assign all of our armies in one country
@@ -226,6 +244,43 @@ sub _own_neighbours {
     return all { $_->owner eq $player } $country->neighbours;
 }
 
+
+#--
+# SUBROUTINES
+
+# -- private subs
+
+#
+# my $bool = _short_path_to_continent( $continent,
+#                                      $from, $through, $range );
+#
+# Return true if $continent is within $range (integer) of $from, going
+# through country $through.
+#
+sub _short_path_to_continent {
+    my ($continent, $from, $through, $range) = @_;
+
+    # can't attack if both $from and $through are owned by the same
+    # player, or if they are not neighbour of each-other.
+    return 0 unless $from->is_neighbour($through);
+    return 0 if $from->owner eq $through->owner;
+
+    # definitely not within range.
+    return 0 if $range <= 0 && $from->continent ne $continent;
+
+    # within range.
+    return 1 if $from->continent eq $continent;
+    return 1 if $range > 0 && $through->continent eq $continent;
+
+    # not currently within range, let's try one hop further.
+    foreach my $country ( $through->neigbours ) {
+        return 1 if
+            _short_path_to_continent($continent, $through, $country, $range-1);
+    }
+
+    # dead-end, abort this path.
+    return 0;
+}
 
 1;
 
