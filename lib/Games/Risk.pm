@@ -131,8 +131,17 @@ Games::Risk - classical 'risk' board game
 
 =head1 DESCRIPTION
 
-This module tracks everything needed for a risk game. It is also used as
-a heap for C<Games::Risk::Controller> POE session.
+Risk is a strategic turn-based board game. Players control armies, with
+which they attempt to capture territories from other players. The goal
+of the game is to control all the territories (C<conquer the world>)
+through the elimination of the other players. Using area movement, Risk
+ignores realistic limitations, such as the vast size of the world, and
+the logistics of long campaigns.
+
+This distribution implements a graphical interface for this game.
+
+C<Games::Risk> itself tracks everything needed for a risk game. It is
+also used as a heap for C<Games::Risk::Controller> POE session.
 
 
 
