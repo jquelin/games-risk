@@ -68,6 +68,33 @@ sub attack {
         }
     }
 
+    # 2- try to complete continent
+    my $count   = 0;
+    my $complex = 0;
+    my $from;
+    foreach my $continent ( $game->map->continents ) {
+        next unless $self->_owns_mostly( $continent );
+        my @countries = $continent->countries;
+
+        # find biggest attack base
+        foreach my $country ( @countries ) {
+            next unless $country->owner eq $me;
+            next unless $country->armies > $count;
+            $count = $country->armies;
+            $from  = $country;
+        }
+
+        #
+        foreach my $country ( @countries ) {
+            next if $country->owner eq $me;
+            next unless $from->is_neighbour($country);
+            next unless $country->armies + < $count;
+            @attack  = ( $from, $country );
+            $complex = 1;
+            last;
+        }
+    }
+
     # hum. we don't have that much choice, do we?
     #return ('attack', $country, $neighbour);
     return ('attack_end', undef, undef);
@@ -327,6 +354,20 @@ sub _description {
         players.
 
     };
+}
+
+
+#
+# my $bool = $ai->_owns_mostly( $continent );
+#
+# Return true if $ai owns more than half of $continent.
+#
+sub _owns_mostly {
+    my ($self, $continent) = @_;
+
+    my @countries = $continent->countries;
+    my @owned     = grep { $_->owner eq $self->player } @countries;
+    return scalar(@owned) >= scalar(@countries) / 2;
 }
 
 
