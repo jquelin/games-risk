@@ -32,7 +32,8 @@ use base qw{ Games::Risk::AI };
 #
 sub attack {
     my ($self) = @_;
-    my $me = $self->player;
+    my $me   = $self->player;
+    my $game = $self->game;
     my @my_countries = $me->countries;
 
     # get all possible attacks
@@ -46,6 +47,24 @@ sub attack {
             next if $neighbour->owner eq $me;
             next if $neighbour->armies >= $max;
             push @options, [ $country, $neighbour ];
+        }
+    }
+
+    # sort players by threat
+    my @players =
+        sort { $b->greatness <=> $a->greatness }
+        grep { $_ ne $me }
+        $game->players;
+
+    # 1- attack player most threatening
+    my @attack;
+    PLAYER:
+    foreach my $player ( @players ) {
+        foreach my $option ( @options ) {
+            my ($src, $dst) = @$option;
+            next unless $dst->owner eq $player;
+            @attack = ( $src, $dst );
+            last PLAYER;
         }
     }
 
