@@ -112,7 +112,7 @@ sub place_armies {
     #    : $player->countries;
 
     # 1- find a country that can be used as an attack base.
-    my $where = $self->_country_to_attack_from_small;
+    my $where = $self->_country_to_attack_from(11);
 
     # 2- check if we can block another player from gaining a continent.
     # this takes precedence over basic attack as defined in 1-
@@ -129,6 +129,9 @@ sub place_armies {
     # 4- another good opportunity: completely crushing a weak enemy
     my $weak = $self->_country_to_crush_weak_enemy;
     $where   = $weak if defined $weak;
+
+    # 5- if no base found, default to any suitable attack base.
+    $where //= $self->_country_to_attack_from(10_000); # 10_000 armies should never be reached!
 
 
     # assign all of our armies in one country
@@ -175,17 +178,17 @@ sub _continents_to_break {
 
 
 #
-# my $country = $self->_country_to_attack_from_small;
+# my $country = $self->_country_to_attack_from($nb);
 #
 # Return a country that can be used to attack neighbours. The country
-# should be next to an enemy, and have less than 11 armies.
+# should be next to an enemy, and have less than $nb armies.
 #
-sub _country_to_attack_from_small {
-    my ($self) = @_;
+sub _country_to_attack_from {
+    my ($self, $nb) = @_;
 
     foreach my $country ( $self->player->countries ) {
         next if $self->_owns_neighbours($country);
-        next if $country->armies > 11;
+        next if $country->armies > $nb;
         return $country;
     }
 
