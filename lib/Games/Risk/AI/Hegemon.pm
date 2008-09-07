@@ -151,6 +151,7 @@ sub place_armies {
 
     # 3- even more urgent: try to remove a continent from the greedy
     # hands of another player.
+    my @to_break = $self->_continents_to_break;
 
 
     # assign all of our armies in one country
@@ -173,6 +174,26 @@ sub _almost_owned {
     my @owned     = grep { $_->owner eq $player } @countries;
 
     return scalar(@owner) >= scalar(@countries) - 2;
+}
+
+
+#
+# my @continents = $ai->_continents_to_break;
+#
+# Return a list of continents owned by a single player which isn't the
+# ai.
+#
+sub _continents_to_break {
+    my ($self) = @_;
+    my $me = $self->player;
+
+    # owned continents, sorted by worth value
+    my @to_break =
+        grep { not $_->is_owned($me) }
+        sort { $b->bonus <=> $a->bonus }
+        $self->map->continents_owned;
+
+    return @to_break;
 }
 
 
