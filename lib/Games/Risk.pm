@@ -117,7 +117,7 @@ sub player_next {
 #
 # Return the list of active players (Games::Risk::Player objects).
 #
-sub players {
+sub players_active {
     my ($self) = @_;
     return @{ $self->_players_active };
 }
