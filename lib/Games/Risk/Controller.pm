@@ -7,7 +7,7 @@
 #
 #
 
-package Games::Risk;
+package Games::Risk::Controller;
 
 use 5.010;
 use strict;
@@ -638,35 +638,27 @@ __END__
 
 =head1 NAME
 
-Games::Risk - classical 'risk' board game
+Games::Risk::Controller - controller poe session for risk
 
 
 
 =head1 SYNOPSIS
 
-    use Games::Risk;
-    Games::Risk->spawn;
-    POE::Kernel->run;
-    exit;
+    use Games::Risk::Controller;
+    Games::Risk::Controller->spawn;
 
 
 
 =head1 DESCRIPTION
 
-Risk is a strategic turn-based board game. Players control armies, with
-which they attempt to capture territories from other players. The goal
-of the game is to control all the territories (C<conquer the world>)
-through the elimination of the other players. Using area movement, Risk
-ignores realistic limitations, such as the vast size of the world, and
-the logistics of long campaigns.
-
-This module implements a graphical interface for this game.
+This module implements a poe session, responsible for the state tracking
+as well as rule enforcement of the game.
 
 
 
 =head1 PUBLIC METHODS
 
-=head2 my $id = Games::Risk->spawn( \%params )
+=head2 my $id = Games::Risk::Controller->spawn( \%params )
 
 This method will create a POE session responsible for a classical risk
 game. It will return the poe id of the session newly created.
