@@ -32,7 +32,7 @@ __PACKAGE__->mk_accessors( qw{
 # -- public methods
 
 #
-# $heap->player_lost( $player );
+# $game->player_lost( $player );
 #
 # Remove a player from the list of active players.
 #
@@ -52,7 +52,7 @@ sub player_lost {
 
 
 #
-# my $player = $heap->player_next;
+# my $player = $game->player_next;
 #
 # Return the next player to play, or undef if the turn is over.
 #
@@ -80,7 +80,7 @@ sub player_next {
 
 
 #
-# my @players = $heap->players;
+# my @players = $game->players;
 #
 # Return the list of current players (Games::Risk::Player objects).
 # Note that some of those players may have already lost.
@@ -92,7 +92,7 @@ sub players {
 
 
 #
-# $heap->players_reset;
+# $game->players_reset;
 #
 # Mark all players to be in "turn to do". Typically called during
 # initial army placing, or real game start.
@@ -122,19 +122,17 @@ Games::Risk - classical 'risk' board game
 
 =head1 SYNOPSIS
 
-    POE::Session->create(
-        [...]
-        heap => Games::Risk::Heap->new,
-        [...]
-    );
+    use Games::Risk;
+    Games::Risk->start;
+    POE::Kernel->run;
+    exit;
 
 
 
 =head1 DESCRIPTION
 
-This module implements a heap object, to be used in C<Games::Risk> POE
-session. Furthermore, the non-event driven part of C<Games::Risk> will
-be implemented as methods in this module.
+This module tracks everything needed for a risk game. It is also used as
+a heap for C<Games::Risk::Controller> POE session.
 
 
 
@@ -145,9 +143,9 @@ be implemented as methods in this module.
 
 =over 4
 
-=item * my $heap = Games::Risk::Heap->new
+=item * my $game = Games::Risk->new
 
-Create a new heap. No params needed.
+Create a new risk game. No params needed.
 
 
 =back
@@ -156,7 +154,7 @@ Create a new heap. No params needed.
 =head2 Accessors
 
 The following accessors (acting as mutators, ie getters and setters) are
-available for C<Games::Risk::Heap> objects:
+available for C<Games::Risk> objects:
 
 
 =over 4
@@ -179,24 +177,24 @@ the current C<Games::Risk::Map> object of the game.
 =over 4
 
 
-=item * my @players = $heap->players()
+=item * my @players = $game->players()
 
 Return the C<Games::Risk::Player> objects of the current game. Note that
 some of those players may have already lost.
 
 
-=item * $heap->player_lost( $player )
+=item * $game->player_lost( $player )
 
 Remove $player from the list of active players.
 
 
-=item * my $player = $heap->player_next()
+=item * my $player = $game->player_next()
 
 Return the next player to play, or undef if the turn is over. Of course,
 players that have lost will never be returned.
 
 
-=item * $heap->players_reset()
+=item * $game->players_reset()
 
 Mark all players to be in "turn to do", effectively marking them as
 still in play. Typically called during initial army placing, or real
