@@ -109,20 +109,16 @@ sub place_armies {
     # find a country that can be used as an attack base.
     my $where;
     COUNTRY:
-    foreach my $country ( shuffle $player->countries )  {
-        NEIGHBOUR:
-        foreach my $neighbour ( shuffle $country->neighbours ) {
-            # don't attack ourself
-            next NEIGHBOUR if $neighbour->owner eq $player;
+    foreach my $country ( $player->countries )  {
+        if ( ! $self->_owns_neighbours($country)
+            && $country->armies <= 11 ) {
             $where = $country;
-            last COUNTRY;
+            last;
         }
     }
 
-    # hmm, we could not find a suitable base for our next attack. 
-    # FIXME: this is only true if playing with capitals, and the only
-    # base suitable is our capital.
-    #$where //= 
+    # check if we need to block another player from gaining a continent.
+
 
     # assign all of our armies in one country
     return ( [ $where, $nb ] );
