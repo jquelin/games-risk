@@ -214,15 +214,102 @@ game start.
 
 
 
+=head1 TODO
+
+This is a work in progress. While there are steady improvements, here's
+a rough list (with no order implied whatsoever) of what you can expect
+in the future for C<Games::Risk>:
+
+=over 4
+
+=item * screen to customize the new game to be played
+
+=item * config save / restore
+
+=item * saving / loading game
+
+=item * network play
+
+=item * maps theming
+
+=item * i18n
+
+=item * better ais
+
+=item * country cards
+
+=item * continents bonus, maybe localized?
+
+=item * statistics
+
+=item * prettier map coloring
+
+=item * missions
+
+=item * remove all the FIXMEs in the code :-)
+
+=item * other...
+
+=back
+
+
+
+=head1 BUGS
+
+Please report any bugs or feature requests to C<bug-games-risk at
+rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Games-Risk>.  I will be
+notified, and then you'll automatically be notified of progress on your
+bug as I make changes.
+
+
+
 =head1 SEE ALSO
 
-L<Games::Risk>.
+You can find more information on the classical C<risk> game on wikipedia
+at L<http://en.wikipedia.org/wiki/Risk_game>.
+
+You might also want to check jRisk, a java-based implementation of Risk,
+which inspired me quite a lot.
+
+
+You can also look for information on this module at:
+
+=over 4
+
+=item * AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/dist/Games-Risk>
+
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/d/Games-Risk>
+
+
+=item * Open bugs
+
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Games-Risk>
+
+
+=back
+
+
+
+=head1 ACKNOWLEDGEMENTS
+
+I definitely recommend you to buy a C<risk> board game and play with
+friends, you'll have an exciting time!
+
+Some ideas  & artwork taken from project C<jrisk>, available at
+L<http://risk.sourceforge.net/>. Others (ideas & artwork once again)
+taken from teg, available at L<http://teg.sourceforge.net/>
 
 
 
 =head1 AUTHOR
 
-Jerome Quelin, C<< <jquelin at cpan.org> >>
+Jerome Quelin, C<< <jquelin@cpan.org> >>
 
 
 
@@ -232,6 +319,7 @@ Copyright (c) 2008 Jerome Quelin, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU GPLv3+.
+
 
 =cut
 
