@@ -13,6 +13,7 @@ use 5.010;
 use strict;
 use warnings;
 
+use Games::Risk::Controller;
 use List::Util qw{ shuffle };
 use POE;
 use aliased 'POE::Kernel' => 'K';
@@ -25,6 +26,31 @@ __PACKAGE__->mk_accessors( qw{
     armies curplayer dst map move_in move_out nbdice src wait_for
     _players _players_active _players_turn_done _players_turn_todo
 } );
+
+
+#--
+# CONSTRUCTOR
+
+#
+# my $game = Games::Risk->new( \%params );
+#
+# Create a new Games::Risk. This class implements a singleton scheme.
+#
+my $singleton;
+sub new {
+    # only one game at a time
+    return $singleton if defined $singleton;
+
+    my ($pkg, $args) = @_;
+
+    # create object
+    $singleton = {};
+    bless $singleton, $pkg;
+
+    # launch controller, and everything needed
+    Games::Risk::Controller->spawn;
+}
+
 
 #--
 # METHODS
@@ -123,7 +149,7 @@ Games::Risk - classical 'risk' board game
 =head1 SYNOPSIS
 
     use Games::Risk;
-    Games::Risk->start;
+    Games::Risk->new;
     POE::Kernel->run;
     exit;
 
@@ -154,7 +180,8 @@ also used as a heap for C<Games::Risk::Controller> POE session.
 
 =item * my $game = Games::Risk->new
 
-Create a new risk game. No params needed.
+Create a new risk game. No params needed. Note: this class implements a
+singleton scheme.
 
 
 =back
