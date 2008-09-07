@@ -160,7 +160,7 @@ sub place_armies {
 # -- private methods
 
 #
-# my $bool = $self->_almost_owned( $player, $continent );
+# my $bool = $ai->_almost_owned( $player, $continent );
 #
 # Return true if $continent is almost (as in "all countries but 2")
 # owned by $player.
@@ -193,7 +193,7 @@ sub _description {
 
 
 #
-# my $bool = $self->_own_neighbours($country);
+# my $bool = $ai->_own_neighbours($country);
 #
 # Return true if ai also owns all the neighbours of $country.
 #
