@@ -172,6 +172,23 @@ sub place_armies {
     }
 
 
+    # 4- another good opportunity: completely crushing a weak enemy
+    my @weak_targets =
+        map  { $_->countries }              # possible targets
+        grep { scalar($_->countries) < 4 }  # less than 4 countries
+        $game->players_active;
+    WEAK:
+    foreach my $weak ( @weak_targets ) {
+        COUNTRY:
+        foreach my $country ( @my_countries ) {
+            next COUNTRY unless $country->is_neighbour($weak);
+            $where = $country;
+            last WEAK;
+        }
+    }
+
+
+
     # assign all of our armies in one country
     return ( [ $where, $nb ] );
 }
