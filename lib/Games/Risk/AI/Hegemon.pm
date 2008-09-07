@@ -27,8 +27,8 @@ use base qw{ Games::Risk::AI };
 #
 # See pod in Games::Risk::AI for information on the goal of this method.
 #
-# This implementation never attacks anything, it ends its attack turn as soon
-# as it begins. Therefore, it always returns ('attack_end', undef, undef).
+# This implementation will attack various countries according to various
+# heuristics, maximizing the chances of the ai to win.
 #
 sub attack {
     my ($self) = @_;
