@@ -15,6 +15,7 @@ use warnings;
 
 use Carp;
 use Games::Risk::AI;
+use List::Util qw{ sum };
 use POE;
 use Readonly;
 use UNIVERSAL::require;
@@ -122,6 +123,21 @@ sub country_del {
 }
 
 
+#
+# my $greatness = $player->greatness;
+#
+# Return an integer reflecting the greatness of $player. It will raise
+# with the number of owned territories, as well as the number of armies.
+#
+sub greatness {
+    my ($self) = @_;
+    my @countries = $self->countries;
+    my $greatness = sum map { $_->armies } @countries;
+    $greatness += scalar(@countries);
+    return $greatness;
+}
+
+
 
 1;
 
@@ -215,6 +231,12 @@ Add C<$country> to the set of countries owned by C<$player>.
 =item * $player->country_del( $country )
 
 Delete C<$country> from the set of countries owned by C<$player>.
+
+
+=item * my $greatness = $player->greatness;
+
+Return an integer reflecting the greatness of C<$player>. It will raise
+with the number of owned territories, as well as the number of armies.
 
 
 =back
