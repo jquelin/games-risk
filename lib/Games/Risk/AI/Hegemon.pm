@@ -94,8 +94,8 @@ sub move_armies {
 #
 # See pod in Games::Risk::AI for information on the goal of this method.
 #
-# This implementation will place the armies randomly on the continent owned by
-# the AI, maybe restricted by $continent if it is specified.
+# This implementation will place the armies according to various
+# heuristics, maximizing the chances of the ai to win.
 #
 sub place_armies {
     my ($self, $nb, $continent) = @_;
