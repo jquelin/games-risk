@@ -5,6 +5,7 @@ lib/Games/Risk/AI.pm
 lib/Games/Risk/AI/Blitzkrieg.pm
 lib/Games/Risk/AI/Dumb.pm
 lib/Games/Risk/AI/Hegemon.pm
+lib/Games/Risk/Controller.pm
 lib/Games/Risk/GUI.pm
 lib/Games/Risk/GUI/Board.pm
 lib/Games/Risk/GUI/icons/dice-0.png
@@ -19,7 +20,6 @@ lib/Games/Risk/GUI/icons/player-active.png
 lib/Games/Risk/GUI/icons/player-lost.png
 lib/Games/Risk/GUI/icons/tk_icons
 lib/Games/Risk/GUI/MoveArmies.pm
-lib/Games/Risk/Heap.pm
 lib/Games/Risk/Map.pm
 lib/Games/Risk/Map/Continent.pm
 lib/Games/Risk/Map/Country.pm

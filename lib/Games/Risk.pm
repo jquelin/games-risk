@@ -13,630 +13,138 @@ use 5.010;
 use strict;
 use warnings;
 
+use Games::Risk::Controller;
 use Games::Risk::GUI::Board;
-use Games::Risk::Heap;
-use Games::Risk::Map;
-use Games::Risk::Player;
-use List::Util   qw{ min shuffle };
-use Module::Util qw{ find_installed };
+use List::Util qw{ shuffle };
 use POE;
-use Readonly;
 use aliased 'POE::Kernel' => 'K';
-
 
 # Public variables of the module.
 our $VERSION = '0.5.0';
 
-Readonly my $ATTACK_WAIT_AI    => 1.250; # FIXME: hardcoded
-Readonly my $ATTACK_WAIT_HUMAN => 0.300; # FIXME: hardcoded
-Readonly my $TURN_WAIT         => 1.800; # FIXME: hardcoded
-Readonly my $WAIT              => 0.100; # FIXME: hardcoded
+use base qw{ Class::Accessor::Fast };
+__PACKAGE__->mk_accessors( qw{
+    armies curplayer dst map move_in move_out nbdice src wait_for
+    _players _players_active _players_turn_done _players_turn_todo
+} );
 
 
 #--
-# CLASS METHODS
-
-# -- public methods
+# CONSTRUCTOR
 
 #
-# my $id = Games::Risk->spawn( \%params )
+# my $game = Games::Risk->new( \%params );
 #
-# This method will create a POE session responsible for a classical risk
-# game. It will return the poe id of the session newly created.
+# Create a new Games::Risk. This class implements a singleton scheme.
 #
-# You can tune the session by passing some arguments as a hash reference.
-# Currently, no params can be tuned.
-#
-sub spawn {
-    my ($type, $args) = @_;
-
-    my $session = POE::Session->create(
-        args          => [ $args ],
-        heap          => Games::Risk::Heap->new,
-        inline_states => {
-            # private events - session management
-            _start         => \&_onpriv_start,
-            _stop          => sub { warn "GR shutdown\n" },
-            # private events - game states
-            _started            => \&_onpriv_load_map,
-            _gui_ready          => \&_onpriv_create_players,
-            _players_created    => \&_onpriv_assign_countries,
-            _countries_assigned => \&_onpriv_place_armies_initial,
-            _place_armies_initial   => \&_onpriv_place_armies_initial,
-            _initial_armies_placed  => \&_onpriv_turn_begin,
-            _begin_turn             => \&_onpriv_turn_begin,
-            _turn_begun             => \&_onpriv_player_next,
-            _player_begun           => \&_onpriv_place_armies,
-            _armies_placed          => \&_onpriv_attack,
-            _attack_done            => \&_onpriv_attack_done,
-            _attack_end             => \&_onpriv_move_armies,
-            _armies_moved           => \&_onpriv_player_next,
-            # public events
-            window_created      => \&_onpub_window_created,
-            map_loaded          => \&_onpub_map_loaded,
-            player_created      => \&_onpub_player_created,
-            initial_armies_placed       => \&_onpub_initial_armies_placed,
-            armies_moved                => \&_onpub_armies_moved,
-            armies_placed       => \&_onpub_armies_placed,
-            attack                  => \&_onpub_attack,
-            attack_move             => \&_onpub_attack_move,
-            attack_end              => \&_onpub_attack_end,
-            move_armies                 => \&_onpub_move_armies,
-        },
-    );
-    return $session->ID;
-}
-
-
-#--
-# EVENTS HANDLERS
-
-# -- public events
-
-#
-# event: armies_moved();
-#
-# fired when player has finished moved armies at the end of the turn.
-#
-sub _onpub_armies_moved {
-    my $h = $_[HEAP];
-
-    # FIXME: check player is curplayer
-    K->delay_set( '_armies_moved' => $WAIT );
-}
-
-
-#
-# event: armies_placed($country, $nb);
-#
-# fired to place $nb additional armies on $country.
-#
-sub _onpub_armies_placed {
-    my ($h, $country, $nb) = @_[HEAP,ARG0, ARG1];
-
-    # FIXME: check player is curplayer
-    # FIXME: check country belongs to curplayer
-    # FIXME: check validity regarding total number
-    # FIXME: check validity regarding continent
-    # FIXME: check negative values
-    my $left = $h->armies - $nb;
-    $h->armies($left);
-
-    $country->armies( $country->armies + $nb );
-    K->post('board', 'chnum', $country); # FIXME: broadcast
-
-    if ( $left == 0 ) {
-        K->delay_set( '_armies_placed' => $WAIT );
-    }
-}
-
-
-#
-# event: attack( $src, $dst );
-#
-# fired when a player wants to attack country $dst from $src.
-#
-sub _onpub_attack {
-    my ($h, $src, $dst) = @_[HEAP, ARG0, ARG1];
-
-    my $player = $h->curplayer;
-
-    # FIXME: check player is curplayer
-    # FIXME: check src belongs to curplayer
-    # FIXME: check dst doesn't belong to curplayer
-    # FIXME: check countries src & dst are neighbours
-    # FIXME: check src has at least 1 army
-
-    my $armies_src = $src->armies - 1; # 1 army to hold $src
-    my $armies_dst = $dst->armies;
-    $h->src($src);
-    $h->dst($dst);
-
-
-    # roll the dices for the attacker
-    my $nbdice_src = min $armies_src, 3; # don't attack with more than 3 armies
-    my @attack;
-    push( @attack, int(rand(6)+1) ) for 1 .. $nbdice_src;
-    @attack = reverse sort @attack;
-    $h->nbdice($nbdice_src); # store number of attack dice, needed for invading
-
-    # roll the dices for the defender. don't defend with 2nd dice if we
-    # don't have at least 50% luck to win with it. FIXME: customizable?
-    my $nbdice_dst = $nbdice_src > 1
-        ? $attack[1] > 4 ? 1 : 2
-        : 2; # defend with 2 dices if attacker has only one
-    $nbdice_dst = min $armies_dst, $nbdice_dst;
-    my @defence;
-    push( @defence, int(rand(6)+1) ) for 1 .. $nbdice_dst;
-    @defence = reverse sort @defence;
-
-    # compute losses
-    my @losses  = (0, 0);
-    $losses[ $attack[0] <= $defence[0] ? 0 : 1 ]++;
-    $losses[ $attack[1] <= $defence[1] ? 0 : 1 ]++
-        if $nbdice_src >= 2 && $nbdice_dst == 2;
-
-    # update countries
-    $src->armies( $src->armies - $losses[0] );
-    $dst->armies( $dst->armies - $losses[1] );
-
-    # post damages
-    # FIXME: only for human player?
-    K->post('board', 'attack_info', $src, $dst, \@attack, \@defence); # FIXME: broadcast
-
-    my $wait = $player->type eq 'ai' ? $ATTACK_WAIT_AI : $ATTACK_WAIT_HUMAN;
-    K->delay_set( '_attack_done' => $wait, $src, $dst );
-}
-
-
-#
-# event: attack_end();
-#
-# fired when a player does not want to attack anymore during her turn.
-#
-sub _onpub_attack_end {
-    K->delay_set( '_attack_end' => $WAIT );
-}
-
-
-#
-# event: attack_move($src, $dst, $nb)
-#
-# request to invade $dst from $src with $nb armies.
-#
-sub _onpub_attack_move {
-    my ($h, $src, $dst, $nb) = @_[HEAP, ARG0..$#_];
-
-    # FIXME: check player is curplayer
-    # FIXME: check $src & $dst
-    # FIXME: check $nb is more than min
-    # FIXME: check $nb is less than max - 1
-
-    # check if previous $dst owner has lost.
-    my $looser = $dst->owner;
-    if ( scalar($looser->countries) == 1 ) {
-        # omg! one player left
-        $h->player_lost($looser);
-        K->post('board', 'player_lost', $looser); # FIXME: broadcast
-    }
-
-    # update the countries
-    $src->armies( $src->armies - $nb );
-    $dst->armies( $nb );
-    $dst->chown( $src->owner );
-
-    # update the gui
-    K->post('board', 'chnum', $src); # FIXME: broadcast
-    K->post('board', 'chown', $dst); # FIXME: broadcast
-
-    # continue attack
-    my $session;
-    my $player = $h->curplayer;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'board'; } #FIXME: broadcast
-    }
-    K->post($session, 'attack');
-}
-
-
-#
-# event: initial_armies_placed($country, $nb);
-#
-# fired to place $nb additional armies on $country.
-#
-sub _onpub_initial_armies_placed {
-    my ($h, $country, $nb) = @_[HEAP,ARG0, ARG1];
-
-    # FIXME: check player is curplayer
-    # FIXME: check country belongs to curplayer
-    # FIXME: check validity regarding total number
-    # FIXME: check validity regarding continent
-
-    $country->armies( $country->armies + $nb );
-    K->post('board', 'chnum', $country); # FIXME: broadcast
-    K->delay_set( '_place_armies_initial' => $WAIT );
-}
-
-
-#
-# event: map_loaded();
-#
-# fired when board has finished loading map.
-#
-sub _onpub_map_loaded {
-    # FIXME: sync & wait when more than one window
-    K->yield('_gui_ready');
-}
-
-
-#
-# event: move_armies( $src, $dst, $nb )
-#
-# fired when player wants to move $nb armies from $src to $dst.
-#
-sub _onpub_move_armies {
-    my ($h, $src, $dst, $nb) = @_[HEAP, ARG0..$#_];
-
-    # FIXME: check player is curplayer
-    # FIXME: check $src & $dst belong to curplayer
-    # FIXME: check $src & $dst are adjacent
-    # FIXME: check $src keeps one army
-    # FIXME: check if army has not yet moved
-    # FIXME: check negative values
-    # FIXME: check max values
-
-    $h->move_out->{ $src->id } += $nb;
-    $h->move_in->{  $dst->id } += $nb;
-
-    $src->armies( $src->armies - $nb );
-    $dst->armies( $dst->armies + $nb );
-
-    K->post('board', 'chnum', $src); # FIXME: broadcast
-    K->post('board', 'chnum', $dst); # FIXME: broadcast
-}
-
-
-#
-# event: player_created($player);
-#
-# fired when a player is ready. used as a checkpoint to be sure everyone
-# is ready before moving on to next phase (assign countries).
-#
-sub _onpub_player_created {
-    my ($h, $player) = @_[HEAP, ARG0];
-    delete $h->wait_for->{ $player->name };
-
-    # go on to the next phase
-    K->yield( '_players_created' ) if scalar keys %{ $h->wait_for } == 0;
-}
-
-
-#
-# event: window_created( $window );
-#
-# fired when a gui window has finished initialized.
-#
-sub _onpub_window_created {
-    my ($h, $state, $win) = @_[HEAP, STATE, ARG0];
-
-    # board needs to load the map
-    if ( $win eq 'board' ) {
-        if ( not defined $h->map ) {
-            # map is not yet loaded, let's give it some more time
-            # by just re-firing current event
-            K->yield($state, $win);
-            return;
-        }
-        K->post('board', 'load_map', $h->map);
-    }
-}
-
-
-# -- private events - game states
-
-#
-# distribute randomly countries to players.
-# FIXME: what in the case of a loaded game?
-# FIXME: this can be configured so that players pick the countries
-# of their choice, turn by turn
-#
-sub _onpriv_assign_countries {
-    my $h = $_[HEAP];
-
-    # initial random assignment of countries
-    my @players   = $h->players;
-    my @countries = shuffle $h->map->countries;
-    while ( my $country = shift @countries ) {
-        # rotate players
-        my $player = shift @players;
-        push @players, $player;
-
-        # store new owner & place one army to start with
-        $country->chown($player);
-        $country->armies(1);
-        K->post('board', 'chown', $country); # FIXME: broadcast
-    }
-
-    # go on to the next phase
-    K->yield( '_countries_assigned' );
-}
-
-
-#
-# start the attack phase for curplayer
-#
-sub _onpriv_attack {
-    my $h = $_[HEAP];
-
-    my $player = $h->curplayer;
-    my $session;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'board'; } #FIXME: broadcast
-    }
-    K->post($session, 'attack');
-}
-
-
-#
-# event: _attack_done($src, $dst)
-#
-# check the outcome of attack of $dst from $src only used as a
-# temporization, so this handler will always serve the same event.
-#
-sub _onpriv_attack_done {
-    my ($h, $src, $dst) = @_[HEAP, ARG0..$#_];
-
-    # update gui
-    K->post('board', 'chnum', $src); # FIXME: broadcast
-    K->post('board', 'chnum', $dst); # FIXME: broadcast
-
-    # get who to send msg to
-    my $player = $h->curplayer;
-    my $session;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'board'; } #FIXME: broadcast
-    }
-
-    # check outcome
-    if ( $dst->armies <= 0 ) {
-        # all your base are belong to us! :-)
-        if ( $src->armies - 1 == $h->nbdice ) {
-            # erm, no choice but move all remaining armies
-            K->yield( 'attack_move', $src, $dst, $h->nbdice );
-
-        } else {
-            # ask how many armies to move
-            my $session;
-            given ($player->type) {
-                when ('ai')    { $session = $player->name; }
-                when ('human') { $session = 'move-armies'; } #FIXME: broadcast
-            }
-            K->post($session, 'attack_move', $src, $dst, $h->nbdice);
-        }
-
-    } else {
-        K->post($session, 'attack');
-    }
-
-}
-
-
-#
-# create the GR::Players that will fight.
-#
-sub _onpriv_create_players {
-    my $h = $_[HEAP];
-
-    # create players - FIXME: number of players
-    my @players;
-    push @players, Games::Risk::Player->new({type=>'human'});
-    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Blitzkrieg'});
-    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Blitzkrieg'});
-    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Blitzkrieg'});
-
-    @players = shuffle @players;
-
-    #FIXME: broadcast
-    $h->wait_for( {} );
-    foreach my $player ( @players ) {
-        $h->wait_for->{ $player->name } = 1;
-        K->post('board', 'player_add', $player);
-    }
-
-    $h->_players(\@players); # FIXME: private
-    $h->_players_active(\@players); # FIXME: private
-}
-
-
-#
-# load map in memory.
-#
-sub _onpriv_load_map {
-    my $h = $_[HEAP];
-
-    # load model
-    # FIXME: hardcoded
-    my $path = find_installed(__PACKAGE__);
-    $path =~ s/\.pm$//;
-    $path .= '/maps/risk.map';
-    my $map = Games::Risk::Map->new;
-    $map->load_file($path);
-    $h->map($map);
-}
-
-
-#
-# request current player to move armies
-#
-sub _onpriv_move_armies {
-    my $h = $_[HEAP];
-
-    # reset counters
-    $h->move_in( {} );
-    $h->move_out( {} );
-
-    # add current player to move
-    my $player = $h->curplayer;
-    my $session;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'board'; } #FIXME: broadcast
-    }
-    K->post($session, 'move_armies');
-}
-
-
-#
-# require curplayer to place its reinforcements.
-#
-sub _onpriv_place_armies {
-    my $h = $_[HEAP];
-    my $player = $h->curplayer;
-
-    # compute number of armies to be placed.
-    my @countries = $player->countries;
-    my $nb = int( scalar(@countries) / 3 );
-    $nb = 3 if $nb < 3;
-
-    # signal player
-    my $session;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'board'; } #FIXME: broadcast
-    }
-    K->post($session, 'place_armies', $nb);
-
-    # continent bonus
-    my $bonus = 0;
-    foreach my $c( $h->map->continents ) {
-        next unless $c->is_owned($player);
-
-        my $bonus = $c->bonus;
-        $nb += $bonus;
-        K->post($session, 'place_armies', $bonus, $c); # FIXME: broadcast
-    }
-
-    $h->armies($nb);
-}
-
-
-#
-# require players to place initials armies.
-#
-sub _onpriv_place_armies_initial {
-    my $h = $_[HEAP];
-
-    # FIXME: possibility to place armies randomly by server
-    # FIXME: possibility to place armies according to map scenario
-
-    # get number of armies to place left
-    my $left = $h->armies;
-
-    if ( not defined $left ) {
-        # undef means that we are just beginning initial armies
-        # placement. let's initialize list of players.
-        $h->players_reset;
-
-        $h->armies(2); # FIXME: hardcoded
-        $left = $h->{armies};
-        K->post('board', 'place_armies_initial_count', $left); # FIXME: broadcast & ai (?)
-    }
-
-    # get next player that should place an army
-    my $player = $h->player_next;
-
-    if ( not defined $player ) {
-        # all players have placed an army once. so let's just decrease
-        # count of armies to be placed, and start again.
-
-        $player = $h->player_next;
-        $left--;
-        $h->armies( $left );
-
-        if ( $left == 0 ) {
-            # hey, we've finished! move on to the next phase.
-            K->yield( '_initial_armies_placed' );
-            return;
-        }
-    }
-
-    # update various guis with current player
-    $h->curplayer( $player );
-    K->post('board', 'player_active', $player); # FIXME: broadcast
-
-    # request army to be placed.
-    my $session;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'board'; } #FIXME: broadcast
-    }
-    K->post($session, 'place_armies_initial');
-}
-
-
-#
-# get next player & update people.
-#
-sub _onpriv_player_next {
-    my $h = $_[HEAP];
-
-    # get next player
-    my $player = $h->player_next;
-    $h->curplayer( $player );
-    if ( not defined $player ) {
-        K->yield('_begin_turn');
-        return;
-    }
-
-    # update various guis with current player
-    K->post('board', 'player_active', $player); # FIXME: broadcast
-
-    K->delay_set('_player_begun'=>$TURN_WAIT);
-}
-
-
-#
-# initialize list of players for next turn.
-#
-sub _onpriv_turn_begin {
-    my $h = $_[HEAP];
-
-    # get next player
-    $h->players_reset;
-
-    # placing armies
-    K->yield('_turn_begun');
-}
-
-
-# -- private events - session management
-
-#
-# event: _start( \%params )
-#
-# Called when the poe session gets initialized. Receive a reference
-# to %params, same as spawn() received.
-#
-sub _onpriv_start {
-    my $h = $_[HEAP];
-
-    K->alias_set('risk');
+my $singleton;
+sub new {
+    # only one game at a time
+    return $singleton if defined $singleton;
+
+    my ($pkg, $args) = @_;
+
+    # create object
+    $singleton = {};
+    bless $singleton, $pkg;
+
+    # launch controller, and everything needed
+    Games::Risk::Controller->spawn($singleton);
 
     # prettyfying tk app.
     # see http://www.perltk.org/index.php?option=com_content&task=view&id=43&Itemid=37
     $poe_main_window->optionAdd('*BorderWidth' => 1);
 
     Games::Risk::GUI::Board->spawn({toplevel=>$poe_main_window});
-    K->yield( '_started' );
+}
+
+
+#--
+# METHODS
+
+# -- public methods
+
+#
+# $game->player_lost( $player );
+#
+# Remove a player from the list of active players.
+#
+sub player_lost {
+    my ($self, $player) = @_;
+
+    # remove from current turn
+    my @done = grep { $_ ne $player } @{ $self->_players_turn_done };
+    my @todo = grep { $_ ne $player } @{ $self->_players_turn_todo };
+    $self->_players_turn_done( \@done );
+    $self->_players_turn_todo( \@todo );
+
+    # remove from active list
+    my @active = grep { $_ ne $player } @{ $self->_players_active };
+    $self->_players_active( \@active );
+}
+
+
+#
+# my $player = $game->player_next;
+#
+# Return the next player to play, or undef if the turn is over.
+#
+sub player_next {
+    my ($self) = @_;
+
+    my @done = @{ $self->_players_turn_done };
+    my @todo = @{ $self->_players_turn_todo };
+    my $next = shift @todo;
+
+    if ( defined $next ) {
+        push @done, $next;
+    } else {
+        # turn is finished, start anew
+        @todo = @done;
+        @done = ();
+    }
+
+    # store new state
+    $self->_players_turn_done( \@done );
+    $self->_players_turn_todo( \@todo );
+
+    return $next;
+}
+
+
+#
+# my @players = $game->players;
+#
+# Return the list of current players (Games::Risk::Player objects).
+# Note that some of those players may have already lost.
+#
+sub players {
+    my ($self) = @_;
+    return @{ $self->_players };
+}
+
+
+#
+# $game->players_reset;
+#
+# Mark all players to be in "turn to do". Typically called during
+# initial army placing, or real game start.
+#
+sub players_reset {
+    my ($self) = @_;
+
+    my @players = @{ $self->_players_active };
+    $self->_players_turn_done([]);
+    $self->_players_turn_todo( \@players );
 }
 
 
 
+
 1;
+
 __END__
+
 
 
 =head1 NAME
@@ -648,7 +156,7 @@ Games::Risk - classical 'risk' board game
 =head1 SYNOPSIS
 
     use Games::Risk;
-    Games::Risk->spawn;
+    Games::Risk->new;
     POE::Kernel->run;
     exit;
 
@@ -663,19 +171,80 @@ through the elimination of the other players. Using area movement, Risk
 ignores realistic limitations, such as the vast size of the world, and
 the logistics of long campaigns.
 
-This module implements a graphical interface for this game.
+This distribution implements a graphical interface for this game.
+
+C<Games::Risk> itself tracks everything needed for a risk game. It is
+also used as a heap for C<Games::Risk::Controller> POE session.
 
 
 
-=head1 PUBLIC METHODS
+=head1 METHODS
 
-=head2 my $id = Games::Risk->spawn( \%params )
+=head2 Constructor
 
-This method will create a POE session responsible for a classical risk
-game. It will return the poe id of the session newly created.
 
-You can tune the session by passing some arguments as a hash reference.
-Currently, no params can be tuned.
+=over 4
+
+=item * my $game = Games::Risk->new
+
+Create a new risk game. No params needed. Note: this class implements a
+singleton scheme.
+
+
+=back
+
+
+=head2 Accessors
+
+The following accessors (acting as mutators, ie getters and setters) are
+available for C<Games::Risk> objects:
+
+
+=over 4
+
+=item * armies()
+
+armies left to be placed.
+
+
+=item * map()
+
+the current C<Games::Risk::Map> object of the game.
+
+
+=back
+
+
+=head2 Public methods
+
+=over 4
+
+
+=item * my @players = $game->players()
+
+Return the C<Games::Risk::Player> objects of the current game. Note that
+some of those players may have already lost.
+
+
+=item * $game->player_lost( $player )
+
+Remove $player from the list of active players.
+
+
+=item * my $player = $game->player_next()
+
+Return the next player to play, or undef if the turn is over. Of course,
+players that have lost will never be returned.
+
+
+=item * $game->players_reset()
+
+Mark all players to be in "turn to do", effectively marking them as
+still in play. Typically called during initial army placing, or real
+game start.
+
+
+=back
 
 
 =begin quiet_pod_coverage
