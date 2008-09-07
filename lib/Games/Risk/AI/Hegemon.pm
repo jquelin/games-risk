@@ -104,6 +104,8 @@ sub place_armies {
     my $map  = $game->map;
 
     my $where;
+    my @continents   = $map->continents;
+    my @my_countries = $me->countries;
 
     # FIXME: restrict to continent if strict placing
     #my @countries = defined $continent
@@ -112,7 +114,7 @@ sub place_armies {
 
     # 1- find a country that can be used as an attack base.
     COUNTRY:
-    foreach my $country ( $me->countries )  {
+    foreach my $country ( @my_countries )  {
         if ( ! $self->_owns_neighbours($country)
             && $country->armies <= 11 ) {
             $where = $country;
@@ -122,7 +124,6 @@ sub place_armies {
 
     # 2- check if we can block another player from gaining a continent.
     # this takes precedence over basic attack as defined in 1-
-    my @continents = $map->continents;
     PLAYER:
     foreach my $player ( $game->players_active ) {
         next PLAYER if $player eq $me;
