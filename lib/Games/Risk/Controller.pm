@@ -430,7 +430,9 @@ sub _onpriv_create_players {
     push @players, Games::Risk::Player->new({type=>'human'});
     push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Blitzkrieg'});
     push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Blitzkrieg'});
-    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Blitzkrieg'});
+    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Hegemon'});
+    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Hegemon'});
+    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Hegemon'});
 
     @players = shuffle @players;
 
