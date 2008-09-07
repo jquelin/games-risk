@@ -116,30 +116,8 @@ sub place_armies {
 
     # 2- check if we can block another player from gaining a continent.
     # this takes precedence over basic attack as defined in 1-
-    PLAYER:
-    foreach my $player ( $game->players_active ) {
-        next PLAYER if $player eq $me;
-
-        CONTINENT:
-        foreach my $continent ( @continents ) {
-            next CONTINENT unless $self->_almost_owned($player, $continent);
-            next CONTINENT if     $continent->is_owned($player);
-
-            # continent almost owned, let's try to block!
-            my @countries = $continent->countries;
-            COUNTRY:
-            foreach my $country ( @countries ) {
-                next COUNTRY if $country->owner ne $me;
-                next COUNTRY if $country->armies > 5;
-
-                # ok, we've found a base to attack from
-                # overwrite where to put armies.
-                $where = $country;
-                last PLAYER;
-            }
-
-        }
-    }
+    my $block = $self->_country_to_block_continent;
+    $where = $block if defined $block;
 
     # 3- even more urgent: try to remove a continent from the greedy
     # hands of another player. ai will try to free continent as far as 4
@@ -237,6 +215,44 @@ sub _country_to_attack_from {
         next if $self->_owns_neighbours($country);
         next if $country->armies > 11;
         return $country;
+    }
+
+    return;
+}
+
+
+#
+# my $country = $self->_country_to_block_continent;
+#
+# Return a country on a continent almost owned by another player. This
+# will be used to pile up armies on it, to block continent from falling
+# in the hands of the other player.
+#
+sub _country_to_block_continent {
+    my ($self) = @_;
+    my $me   = $self->player;
+    my $game = $self->game;
+    my $map  = $game->map;
+
+    PLAYER:
+    foreach my $player ( $game->players_active ) {
+        next PLAYER if $player eq $me;
+
+        CONTINENT:
+        foreach my $continent ( $map->continents ) {
+            next CONTINENT unless $self->_almost_owned($player, $continent);
+            next CONTINENT if     $continent->is_owned($player);
+
+            # continent almost owned, let's try to block!
+            COUNTRY:
+            foreach my $country ( $continent->countries ) {
+                next COUNTRY if $country->owner ne $me;
+                next COUNTRY if $country->armies > 5;
+
+                # ok, we've found a country to fortify.
+                return $country;
+            }
+        }
     }
 
     return;
