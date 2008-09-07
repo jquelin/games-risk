@@ -14,6 +14,10 @@ High-level changelog
 Low-level changelog
 ===================
 
+0.5.1 Sun Sep  7 18:09:08 CEST 2008
+ - new ai "hegemon" available, quite hard. idea taken from jrisk
+ - internals reworked so that GR is the heap of GR:Controller
+
 0.5.0 Sat Sep  6 15:54:57 CEST 2008
  - new ai "blitzkrieg" available, less braindead than GR:AI:Dumb. idea
    taken from jrisk
