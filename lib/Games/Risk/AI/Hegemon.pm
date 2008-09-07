@@ -222,11 +222,27 @@ sub difficulty { return 'hard' }
 #
 # See pod in Games::Risk::AI for information on the goal of this method.
 #
-# This implementation will not move any armies at all.
+# This implementation reinforces armies from less critical to more
+# critical areas.
 #
 sub move_armies {
     my ($self) = @_;
-    return;
+    my $me = $self->player;
+
+    my @where;
+    # move all armies from countries enclosed within other countries
+    # that we own.
+    foreach my $country ( $self->player->countries ) {
+        next unless $self->_owns_neighbours($country);
+
+        foreach my $neighbour ( $country->neighbours ) {
+            next if $self->_owns_neighbours($neighbour);
+            push @where, [ $country, $neighbour, $country->armies - 1 ];
+            last;
+        }
+    }
+
+    return @where;
 }
 
 
