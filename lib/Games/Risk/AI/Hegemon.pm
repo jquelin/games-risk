@@ -120,7 +120,7 @@ sub attack {
                 $from  = $country;
             }
             foreach my $country ( @countries ) {
-                next if $country eq $me;
+                next if $country->owner eq $me;
                 next unless $country->armies + 1 < $count;
                 next unless $from->is_neighbour( $country );
                 @attack = ( $from, $country );
