@@ -113,6 +113,18 @@ sub player_next {
 
 
 #
+# my @players = $game->players_active;
+#
+# Return the list of active players (Games::Risk::Player objects).
+#
+sub players {
+    my ($self) = @_;
+    return @{ $self->_players_active };
+}
+
+
+
+#
 # my @players = $game->players;
 #
 # Return the list of current players (Games::Risk::Player objects).
@@ -220,12 +232,6 @@ the current C<Games::Risk::Map> object of the game.
 =over 4
 
 
-=item * my @players = $game->players()
-
-Return the C<Games::Risk::Player> objects of the current game. Note that
-some of those players may have already lost.
-
-
 =item * $game->player_lost( $player )
 
 Remove $player from the list of active players.
@@ -235,6 +241,17 @@ Remove $player from the list of active players.
 
 Return the next player to play, or undef if the turn is over. Of course,
 players that have lost will never be returned.
+
+
+=item * my @players = $game->players()
+
+Return the C<Games::Risk::Player> objects of the current game. Note that
+some of those players may have already lost.
+
+
+=item * my @players = $game->players_active;
+
+Return the list of active players (Games::Risk::Player objects).
 
 
 =item * $game->players_reset()
