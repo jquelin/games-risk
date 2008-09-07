@@ -44,11 +44,10 @@ Readonly my $WAIT              => 0.100; # FIXME: hardcoded
 # Currently, no params can be tuned.
 #
 sub spawn {
-    my ($type, $args) = @_;
+    my ($type, $game) = @_;
 
     my $session = POE::Session->create(
-        args          => [ $args ],
-        heap          => Games::Risk::Heap->new,
+        heap          => $game,
         inline_states => {
             # private events - session management
             _start         => \&_onpriv_start,

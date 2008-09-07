@@ -48,7 +48,7 @@ sub new {
     bless $singleton, $pkg;
 
     # launch controller, and everything needed
-    Games::Risk::Controller->spawn;
+    Games::Risk::Controller->spawn($singleton);
 }
 
 
