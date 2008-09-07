@@ -14,6 +14,7 @@ use strict;
 use warnings;
 
 use File::Basename qw{ fileparse };
+use List::MoreUtils qw{ uniq };
 use aliased 'Games::Risk::Map::Continent';
 use aliased 'Games::Risk::Map::Country';
 
@@ -34,6 +35,24 @@ __PACKAGE__->mk_accessors( qw{ background greyscale _continents _countries _dirn
 sub continents {
     my ($self) = @_;
     return values %{ $self->_continents };
+}
+
+
+#
+# my @owned = $map->continents_owned;
+#
+# Return a list with all continents that are owned by a single player.
+#
+sub continents_owned {
+    my ($self) = @_;
+
+    my @owned = ();
+    foreach my $continent ( $self->continents ) {
+        my $nb = uniq map { $_->owner } $continent->countries;
+        push @owned, $continent if $nb == 1;
+    }
+
+    return @owned;
 }
 
 
@@ -232,6 +251,11 @@ the path to the background image for the board.
 =item * my @continents = $map->continents()
 
 Return the list of all continents in the C<$map>.
+
+
+=item * my @owned = $map->continents_owned;
+
+Return a list with all continents that are owned by a single player.
 
 
 =item * my @countries = $map->countries()
