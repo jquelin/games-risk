@@ -99,17 +99,20 @@ sub move_armies {
 #
 sub place_armies {
     my ($self, $nb, $continent) = @_;
-    my $player = $self->player;
+    my $me   = $self->player;
+    my $game = $self->game;
+    my $map  = $game->map;
+
+    my $where;
 
     # FIXME: restrict to continent if strict placing
     #my @countries = defined $continent
     #    ? grep { $_->continent->id == $continent } $player->countries
     #    : $player->countries;
 
-    # find a country that can be used as an attack base.
-    my $where;
+    # 1- find a country that can be used as an attack base.
     COUNTRY:
-    foreach my $country ( $player->countries )  {
+    foreach my $country ( $me->countries )  {
         if ( ! $self->_owns_neighbours($country)
             && $country->armies <= 11 ) {
             $where = $country;
@@ -117,7 +120,36 @@ sub place_armies {
         }
     }
 
-    # check if we need to block another player from gaining a continent.
+    # 2- check if we can block another player from gaining a continent.
+    # this takes precedence over basic attack as defined in 1-
+    my @continents = $map->continents;
+    PLAYER:
+    foreach my $player ( $game->players_active ) {
+        next PLAYER if $player eq $me;
+
+        CONTINENT:
+        foreach my $continent ( @continents ) {
+            next CONTINENT unless $self->_almost_owned($player, $continent);
+            next CONTINENT if     $continent->is_owned($player);
+
+            # continent almost owned, let's try to block!
+            my @countries = $continent->countries;
+            COUNTRY:
+            foreach my $country ( @countries ) {
+                next COUNTRY if $country->owner ne $me;
+                next COUNTRY if $country->armies > 5;
+
+                # ok, we've found a base to attack from
+                # overwrite where to put armies.
+                $where = $country;
+                last PLAYER;
+            }
+
+        }
+    }
+
+    # 3- even more urgent: try to remove a continent from the greedy
+    # hands of another player.
 
 
     # assign all of our armies in one country
