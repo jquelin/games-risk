@@ -55,7 +55,7 @@ sub attack {
     my @players =
         sort { $b->greatness <=> $a->greatness }
         grep { $_ ne $me }
-        $game->players;
+        $game->players_active;
 
     # 1- attack player most threatening
     my @attack;
