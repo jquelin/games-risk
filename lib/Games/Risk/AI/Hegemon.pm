@@ -127,20 +127,8 @@ sub place_armies {
     $where   = $free if defined $free;
 
     # 4- another good opportunity: completely crushing a weak enemy
-    my @weak_targets =
-        map  { $_->countries }              # possible targets
-        grep { scalar($_->countries) < 4 }  # less than 4 countries
-        $game->players_active;
-    WEAK:
-    foreach my $weak ( @weak_targets ) {
-        COUNTRY:
-        foreach my $country ( @my_countries ) {
-            next COUNTRY unless $country->is_neighbour($weak);
-            $where = $country;
-            last WEAK;
-        }
-    }
-
+    my $weak = $self->_country_to_crush_weak_enemy;
+    $where   = $weak if defined $weak;
 
 
     # assign all of our armies in one country
@@ -236,6 +224,36 @@ sub _country_to_block_continent {
                 # ok, we've found a country to fortify.
                 return $country;
             }
+        }
+    }
+
+    return;
+}
+
+
+#
+# my $country = $self->_country_to_crush_weak_enemy;
+#
+# Return a country that can be used to crush a weak enemy.
+#
+sub _country_to_crush_weak_enemy {
+    my ($self) = @_;
+
+    # find weak players
+    my @weaks =
+        grep { scalar($_->countries) < 4 }  # less than 4 countries
+        $self->game->players_active;
+    return unless @weaks;
+
+    # potential targets
+    my @targets = map { $_->countries } @weaks;
+
+    COUNTRY:
+    foreach my $country ( $self->player->countries ) {
+        WEAK:
+        foreach my $target ( @targets ) {
+            next WEAK unless $country->is_neighbour($target);
+            return $country;
         }
     }
 
