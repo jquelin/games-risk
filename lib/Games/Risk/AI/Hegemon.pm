@@ -117,7 +117,7 @@ sub place_armies {
     # 2- check if we can block another player from gaining a continent.
     # this takes precedence over basic attack as defined in 1-
     my $block = $self->_country_to_block_continent;
-    $where = $block if defined $block;
+    $where    = $block if defined $block;
 
     # 3- even more urgent: try to remove a continent from the greedy
     # hands of another player. ai will try to free continent as far as 4
