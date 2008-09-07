@@ -13,6 +13,7 @@ use 5.010;
 use strict;
 use warnings;
 
+use File::Basename  qw{ fileparse };
 use Games::Risk::GUI::Board;
 use Games::Risk::Map;
 use Games::Risk::Player;
@@ -455,8 +456,8 @@ sub _onpriv_load_map {
     # load model
     # FIXME: hardcoded
     my $path = find_installed(__PACKAGE__);
-    $path =~ s/\.pm$//;
-    $path .= '/maps/risk.map';
+    my (undef, $dirname, undef) = fileparse($path);
+    $path = "$dirname/maps/risk.map";
     my $map = Games::Risk::Map->new;
     $map->load_file($path);
     $h->map($map);
