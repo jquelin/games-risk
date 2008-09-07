@@ -123,24 +123,8 @@ sub place_armies {
     # hands of another player. ai will try to free continent as far as 4
     # countries! prefer to free closer continents - if range equals,
     # decision is taken based on continent worth.
-    my @to_break = $self->_continents_to_break;
-    RANGE:
-    foreach my $range ( 1 .. 4 ) {
-        foreach my $continent ( @to_break ) {
-            foreach my $country ( @my_countries ) {
-                NEIGHBOUR:
-                foreach my $neighbour ( $coutry->neighbours ) {
-                    my $freeable = _short_path_to_continent(
-                        $continent, $country, $neighbour, $range);
-                    next NEIGHBOUR if not $freeable;
-                    # eheh, we found a path!
-                    $where = $country;
-                    last RANGE;
-                }
-            }
-        }
-    }
-
+    my $free = $self->_country_to_free_continent;
+    $where   = $free if defined $free;
 
     # 4- another good opportunity: completely crushing a weak enemy
     my @weak_targets =
@@ -251,6 +235,37 @@ sub _country_to_block_continent {
 
                 # ok, we've found a country to fortify.
                 return $country;
+            }
+        }
+    }
+
+    return;
+}
+
+
+#
+# my $country = $self->_country_to_free_continent;
+#
+# Return a country that can be used to attack a continent owned by another player. This
+# will prevent the user from getting the bonus.
+#
+sub _country_to_free_continent {
+    my ($self) = @_;
+
+    my @to_break = $self->_continents_to_break;
+
+    RANGE:
+    foreach my $range ( 1 .. 4 ) {
+        foreach my $continent ( @to_break ) {
+            foreach my $country ( @my_countries ) {
+                NEIGHBOUR:
+                foreach my $neighbour ( $coutry->neighbours ) {
+                    my $freeable = _short_path_to_continent(
+                        $continent, $country, $neighbour, $range);
+                    next NEIGHBOUR if not $freeable;
+                    # eheh, we found a path!
+                    return $country;
+                }
             }
         }
     }
