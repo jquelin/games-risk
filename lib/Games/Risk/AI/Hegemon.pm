@@ -88,7 +88,7 @@ sub attack {
         #
         foreach my $country ( @countries ) {
             next if $country->owner eq $me;
-            next unless $country->armies + < $count;
+            next unless $country->armies + 1 < $count;
             next unless $from->is_neighbour($country);
             @attack  = ( $from, $country );
             $complex = 1;
@@ -494,7 +494,7 @@ sub _short_path_to_continent {
     return 1 if $range > 0 && $through->continent eq $continent;
 
     # not currently within range, let's try one hop further.
-    foreach my $country ( $through->neigbours ) {
+    foreach my $country ( $through->neighbours ) {
         return 1 if
             _short_path_to_continent($continent, $through, $country, $range-1);
     }
