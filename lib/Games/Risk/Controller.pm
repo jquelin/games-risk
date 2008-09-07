@@ -14,7 +14,6 @@ use strict;
 use warnings;
 
 use File::Basename  qw{ fileparse };
-use Games::Risk::GUI::Board;
 use Games::Risk::Map;
 use Games::Risk::Player;
 use List::Util   qw{ min shuffle };
@@ -620,12 +619,6 @@ sub _onpriv_start {
     my $h = $_[HEAP];
 
     K->alias_set('risk');
-
-    # prettyfying tk app.
-    # see http://www.perltk.org/index.php?option=com_content&task=view&id=43&Itemid=37
-    $poe_main_window->optionAdd('*BorderWidth' => 1);
-
-    Games::Risk::GUI::Board->spawn({toplevel=>$poe_main_window});
     K->yield( '_started' );
 }
 
