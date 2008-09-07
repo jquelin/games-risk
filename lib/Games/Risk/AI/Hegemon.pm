@@ -168,7 +168,7 @@ sub _continents_to_break {
     my @to_break =
         grep { not $_->is_owned($me) }
         sort { $b->bonus <=> $a->bonus }
-        $self->map->continents_owned;
+        $self->game->map->continents_owned;
 
     return @to_break;
 }
@@ -311,11 +311,11 @@ sub _description {
 
 
 #
-# my $bool = $ai->_own_neighbours($country);
+# my $bool = $ai->_owns_neighbours($country);
 #
 # Return true if ai also owns all the neighbours of $country.
 #
-sub _own_neighbours {
+sub _owns_neighbours {
     my ($self, $country) = @_;
 
     my $player = $self->player;
