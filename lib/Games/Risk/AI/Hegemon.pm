@@ -35,6 +35,7 @@ sub attack {
     my $me   = $self->player;
     my $game = $self->game;
     my @my_countries = $me->countries;
+    my @continents   = $game->map->continents;
 
     # get all possible attacks
     my @options;
@@ -72,7 +73,7 @@ sub attack {
     my $count   = 0;
     my $complex = 0;
     my $from;
-    foreach my $continent ( $game->map->continents ) {
+    foreach my $continent ( @continents ) {
         next unless $self->_owns_mostly( $continent );
         my @countries = $continent->countries;
 
@@ -87,13 +88,47 @@ sub attack {
         #
         foreach my $country ( @countries ) {
             next if $country->owner eq $me;
-            next unless $from->is_neighbour($country);
             next unless $country->armies + < $count;
+            next unless $from->is_neighbour($country);
             @attack  = ( $from, $country );
             $complex = 1;
             last;
         }
     }
+
+    # 3- else attempt to attack continent with the greatest territories
+    # owned, that has yet to be conquered.
+    if ( not $complex ) {
+        my $value = 0; # FIXME: uh, don't understand this
+        my $choice;
+
+        foreach my $continent ( @continents ) {
+            next if $continent->is_owned($me);
+            my @owned =
+                grep { $_->owner eq $me }
+                $continent->countries;
+
+            $choice = $continent if scalar(@owned) > $value;
+        }
+
+        if ( $choice ) {
+            my @countries = $choice->countries;
+            foreach my $country ( @countries ) {
+                next unless $country->owner eq $me;
+                next unless $country->armies > $count;
+                $count = $country->armies;
+                $from  = $country;
+            }
+            foreach my $country ( @countries ) {
+                next if $country eq $me;
+                next unless $country->armies + 1 < $count;
+                next unless $from->is_neighbour( $country );
+                @attack = ( $from, $country );
+                last;
+            }
+        }
+    }
+
 
     # hum. we don't have that much choice, do we?
     #return ('attack', $country, $neighbour);
