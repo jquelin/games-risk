@@ -103,7 +103,6 @@ sub place_armies {
     my $game = $self->game;
     my $map  = $game->map;
 
-    my $where;
     my @continents   = $map->continents;
     my @my_countries = $me->countries;
 
@@ -113,14 +112,7 @@ sub place_armies {
     #    : $player->countries;
 
     # 1- find a country that can be used as an attack base.
-    COUNTRY:
-    foreach my $country ( @my_countries )  {
-        if ( ! $self->_owns_neighbours($country)
-            && $country->armies <= 11 ) {
-            $where = $country;
-            last;
-        }
-    }
+    my $where = $self->_country_to_attack_from;
 
     # 2- check if we can block another player from gaining a continent.
     # this takes precedence over basic attack as defined in 1-
@@ -229,6 +221,25 @@ sub _continents_to_break {
         $self->map->continents_owned;
 
     return @to_break;
+}
+
+
+#
+# my $country = $self->_country_to_attack_from;
+#
+# Return a country that can be used to attack neighbours. The country
+# should be next to an enemy, and already have less than 11 armies.
+#
+sub _country_to_attack_from {
+    my ($self) = @_;
+
+    foreach my $country ( $self->player->countries ) {
+        next if $self->_owns_neighbours($country);
+        next if $country->armies > 11;
+        return $country;
+    }
+
+    return;
 }
 
 
