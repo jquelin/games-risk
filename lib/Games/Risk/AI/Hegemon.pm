@@ -352,6 +352,7 @@ sub _country_to_crush_weak_enemy {
     # find weak players
     my @weaks =
         grep { scalar($_->countries) < 4 }  # less than 4 countries
+        grep { $_ ne $self->player }
         $self->game->players_active;
     return unless @weaks;
 
