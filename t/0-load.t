@@ -11,7 +11,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 12;
+use Test::More tests => 13;
 
 BEGIN { use_ok( 'Games::Risk' ); }
 diag( "Testing Games::Risk $Games::Risk::VERSION, Perl $], $^X" );
