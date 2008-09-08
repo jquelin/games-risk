@@ -192,6 +192,7 @@ sub _parse_file_section_files {
             open my $fh, '<', $file or die "cannot open '$file': $!";
 
             my $section;
+            my @cards;
             while ( defined( my $l = <$fh> ) ) {
                 given ($l) {
                     when (/^\s*$/)    { } # empty lines
@@ -203,7 +204,7 @@ sub _parse_file_section_files {
                     }
 
                     # further parsing
-                    if ( $section eq 'cards' ) {
+                    if ( defined $section && $section eq 'cards' ) {
                         push @cards, lc $l;
                     }
 
