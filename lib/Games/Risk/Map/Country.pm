@@ -13,7 +13,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use List::Util qw{ first };
+use List::MoreUtils qw{ any };
 
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ armies continent greyval name owner x y
@@ -62,7 +62,7 @@ sub chown {
 #
 sub is_neighbour {
     my ($self, $c) = @_;
-    return first { $_ == $c } $self->neighbours;
+    return any { $_ eq $c } $self->neighbours;
 }
 
 
