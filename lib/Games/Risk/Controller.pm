@@ -27,6 +27,7 @@ Readonly my $ATTACK_WAIT_AI    => 1.250; # FIXME: hardcoded
 Readonly my $ATTACK_WAIT_HUMAN => 0.300; # FIXME: hardcoded
 Readonly my $TURN_WAIT         => 1.800; # FIXME: hardcoded
 Readonly my $WAIT              => 0.100; # FIXME: hardcoded
+Readonly my $START_ARMIES      => 5;
 
 
 #--
@@ -537,7 +538,7 @@ sub _onpriv_place_armies_initial {
         # placement. let's initialize list of players.
         $h->players_reset;
 
-        $h->armies(2); # FIXME: hardcoded
+        $h->armies($START_ARMIES); # FIXME: hardcoded
         $left = $h->{armies};
         K->post('board', 'place_armies_initial_count', $left); # FIXME: broadcast & ai (?)
     }
