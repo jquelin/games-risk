@@ -16,11 +16,12 @@ use warnings;
 use File::Basename qw{ fileparse };
 use List::Util      qw{ shuffle };
 use List::MoreUtils qw{ uniq };
+use aliased 'Games::Risk::Map::Card';
 use aliased 'Games::Risk::Map::Continent';
 use aliased 'Games::Risk::Map::Country';
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ background cards greyscale _continents _countries _dirname } );
+__PACKAGE__->mk_accessors( qw{ background _cards greyscale _continents _countries _dirname } );
 
 
 #--
@@ -206,14 +207,15 @@ sub _parse_file_section_files {
 
                     # further parsing
                     if ( defined $section && $section eq 'cards' ) {
-                        push @cards, lc $l;
+                        my ($type, $id) = split /\s+/, lc $l;
+                        push @cards, Card->new({ type=>$type, country=>$id });
                     }
 
                     # FIXME: parsing missions too in the same file
                 }
             }
             close $fh;
-            $self->cards( [ shuffle @cards ] );
+            $self->_cards( [ shuffle @cards ] );
             return;
         }
         return 'wtf?';
