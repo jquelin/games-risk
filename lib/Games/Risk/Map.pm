@@ -308,6 +308,8 @@ Return the country which id matches C<$id>.
 
 =begin quiet_pod_coverage
 
+=item Card (inserted by aliased)
+
 =item Continent (inserted by aliased)
 
 =item Country (inserted by aliased)
