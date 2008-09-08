@@ -208,9 +208,13 @@ sub _parse_file_section_files {
             my $file = $self->_dirname . "/$1";
             open my $fh, '<', $file or die "cannot open '$file': $!";
 
-            my $section;
+            my $section = '';
             my @cards;
             while ( defined( my $l = <$fh> ) ) {
+                $l =~ s/[\r\n]//g;  # remove all end of lines
+                $l =~ s/^\s+//;     # trim heading whitespaces
+                $l =~ s/\s+$//;     # trim trailing whitespaces
+
                 given ($l) {
                     when (/^\s*$/)    { } # empty lines
                     when (/^\s*[#;]/) { } # comments
@@ -221,7 +225,7 @@ sub _parse_file_section_files {
                     }
 
                     # further parsing
-                    if ( defined $section && $section eq 'cards' ) {
+                    if ( $section eq 'cards' ) {
                         my ($type, $id) = split /\s+/, lc $l;
                         push @cards, Card->new({ type=>$type, country=>$id });
                     }
