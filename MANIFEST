@@ -23,6 +23,7 @@ lib/Games/Risk/GUI/MoveArmies.pm
 lib/Games/Risk/Map.pm
 lib/Games/Risk/Map/Continent.pm
 lib/Games/Risk/Map/Country.pm
+lib/Games/Risk/maps/risk.cards
 lib/Games/Risk/maps/risk.map
 lib/Games/Risk/maps/risk_background.jpg
 lib/Games/Risk/maps/risk_map.gif

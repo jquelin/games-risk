@@ -1,0 +1,67 @@
+; Yura Mamyrin
+; cards file
+
+[cards]
+Infantry 1
+Cannon 2
+Infantry 3
+Infantry 4
+Cavalry 5
+Cavalry 6
+Cavalry 7
+Cannon 8
+Cannon 9
+Cannon 10
+Cavalry 11
+Cannon 12
+Infantry 13
+Infantry 14
+Cannon 15
+Cannon 16
+Cavalry 17
+Cavalry 18
+Infantry 19
+Cavalry 20
+Infantry 21
+Infantry 22
+Cavalry 23
+Cannon 24
+Cannon 25
+Infantry 26
+Cannon 27
+Cavalry 28
+Cavalry 29
+Infantry 30
+Cannon 31
+Infantry 32
+Cannon 33
+Cavalry 34
+Infantry 35
+Cannon 36
+Infantry 37
+Cavalry 38
+Cavalry 39
+Cavalry 40
+Cannon 41
+Infantry 42
+wildcard
+wildcard
+
+;destroy x occupy x x continents x x x
+;destroy (Player) occupy (int int) continents (Continent Continent Continent)
+; * = any
+[missions]
+0	0 0	5 2 0	Conquer the continents of ASIA and SOUTH AMERICA.
+0	0 0	3 6 *	Conquer the continents of EUROPE and AUSTRALIA and a third continent of your choice.
+0	0 0	5 4 0	Conquer the continents of ASIA and AFRICA.
+0	0 0	3 2 *	Conquer the continents of EUROPE and SOUTH AMERICA and a third continent of your choice.
+0	0 0	1 6 0	Conquer the continents of NORTH AMERICA and AUSTRALIA.
+0	0 0	1 4 0	Conquer the continents of NORTH AMERICA and AFRICA.
+0	18 2	0 0 0	Occupy 18 countries of your choice and occupy each with at least 2 armies.
+0	24 1	0 0 0	Occupy 24 countries of your choice and occupy each with at least 1 army.
+1	24 1	0 0 0	Destroy all of PLAYER1's TROOPS. If they are yours or they have already been destroyed by another player then your mission is: Occupy 24 countries.
+2	24 1	0 0 0	Destroy all of PLAYER2's TROOPS. If they are yours or they have already been destroyed by another player then your mission is: Occupy 24 countries.
+3	24 1	0 0 0	Destroy all of PLAYER3's TROOPS. If they are yours or they have already been destroyed by another player then your mission is: Occupy 24 countries.
+4	24 1	0 0 0	Destroy all of PLAYER4's TROOPS. If they are yours or they have already been destroyed by another player then your mission is: Occupy 24 countries.
+5	24 1	0 0 0	Destroy all of PLAYER5's TROOPS. If they are yours or they have already been destroyed by another player then your mission is: Occupy 24 countries.
+6	24 1	0 0 0	Destroy all of PLAYER6's TROOPS. If they are yours or they have already been destroyed by another player then your mission is: Occupy 24 countries.
