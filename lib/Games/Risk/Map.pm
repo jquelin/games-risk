@@ -30,6 +30,21 @@ __PACKAGE__->mk_accessors( qw{ background _cards greyscale _continents _countrie
 # -- public subs
 
 #
+# my $card = $map->card_get;
+#
+# Return the next card from the card stack.
+#
+sub card_get {
+    my ($self) = @_;
+
+    # get a card from the stack
+    my ($card, @cards) = @{ $self->_cards };
+    $self->_cards( \@cards );
+
+    return $card;
+}
+
+#
 # my @continents = $map->continents;
 #
 # Return the list of all continents in the $map.
@@ -279,6 +294,11 @@ the path to the background image for the board.
 =head2 Object methods
 
 =over 4
+
+=item * my $card = $map->card_get()
+
+Return the next card from the cards stack.
+
 
 =item * my @continents = $map->continents()
 
