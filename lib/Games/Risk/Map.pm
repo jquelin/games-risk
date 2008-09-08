@@ -206,6 +206,8 @@ sub _parse_file_section_files {
                     if ( $section eq 'cards' ) {
                         push @cards, lc $l;
                     }
+
+                    # FIXME: parsing missions too in the same file
                 }
             }
             close $fh;
