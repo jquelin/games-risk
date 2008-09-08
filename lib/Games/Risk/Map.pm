@@ -129,6 +129,18 @@ sub load_file {
         }
     }
 
+    # update the cards with the correct country
+    foreach my $card ( @{ $self->_cards } ) {
+        my $id = $card->country;
+        next unless defined $id;
+        my $country = $self->country_get($id);
+        if ( not defined $country ) {
+            warn "cards parse error: country $id doesn't exist\n";
+            next;
+        }
+        $card->country( $country );
+    }
+
     #use Data::Dumper; say Dumper($self);
     #use YAML; say Dump($self);
 }
