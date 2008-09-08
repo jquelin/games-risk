@@ -292,11 +292,13 @@ in the future for C<Games::Risk>:
 
 =item * i18n
 
-=item * better ais
+=item * better ais - DONE - 0.5.0: blitzkrieg ai, 0.5.1: hegemon ai
 
 =item * country cards
 
-=item * continents bonus, maybe localized?
+=item * continents bonus - DONE - 0.3.3
+
+=item * continents localized
 
 =item * statistics
 
