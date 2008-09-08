@@ -14,12 +14,13 @@ use strict;
 use warnings;
 
 use File::Basename qw{ fileparse };
+use List::Util      qw{ shuffle };
 use List::MoreUtils qw{ uniq };
 use aliased 'Games::Risk::Map::Continent';
 use aliased 'Games::Risk::Map::Country';
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ background greyscale _continents _countries _dirname } );
+__PACKAGE__->mk_accessors( qw{ background cards greyscale _continents _countries _dirname } );
 
 
 #--
@@ -184,6 +185,31 @@ sub _parse_file_section_files {
         }
         when (/^pic\s+(.*)$/) {
             $self->background( $self->_dirname . "/$1" );
+            return;
+        }
+        when(/^crd\s+(.+)$/) {
+            my $file = $self->_dirname . "/$1";
+            open my $fh, '<', $file or die "cannot open '$file': $!";
+
+            my $section;
+            while ( defined( my $l = <$fh> ) ) {
+                given ($l) {
+                    when (/^\s*$/)    { } # empty lines
+                    when (/^\s*[#;]/) { } # comments
+
+                    when (/^\[([^]]+)\]$/) {
+                        # changing [section]
+                        $section = $1;
+                    }
+
+                    # further parsing
+                    if ( $section eq 'cards' ) {
+                        push @cards, lc $l;
+                    }
+                }
+            }
+            close $fh;
+            $self->cards( [ shuffle @cards ] );
             return;
         }
         return 'wtf?';
