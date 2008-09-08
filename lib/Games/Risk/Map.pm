@@ -118,6 +118,7 @@ sub load_file {
 }
 
 # -- private subs
+# the following are UGLY, UGLY, UGLY!
 
 sub _parse_file_section_ {
     my ($self, $line) = @_;
