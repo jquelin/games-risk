@@ -1065,14 +1065,6 @@ sub _ongui_canvas_place_armies_initial {
     K->post('risk', 'initial_armies_placed', $country, 1);
 }
 
-#--
-# Subs
-
-# -- private subs
-
-sub _create_gui {
-}
-
 
 1;
 
