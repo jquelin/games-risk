@@ -521,6 +521,7 @@ sub _onpriv_start {
     my $fleft  = $top->Frame->pack(@LEFT,  @XFILL2);
     my $fright = $top->Frame->pack(@RIGHT, @FILL2);
 
+
     #-- frame for game state
     my $fgs = $fleft->Frame->pack(@TOP, @FILLX);
     $fgs->Label(-text=>'Game state: ')->pack(@LEFT);
@@ -581,6 +582,7 @@ sub _onpriv_start {
         $top->bind('Tk::Canvas', "<Control-Key-$key>", undef);
     }
 
+
     #-- bottom frame
     # the status bar
     $h->{status} = '';
@@ -604,6 +606,7 @@ sub _onpriv_start {
     $fpl->Label(-text=>'Players')->pack(@TOP);
     my $fplist = $fpl->Frame->pack(@TOP);
     $h->{frames}{players} = $fplist;
+
 
     #-- dices frame
     my $fdice = $fright->Frame->pack(@TOP,@FILLX, -pady=>10);
