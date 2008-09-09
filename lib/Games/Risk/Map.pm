@@ -241,6 +241,11 @@ available for C<Games::Risk::Map> objects:
 the path to the background image for the board.
 
 
+=item * greyscale()
+
+the path to the greyscale bitmap for the board.
+
+
 =back
 
 
