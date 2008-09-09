@@ -75,6 +75,7 @@ sub spawn {
             _canvas_attack_cancel          => \&_ongui_canvas_attack_cancel,
             _canvas_attack_from            => \&_ongui_canvas_attack_from,
             _canvas_attack_target          => \&_ongui_canvas_attack_target,
+            _canvas_configure              => \&_ongui_canvas_configure,
             _canvas_move_armies_cancel     => \&_ongui_canvas_move_armies_cancel,
             _canvas_move_armies_from       => \&_ongui_canvas_move_armies_from,
             _canvas_move_armies_target     => \&_ongui_canvas_move_armies_target,
@@ -876,6 +877,34 @@ sub _ongui_canvas_attack_target {
     K->post('risk', 'attack', $h->{src}, $country);
 }
 
+
+#
+# event: _canvas_configure( undef, [$widget, $w, $h] );
+#
+# Called when canvas is reconfigured. new width and height available
+# with ($w, $h). note that reconfigure is also window motion.
+#
+sub _ongui_canvas_configure {
+    my ($h, $args) = @_[HEAP, ARG1];
+    my ($widget, $neww, $newh) = @$args;
+
+    say "conf"; return;
+    # only toplevel matters for us
+    return unless $widget eq $h->{toplevel};
+
+    # retrieve old values, store new ones
+    my $oldw = $h->{toplevel_width};
+    my $oldh = $h->{toplevel_height};
+    $h->{toplevel_width}  = $neww;
+    $h->{toplevel_height} = $newh;
+    return unless defined $oldw && defined $oldh;
+    return if $oldw == $neww;
+    return if $oldh == $newh;
+
+    # resize
+
+    say "resize";
+}
 
 #
 # event: _canvas_motion( undef, [$canvas, $x, $y] );
