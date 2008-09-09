@@ -568,7 +568,7 @@ sub _onpriv_start {
 
 
     #-- canvas
-    my $c = $fleft->Canvas->pack(@TOP);
+    my $c = $fleft->Canvas->pack(@TOP,@XFILL2);
     $h->{canvas} = $c;
     $c->CanvasBind( '<Motion>', [$s->postback('_canvas_motion'), Ev('x'), Ev('y')] );
     # removing class bindings
