@@ -244,18 +244,19 @@ sub _onpub_country_redraw {
 # their data.
 #
 sub _onpub_load_map {
-    my ($h, $map) = @_[HEAP, ARG0];
+    my ($h, $s, $map) = @_[HEAP, SESSION, ARG0];
     my $c = $h->{canvas};
 
     # remove everything
     $c->delete('all');
+    $c->CanvasBind('<Configure>', undef);
 
     # create background image
     my $img_path = $map->background;
-    my ($width,$height) = imgsize($img_path);
+    my ($width, $height) = imgsize($img_path);
     my $img = $c->Photo( -file=>$img_path );
+    $h->{background} = $img; # store original image for later on
     $c->configure(-width => $width, -height => $height);
-    #use Data::Dumper; say Dumper($img);
     $c->createImage(0, 0, -anchor=>'nw', -image=>$img, -tags=>['background']);
 
     # create capitals
@@ -272,8 +273,11 @@ sub _onpub_load_map {
     }
 
     # load greyscale image
-    $h->{greyscale} = $h->{toplevel}->Photo(-file=>$map->greyscale);
+    $h->{greyscale} = $c->Photo(-file=>$map->greyscale);
 
+    # allow the canvas to update itself.
+    $c->idletasks;
+    $c->CanvasBind('<Configure>', [$s->postback('_canvas_configure'), Ev('w'), Ev('h')] );
 
     # store map and say we're done
     $h->{map} = $map;
