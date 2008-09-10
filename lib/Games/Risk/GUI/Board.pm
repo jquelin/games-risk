@@ -904,7 +904,12 @@ sub _ongui_canvas_configure {
     $c->createImage(0, 0, -anchor=>'nw', -image=>$img, -tags=>['background']);
     $c->lower('background', 'all');
 
-    # update zoom factors
+    # update zoom factors. note that we don't want to resize greyscale
+    # image since a) it takes time, which is unneeded since this image
+    # is not displayed and b) greyscale are quite close from country to
+    # country, and resizing will blur this to the point that it's no
+    # longer usable. therefore, just storing a zoom factor and using it
+    # will be enough for greyscale.
     my ($origw, $origh) = @{ $h->{orig_bg_size} };
     $h->{zoom} = [ $neww/$origw, $newh/$origh ];
 }
