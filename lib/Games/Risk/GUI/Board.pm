@@ -919,6 +919,11 @@ sub _ongui_canvas_motion {
 
     my (undef, $x,$y) = @$args; # first param is canvas
 
+    # correct with zoom factor
+    my ($zoomx, $zoomy) = @{ $h->{zoom} };
+    $x /= $zoomx;
+    $y /= $zoomy;
+
     # get greyscale pointed by mouse, this may die if moving too fast
     # outside of the canvas. we just need the 'red' component, since
     # green and blue will be the same.
