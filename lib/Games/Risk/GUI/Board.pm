@@ -68,6 +68,7 @@ sub spawn {
             _stop                => sub { warn "gui-board shutdown\n" },
             # private events - game
             _clean_attack                  => \&_onpriv_clean_attack,
+            _country_redraw                => \&_onpub_country_redraw,
             # gui events
             _but_attack_done               => \&_ongui_but_attack_done,
             _but_attack_redo               => \&_ongui_but_attack_redo,
@@ -912,7 +913,12 @@ sub _ongui_canvas_configure {
     # will be enough for greyscale.
     my ($origw, $origh) = @{ $h->{orig_bg_size} };
     $h->{zoom} = [ $neww/$origw, $newh/$origh ];
+
+    # force country redraw, for them to be correctly placed on the new
+    # map.
+    K->yield('_country_redraw', $_) foreach $h->{map}->countries;
 }
+
 
 #
 # event: _canvas_motion( undef, [$canvas, $x, $y] );
