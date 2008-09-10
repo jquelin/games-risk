@@ -167,8 +167,9 @@ sub _onpub_attack_info {
     # draw a line on the canvas
     my $c = $h->{canvas};
     state $i = 0;
-    my $x1 = $src->x; my $y1 = $src->y;
-    my $x2 = $dst->x; my $y2 = $dst->y;
+    my ($zoomx, $zoomy) = @{ $h->{zoom} };
+    my $x1 = $src->x * $zoomx; my $y1 = $src->y * $zoomy;
+    my $x2 = $dst->x * $zoomx; my $y2 = $dst->y * $zoomy;
     $c->createLine(
         $x1, $y1, $x2, $y2,
         -arrow => 'last',
@@ -222,8 +223,9 @@ sub _onpub_country_redraw {
             : (5,       'white', '');
 
     $radius += min(12,$armies-1)/2;
-    my $x = $country->x;
-    my $y = $country->y;
+    my ($zoomx, $zoomy) = @{ $h->{zoom} };
+    my $x = $country->x * $zoomx;
+    my $y = $country->y * $zoomy;
     my $x1 = $x - $radius; my $x2 = $x + $radius;
     my $y1 = $y - $radius; my $y2 = $y + $radius;
 
