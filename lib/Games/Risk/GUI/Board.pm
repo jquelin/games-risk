@@ -257,10 +257,14 @@ sub _onpub_load_map {
     # create background image
     my $img_path = $map->background;
     my ($width, $height) = imgsize($img_path);
+    # FIXME: adapt to current window width/height
     my $img = $c->Photo( -file=>$img_path );
-    $h->{background} = $img; # store original image for later on
     $c->configure(-width => $width, -height => $height);
     $c->createImage(0, 0, -anchor=>'nw', -image=>$img, -tags=>['background']);
+
+    # store zoom information
+    $h->{orig_bg_size} = [$width, $height];
+    $h->{zoom}         = [1, 1];
 
     # create capitals
     foreach my $country ( $map->countries ) {
@@ -278,7 +282,7 @@ sub _onpub_load_map {
     # load greyscale image
     $h->{greyscale} = $c->Photo(-file=>$map->greyscale);
 
-    # allow the canvas to update itself.
+    # allow the canvas to update itself & reinstall callback.
     $c->idletasks;
     $c->CanvasBind('<Configure>', [$s->postback('_canvas_configure'), Ev('w'), Ev('h')] );
 
@@ -900,7 +904,9 @@ sub _ongui_canvas_configure {
     $c->createImage(0, 0, -anchor=>'nw', -image=>$img, -tags=>['background']);
     $c->lower('background', 'all');
 
-    # resize
+    # update zoom factors
+    my ($origw, $origh) = @{ $h->{orig_bg_size} };
+    $h->{zoom} = [ $neww/$origw, $newh/$origh ];
 }
 
 #
