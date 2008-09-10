@@ -15,8 +15,10 @@ use warnings;
 
 use File::Basename qw{ fileparse };
 use Games::Risk::GUI::MoveArmies;
+use Image::Resize;
 use Image::Size;
 use List::Util     qw{ min };
+use MIME::Base64;
 use Module::Util   qw{ find_installed };
 use POE;
 use Readonly;
@@ -888,12 +890,15 @@ sub _ongui_canvas_configure {
     my ($h, $args) = @_[HEAP, ARG1];
     my ($c, $neww, $newh) = @$args;
 
-    return;
+    # create a new image resized to fit new dims
+    my $orig = Image::Resize->new($h->{map}{background});
+    my $gd   = $orig->resize($neww, $newh, 0);
 
-    # retrieve old values.
-    my $bg = $h->{background};
-    my $origw = $bg->width;
-    my $origh = $bg->height;
+    # install this new image inplace of previous background
+    my $img = $c->Photo( -data => encode_base64($gd->png) );
+    $c->delete('background');
+    $c->createImage(0, 0, -anchor=>'nw', -image=>$img, -tags=>['background']);
+    $c->lower('background', 'all');
 
     # resize
 }
