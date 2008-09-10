@@ -895,7 +895,7 @@ sub _ongui_canvas_configure {
     my ($c, $neww, $newh) = @$args;
 
     # create a new image resized to fit new dims
-    my $orig = Image::Resize->new($h->{map}{background});
+    my $orig = Image::Resize->new($h->{map}->background);
     my $gd   = $orig->resize($neww, $newh, 0);
 
     # install this new image inplace of previous background
