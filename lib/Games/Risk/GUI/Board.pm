@@ -230,7 +230,16 @@ sub _onpub_country_redraw {
     my $y1 = $y - $radius; my $y2 = $y + $radius;
 
     # update canvas
-    $c->itemconfigure( "$id&&text", -text => $text);
+    #  - text
+    $c->delete( "$id&&text" );
+    $c->createText(
+        $x, $y+1,
+        -fill => 'white',
+        -tags => [ $country->id, 'text' ],
+        -text => $text,
+    );
+
+    #  - circle
     $c->delete( "$id&&circle" );
     $c->createOval(
         $x1, $y1, $x2, $y2,
@@ -270,17 +279,7 @@ sub _onpub_load_map {
     $h->{zoom}         = [1, 1];
 
     # create capitals
-    foreach my $country ( $map->countries ) {
-        # create text for country armies
-        $c->createText(
-            $country->x, $country->y+1,
-            -fill => 'white',
-            -tags => [ $country->id, 'text' ],
-        );
-
-        # update text values & oval
-        K->yield('chown', $country);
-    }
+    K->yield('_country_redraw', $_) foreach $map->countries;
 
     # load greyscale image
     $h->{greyscale} = $c->Photo(-file=>$map->greyscale);
