@@ -403,7 +403,7 @@ sub _onpriv_attack_done {
             $h->got_card(1);
             my $card = $h->map->card_get;
             $player->card_add($card);
-            K->post($session, 'card', $card);
+            K->post($session, 'card', $card);# FIXME: broadcast
         }
 
         if ( $src->armies - 1 == $h->nbdice ) {
