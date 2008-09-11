@@ -107,6 +107,7 @@ sub _onpub_attack_move {
     $top->geometry("+$x+$y");
     $h->{toplevel}->deiconify;
     $h->{toplevel}->raise;
+    $h->{toplevel}->update;
 
     #$top->resizable(0,0);
     #my ($maxw,$maxh) = $top->geometry =~ /^(\d+)x(\d+)/;
@@ -147,6 +148,7 @@ sub _onpub_move_armies {
     $top->geometry("+$x+$y");
     $h->{toplevel}->deiconify;
     $h->{toplevel}->raise;
+    $h->{toplevel}->update;
 
     #$top->resizable(0,0);
     #my ($maxw,$maxh) = $top->geometry =~ /^(\d+)x(\d+)/;
