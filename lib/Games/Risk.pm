@@ -65,6 +65,19 @@ sub new {
 # -- public methods
 
 #
+# $game->card_add( $player, $card );
+#
+# Add $card to the $player's list of cards.
+#
+sub card_add {
+    my ($self, $player, $card) = @_;
+    my @cards = @{ $self->_cards->{$player} // [] };
+    push @cards, $card;
+    $self->_cards->{$player} = \@cards;
+}
+
+
+#
 # $game->cards_reset;
 #
 # put back all cards given to players to the deck.
@@ -251,6 +264,11 @@ the current C<Games::Risk::Map> object of the game.
 =head2 Public methods
 
 =over 4
+
+=item * $game->card_add( $player, $card );
+
+Add C<$card> to the C<$player>'s list of cards.
+
 
 =item * $game->cards_reset;
 
