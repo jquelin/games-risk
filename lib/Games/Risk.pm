@@ -25,7 +25,7 @@ our $VERSION = '0.5.1';
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{
     armies curplayer dst got_card map move_in move_out nbdice src wait_for
-    _players _players_active _players_turn_done _players_turn_todo
+    _cards _players _players_active _players_turn_done _players_turn_todo
 } );
 
 
@@ -63,6 +63,27 @@ sub new {
 # METHODS
 
 # -- public methods
+
+#
+# $game->cards_reset;
+#
+# put back all cards given to players to the deck.
+#
+sub cards_reset {
+    my ($self) = @_;
+    my $map = $self->map;
+
+    # return all distributed cards to the deck.
+    my $cards = $self->_cards // {};
+    foreach my $p ( keys %$cards ) {
+        my $c = $cards->{$p};
+        $self->card_return($_) for @$c;
+    }
+
+    # reinit the cards distributed
+    $self->_cards({});
+}
+
 
 #
 # $game->player_lost( $player );
@@ -230,6 +251,10 @@ the current C<Games::Risk::Map> object of the game.
 =head2 Public methods
 
 =over 4
+
+=item * $game->cards_reset;
+
+Put back all cards given to players to the deck.
 
 
 =item * $game->player_lost( $player )
