@@ -469,9 +469,6 @@ sub _onpriv_load_map {
     my $map = Games::Risk::Map->new;
     $map->load_file($path);
     $h->map($map);
-
-    # various inits
-    $h->cards_reset;
 }
 
 
