@@ -416,7 +416,6 @@ sub _onpriv_attack_done {
     } else {
         K->post($session, 'attack');
     }
-
 }
 
 
@@ -588,6 +587,9 @@ sub _onpriv_player_next {
         K->yield('_begin_turn');
         return;
     }
+
+    # reset card status
+    $h->got_card(0);
 
     # update various guis with current player
     K->post('board', 'player_active', $player); # FIXME: broadcast
