@@ -399,6 +399,13 @@ sub _onpriv_attack_done {
     # check outcome
     if ( $dst->armies <= 0 ) {
         # all your base are belong to us! :-)
+        if ( not $h->got_card ) {
+            $h->got_card(1);
+            my $card = $h->map->card_get;
+            $h->card_add($player, $card);
+            K->post($session, 'card', $card);
+        }
+
         if ( $src->armies - 1 == $h->nbdice ) {
             # erm, no choice but move all remaining armies
             K->yield( 'attack_move', $src, $dst, $h->nbdice );
