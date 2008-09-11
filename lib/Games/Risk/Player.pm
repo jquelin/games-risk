@@ -99,6 +99,20 @@ sub cards {
 
 
 #
+# $player->card_add( $card );
+#
+# Add $card to the set of cards owned by $player.
+#
+sub card_add {
+    my ($self, $card) = @_;
+    my @cards = $self->cards;
+    push @cards, $card;
+    $self->_cards(\@cards);
+}
+
+
+
+#
 # my @countries = $player->countries;
 #
 # Return the list of countries (Games::Risk::Map::Country objects)
@@ -233,6 +247,11 @@ The following methods are available for C<Games::Risk::Player> objects:
 
 Return the list of cards (C<Games::Risk::Map::Card> objects) currently
 owned by C<$player>.
+
+
+=item * $player->card_add( $card )
+
+Add C<$card> to the set of cards owned by C<$player>.
 
 
 =item * my @countries = $player->countries()

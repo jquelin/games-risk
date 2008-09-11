@@ -402,7 +402,7 @@ sub _onpriv_attack_done {
         if ( not $h->got_card ) {
             $h->got_card(1);
             my $card = $h->map->card_get;
-            $h->card_add($player, $card);
+            $player->card_add($card);
             K->post($session, 'card', $card);
         }
 
