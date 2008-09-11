@@ -14,6 +14,11 @@ High-level changelog
 Low-level changelog
 ===================
 
+0.5.2 Thu Sep 11 10:38:05 CEST 2008
+ - starting with 5 armies
+ - resizing map is now possible
+ - movearmies window should appear on top
+
 0.5.1 Sun Sep  7 18:09:08 CEST 2008
  - new ai "hegemon" available, quite hard. idea taken from jrisk
  - internals reworked so that GR is the heap of GR:Controller
