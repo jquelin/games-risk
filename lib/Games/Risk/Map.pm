@@ -44,6 +44,20 @@ sub card_get {
     return $card;
 }
 
+
+#
+# $map->card_return( $card );
+#
+# Push back $card in the card stack.
+#
+sub card_return {
+    my ($self, $card) = @_;
+
+    my @cards = ( @{ $self->_cards }, $card );
+    $self->_cards( \@cards );
+}
+
+
 #
 # my @continents = $map->continents;
 #
@@ -314,6 +328,11 @@ the path to the background image for the board.
 =item * my $card = $map->card_get()
 
 Return the next card from the cards stack.
+
+
+=item * $map->card_return( $card )
+
+Push back a $card in the card stack.
 
 
 =item * my @continents = $map->continents()
