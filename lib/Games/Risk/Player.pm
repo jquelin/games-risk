@@ -36,7 +36,7 @@ my $Color_id = 0;
 
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ ai ai_class color name type _countries } );
+__PACKAGE__->mk_accessors( qw{ ai ai_class color name type _cards _countries } );
 
 
 #--
@@ -85,6 +85,18 @@ sub new {
 # METHODS
 
 # -- public methods
+
+#
+# my @cards = $player->cards;
+#
+# Return the list of cards (Games::Risk::Map::Card objects) currently
+# owned by $player.
+#
+sub cards {
+    my ($self) = @_;
+    return @{ $self->_cards // [] };
+}
+
 
 #
 # my @countries = $player->countries;
@@ -216,6 +228,12 @@ The following methods are available for C<Games::Risk::Player> objects:
 
 
 =over 4
+
+=item my @cards = $player->cards()
+
+Return the list of cards (C<Games::Risk::Map::Card> objects) currently
+owned by C<$player>.
+
 
 =item * my @countries = $player->countries()
 
