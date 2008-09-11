@@ -251,7 +251,7 @@ Add C<$country> to the set of countries owned by C<$player>.
 Delete C<$country> from the set of countries owned by C<$player>.
 
 
-=item * my $greatness = $player->greatness;
+=item * my $greatness = $player->greatness()
 
 Return an integer reflecting the greatness of C<$player>. It will raise
 with the number of owned territories, as well as the number of armies.
