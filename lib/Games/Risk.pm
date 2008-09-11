@@ -74,14 +74,10 @@ sub cards_reset {
     my $map = $self->map;
 
     # return all distributed cards to the deck.
-    my $cards = $self->_cards // {};
-    foreach my $p ( keys %$cards ) {
-        my $c = $cards->{$p};
-        $self->card_return($_) for @$c;
+    foreach my $player ( $self->players ) {
+        my @cards = $player->cards;
+        $map->card_return($_) for @cards;
     }
-
-    # reinit the cards distributed
-    $self->_cards({});
 }
 
 
