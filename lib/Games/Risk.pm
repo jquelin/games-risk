@@ -20,7 +20,7 @@ use POE;
 use aliased 'POE::Kernel' => 'K';
 
 # Public variables of the module.
-our $VERSION = '0.5.2';
+our $VERSION = '0.5.3';
 
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{

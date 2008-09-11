@@ -14,7 +14,11 @@ High-level changelog
 Low-level changelog
 ===================
 
+0.5.3 Thu Sep 11 10:41:55 CEST 2008
+ - adding missing prereq (cf 0.5.2)
+
 0.5.2 Thu Sep 11 10:38:05 CEST 2008
+ - (not published, prereqs were wrong)
  - starting with 5 armies
  - resizing map is now possible
  - movearmies window should appear on top
