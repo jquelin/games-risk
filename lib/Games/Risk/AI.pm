@@ -98,7 +98,6 @@ sub spawn {
         },
     );
     return $session->ID;
-
 }
 
 
