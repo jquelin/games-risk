@@ -116,7 +116,7 @@ sub _onpriv_redraw_cards {
         )->grid(-row=>$row,-column=>$col);
 
         # the info themselves
-        $c->createImage(0, 0, -anchor=>'nw', -image=>$h->{images}{"card-bg"}, -tags=>['bg']);
+        $c->createImage(0, 0, -anchor=>'nw', -image=>$h->{images}{bg}, -tags=>['bg']);
         if ( defined $country ) {
             $c->createText(
                 $WIDTH/2, 15,
@@ -161,7 +161,7 @@ sub _onpriv_start {
     # FIXME: this should be in a sub/method somewhere
     my $path = find_installed(__PACKAGE__);
     my (undef, $dirname, undef) = fileparse($path);
-    $h->{images}{"card-$_"} = $top->Photo(-file=>"$dirname/icons/card-$_.png")
+    $h->{images}{$_} = $top->Photo(-file=>"$dirname/icons/card-$_.png")
         foreach qw{ bg artillery cavalry infantry jocker };
 
     #- top frame
