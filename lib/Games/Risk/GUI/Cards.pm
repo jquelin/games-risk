@@ -101,23 +101,29 @@ sub _onpriv_redraw_cards {
     # update gui
     my $cards = $h->{cards};
     foreach my $i ( 0 .. $#$cards ) {
-        my $row = int( $i / 3 );
-        my $col = $i % 3;
-
         my $card = $cards->[$i];
         my $country = $card->country;
 
-        my $fcard = $h->{frame}->Frame(
+        # the canvas containing country info
+        my $row = int( $i / 3 );
+        my $col = $i % 3;
+        my $c = $h->{frame}->Canvas(
             -width  => 95,
-            -height => 175,
+            -height => 145,
         )->grid(-row=>$row,-column=>$col);
-        my $c = $fcard->Canvas(-width=>95, -height=>145)->pack(@TOP);
-        my $b = $fcard->Checkbutton(
-            -text => defined $country ? $country->name : 'jocker',
-        )->pack(@TOP);
-        $c->createImage(0, 0, -anchor=>'nw', -image=>$h->{images}{"card-bg"}, -tags=>['bg']);
 
-        push @$frames, $fcard;
+        # the info themselves
+        $c->createImage(0, 0, -anchor=>'nw', -image=>$h->{images}{"card-bg"}, -tags=>['bg']);
+        if ( defined $country ) {
+            $c->createText(
+                95/2, 15,
+                -width  => 70,
+                -anchor => 'n',
+                -text   => $country->name,
+            );
+        }
+
+        push @$frames, $c;
     }
 
     #$h->{frame}->configure(-width=>95*3,-height=>175*scalar(@hframes));
@@ -158,8 +164,8 @@ sub _onpriv_start {
     #- top frame
     $h->{frame} = $top->Scrolled('Frame',
         -scrollbars => 'e',
-        -width      => 110*3,
-        -height     => 175*2,
+        -width      => (95+5)*3,
+        -height     => (145+5)*2,
     )->pack(@TOP, @XFILL2);
 
     #- bottom button
