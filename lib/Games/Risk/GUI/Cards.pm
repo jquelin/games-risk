@@ -110,7 +110,7 @@ sub _onpriv_start {
     $h->{toplevel} = $top;
     $top->title('Cards');
 
-    # -- load pictures
+    #- load pictures
     # FIXME: this should be in a sub/method somewhere
     my $path = find_installed(__PACKAGE__);
     my (undef, $dirname, undef) = fileparse($path);
@@ -124,7 +124,7 @@ sub _onpriv_start {
         -height     => 150,
     )->pack(@TOP, @XFILL2);
 
-    # -- bottom button
+    #- bottom button
     my $b = $top->Button(
         -text => 'Exchange',
         @ENOFF,
