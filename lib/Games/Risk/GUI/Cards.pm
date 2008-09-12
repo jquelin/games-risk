@@ -96,6 +96,12 @@ sub _onpub_card {
 
 # -- private events
 
+#
+# event: _redraw_cards()
+#
+# ask to discard current cards shown, and redraw them. used when
+# receiving a new card, or after exchanging some of them.
+#
 sub _onpriv_redraw_cards {
     my ($h, $s) = @_[HEAP, SESSION];
 
@@ -196,47 +202,21 @@ sub _onpriv_start {
         @ENOFF,
     )->pack(@TOP, @FILL2);
 
-    #
+    #- force window geometry
     $top->update;    # force redraw
     $top->resizable(0,0);
+
+    #- window bindings.
+    #$top->bind('<4>', $s->postback('_slide_wheel',  1));
+    #$top->bind('<5>', $s->postback('_slide_wheel', -1));
 
 
     # -- inits
     $h->{cards} = [];
 
-=pod
-
-    my $lab = $top->Label->pack(@TOP,@XFILL2);
-    my $fs  = $top->Frame->pack(@TOP,@XFILL2);
-    $fs->Label(-text=>'Armies to move')->pack(@LEFT);
-    $h->{armies} = 0;  # nb of armies to move
-    my $sld = $fs->Scale(
-        -orient    => 'horizontal',
-        -width     => 5, # height since we're horizontal
-        -showvalue => 1,
-        -variable  => \$h->{armies},
-    )->pack(@LEFT,@XFILL2);
-    my $but = $top->Button(
-        -text    => 'Move armies',
-        -command => $s->postback('_but_move'),
-    )->pack(@TOP);
-    $h->{lab_title} = $title;
-    $h->{lab_info}  = $lab;
-    $h->{but_move}  = $but;
-    $h->{scale}     = $sld;
-
-    # window bindings.
-    $top->bind('<4>', $s->postback('_slide_wheel',  1));
-    $top->bind('<5>', $s->postback('_slide_wheel', -1));
-    $top->bind('<Key-Return>', $s->postback('_but_move'));
-    $top->bind('<Key-space>', $s->postback('_but_move'));
-
 
     #-- trap some events
     $top->protocol( WM_DELETE_WINDOW => sub{} );
-
-=cut
-
 }
 
 
@@ -276,6 +256,10 @@ sub _ongui_card_clicked {
         $canvas->configure(-bg=>'black');
         push @selected, $canvas;
     }
+
+    # FIXME: check validity of cards selected
+    #$top->bind('<Key-Return>', $s->postback('_but_move'));
+    #$top->bind('<Key-space>',  $s->postback('_but_move'));
 
     # store new set of selected cards
     $h->{selected} = \@selected;
