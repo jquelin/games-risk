@@ -120,8 +120,8 @@ sub _onpriv_start {
     #- top frame
     $h->{frame} = $top->Scrolled('Frame',
         -scrollbars => 'e',
-        -width      => 95*3,
-        -height     => 150,
+        -width      => 110*3,
+        -height     => 175*2,
     )->pack(@TOP, @XFILL2);
 
     #- bottom button
@@ -129,6 +129,10 @@ sub _onpriv_start {
         -text => 'Exchange',
         @ENOFF,
     )->pack(@TOP, @FILL2);
+
+    #
+    $top->update;    # force redraw
+    $top->resizable(0,0);
 
 
     # -- inits
