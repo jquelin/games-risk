@@ -140,6 +140,7 @@ sub _onpriv_redraw_cards {
             );
         }
 
+        # storing canvas
         push @$canvases, $c;
     }
 
