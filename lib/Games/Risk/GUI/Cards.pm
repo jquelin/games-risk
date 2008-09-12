@@ -79,15 +79,10 @@ sub spawn {
 sub _onpub_card {
     my ($h, $card) = @_[HEAP, ARG0];
 
-    # update gui
-    my $top = $h->{toplevel};
+    my $cards = $h->{cards};
+    push @$cards, $card;
 
-    # move window & enforce geometry
-    $top->update;               # force redraw
-
-    #$top->resizable(0,0);
-    #my ($maxw,$maxh) = $top->geometry =~ /^(\d+)x(\d+)/;
-    #$top->maxsize($maxw,$maxh); # bug in resizable: minsize in effet but not maxsize
+    K->yield('_redraw_cards');
 }
 
 
