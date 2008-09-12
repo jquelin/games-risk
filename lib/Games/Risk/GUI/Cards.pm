@@ -97,9 +97,10 @@ sub _onpub_card {
 sub _onpriv_redraw_cards {
     my ($h, $s) = @_[HEAP, SESSION];
 
-    #- top frame
+    # removing cards
     my $canvases = $h->{canvases} // [];
-    $_->gridForget for @$canvases;
+    $_->destroy for @$canvases;
+    $canvases = [];
 
     # update gui
     my $cards = $h->{cards};
