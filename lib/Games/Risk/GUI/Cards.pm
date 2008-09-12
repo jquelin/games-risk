@@ -17,6 +17,7 @@ use File::Basename qw{ fileparse };
 use List::Util qw{ max };
 use Module::Util   qw{ find_installed };
 use POE;
+use Readonly;
 use Tk;
 
 use aliased 'POE::Kernel' => 'K';
@@ -38,6 +39,8 @@ my @ENON    = ( -state => 'normal' );
 my @ENOFF   = ( -state => 'disabled' );
 
 
+Readonly my $WIDTH  => 95;
+Readonly my $HEIGHT => 145;
 
 
 #--
@@ -108,15 +111,15 @@ sub _onpriv_redraw_cards {
         my $row = int( $i / 3 );
         my $col = $i % 3;
         my $c = $h->{frame}->Canvas(
-            -width  => 95,
-            -height => 145,
+            -width  => $WIDTH,
+            -height => $HEIGHT,
         )->grid(-row=>$row,-column=>$col);
 
         # the info themselves
         $c->createImage(0, 0, -anchor=>'nw', -image=>$h->{images}{"card-bg"}, -tags=>['bg']);
         if ( defined $country ) {
             $c->createText(
-                95/2, 15,
+                $WIDTH/2, 15,
                 -width  => 70,
                 -anchor => 'n',
                 -text   => $country->name,
@@ -164,8 +167,8 @@ sub _onpriv_start {
     #- top frame
     $h->{frame} = $top->Scrolled('Frame',
         -scrollbars => 'e',
-        -width      => (95+5)*3,
-        -height     => (145+5)*2,
+        -width      => ($WIDTH+5)*3,
+        -height     => ($HEIGHT+5)*2,
     )->pack(@TOP, @XFILL2);
 
     #- bottom button
