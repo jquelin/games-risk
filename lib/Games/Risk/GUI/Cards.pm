@@ -64,6 +64,7 @@ sub spawn {
             # private events
             _redraw_cards    => \&_onpriv_redraw_cards,
             # gui events
+            _card_clicked   => \&_ongui_card_clicked,
             # public events
             card       => \&_onpub_card,
         },
@@ -115,6 +116,7 @@ sub _onpriv_redraw_cards {
             -width  => $WIDTH,
             -height => $HEIGHT,
         )->grid(-row=>$row,-column=>$col);
+        $c->CanvasBind('<1>', [$s->postback('_card_clicked'), $card]);
 
         # the info themselves
         $c->createImage(0, 0, -anchor=>'nw', -image=>$h->{images}{bg}, -tags=>['bg']);
@@ -249,6 +251,17 @@ sub _onpriv_but_move {
     $h->{toplevel}->withdraw;
 }
 
+
+#
+# event: _card_clicked()
+#
+# click on a card, changing its selected status.
+sub _ongui_card_clicked {
+    my ($h, $args) = @_[HEAP, ARG1];
+
+    my ($canvas, $card) = @$args;
+    say "$canvas - $card";
+}
 
 #
 # event: _slide_wheel([$diff])
