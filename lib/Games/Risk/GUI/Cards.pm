@@ -166,6 +166,7 @@ sub _onpriv_start {
     my $top = $opts->{parent}->Toplevel;
     #$top->withdraw;           # window is hidden first
     $h->{toplevel} = $top;
+    $top->title('Cards');
 
     # -- load pictures
     # FIXME: this should be in a sub/method somewhere
