@@ -117,7 +117,13 @@ sub _onpriv_redraw_cards {
 
         # the info themselves
         $c->createImage(0, 0, -anchor=>'nw', -image=>$h->{images}{bg}, -tags=>['bg']);
-        if ( defined $country ) {
+        if ( $card->type eq 'jocker' ) {
+            # only the jocker!
+            $c->createImage(
+                $WIDTH/2, $HEIGHT/2,
+                -image  => $h->{images}{$card->type},
+            );
+        } else {
             # country name
             $c->createText(
                 $WIDTH/2, 15,
