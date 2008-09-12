@@ -117,8 +117,8 @@ sub _onpriv_start {
     $h->{images}{"card-$_"} = $top->Photo(-file=>"$dirname/icons/card-$_.png")
         foreach qw{ bg artillery cavalry infantry jocker };
 
-    # -- top frame
-    my $f = $top->Scrolled('Frame',
+    #- top frame
+    $h->{frame} = $top->Scrolled('Frame',
         -scrollbars => 'e',
         -width      => 95*3,
         -height     => 150,
