@@ -55,8 +55,11 @@ sub spawn {
     my $session = POE::Session->create(
         args          => [ $args ],
         inline_states => {
+            # private events - session mgmt
             _start     => \&_onpriv_start,
             _stop                => sub { warn "gui-cards shutdown\n" },
+            # private events
+            _redraw_cards    => \&_onpriv_redraw_cards,
             # gui events
             # public events
             card       => \&_onpub_card,
@@ -87,6 +90,46 @@ sub _onpub_card {
 
 
 # -- private events
+
+sub _onpriv_redraw_cards {
+    my ($h, $s) = @_[HEAP, SESSION];
+
+    #- top frame
+    my $frames = $h->{frames} // [];
+    $_->gridForget for @$frames;
+
+    # update gui
+    my $cards = $h->{cards};
+    foreach my $i ( 0 .. $#$cards ) {
+        my $row = int( $i / 3 );
+        my $col = $i % 3;
+
+        my $card = $cards->[$i];
+        my $country = $card->country;
+
+        my $fcard = $h->{frame}->Frame(
+            -width  => 95,
+            -height => 175,
+        )->grid(-row=>$row,-column=>$col);
+        my $c = $fcard->Canvas(-width=>95, -height=>145)->pack(@TOP);
+        my $b = $fcard->Checkbutton(
+            -text => defined $country ? $country->name : 'jocker',
+        )->pack(@TOP);
+        $c->createImage(0, 0, -anchor=>'nw', -image=>$h->{images}{"card-bg"}, -tags=>['bg']);
+
+        push @$frames, $fcard;
+    }
+
+    #$h->{frame}->configure(-width=>95*3,-height=>175*scalar(@hframes));
+
+    # move window & enforce geometry
+    #$top->update;               # force redraw
+
+    #$top->resizable(0,0);
+    #my ($maxw,$maxh) = $top->geometry =~ /^(\d+)x(\d+)/;
+    #$top->maxsize($maxw,$maxh); # bug in resizable: minsize in effet but not maxsize
+}
+
 
 #
 # event: _start( \%opts );
