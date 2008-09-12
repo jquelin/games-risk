@@ -115,11 +115,12 @@ sub _onpriv_redraw_cards {
         my $c = $h->{frame}->Canvas(
             -width  => $WIDTH,
             -height => $HEIGHT,
+            -bg     => 'white',
         )->grid(-row=>$row,-column=>$col);
         $c->CanvasBind('<1>', [$s->postback('_card_clicked'), $card]);
 
         # the info themselves
-        $c->createImage(0, 0, -anchor=>'nw', -image=>$h->{images}{bg}, -tags=>['bg']);
+        $c->createImage(1, 1, -anchor=>'nw', -image=>$h->{images}{bg}, -tags=>['bg']);
         if ( $card->type eq 'jocker' ) {
             # only the jocker!
             $c->createImage(
