@@ -405,6 +405,12 @@ sub _onpriv_attack_done {
         if ( not $h->got_card ) {
             $h->got_card(1);
             my $card = $h->map->card_get;
+            my $player = $h->curplayer;
+            my $session;
+            given ($player->type) {
+                when ('ai')    { $session = $player->name; }
+                when ('human') { $session = 'cards'; } #FIXME: broadcast
+            }
             $player->card_add($card);
             K->post($session, 'card', $card);# FIXME: broadcast
         }
