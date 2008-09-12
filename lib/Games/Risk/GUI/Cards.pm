@@ -59,6 +59,7 @@ sub spawn {
             _stop                => sub { warn "gui-cards shutdown\n" },
             # gui events
             # public events
+            card       => \&_onpub_card,
         },
     );
     return $session->ID;
@@ -71,77 +72,18 @@ sub spawn {
 # -- public events
 
 #
-# event: attack_move( $src, $dst, $min );
+# event: card( $card );
 #
-# request how many armies to move from $src to $dst (minimum $min,
-# according to the number of attack dices) during invasion.
+# player just received a new $card, display it.
 #
-sub _onpub_attack_move {
-    my ($h, $src, $dst, $min) = @_[HEAP, ARG0..$#_];
-
-    # store countries
-    $h->{src} = $src;
-    $h->{dst} = $dst;
-    $h->{reply}   = 'attack_move';
-    $h->{replyto} = 'risk'; # FIXME: from?
+sub _onpub_card {
+    my ($h, $card) = @_[HEAP, ARG0];
 
     # update gui
     my $top = $h->{toplevel};
-    $top->title('Country invasion');
-    $h->{lab_title}->configure(-text => 'A country has been conquered!');
-    my $title = sprintf 'You have conquered %s while attacking from %s.',
-        $dst->name, $src->name;
-    my $max = $src->armies - 1; # 1 army should guard $src
-    $h->{scale}->configure(-from=>$min,-to=>$max);
-    $h->{lab_info}->configure(-text=>$title);
-    $h->{armies} = $max;
 
     # move window & enforce geometry
     $top->update;               # force redraw
-    my ($x,$y) = $top->parent->geometry =~ /\+(\d+)\+(\d+)$/;
-    $x += max $src->x, $dst->x; $x += 50;
-    $y += max $src->y, $dst->y; $y += 50;
-    $top->geometry("+$x+$y");
-    $h->{toplevel}->deiconify;
-
-    #$top->resizable(0,0);
-    #my ($maxw,$maxh) = $top->geometry =~ /^(\d+)x(\d+)/;
-    #$top->maxsize($maxw,$maxh); # bug in resizable: minsize in effet but not maxsize
-}
-
-
-#
-# event: move_armies( $src, $dst, $max );
-#
-# request how many armies to move from $src to $dst, but no more than
-# $max (armies having already travelled this turn.
-#
-sub _onpub_move_armies {
-    my ($h, $src, $dst, $max) = @_[HEAP, ARG0..$#_];
-
-    # store countries
-    $h->{src} = $src;
-    $h->{dst} = $dst;
-    $h->{reply}   = 'move_armies_move';
-    $h->{replyto} = 'board'; # FIXME: from?
-
-    # update gui
-    my $top = $h->{toplevel};
-    $top->title('Moving armies');
-    $h->{lab_title}->configure(-text => 'Consolidate your positions');
-    my $title = sprintf 'Moving armies from %s to %s.',
-        $dst->name, $src->name;
-    $h->{scale}->configure(-from=>0,-to=>$max);
-    $h->{lab_info}->configure(-text=>$title);
-    $h->{armies} = 0;
-
-    # move window & enforce geometry
-    $top->update;               # force redraw
-    my ($x,$y) = $top->parent->geometry =~ /\+(\d+)\+(\d+)$/;
-    $x += max $src->x, $dst->x; $x += 50;
-    $y += max $src->y, $dst->y; $y += 50;
-    $top->geometry("+$x+$y");
-    $h->{toplevel}->deiconify;
 
     #$top->resizable(0,0);
     #my ($maxw,$maxh) = $top->geometry =~ /^(\d+)x(\d+)/;
