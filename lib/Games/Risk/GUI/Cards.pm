@@ -15,6 +15,7 @@ use warnings;
 
 use File::Basename qw{ fileparse };
 use List::Util qw{ max };
+use List::MoreUtils qw{ any };
 use Module::Util   qw{ find_installed };
 use POE;
 use Readonly;
@@ -257,12 +258,29 @@ sub _onpriv_but_move {
 # event: _card_clicked()
 #
 # click on a card, changing its selected status.
+#
 sub _ongui_card_clicked {
     my ($h, $args) = @_[HEAP, ARG1];
 
     my ($canvas, $card) = @$args;
-    say "$canvas - $card";
+    my $selected = $h->{selected} // [];
+    my @selected = @$selected;
+
+    # change card status: de/selected
+    if ( any { $_ eq $canvas } @selected ) {
+        # deselect
+        $canvas->configure(-bg=>'white');
+        @selected = grep { $_ ne $canvas } @selected;
+    } else {
+        # select
+        $canvas->configure(-bg=>'black');
+        push @selected, $canvas;
+    }
+
+    # store new set of selected cards
+    $h->{selected} = \@selected;
 }
+
 
 #
 # event: _slide_wheel([$diff])
