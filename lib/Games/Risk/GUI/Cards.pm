@@ -118,11 +118,18 @@ sub _onpriv_redraw_cards {
         # the info themselves
         $c->createImage(0, 0, -anchor=>'nw', -image=>$h->{images}{bg}, -tags=>['bg']);
         if ( defined $country ) {
+            # country name
             $c->createText(
                 $WIDTH/2, 15,
                 -width  => 70,
                 -anchor => 'n',
                 -text   => $country->name,
+            );
+            # type of card
+            $c->createImage(
+                $WIDTH/2, $HEIGHT-10,
+                -anchor => 's',
+                -image  => $h->{images}{$card->type},
             );
         }
 
