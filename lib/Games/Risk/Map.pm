@@ -253,6 +253,7 @@ sub _parse_file_section_files {
                     # further parsing
                     if ( $section eq 'cards' ) {
                         my ($type, $id) = split /\s+/, lc $l;
+                        $type = 'artillery' if $type eq 'cannon';
                         push @cards, Card->new({ type=>$type, country=>$id });
                     }
 
