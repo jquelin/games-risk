@@ -130,6 +130,10 @@ sub _onpriv_start {
         @ENOFF,
     )->pack(@TOP, @FILL2);
 
+
+    # -- inits
+    $h->{cards} = [];
+
 =pod
 
     my $lab = $top->Label->pack(@TOP,@XFILL2);
