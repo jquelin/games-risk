@@ -98,8 +98,8 @@ sub _onpriv_redraw_cards {
     my ($h, $s) = @_[HEAP, SESSION];
 
     #- top frame
-    my $frames = $h->{frames} // [];
-    $_->gridForget for @$frames;
+    my $canvases = $h->{canvases} // [];
+    $_->gridForget for @$canvases;
 
     # update gui
     my $cards = $h->{cards};
@@ -139,7 +139,7 @@ sub _onpriv_redraw_cards {
             );
         }
 
-        push @$frames, $c;
+        push @$canvases, $c;
     }
 
     #$h->{frame}->configure(-width=>95*3,-height=>175*scalar(@hframes));
