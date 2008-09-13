@@ -8,6 +8,12 @@ lib/Games/Risk/AI/Hegemon.pm
 lib/Games/Risk/Controller.pm
 lib/Games/Risk/GUI.pm
 lib/Games/Risk/GUI/Board.pm
+lib/Games/Risk/GUI/Cards.pm
+lib/Games/Risk/GUI/icons/card-artillery.png
+lib/Games/Risk/GUI/icons/card-bg.png
+lib/Games/Risk/GUI/icons/card-cavalry.png
+lib/Games/Risk/GUI/icons/card-infantry.png
+lib/Games/Risk/GUI/icons/card-joker.png
 lib/Games/Risk/GUI/icons/dice-0.png
 lib/Games/Risk/GUI/icons/dice-1.png
 lib/Games/Risk/GUI/icons/dice-2.png
@@ -21,8 +27,10 @@ lib/Games/Risk/GUI/icons/player-lost.png
 lib/Games/Risk/GUI/icons/tk_icons
 lib/Games/Risk/GUI/MoveArmies.pm
 lib/Games/Risk/Map.pm
+lib/Games/Risk/Map/Card.pm
 lib/Games/Risk/Map/Continent.pm
 lib/Games/Risk/Map/Country.pm
+lib/Games/Risk/maps/risk.cards
 lib/Games/Risk/maps/risk.map
 lib/Games/Risk/maps/risk_background.jpg
 lib/Games/Risk/maps/risk_map.gif

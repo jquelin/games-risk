@@ -98,7 +98,6 @@ sub spawn {
         },
     );
     return $session->ID;
-
 }
 
 
@@ -118,6 +117,53 @@ sub description {
     $descr =~ s/[\n\s]+\z//;
     $descr =~ s/\A\n+//;
     return $descr;
+}
+
+#
+# my @cards = $ai->exchange_cards;
+#
+# Check if ai can trade some @cards for armies.
+#
+sub exchange_cards {
+    my ($self) = @_;
+    my $me = $self->player;
+
+    my @cards = $me->cards;
+    return if scalar(@cards) < 3;
+
+    # dispatch cards on their type
+    my @a =
+        sort { ($b->country->owner eq $me) <=> ($a->country->owner eq $me) }
+        grep { $_->type eq 'artillery' } @cards;
+    my @c =
+        sort { ($b->country->owner eq $me) <=> ($a->country->owner eq $me) }
+        grep { $_->type eq 'cavalry'   } @cards;
+    my @i =
+        sort { ($b->country->owner eq $me) <=> ($a->country->owner eq $me) }
+        grep { $_->type eq 'infantry'  } @cards;
+    my @j = grep { $_->type eq 'joker' } @cards;
+    my $nba = scalar @a;
+    my $nbc = scalar @c;
+    my $nbi = scalar @i;
+    my $nbj = scalar @j;
+
+    # trade cards
+    return ($a[0],$c[0],$i[0]) if $nba && $nbc && $nbi;
+    return ($a[0],$c[0],$j[0]) if $nba && $nbc && $nbj;
+    return ($a[0],$i[0],$j[0]) if $nba && $nbi && $nbj;
+    return ($c[0],$i[0],$j[0]) if $nbc && $nbi && $nbj;
+    return ($a[0],@j[0..1])    if $nba && $nbj == 2;
+    return ($c[0],@j[0..1])    if $nbc && $nbj == 2;
+    return ($i[0],@j[0..1])    if $nbi && $nbj == 2;
+    return (@j[0..2])          if $nbj == 3;
+    return (@a[0..2])          if $nba == 3;
+    return (@a[0..1],$j[0])    if $nba == 2 && $nbj;
+    return (@c[0..2])          if $nbc == 3;
+    return (@c[0..1],$j[0])    if $nbc == 2 && $nbj;
+    return (@i[0..2])          if $nbi == 3;
+    return (@i[0..1],$j[0])    if $nbi == 2 && $nbj;
+
+    return;
 }
 
 
@@ -191,6 +237,11 @@ sub _onpub_move_armies {
 sub _onpub_place_armies {
     my ($ai, $nb, $continent) = @_[HEAP, ARG0, ARG1];
 
+    # try to exchange cards
+    my @cards = $ai->exchange_cards;
+    K->post('risk', 'cards_exchange', @cards) if @cards;
+
+    # place armies
     foreach my $where ( $ai->place_armies($nb, $continent) ) {
         my ($country, $nb) = @$where;
         K->post('risk', 'armies_placed', $country, $nb);
@@ -315,6 +366,11 @@ Return a short description of the ai and how it works.
 =item * my $str = $ai->difficulty()
 
 Return a difficulty level for the ai.
+
+
+=item * my @cards = $ai->exchange_cards()
+
+Check if ai can trade some C<@cards> for armies.
 
 
 =item * my @moves = $ai->move_armies()

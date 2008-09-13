@@ -14,18 +14,49 @@ use strict;
 use warnings;
 
 use File::Basename qw{ fileparse };
+use List::Util      qw{ shuffle };
 use List::MoreUtils qw{ uniq };
+use aliased 'Games::Risk::Map::Card';
 use aliased 'Games::Risk::Map::Continent';
 use aliased 'Games::Risk::Map::Country';
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ background greyscale _continents _countries _dirname } );
+__PACKAGE__->mk_accessors( qw{ background _cards greyscale _continents _countries _dirname } );
 
 
 #--
 # SUBROUTINES
 
 # -- public subs
+
+#
+# my $card = $map->card_get;
+#
+# Return the next card from the card stack.
+#
+sub card_get {
+    my ($self) = @_;
+
+    # get a card from the stack
+    my ($card, @cards) = @{ $self->_cards };
+    $self->_cards( \@cards );
+
+    return $card;
+}
+
+
+#
+# $map->card_return( $card );
+#
+# Push back $card in the card stack.
+#
+sub card_return {
+    my ($self, $card) = @_;
+
+    my @cards = ( @{ $self->_cards }, $card );
+    $self->_cards( \@cards );
+}
+
 
 #
 # my @continents = $map->continents;
@@ -112,11 +143,24 @@ sub load_file {
         }
     }
 
+    # update the cards with the correct country
+    foreach my $card ( @{ $self->_cards } ) {
+        my $id = $card->country;
+        next unless defined $id;
+        my $country = $self->country_get($id);
+        if ( not defined $country ) {
+            warn "cards parse error: country $id doesn't exist\n";
+            next;
+        }
+        $card->country( $country );
+    }
+
     #use Data::Dumper; say Dumper($self);
     #use YAML; say Dump($self);
 }
 
 # -- private subs
+# the following are UGLY, UGLY, UGLY!
 
 sub _parse_file_section_ {
     my ($self, $line) = @_;
@@ -186,6 +230,41 @@ sub _parse_file_section_files {
             $self->background( $self->_dirname . "/$1" );
             return;
         }
+        when(/^crd\s+(.+)$/) {
+            my $file = $self->_dirname . "/$1";
+            open my $fh, '<', $file or die "cannot open '$file': $!";
+
+            my $section = '';
+            my @cards;
+            while ( defined( my $l = <$fh> ) ) {
+                $l =~ s/[\r\n]//g;  # remove all end of lines
+                $l =~ s/^\s+//;     # trim heading whitespaces
+                $l =~ s/\s+$//;     # trim trailing whitespaces
+
+                given ($l) {
+                    when (/^\s*$/)    { } # empty lines
+                    when (/^\s*[#;]/) { } # comments
+
+                    when (/^\[([^]]+)\]$/) {
+                        # changing [section]
+                        $section = $1;
+                    }
+
+                    # further parsing
+                    if ( $section eq 'cards' ) {
+                        my ($type, $id) = split /\s+/, lc $l;
+                        $type = 'artillery' if $type eq 'cannon';
+                        $type = 'joker'    if $type eq 'wildcard';
+                        push @cards, Card->new({ type=>$type, country=>$id });
+                    }
+
+                    # FIXME: parsing missions too in the same file
+                }
+            }
+            close $fh;
+            $self->_cards( [ shuffle @cards ] );
+            return;
+        }
         return 'wtf?';
     }
 }
@@ -253,6 +332,16 @@ the path to the greyscale bitmap for the board.
 
 =over 4
 
+=item * my $card = $map->card_get()
+
+Return the next card from the cards stack.
+
+
+=item * $map->card_return( $card )
+
+Push back a $card in the card stack.
+
+
 =item * my @continents = $map->continents()
 
 Return the list of all continents in the C<$map>.
@@ -280,6 +369,8 @@ Return the country which id matches C<$id>.
 
 
 =begin quiet_pod_coverage
+
+=item Card (inserted by aliased)
 
 =item Continent (inserted by aliased)
 

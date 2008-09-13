@@ -73,6 +73,7 @@ sub spawn {
             player_created      => \&_onpub_player_created,
             initial_armies_placed       => \&_onpub_initial_armies_placed,
             armies_moved                => \&_onpub_armies_moved,
+            cards_exchange          => \&_onpub_cards_exchange,
             armies_placed       => \&_onpub_armies_placed,
             attack                  => \&_onpub_attack,
             attack_move             => \&_onpub_attack_move,
@@ -237,6 +238,67 @@ sub _onpub_attack_move {
 
 
 #
+# event: cards_exchange($card, $card, $card)
+#
+# exchange the cards against some armies.
+#
+sub _onpub_cards_exchange {
+    my ($h, @cards) = @_[HEAP, ARG0..$#_];
+    my $player = $h->curplayer;
+
+    # FIXME: check player is curplayer
+    # FIXME: check cards belong to player
+    # FIXME: check we're in place_armies phase
+
+    # compute player's bonus
+    my $combo = join '', sort map { substr $_->type, 0, 1 } @cards;
+    my $bonus;
+    given ($combo) {
+        when ( [ qw{ aci acj aij cij ajj cjj ijj jjj } ] ) { $bonus = 10; }
+        when ( [ qw{ aaa aaj } ] ) { $bonus = 8; }
+        when ( [ qw{ ccc ccj } ] ) { $bonus = 6; }
+        when ( [ qw{ iii iij } ] ) { $bonus = 4; }
+        default { $bonus = 0; }
+    }
+
+    # wrong combo
+    return if $bonus == 0;
+
+    # trade the armies
+    my $armies = $h->armies + $bonus;
+    $h->armies($armies);
+
+    # signal that player has some more armies...
+    my $session;
+    given ($player->type) {
+        when ('ai')    { $session = $player->name; }
+        when ('human') { $session = 'board'; } #FIXME: broadcast
+    }
+    K->post($session, 'place_armies', $bonus); # FIXME: broadcast
+
+    # ... and maybe some country bonus...
+    foreach my $card ( @cards ) {
+        next if $card->type eq 'joker'; # joker do not bear a country
+        my $country = $card->country;
+        next unless $country->owner eq $player;
+        $country->armies($country->armies + 2);
+        K->post('board', 'chnum', $country); # FIXME: broadcast
+    }
+
+    # ... but some cards less.
+    $player->card_del($_) foreach @cards;
+    given ($player->type) {
+        when ('ai')    { $session = $player->name; }
+        when ('human') { $session = 'cards'; } #FIXME: broadcast
+    }
+    K->post($session, 'card_del', @cards);
+
+    # finally, put back the cards on the deck
+    $h->map->card_return($_) foreach @cards;
+}
+
+
+#
 # event: initial_armies_placed($country, $nb);
 #
 # fired to place $nb additional armies on $country.
@@ -372,6 +434,8 @@ sub _onpriv_attack {
         when ('human') { $session = 'board'; } #FIXME: broadcast
     }
     K->post($session, 'attack');
+    K->post('cards', 'attack'); # FIXME: should not be alone like this, need a multiplexed in GR::GUI
+    # FIXME: even more since the gui always get this event, even if it's not its turn to play
 }
 
 
@@ -399,6 +463,23 @@ sub _onpriv_attack_done {
     # check outcome
     if ( $dst->armies <= 0 ) {
         # all your base are belong to us! :-)
+
+        # distribute a card if that's the first successful attack in the
+        # player's turn.
+        if ( not $h->got_card ) {
+            $h->got_card(1);
+            my $card = $h->map->card_get;
+            my $player = $h->curplayer;
+            my $session;
+            given ($player->type) {
+                when ('ai')    { $session = $player->name; }
+                when ('human') { $session = 'cards'; } #FIXME: broadcast
+            }
+            $player->card_add($card);
+            K->post($session, 'card_add', $card);# FIXME: broadcast
+        }
+
+        # move armies to invade country
         if ( $src->armies - 1 == $h->nbdice ) {
             # erm, no choice but move all remaining armies
             K->yield( 'attack_move', $src, $dst, $h->nbdice );
@@ -416,7 +497,6 @@ sub _onpriv_attack_done {
     } else {
         K->post($session, 'attack');
     }
-
 }
 
 
@@ -516,6 +596,8 @@ sub _onpriv_place_armies {
         $nb += $bonus;
         K->post($session, 'place_armies', $bonus, $c); # FIXME: broadcast
     }
+    K->post('cards', 'place_armies'); # FIXME: should not be alone like this, need a multiplexed in GR::GUI
+    # FIXME: even more since the gui always get this event, even if it's not its turn to play
 
     $h->armies($nb);
 }
@@ -588,6 +670,9 @@ sub _onpriv_player_next {
         K->yield('_begin_turn');
         return;
     }
+
+    # reset card status
+    $h->got_card(0);
 
     # update various guis with current player
     K->post('board', 'player_active', $player); # FIXME: broadcast

@@ -36,6 +36,7 @@ WriteMakefile(
         'Tk::Balloon'            => 0,
         'Tk::Font'               => 0,
         'Tk::JPEG'               => 0,
+        'Tk::Pane'               => 0,
         'Tk::PNG'                => 0,
         'Test::More'             => 0,
         'UNIVERSAL::require'     => 0,

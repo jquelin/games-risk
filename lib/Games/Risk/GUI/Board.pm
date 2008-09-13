@@ -14,6 +14,7 @@ use strict;
 use warnings;
 
 use File::Basename qw{ fileparse };
+use Games::Risk::GUI::Cards;
 use Games::Risk::GUI::MoveArmies;
 use Image::Resize;
 use Image::Size;
@@ -650,6 +651,7 @@ sub _onpriv_start {
 
 
     #-- other window
+    Games::Risk::GUI::Cards->spawn({parent=>$top});
     Games::Risk::GUI::MoveArmies->spawn({parent=>$top});
 
     #-- say that we're done

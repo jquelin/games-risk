@@ -36,7 +36,7 @@ my $Color_id = 0;
 
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ ai ai_class color name type _countries } );
+__PACKAGE__->mk_accessors( qw{ ai ai_class color name type _cards _countries } );
 
 
 #--
@@ -85,6 +85,44 @@ sub new {
 # METHODS
 
 # -- public methods
+
+#
+# my @cards = $player->cards;
+#
+# Return the list of cards (Games::Risk::Map::Card objects) currently
+# owned by $player.
+#
+sub cards {
+    my ($self) = @_;
+    return @{ $self->_cards // [] };
+}
+
+
+#
+# $player->card_add( $card );
+#
+# Add $card to the set of cards owned by $player.
+#
+sub card_add {
+    my ($self, $card) = @_;
+    my @cards = $self->cards;
+    push @cards, $card;
+    $self->_cards(\@cards);
+}
+
+
+#
+# $player->card_del( $card );
+#
+# Remove $card from the set of cards owned by $player.
+#
+sub card_del {
+    my ($self, $card) = @_;
+
+    my @cards = grep { $_ ne $card } $self->cards;
+    $self->_cards(\@cards);
+}
+
 
 #
 # my @countries = $player->countries;
@@ -217,6 +255,22 @@ The following methods are available for C<Games::Risk::Player> objects:
 
 =over 4
 
+=item my @cards = $player->cards()
+
+Return the list of cards (C<Games::Risk::Map::Card> objects) currently
+owned by C<$player>.
+
+
+=item * $player->card_add( $card )
+
+Add C<$card> to the set of cards owned by C<$player>.
+
+
+=item * $player->card_del( $card )
+
+Remove C<$card> from the set of cards owned by C<player>.
+
+
 =item * my @countries = $player->countries()
 
 Return the list of countries (C<Games::Risk::Map::Country> objects)
@@ -233,7 +287,7 @@ Add C<$country> to the set of countries owned by C<$player>.
 Delete C<$country> from the set of countries owned by C<$player>.
 
 
-=item * my $greatness = $player->greatness;
+=item * my $greatness = $player->greatness()
 
 Return an integer reflecting the greatness of C<$player>. It will raise
 with the number of owned territories, as well as the number of armies.
