@@ -128,8 +128,8 @@ sub _onpriv_redraw_cards {
 
         # the info themselves
         $c->createImage(1, 1, -anchor=>'nw', -image=>$h->{images}{bg}, -tags=>['bg']);
-        if ( $card->type eq 'jocker' ) {
-            # only the jocker!
+        if ( $card->type eq 'joker' ) {
+            # only the joker!
             $c->createImage(
                 $WIDTH/2, $HEIGHT/2,
                 -image  => $h->{images}{$card->type},
@@ -187,7 +187,7 @@ sub _onpriv_start {
     my $path = find_installed(__PACKAGE__);
     my (undef, $dirname, undef) = fileparse($path);
     $h->{images}{$_} = $top->Photo(-file=>"$dirname/icons/card-$_.png")
-        foreach qw{ bg artillery cavalry infantry jocker };
+        foreach qw{ bg artillery cavalry infantry joker };
 
     #- top label
     $h->{label} = $top->Label(

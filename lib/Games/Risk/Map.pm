@@ -254,7 +254,7 @@ sub _parse_file_section_files {
                     if ( $section eq 'cards' ) {
                         my ($type, $id) = split /\s+/, lc $l;
                         $type = 'artillery' if $type eq 'cannon';
-                        $type = 'jocker'    if $type eq 'wildcard';
+                        $type = 'joker'    if $type eq 'wildcard';
                         push @cards, Card->new({ type=>$type, country=>$id });
                     }
 
