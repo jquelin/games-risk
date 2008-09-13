@@ -368,6 +368,11 @@ Return a short description of the ai and how it works.
 Return a difficulty level for the ai.
 
 
+=item * my @cards = $ai->exchange_cards()
+
+Check if ai can trade some C<@cards> for armies.
+
+
 =item * my @moves = $ai->move_armies()
 
 Return a list of C<[ $src, $dst, $nb ]> tuples (two
