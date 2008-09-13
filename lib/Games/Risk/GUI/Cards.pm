@@ -307,6 +307,8 @@ sub _ongui_card_clicked {
 
     # store new set of selected cards
     $h->{selected} = \@selected;
+
+    K->yield('_change_button_state');
 }
 
 
