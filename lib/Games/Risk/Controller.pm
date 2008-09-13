@@ -73,6 +73,7 @@ sub spawn {
             player_created      => \&_onpub_player_created,
             initial_armies_placed       => \&_onpub_initial_armies_placed,
             armies_moved                => \&_onpub_armies_moved,
+            cards_exchange          => \&_onpub_cards_exchange,
             armies_placed       => \&_onpub_armies_placed,
             attack                  => \&_onpub_attack,
             attack_move             => \&_onpub_attack_move,
@@ -233,6 +234,11 @@ sub _onpub_attack_move {
         when ('human') { $session = 'board'; } #FIXME: broadcast
     }
     K->post($session, 'attack');
+}
+
+sub _onpub_cards_exchange {
+    my ($h, @cards) = @_[HEAP, ARG0..$#_];
+    say for map {$_->type} @cards;
 }
 
 
