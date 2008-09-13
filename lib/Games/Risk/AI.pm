@@ -119,6 +119,14 @@ sub description {
     return $descr;
 }
 
+#
+# my @cards = $ai->exchange_cards;
+#
+# Check if ai can trade some @cards for armies.
+#
+sub exchange_cards {
+}
+
 
 #
 # my @where = $ai->move_armies;
@@ -190,6 +198,11 @@ sub _onpub_move_armies {
 sub _onpub_place_armies {
     my ($ai, $nb, $continent) = @_[HEAP, ARG0, ARG1];
 
+    # try to exchange cards
+    my @cards = $ai->exchange_cards;
+    K->post('risk', 'cards_exchange', @cards) if @cards;
+
+    # place armies
     foreach my $where ( $ai->place_armies($nb, $continent) ) {
         my ($country, $nb) = @$where;
         K->post('risk', 'armies_placed', $country, $nb);
