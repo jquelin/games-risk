@@ -268,13 +268,20 @@ sub _onpub_cards_exchange {
     my $armies = $h->armies + $bonus;
     $h->armies($armies);
 
-    # signal that player has some more armies
+    # signal that player has some more armies...
     my $session;
     given ($player->type) {
         when ('ai')    { $session = $player->name; }
         when ('human') { $session = 'board'; } #FIXME: broadcast
     }
     K->post($session, 'place_armies', $bonus); # FIXME: broadcast
+
+    # ... but some cards less.
+    given ($player->type) {
+        when ('ai')    { $session = $player->name; }
+        when ('human') { $session = 'cards'; } #FIXME: broadcast
+    }
+    K->post($session, 'card_del', @cards);
 
 }
 
