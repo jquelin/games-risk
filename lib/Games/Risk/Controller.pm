@@ -413,7 +413,7 @@ sub _onpriv_attack_done {
                 when ('human') { $session = 'cards'; } #FIXME: broadcast
             }
             $player->card_add($card);
-            K->post($session, 'card', $card);# FIXME: broadcast
+            K->post($session, 'card_add', $card);# FIXME: broadcast
         }
 
         # move armies to invade country

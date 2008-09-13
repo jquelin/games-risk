@@ -69,7 +69,7 @@ sub spawn {
             _card_clicked   => \&_ongui_card_clicked,
             # public events
             attack               => \&_onpub_change_button_state,
-            card       => \&_onpub_card,
+            card_add             => \&_onpub_card_add,
             place_armies         => \&_onpub_change_button_state,
         },
     );
@@ -83,11 +83,11 @@ sub spawn {
 # -- public events
 
 #
-# event: card( $card );
+# event: card_add( $card );
 #
 # player just received a new $card, display it.
 #
-sub _onpub_card {
+sub _onpub_card_add {
     my ($h, $card) = @_[HEAP, ARG0];
 
     my $cards = $h->{cards};
