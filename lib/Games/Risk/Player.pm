@@ -111,6 +111,18 @@ sub card_add {
 }
 
 
+#
+# $player->card_del( $card );
+#
+# Remove $card from the set of cards owned by $player.
+#
+sub card_del {
+    my ($self, $card) = @_;
+
+    my @cards = grep { $_ ne $card } $self->cards;
+    $self->_cards(\@cards);
+}
+
 
 #
 # my @countries = $player->countries;
@@ -252,6 +264,11 @@ owned by C<$player>.
 =item * $player->card_add( $card )
 
 Add C<$card> to the set of cards owned by C<$player>.
+
+
+=item * $player->card_del( $card )
+
+Remove C<$card> from the set of cards owned by C<player>.
 
 
 =item * my @countries = $player->countries()
