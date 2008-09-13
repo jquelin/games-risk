@@ -379,6 +379,7 @@ sub _onpriv_attack {
     }
     K->post($session, 'attack');
     K->post('cards', 'attack'); # FIXME: should not be alone like this, need a multiplexed in GR::GUI
+    # FIXME: even more since the gui always get this event, even if it's not its turn to play
 }
 
 
@@ -540,6 +541,7 @@ sub _onpriv_place_armies {
         K->post($session, 'place_armies', $bonus, $c); # FIXME: broadcast
     }
     K->post('cards', 'place_armies'); # FIXME: should not be alone like this, need a multiplexed in GR::GUI
+    # FIXME: even more since the gui always get this event, even if it's not its turn to play
 
     $h->armies($nb);
 }
