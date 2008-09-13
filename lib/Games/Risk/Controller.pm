@@ -276,6 +276,15 @@ sub _onpub_cards_exchange {
     }
     K->post($session, 'place_armies', $bonus); # FIXME: broadcast
 
+    # ... and maybe some country bonus...
+    foreach my $card ( @cards ) {
+        next if $card->type eq 'joker'; # joker do not bear a country
+        my $country = $card->country;
+        next unless $country->owner eq $player;
+        $country->armies($country->armies + 2);
+        K->post('board', 'chnum', $country); # FIXME: broadcast
+    }
+
     # ... but some cards less.
     $player->card_del($_) foreach @cards;
     given ($player->type) {
