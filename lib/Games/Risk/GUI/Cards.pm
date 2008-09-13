@@ -71,6 +71,7 @@ sub spawn {
             # public events
             attack               => \&_onpub_change_button_state,
             card_add             => \&_onpub_card_add,
+            card_del             => \&_onpub_card_del,
             place_armies         => \&_onpub_change_button_state,
         },
     );
@@ -95,6 +96,31 @@ sub _onpub_card_add {
     push @$cards, $card;
 
     K->yield('_redraw_cards');
+}
+
+
+#
+# event: card_del( @cards );
+#
+# player just exchange some @cards, remove them.
+#
+sub _onpub_card_del {
+    my ($h, @del) = @_[HEAP, ARG0..$#_];
+
+    # nothing selected any more
+    $h->{selected} = [];
+    $h->{bonus}    = 0;
+    $h->{label}->configure(-text=>'Select 3 cards');
+
+    # remove the cards
+    my @cards = @{ $h->{cards} };
+    my %left; @left{ @cards } = ();
+    delete @left{ @del };
+    my @left = grep { exists $left{$_} } @cards;
+    $h->{cards} = \@left;
+
+    K->yield('_redraw_cards');
+    K->yield('_change_button_state');
 }
 
 
