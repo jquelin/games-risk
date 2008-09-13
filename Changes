@@ -3,7 +3,8 @@ Revision history for Games::Risk.
 High-level changelog
 ====================
 
-0.5.x    new ai
+0.6.x    cards support
+0.5.x    new ais, gui enhancements
 0.4.x    move armies, gui enhancements
 0.3.x    attack, bonus, gui enhancements
 0.2.x    turn reinforcements, gui enhancements
@@ -13,6 +14,11 @@ High-level changelog
 
 Low-level changelog
 ===================
+
+0.6.0 Sat Sep 13 17:06:51 CEST 2008
+ - support for country card
+
+**
 
 0.5.3 Thu Sep 11 10:41:55 CEST 2008
  - adding missing prereq (cf 0.5.2)
