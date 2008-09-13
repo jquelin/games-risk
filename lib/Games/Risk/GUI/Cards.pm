@@ -18,6 +18,7 @@ use List::MoreUtils qw{ any firstidx };
 use Module::Util   qw{ find_installed };
 use POE;
 use Readonly;
+use Tk::Pane;
 
 use aliased 'POE::Kernel' => 'K';
 
