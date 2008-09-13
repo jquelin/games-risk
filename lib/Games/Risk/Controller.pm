@@ -236,9 +236,46 @@ sub _onpub_attack_move {
     K->post($session, 'attack');
 }
 
+
+#
+# event: cards_exchange($card, $card, $card)
+#
+# exchange the cards against some armies.
+#
 sub _onpub_cards_exchange {
     my ($h, @cards) = @_[HEAP, ARG0..$#_];
-    say for map {$_->type} @cards;
+    my $player = $h->curplayer;
+
+    # FIXME: check player is curplayer
+    # FIXME: check cards belong to player
+    # FIXME: check we're in place_armies phase
+
+    # compute player's bonus
+    my $combo = join '', sort map { substr $_->type, 0, 1 } @cards;
+    my $bonus;
+    given ($combo) {
+        when ( [ qw{ aci acj aij cij ajj cjj ijj jjj } ] ) { $bonus = 10; }
+        when ( [ qw{ aaa aaj } ] ) { $bonus = 8; }
+        when ( [ qw{ ccc ccj } ] ) { $bonus = 6; }
+        when ( [ qw{ iii iij } ] ) { $bonus = 4; }
+        default { $bonus = 0; }
+    }
+
+    # wrong combo
+    return if $bonus == 0;
+
+    # trade the armies
+    my $armies = $h->armies + $bonus;
+    $h->armies($armies);
+
+    # signal that player has some more armies
+    my $session;
+    given ($player->type) {
+        when ('ai')    { $session = $player->name; }
+        when ('human') { $session = 'board'; } #FIXME: broadcast
+    }
+    K->post($session, 'place_armies', $bonus); # FIXME: broadcast
+
 }
 
 
