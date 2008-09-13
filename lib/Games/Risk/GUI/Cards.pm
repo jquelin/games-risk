@@ -14,12 +14,10 @@ use strict;
 use warnings;
 
 use File::Basename qw{ fileparse };
-use List::Util qw{ max };
 use List::MoreUtils qw{ any firstidx };
 use Module::Util   qw{ find_installed };
 use POE;
 use Readonly;
-use Tk;
 
 use aliased 'POE::Kernel' => 'K';
 
