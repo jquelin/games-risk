@@ -189,7 +189,11 @@ sub _onpriv_start {
     $h->{images}{$_} = $top->Photo(-file=>"$dirname/icons/card-$_.png")
         foreach qw{ bg artillery cavalry infantry jocker };
 
-    #- top frame
+    #- top label
+    $h->{label} = $top->Label(
+        -text => 'Select 3 cards')->pack(@TOP,@FILLX);
+
+    #- cards frame
     $h->{frame} = $top->Scrolled('Frame',
         -scrollbars => 'e',
         -width      => ($WIDTH+5)*3,
