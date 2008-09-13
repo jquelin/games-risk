@@ -253,8 +253,12 @@ sub _ongui_card_clicked {
     my ($h, $args) = @_[HEAP, ARG1];
     my ($canvas, $card) = @$args;
 
+    # get the lists
+    my @cards    = @{ $h->{cards} };
     my @canvases = @{ $h->{canvases} };
     my @selected = @{ $h->{selected} // [] };
+
+    # get index of clicked canvas, and its select status
     my $idx = firstidx { $_ eq $canvas } @canvases;
     my $is_selected = any { $_ == $idx } @selected;
 
@@ -267,6 +271,32 @@ sub _ongui_card_clicked {
         # select
         $canvas->configure(-bg=>'black');
         push @selected, $idx;
+    }
+
+
+    if ( scalar(@selected) == 3 ) {
+        # get types of armies
+        my @types = sort map { $cards[$_]->type } @selected;
+
+        # compute how much armies it's worth.
+        my $combo = join '', map { substr $_, 0, 1 } @types;
+        my $bonus;
+        given ($combo) {
+            when ( [ qw{ aci acj aij cij ajj cjj ijj jjj } ] ) { $bonus = 10; }
+            when ( [ qw{ aaa aaj } ] ) { $bonus = 8; }
+            when ( [ qw{ ccc ccj } ] ) { $bonus = 6; }
+            when ( [ qw{ iii iij } ] ) { $bonus = 4; }
+            default { $bonus = 0; }
+        }
+
+        # update label
+        local $" = ', ';
+        my $text  = "@types = $bonus armies";
+        $h->{label}->configure(-text=>$text);
+
+    } else {
+        # update label
+        $h->{label}->configure(-text=>'Select 3 cards');
     }
 
     # FIXME: check validity of cards selected
