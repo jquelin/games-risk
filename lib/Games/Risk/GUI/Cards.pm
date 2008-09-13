@@ -63,11 +63,14 @@ sub spawn {
             _start     => \&_onpriv_start,
             _stop                => sub { warn "gui-cards shutdown\n" },
             # private events
+            _change_button_state => \&_onpub_change_button_state,
             _redraw_cards    => \&_onpriv_redraw_cards,
             # gui events
             _card_clicked   => \&_ongui_card_clicked,
             # public events
+            attack               => \&_onpub_change_button_state,
             card       => \&_onpub_card,
+            place_armies         => \&_onpub_change_button_state,
         },
     );
     return $session->ID;
@@ -91,6 +94,36 @@ sub _onpub_card {
     push @$cards, $card;
 
     K->yield('_redraw_cards');
+}
+
+
+#
+# event: attack()
+# event: place_armies()
+# event: _change_button_state()
+#
+# change button state depending on the game state and the cards
+# selected.
+#
+sub _onpub_change_button_state {
+    my ($h, $event) = @_[HEAP, STATE];
+
+    my $select;
+    given ($event) {
+        when ('attack') {
+            $h->{state} = 'attack';
+            $select     = 0;
+        }
+        when ('place_armies') {
+            $h->{state} = 'place_armies';
+            $select     = $h->{bonus};
+        }
+        default {
+            $select = $h->{state} eq 'place_armies' && $h->{bonus};
+        }
+    }
+
+    $h->{button}->configure( $select ? @ENON : @ENOFF );
 }
 
 
