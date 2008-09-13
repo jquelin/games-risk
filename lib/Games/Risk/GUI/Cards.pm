@@ -67,6 +67,7 @@ sub spawn {
             _redraw_cards    => \&_onpriv_redraw_cards,
             # gui events
             _card_clicked   => \&_ongui_card_clicked,
+            _but_exchange        => \&_ongui_but_exchange,
             # public events
             attack               => \&_onpub_change_button_state,
             card_add             => \&_onpub_card_add,
@@ -241,7 +242,8 @@ sub _onpriv_start {
 
     #- bottom button
     $h->{button} = $top->Button(
-        -text => 'Exchange',
+        -text    => 'Exchange cards',
+        -command => $s->postback('_but_exchange'),
         @ENOFF,
     )->pack(@TOP, @FILL2);
 
@@ -266,14 +268,19 @@ sub _onpriv_start {
 # -- gui events
 
 #
-# event: _but_move()
+# event: _but_exchange()
 #
-# click on the move button, decide to move armies.
+# click on the exchange button, to trade armies.
 #
-sub _onpriv_but_move {
+sub _ongui_but_exchange {
     my $h = $_[HEAP];
-    K->post($h->{replyto}, $h->{reply}, $h->{src}, $h->{dst}, $h->{armies});
-    $h->{toplevel}->withdraw;
+
+    # get the lists
+    my @cards    = @{ $h->{cards} };
+    my @selected = @{ $h->{selected} };
+
+    my @exchange = map { $cards[$_] } @selected;
+    K->post('risk', 'cards_exchange', @exchange);
 }
 
 
