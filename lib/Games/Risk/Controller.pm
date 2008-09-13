@@ -277,12 +277,15 @@ sub _onpub_cards_exchange {
     K->post($session, 'place_armies', $bonus); # FIXME: broadcast
 
     # ... but some cards less.
+    $player->card_del($_) foreach @cards;
     given ($player->type) {
         when ('ai')    { $session = $player->name; }
         when ('human') { $session = 'cards'; } #FIXME: broadcast
     }
     K->post($session, 'card_del', @cards);
 
+    # finally, put back the cards on the deck
+    $h->map->card_return($_) foreach @cards;
 }
 
 
