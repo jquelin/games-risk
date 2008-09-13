@@ -372,6 +372,7 @@ sub _onpriv_attack {
         when ('human') { $session = 'board'; } #FIXME: broadcast
     }
     K->post($session, 'attack');
+    K->post('cards', 'attack'); # FIXME: should not be alone like this, need a multiplexed in GR::GUI
 }
 
 
@@ -532,6 +533,7 @@ sub _onpriv_place_armies {
         $nb += $bonus;
         K->post($session, 'place_armies', $bonus, $c); # FIXME: broadcast
     }
+    K->post('cards', 'place_armies'); # FIXME: should not be alone like this, need a multiplexed in GR::GUI
 
     $h->armies($nb);
 }
