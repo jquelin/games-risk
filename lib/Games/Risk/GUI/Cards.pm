@@ -288,6 +288,7 @@ sub _ongui_card_clicked {
             when ( [ qw{ iii iij } ] ) { $bonus = 4; }
             default { $bonus = 0; }
         }
+        $h->{bonus} = $bonus;
 
         # update label
         local $" = ', ';
@@ -297,6 +298,7 @@ sub _ongui_card_clicked {
     } else {
         # update label
         $h->{label}->configure(-text=>'Select 3 cards');
+        $h->{bonus} = 0;
     }
 
     # FIXME: check validity of cards selected
