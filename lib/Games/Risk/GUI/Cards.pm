@@ -207,7 +207,7 @@ sub _onpriv_start {
     )->pack(@TOP, @XFILL2);
 
     #- bottom button
-    my $b = $top->Button(
+    $h->{button} = $top->Button(
         -text => 'Exchange',
         @ENOFF,
     )->pack(@TOP, @FILL2);
