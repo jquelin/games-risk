@@ -15,7 +15,7 @@ use warnings;
 
 use File::Basename qw{ fileparse };
 use List::Util qw{ max };
-use List::MoreUtils qw{ any };
+use List::MoreUtils qw{ any firstidx };
 use Module::Util   qw{ find_installed };
 use POE;
 use Readonly;
@@ -108,13 +108,17 @@ sub _onpriv_redraw_cards {
     # removing cards
     my $canvases = $h->{canvases} // [];
     $_->destroy for @$canvases;
-    $canvases = [];
 
     # update gui
+    my @canvases;
+    my @selected = @{ $h->{selected} // [] };
     my $cards = $h->{cards};
     foreach my $i ( 0 .. $#$cards ) {
         my $card = $cards->[$i];
         my $country = $card->country;
+
+        #
+        my $is_selected = any { $_ == $i } @selected;
 
         # the canvas containing country info
         my $row = int( $i / 3 );
@@ -122,7 +126,7 @@ sub _onpriv_redraw_cards {
         my $c = $h->{frame}->Canvas(
             -width  => $WIDTH,
             -height => $HEIGHT,
-            -bg     => 'white',
+            -bg     => $is_selected ? 'black' : 'white',
         )->grid(-row=>$row,-column=>$col);
         $c->CanvasBind('<1>', [$s->postback('_card_clicked'), $card]);
 
@@ -151,8 +155,10 @@ sub _onpriv_redraw_cards {
         }
 
         # storing canvas
-        push @$canvases, $c;
+        push @canvases, $c;
     }
+
+    $h->{canvases} = \@canvases;
 
     #$h->{frame}->configure(-width=>95*3,-height=>175*scalar(@hframes));
 
@@ -245,20 +251,22 @@ sub _onpriv_but_move {
 #
 sub _ongui_card_clicked {
     my ($h, $args) = @_[HEAP, ARG1];
-
     my ($canvas, $card) = @$args;
-    my $selected = $h->{selected} // [];
-    my @selected = @$selected;
+
+    my @canvases = @{ $h->{canvases} };
+    my @selected = @{ $h->{selected} // [] };
+    my $idx = firstidx { $_ eq $canvas } @canvases;
+    my $is_selected = any { $_ == $idx } @selected;
 
     # change card status: de/selected
-    if ( any { $_ eq $canvas } @selected ) {
+    if ( $is_selected ) {
         # deselect
         $canvas->configure(-bg=>'white');
-        @selected = grep { $_ ne $canvas } @selected;
+        @selected = grep { $_ != $idx } @selected;
     } else {
         # select
         $canvas->configure(-bg=>'black');
-        push @selected, $canvas;
+        push @selected, $idx;
     }
 
     # FIXME: check validity of cards selected
