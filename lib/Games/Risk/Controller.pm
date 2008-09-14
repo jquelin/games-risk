@@ -215,6 +215,20 @@ sub _onpub_attack_move {
         # omg! one player left
         $h->player_lost($looser);
         K->post('board', 'player_lost', $looser); # FIXME: broadcast
+
+        # distribute cards from lost player to the one who crushed her
+        my @cards = $looser->cards;
+        my $player = $h->curplayer;
+        my $session;
+        given ($player->type) {
+            when ('ai')    { $session = $player->name; }
+            when ('human') { $session = 'cards'; } #FIXME: broadcast
+        }
+        foreach my $card ( @cards ) {
+            $looser->card_del($card);
+            $player->card_add($card);
+            K->post($session, 'card_add', $card);
+        }
     }
 
     # update the countries
