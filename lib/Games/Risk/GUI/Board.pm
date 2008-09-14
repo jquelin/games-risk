@@ -166,8 +166,8 @@ sub _onpub_attack_info {
     );
     my $srcid = $src->id;
     my $dstid = $dst->id;
-    $c->lower('attack',"country$srcid");
-    $c->raise('attack',"country$dstid");
+    $c->raise('attack', 'all');
+    $c->raise("country$srcid", 'attack');
     $c->idletasks;
     my $wait = $h->{curplayer}->type eq 'ai' ? $WAIT_CLEAN_AI : $WAIT_CLEAN_HUMAN;
     K->delay_set('_clean_attack' => $wait, $i);
