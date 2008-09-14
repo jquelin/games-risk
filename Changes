@@ -15,10 +15,16 @@ High-level changelog
 Low-level changelog
 ===================
 
+0.6.1 Sun Sep 14 12:32:17 CEST 2008
  - stealing cards from player who just lost
+ - small internals cleanup
 
 0.6.0 Sat Sep 13 17:06:51 CEST 2008
- - support for country card
+ - support for country cards
+    . loading them from card file
+    . getting a card per turn if one successful attack
+    . exchanging cards for armies
+    . ai do trade cards, too
 
 **
 
@@ -32,7 +38,7 @@ Low-level changelog
  - movearmies window should appear on top
 
 0.5.1 Sun Sep  7 18:09:08 CEST 2008
- - new ai "hegemon" available, quite hard. idea taken from jrisk
+ - new ai "hegemon" available, quite hard. idea & code taken from jrisk
  - internals reworked so that GR is the heap of GR:Controller
 
 0.5.0 Sat Sep  6 15:54:57 CEST 2008
