@@ -161,8 +161,8 @@ sub _onpub_attack_info {
         $x1, $y1, $x2, $y2,
         -arrow => 'last',
         -tags  => ['attack', $i],
-        -fill  => $h->{curplayer}->color,
-        -width => 2,
+        -fill  => 'yellow', #$h->{curplayer}->color,
+        -width => 4,
     );
     my $srcid = $src->id;
     my $dstid = $dst->id;
@@ -170,6 +170,7 @@ sub _onpub_attack_info {
     $c->lower('attack',"text&&$srcid");
     $c->raise('attack',"circle&&$dstid");
     $c->raise('attack',"text&&$dstid");
+    $c->idletasks;
     my $wait = $h->{curplayer}->type eq 'ai' ? $WAIT_CLEAN_AI : $WAIT_CLEAN_HUMAN;
     K->delay_set('_clean_attack' => $wait, $i);
     $i++;
@@ -206,10 +207,10 @@ sub _onpub_country_redraw {
 
     # FIXME: change radius to reflect number of armies
     my ($radius, $fill_color, $text) = defined $owner
-            ? (7, $owner->color, $armies)
-            : (5,       'white', '');
+            ? (10, $owner->color, $armies)
+            : (8,       'white', '');
 
-    $radius += min(12,$armies-1)/2;
+    $radius += min(16,$armies-1)/2;
     my ($zoomx, $zoomy) = @{ $h->{zoom} };
     my $x = $country->x * $zoomx;
     my $y = $country->y * $zoomy;
