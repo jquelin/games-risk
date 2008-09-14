@@ -14,6 +14,7 @@ use strict;
 use warnings;
 
 use File::Basename qw{ fileparse };
+use Games::Risk::GUI::Constants;
 use List::MoreUtils qw{ any firstidx };
 use Module::Util   qw{ find_installed };
 use POE;
@@ -21,23 +22,6 @@ use Readonly;
 use Tk::Pane;
 
 use aliased 'POE::Kernel' => 'K';
-
-my @TOP     = ( -side => 'top'    );
-my @BOTTOM  = ( -side => 'bottom' );
-my @LEFT    = ( -side => 'left'   );
-my @RIGHT   = ( -side => 'right'  );
-
-my @FILLX   = ( -fill => 'x'    );
-my @FILL2   = ( -fill => 'both' );
-my @XFILLX  = ( -expand => 1, -fill => 'x'    );
-my @XFILL2  = ( -expand => 1, -fill => 'both' );
-
-my @PAD1    = ( -padx => 1, -pady => 1);
-my @PAD20   = ( -padx => 20, -pady => 20);
-
-my @ENON    = ( -state => 'normal' );
-my @ENOFF   = ( -state => 'disabled' );
-
 
 Readonly my $WIDTH  => 95;
 Readonly my $HEIGHT => 145;

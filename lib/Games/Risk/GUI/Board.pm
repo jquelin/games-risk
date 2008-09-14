@@ -15,6 +15,7 @@ use warnings;
 
 use File::Basename qw{ fileparse };
 use Games::Risk::GUI::Cards;
+use Games::Risk::GUI::Constants;
 use Games::Risk::GUI::MoveArmies;
 use Image::Resize;
 use Image::Size;
@@ -32,21 +33,6 @@ use aliased 'POE::Kernel' => 'K';
 
 Readonly my $WAIT_CLEAN_AI    => 1.000;
 Readonly my $WAIT_CLEAN_HUMAN => 0.250;
-
-my @TOP     = ( -side => 'top'    );
-my @BOTTOM  = ( -side => 'bottom' );
-my @LEFT    = ( -side => 'left'   );
-my @RIGHT   = ( -side => 'right'  );
-
-my @FILLX   = ( -fill => 'x'    );
-my @FILL2   = ( -fill => 'both' );
-my @XFILLX  = ( -expand => 1, -fill => 'x'    );
-my @XFILL2  = ( -expand => 1, -fill => 'both' );
-
-my @PAD1    = ( -padx => 1, -pady => 1);
-
-my @ENON    = ( -state => 'normal' );
-my @ENOFF   = ( -state => 'disabled' );
 
 
 #--
