@@ -9,6 +9,7 @@ lib/Games/Risk/Controller.pm
 lib/Games/Risk/GUI.pm
 lib/Games/Risk/GUI/Board.pm
 lib/Games/Risk/GUI/Cards.pm
+lib/Games/Risk/GUI/Constants.pm
 lib/Games/Risk/GUI/icons/card-artillery.png
 lib/Games/Risk/GUI/icons/card-bg.png
 lib/Games/Risk/GUI/icons/card-cavalry.png
