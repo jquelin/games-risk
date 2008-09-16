@@ -32,6 +32,7 @@ my @NAMES = shuffle (
     'Genghis Kahn',         # mongolia, 1162  - 1227
     'Charlemagne',          # france,   747   - 814
     'Saladin',              # iraq,     1137  - 1193
+    'foobar',               # perl
 );
 my $Id_name = 0;
 
