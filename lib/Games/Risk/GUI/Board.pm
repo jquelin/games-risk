@@ -205,8 +205,8 @@ sub _onpub_country_redraw {
 
     # FIXME: change radius to reflect number of armies
     my ($radius, $fill_color, $text) = defined $owner
-            ? (10, $owner->color, $armies)
-            : (8,       'white', '');
+            ? (8, $owner->color, $armies)
+            : (6,       'white', '');
 
     $radius += min(16,$armies-1)/2;
     my ($zoomx, $zoomy) = @{ $h->{zoom} };
