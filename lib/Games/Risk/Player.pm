@@ -24,13 +24,20 @@ use aliased 'POE::Kernel' => 'K';
 Readonly my @COLORS => (
     '#333333',  # grey20
     '#FF2052',  # awesome
-    '#1560BD',  # denim
-    '#33CC99',  # shamrock
-    '#FF9966',  # atomic tangerine
-    '#00755E',  # tropical rain forest
+    '#01A368',  # green
+    '#0066FF',  # blue
     '#9E5B40',  # sepia
-    '#A50B5E',  # jazzberry jam
-    '#A3E3ED',  # blizzard blue
+    '#A9B2C3',  # cadet blue
+    '#BB3385',  # red violet
+    '#FF681F',  # orange
+    '#DCB63B',  # ~ dirty yellow
+    '#00CCCC',  # robin's egg blue
+    #'#1560BD',  # denim
+    #'#33CC99',  # shamrock
+    #'#FF9966',  # atomic tangerine
+    #'#00755E',  # tropical rain forest
+    #'#A50B5E',  # jazzberry jam
+    #'#A3E3ED',  # blizzard blue
 );
 my $Color_id = 0;
 
