@@ -15,6 +15,13 @@ High-level changelog
 Low-level changelog
 ===================
 
+0.6.2 Wed Sep 17 17:30:09 CEST 2008
+ - bugfix: ais owning a continent were exchanging their cards twice!
+ - better visual:
+     . changed color scheme (courtesy of charlotte)
+     . attack vector now yellow
+     . circle size bigger
+
 0.6.1 Sun Sep 14 12:32:17 CEST 2008
  - stealing cards from player who just lost
  - small internals cleanup
