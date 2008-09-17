@@ -30,6 +30,7 @@ Readonly my $WAIT              => 0.100; # FIXME: hardcoded
 Readonly my $START_ARMIES      => 5;
 
 
+
 #--
 # CLASS METHODS
 
@@ -62,7 +63,8 @@ sub spawn {
             _initial_armies_placed  => \&_onpriv_turn_begin,
             _begin_turn             => \&_onpriv_turn_begin,
             _turn_begun             => \&_onpriv_player_next,
-            _player_begun           => \&_onpriv_place_armies,
+            _player_begun           => \&_onpriv_cards_exchange,
+            _cards_exchanged        => \&_onpriv_place_armies,
             _armies_placed          => \&_onpriv_attack,
             _attack_done            => \&_onpriv_attack_done,
             _attack_end             => \&_onpriv_move_armies,
@@ -511,6 +513,23 @@ sub _onpriv_attack_done {
     } else {
         K->post($session, 'attack');
     }
+}
+
+
+#
+# ask player to exchange cards if they want
+#
+sub _onpriv_cards_exchange {
+    my $h = $_[HEAP];
+
+    my $player = $h->curplayer;
+    my $session;
+    given ($player->type) {
+        when ('ai')    { $session = $player->name; }
+        when ('human') { $session = 'move-armies'; } #FIXME: broadcast
+    }
+    K->post($session, 'exchange_cards');
+    K->yield('_cards_exchanged');
 }
 
 

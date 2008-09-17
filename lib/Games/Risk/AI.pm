@@ -93,6 +93,7 @@ sub spawn {
             # public events
             attack                   => \&_onpub_attack,
             attack_move              => \&_onpub_attack_move,
+            exchange_cards           => \&_onpub_exchange_cards,
             move_armies              => \&_onpub_move_armies,
             place_armies     => \&_onpub_place_armies,
             place_armies_initial     => \&_onpub_place_armies_initial,
@@ -213,6 +214,20 @@ sub _onpub_attack_move {
 
 
 #
+# event: exchange_cards();
+#
+# request the ai to exchange some cards if it wants to.
+#
+sub _onpub_exchange_cards {
+    my $ai = $_[HEAP];
+
+    # try to exchange cards
+    my @cards = $ai->exchange_cards;
+    K->post('risk', 'cards_exchange', @cards) if @cards;
+}
+
+
+#
 # event: move_armies();
 #
 # request the ai to move armies between adjacent countries, or to end
@@ -237,10 +252,6 @@ sub _onpub_move_armies {
 #
 sub _onpub_place_armies {
     my ($ai, $nb, $continent) = @_[HEAP, ARG0, ARG1];
-
-    # try to exchange cards
-    my @cards = $ai->exchange_cards;
-    K->post('risk', 'cards_exchange', @cards) if @cards;
 
     # place armies
     foreach my $where ( $ai->place_armies($nb, $continent) ) {
