@@ -118,7 +118,7 @@ sub _onpub_move_armies {
     $top->title('Moving armies');
     $h->{lab_title}->configure(-text => 'Consolidate your positions');
     my $title = sprintf 'Moving armies from %s to %s.',
-        $dst->name, $src->name;
+        $src->name, $dst->name;
     $h->{scale}->configure(-from=>0,-to=>$max);
     $h->{lab_info}->configure(-text=>$title);
     $h->{armies} = 0;
