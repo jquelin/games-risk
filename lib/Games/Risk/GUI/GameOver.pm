@@ -81,8 +81,13 @@ sub _onpriv_start {
             . 'intelligences were not that hard?'
             : 'Unfortunately, you lost... Try harder next time!'
     )->pack(@TOP,@PAD20);
+    $top->Button(
+        -text    => 'Close',
+        -command => $s->postback('_but_close'),
+    )->pack(@TOP);
 
-    # move window & enforce geometry
+
+    #-- move window & enforce geometry
     $top->update;               # force redraw
     my ($wi,$he,$x,$y) = split /\D/, $top->parent->geometry;
     $x += int($wi / 3);
@@ -91,29 +96,13 @@ sub _onpriv_start {
     $top->deiconify;
 
 
-=pod
-
-    my $but = $top->Button(
-        -text    => 'Move armies',
-        -command => $s->postback('_but_move'),
-    )->pack(@TOP);
-    $h->{lab_title} = $title;
-    $h->{lab_info}  = $lab;
-    $h->{but_move}  = $but;
-    $h->{scale}     = $sld;
-
-    # window bindings.
-    $top->bind('<4>', $s->postback('_slide_wheel',  1));
-    $top->bind('<5>', $s->postback('_slide_wheel', -1));
-    $top->bind('<Key-Return>', $s->postback('_but_move'));
-    $top->bind('<Key-space>', $s->postback('_but_move'));
+    #-- window bindings.
+    $top->bind('<Key-Return>', $s->postback('_but_close'));
+    $top->bind('<Key-space>', $s->postback('_but_close'));
 
 
     #-- trap some events
-    $top->protocol( WM_DELETE_WINDOW => sub{} );
-
-=cut
-
+    $top->protocol( WM_DELETE_WINDOW => $s->postback('_but_close') );
 }
 
 
