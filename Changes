@@ -3,7 +3,8 @@ Revision history for Games::Risk.
 High-level changelog
 ====================
 
-0.6.x    cards support
+1.0.0    game over detection
+0.6.x    cards support, gui enhancements
 0.5.x    new ais, gui enhancements
 0.4.x    move armies, gui enhancements
 0.3.x    attack, bonus, gui enhancements
@@ -15,8 +16,12 @@ High-level changelog
 Low-level changelog
 ===================
 
+1.0.0 Fri Sep 19 15:09:17 CEST 2008
+ - game over detected and announced
  - countries display fix when moving armies
  - countries should not have dashes in their name
+
+**
 
 0.6.2 Wed Sep 17 17:30:09 CEST 2008
  - bugfix: ais owning a continent were exchanging their cards twice!
