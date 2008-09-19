@@ -16,8 +16,8 @@ use warnings;
 use File::Basename  qw{ fileparse };
 use Games::Risk::Map;
 use Games::Risk::Player;
-use List::Util   qw{ min shuffle };
-use Module::Util qw{ find_installed };
+use List::Util      qw{ min shuffle };
+use Module::Util    qw{ find_installed };
 use POE;
 use Readonly;
 use aliased 'POE::Kernel' => 'K';
@@ -52,13 +52,13 @@ sub spawn {
         heap          => $game,
         inline_states => {
             # private events - session management
-            _start         => \&_onpriv_start,
-            _stop          => sub { warn "GR shutdown\n" },
+            _start                  => \&_onpriv_start,
+            _stop                   => sub { warn "GR shutdown\n" },
             # private events - game states
-            _started            => \&_onpriv_load_map,
-            _gui_ready          => \&_onpriv_create_players,
-            _players_created    => \&_onpriv_assign_countries,
-            _countries_assigned => \&_onpriv_place_armies_initial,
+            _started                => \&_onpriv_load_map,
+            _gui_ready              => \&_onpriv_create_players,
+            _players_created        => \&_onpriv_assign_countries,
+            _countries_assigned     => \&_onpriv_place_armies_initial,
             _place_armies_initial   => \&_onpriv_place_armies_initial,
             _initial_armies_placed  => \&_onpriv_turn_begin,
             _begin_turn             => \&_onpriv_turn_begin,
@@ -70,17 +70,17 @@ sub spawn {
             _attack_end             => \&_onpriv_move_armies,
             _armies_moved           => \&_onpriv_player_next,
             # public events
-            window_created      => \&_onpub_window_created,
-            map_loaded          => \&_onpub_map_loaded,
-            player_created      => \&_onpub_player_created,
-            initial_armies_placed       => \&_onpub_initial_armies_placed,
-            armies_moved                => \&_onpub_armies_moved,
+            window_created          => \&_onpub_window_created,
+            map_loaded              => \&_onpub_map_loaded,
+            player_created          => \&_onpub_player_created,
+            initial_armies_placed   => \&_onpub_initial_armies_placed,
+            armies_moved            => \&_onpub_armies_moved,
             cards_exchange          => \&_onpub_cards_exchange,
-            armies_placed       => \&_onpub_armies_placed,
+            armies_placed           => \&_onpub_armies_placed,
             attack                  => \&_onpub_attack,
             attack_move             => \&_onpub_attack_move,
             attack_end              => \&_onpub_attack_end,
-            move_armies                 => \&_onpub_move_armies,
+            move_armies             => \&_onpub_move_armies,
         },
     );
     return $session->ID;
