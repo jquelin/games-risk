@@ -22,3 +22,50 @@ Games::Risk->new;
 POE::Kernel->run;
 exit;
 
+__END__
+
+=head1 NAME
+
+prisk - classical Risk game written in perl
+
+
+=head1 DESCRIPTION
+
+Risk is a strategic turn-based board game. Players control armies, with
+which they attempt to capture territories from other players. The goal
+of the game is to control all the territories (C<conquer the world>)
+through the elimination of the other players. Using area movement, Risk
+ignores realistic limitations, such as the vast size of the world, and
+the logistics of long campaigns.
+
+This distribution implements a graphical interface for this game.
+
+
+
+=hea1 OPTIONS
+
+None as of now.
+
+
+
+=head1 SEE ALSO
+
+L<Games::Risk>.
+
+
+
+=head1 AUTHOR
+
+Jerome Quelin, C<< <jquelin at cpan.org> >>
+
+
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright (c) 2008 Jerome Quelin, all rights reserved.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU GPLv3+.
+
+=cut
+
