@@ -200,6 +200,7 @@ sub _parse_file_section_countries {
 
     # get country param
     my ($greyval, $name, $idcont, $x, $y) = split /\s+/, $line;
+    $name =~ s/-/ /g;
     my $continent = $self->_continents->{$idcont};
     return "continent '$idcont' does not exist" unless defined $continent;
 
