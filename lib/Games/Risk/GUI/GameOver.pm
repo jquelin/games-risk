@@ -66,6 +66,7 @@ sub _onpriv_start {
     #-- create gui
 
     my $top  = $opts->{parent}->Toplevel(-title=>'Game over');
+    $h->{toplevel} = $top;
     $top->withdraw;
 
     my $font = $top->Font(-size=>16);
@@ -111,12 +112,13 @@ sub _onpriv_start {
 #
 # event: _but_close()
 #
-# click on the close button, .
+# click on the close button, or if window has been closed.
 #
-sub _onpriv_but_move {
+sub _onpriv_but_close {
     my $h = $_[HEAP];
-    K->post($h->{replyto}, $h->{reply}, $h->{src}, $h->{dst}, $h->{armies});
-    $h->{toplevel}->withdraw;
+    $h->{toplevel}->destroy;
+    delete $h->{toplevel};
+    K->alias_remove('gameover');
 }
 
 
