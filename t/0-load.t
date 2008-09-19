@@ -11,7 +11,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 15;
+use Test::More tests => 16;
 
 BEGIN { use_ok( 'Games::Risk' ); }
 diag( "Testing Games::Risk $Games::Risk::VERSION, Perl $], $^X" );
@@ -24,6 +24,7 @@ BEGIN { use_ok( 'Games::Risk::GUI' ); }
 BEGIN { use_ok( 'Games::Risk::GUI::Board' ); }
 BEGIN { use_ok( 'Games::Risk::GUI::Cards' ); }
 BEGIN { use_ok( 'Games::Risk::GUI::Constants' ); }
+BEGIN { use_ok( 'Games::Risk::GUI::GameOver' ); }
 BEGIN { use_ok( 'Games::Risk::GUI::MoveArmies' ); }
 BEGIN { use_ok( 'Games::Risk::Map' ); }
 BEGIN { use_ok( 'Games::Risk::Map::Continent' ); }
