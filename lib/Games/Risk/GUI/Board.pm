@@ -16,6 +16,7 @@ use warnings;
 use File::Basename qw{ fileparse };
 use Games::Risk::GUI::Cards;
 use Games::Risk::GUI::Constants;
+use Games::Risk::GUI::GameOver;
 use Games::Risk::GUI::MoveArmies;
 use Image::Resize;
 use Image::Size;
@@ -256,6 +257,12 @@ sub _onpub_game_over {
     $h->{labels}{attack}->configure(@ENOFF);
     $h->{buttons}{attack_redo}->configure(@ENOFF);
     $h->{buttons}{attack_done}->configure(@ENOFF);
+
+    # announce the winner
+    Games::Risk::GUI::GameOver->spawn({
+        parent => $h->{toplevel},
+        winner => $winner,
+    });
 }
 
 
