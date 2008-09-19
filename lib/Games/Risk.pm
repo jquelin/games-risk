@@ -315,11 +315,11 @@ in the future for C<Games::Risk>:
 
 =item * better ais - DONE - 0.5.0: blitzkrieg ai, 0.5.1: hegemon ai
 
-=item * country cards
+=item * country cards - DONE - 0.6.0
 
 =item * continents bonus - DONE - 0.3.3
 
-=item * continents localized
+=item * continents bonus localized
 
 =item * statistics
 
@@ -329,9 +329,19 @@ in the future for C<Games::Risk>:
 
 =item * remove all the FIXMEs in the code :-)
 
+=item * do-or-die mode (slanning's request)
+
+=item * "attack trip" planning (slanning's request)
+
 =item * other...
 
 =back
+
+
+However, the game is already totally playable by now: reinforcements,
+continent bonus, country cards, different artificial intelligences...
+Therefore, version 1.0.0 has been released with those basic
+requirements. Except new features soon!
 
 
 
@@ -380,7 +390,8 @@ L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Games-Risk>
 =head1 ACKNOWLEDGEMENTS
 
 I definitely recommend you to buy a C<risk> board game and play with
-friends, you'll have an exciting time!
+friends, you'll have an exciting time - much more than with this poor
+electronic copy.
 
 Some ideas  & artwork taken from project C<jrisk>, available at
 L<http://risk.sourceforge.net/>. Others (ideas & artwork once again)
