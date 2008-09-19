@@ -16,6 +16,7 @@ use warnings;
 use File::Basename qw{ fileparse };
 use Games::Risk::GUI::Cards;
 use Games::Risk::GUI::Constants;
+use Games::Risk::GUI::GameOver;
 use Games::Risk::GUI::MoveArmies;
 use Image::Resize;
 use Image::Size;
@@ -77,6 +78,7 @@ sub spawn {
             attack_info                => \&_onpub_attack_info,
             chnum                      => \&_onpub_country_redraw,
             chown                      => \&_onpub_country_redraw,
+            game_over                     => \&_onpub_game_over,
             load_map             => \&_onpub_load_map,
             move_armies                   => \&_onpub_move_armies,
             move_armies_move              => \&_onpub_move_armies_move,
@@ -237,6 +239,31 @@ sub _onpub_country_redraw {
     $c->raise("country$id&&text",   'all');
 }
 
+
+#
+# event: game_over( $player );
+#
+# sent when $player has won the game.
+#
+sub _onpub_game_over {
+    my ($h, $winner) = @_[HEAP, ARG0];
+
+    # update gui
+    my $c = $h->{canvas};
+    $h->{toplevel}->bind('<Key-space>', undef);  # can't re-attack
+    $h->{toplevel}->bind('<Key-Return>', undef); # done attack
+    $c->CanvasBind('<1>', undef);
+    $c->CanvasBind('<3>', undef);
+    $h->{labels}{attack}->configure(@ENOFF);
+    $h->{buttons}{attack_redo}->configure(@ENOFF);
+    $h->{buttons}{attack_done}->configure(@ENOFF);
+
+    # announce the winner
+    Games::Risk::GUI::GameOver->spawn({
+        parent => $h->{toplevel},
+        winner => $winner,
+    });
+}
 
 
 #

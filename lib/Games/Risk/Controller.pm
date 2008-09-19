@@ -237,6 +237,13 @@ sub _onpub_attack_move {
             K->post($session, 'card_add', $card);
             K->post($sessionloose, 'card_del', $card);
         }
+
+        # check if game is over
+        my @active = $h->players_active;
+        if ( scalar @active == 1 ) {
+            K->post('board', 'game_over', $player); # FIXME: broadcast
+            return;
+        }
     }
 
     # update the countries
