@@ -14,7 +14,8 @@ use warnings;
 use FindBin qw{ $Bin };
 use lib "$Bin/../lib";
 
-use Tk; # should come first
+use Getopt::Euclid; # should come first
+use Tk;             # should come before Games::Risk* and POE*
 use Games::Risk;
 use POE;
 
