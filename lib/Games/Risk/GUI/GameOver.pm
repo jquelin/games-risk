@@ -36,8 +36,8 @@ sub spawn {
     my $session = POE::Session->create(
         args          => [ $args ],
         inline_states => {
-            _start     => \&_onpriv_start,
-            _stop                => sub { warn "gui-gameover shutdown\n" },
+            _start       => \&_onpriv_start,
+            _stop        => sub { warn "gui-gameover shutdown\n" },
             # gui events
             _but_close   => \&_onpriv_but_close,
         },

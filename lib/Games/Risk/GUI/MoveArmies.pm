@@ -37,8 +37,8 @@ sub spawn {
     my $session = POE::Session->create(
         args          => [ $args ],
         inline_states => {
-            _start     => \&_onpriv_start,
-            _stop                => sub { warn "gui-movearmies shutdown\n" },
+            _start       => \&_onpriv_start,
+            _stop        => sub { warn "gui-movearmies shutdown\n" },
             # gui events
             _but_move    => \&_onpriv_but_move,
             _slide_wheel => \&_onpriv_slide_wheel,

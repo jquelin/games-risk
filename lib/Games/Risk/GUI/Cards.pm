@@ -13,10 +13,10 @@ use 5.010;
 use strict;
 use warnings;
 
-use File::Basename qw{ fileparse };
+use File::Basename  qw{ fileparse };
 use Games::Risk::GUI::Constants;
 use List::MoreUtils qw{ any firstidx };
-use Module::Util   qw{ find_installed };
+use Module::Util    qw{ find_installed };
 use POE;
 use Readonly;
 use Tk::Pane;
@@ -43,13 +43,13 @@ sub spawn {
         args          => [ $args ],
         inline_states => {
             # private events - session mgmt
-            _start     => \&_onpriv_start,
+            _start               => \&_onpriv_start,
             _stop                => sub { warn "gui-cards shutdown\n" },
             # private events
             _change_button_state => \&_onpub_change_button_state,
-            _redraw_cards    => \&_onpriv_redraw_cards,
+            _redraw_cards        => \&_onpriv_redraw_cards,
             # gui events
-            _card_clicked   => \&_ongui_card_clicked,
+            _card_clicked        => \&_ongui_card_clicked,
             _but_exchange        => \&_ongui_but_exchange,
             # public events
             attack               => \&_onpub_change_button_state,

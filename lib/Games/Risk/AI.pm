@@ -18,6 +18,7 @@ use Games::Risk;
 use List::Util qw{ shuffle };
 use POE;
 use Readonly;
+
 use aliased 'POE::Kernel' => 'K';
 
 use base qw{ Class::Accessor::Fast };
@@ -88,15 +89,15 @@ sub spawn {
         heap          => $ai,
         inline_states => {
             # private events - session management
-            _start         => \&_onpriv_start,
-            _stop          => sub { warn "AI shutdown\n" },
+            _start                => \&_onpriv_start,
+            _stop                 => sub { warn "AI shutdown\n" },
             # public events
-            attack                   => \&_onpub_attack,
-            attack_move              => \&_onpub_attack_move,
-            exchange_cards           => \&_onpub_exchange_cards,
-            move_armies              => \&_onpub_move_armies,
-            place_armies     => \&_onpub_place_armies,
-            place_armies_initial     => \&_onpub_place_armies_initial,
+            attack                => \&_onpub_attack,
+            attack_move           => \&_onpub_attack_move,
+            exchange_cards        => \&_onpub_exchange_cards,
+            move_armies           => \&_onpub_move_armies,
+            place_armies          => \&_onpub_place_armies,
+            place_armies_initial  => \&_onpub_place_armies_initial,
         },
     );
     return $session->ID;
