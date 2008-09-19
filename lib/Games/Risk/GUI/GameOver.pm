@@ -66,6 +66,7 @@ sub _onpriv_start {
     #-- create gui
 
     my $top  = $opts->{parent}->Toplevel(-title=>'Game over');
+    $top->withdraw;
 
     my $font = $top->Font(-size=>16);
     $top->Label(
@@ -80,6 +81,15 @@ sub _onpriv_start {
             . 'intelligences were not that hard?'
             : 'Unfortunately, you lost... Try harder next time!'
     )->pack(@TOP,@PAD20);
+
+    # move window & enforce geometry
+    $top->update;               # force redraw
+    my ($wi,$he,$x,$y) = split /\D/, $top->parent->geometry;
+    $x += int($wi / 3);
+    $y += int($he / 3);
+    $top->geometry("+$x+$y");
+    $top->deiconify;
+
 
 =pod
 
