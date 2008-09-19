@@ -226,10 +226,16 @@ sub _onpub_attack_move {
             when ('ai')    { $session = $player->name; }
             when ('human') { $session = 'cards'; } #FIXME: broadcast
         }
+        my $sessionloose;
+        given ($looser->type) {
+            when ('ai')    { $sessionloose = $player->name; }
+            when ('human') { $sessionloose = 'cards'; } #FIXME: broadcast
+        }
         foreach my $card ( @cards ) {
             $looser->card_del($card);
             $player->card_add($card);
             K->post($session, 'card_add', $card);
+            K->post($sessionloose, 'card_del', $card);
         }
     }
 
