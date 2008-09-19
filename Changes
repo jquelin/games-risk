@@ -15,6 +15,9 @@ High-level changelog
 Low-level changelog
 ===================
 
+ - countries display fix when moving armies
+ - countries should not have dashes in their name
+
 0.6.2 Wed Sep 17 17:30:09 CEST 2008
  - bugfix: ais owning a continent were exchanging their cards twice!
  - better visual:
