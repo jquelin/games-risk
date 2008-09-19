@@ -211,9 +211,19 @@ sub _onpub_attack_move {
     # FIXME: check $nb is more than min
     # FIXME: check $nb is less than max - 1
 
-    # check if previous $dst owner has lost.
     my $looser = $dst->owner;
-    if ( scalar($looser->countries) == 1 ) {
+
+    # update the countries
+    $src->armies( $src->armies - $nb );
+    $dst->armies( $nb );
+    $dst->chown( $src->owner );
+
+    # update the gui
+    K->post('board', 'chnum', $src); # FIXME: broadcast
+    K->post('board', 'chown', $dst); # FIXME: broadcast
+
+    # check if previous $dst owner has lost.
+    if ( scalar($looser->countries) == 0 ) {
         # omg! one player left
         $h->player_lost($looser);
         K->post('board', 'player_lost', $looser); # FIXME: broadcast
@@ -245,15 +255,6 @@ sub _onpub_attack_move {
             return;
         }
     }
-
-    # update the countries
-    $src->armies( $src->armies - $nb );
-    $dst->armies( $nb );
-    $dst->chown( $src->owner );
-
-    # update the gui
-    K->post('board', 'chnum', $src); # FIXME: broadcast
-    K->post('board', 'chown', $dst); # FIXME: broadcast
 
     # continue attack
     my $session;
