@@ -593,12 +593,7 @@ sub _onpriv_place_armies {
     $nb = 3 if $nb < 3;
 
     # signal player
-    my $session;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'board'; } #FIXME: broadcast
-    }
-    K->post($session, 'place_armies', $nb);
+    $h->send_to_one($player, 'place_armies', $nb);
 
     # continent bonus
     my $bonus = 0;
@@ -607,10 +602,8 @@ sub _onpriv_place_armies {
 
         my $bonus = $c->bonus;
         $nb += $bonus;
-        K->post($session, 'place_armies', $bonus, $c); # FIXME: broadcast
+        $h->send_to_one($player, 'place_armies', $bonus, $c);
     }
-    K->post('cards', 'place_armies'); # FIXME: should not be alone like this, need a multiplexed in GR::GUI
-    # FIXME: even more since the gui always get this event, even if it's not its turn to play
 
     $h->armies($nb);
 }
