@@ -122,7 +122,7 @@ sub _onpub_armies_placed {
     $h->armies($left);
 
     $country->armies( $country->armies + $nb );
-    K->post('board', 'chnum', $country); # FIXME: broadcast
+    $h->send_to_all('chnum', $country);
 
     if ( $left == 0 ) {
         K->delay_set( '_armies_placed' => $WAIT );
@@ -219,7 +219,7 @@ sub _onpub_attack_move {
     $dst->chown( $src->owner );
 
     # update the gui
-    K->post('board', 'chnum', $src); # FIXME: broadcast
+    $h->send_to_all('chnum', $src);
     K->post('board', 'chown', $dst); # FIXME: broadcast
 
     # check if previous $dst owner has lost.
@@ -312,7 +312,7 @@ sub _onpub_cards_exchange {
         my $country = $card->country;
         next unless $country->owner eq $player;
         $country->armies($country->armies + 2);
-        K->post('board', 'chnum', $country); # FIXME: broadcast
+        $h->send_to_all('chnum', $country);
     }
 
     # ... but some cards less.
@@ -342,7 +342,7 @@ sub _onpub_initial_armies_placed {
     # FIXME: check validity regarding continent
 
     $country->armies( $country->armies + $nb );
-    K->post('board', 'chnum', $country); # FIXME: broadcast
+    $h->send_to_all('chnum', $country);
     K->delay_set( '_place_armies_initial' => $WAIT );
 }
 
@@ -380,8 +380,8 @@ sub _onpub_move_armies {
     $src->armies( $src->armies - $nb );
     $dst->armies( $dst->armies + $nb );
 
-    K->post('board', 'chnum', $src); # FIXME: broadcast
-    K->post('board', 'chnum', $dst); # FIXME: broadcast
+    $h->send_to_all('chnum', $src);
+    $h->send_to_all('chnum', $dst);
 }
 
 
@@ -479,8 +479,8 @@ sub _onpriv_attack_done {
     my ($h, $src, $dst) = @_[HEAP, ARG0..$#_];
 
     # update gui
-    K->post('board', 'chnum', $src); # FIXME: broadcast
-    K->post('board', 'chnum', $dst); # FIXME: broadcast
+    $h->send_to_all('chnum', $src);
+    $h->send_to_all('chnum', $dst);
 
     # get who to send msg to
     my $player = $h->curplayer;
