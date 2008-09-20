@@ -431,16 +431,7 @@ sub _onpriv_assign_countries {
 #
 sub _onpriv_attack {
     my $h = $_[HEAP];
-
-    my $player = $h->curplayer;
-    my $session;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'board'; } #FIXME: broadcast
-    }
-    K->post($session, 'attack');
-    K->post('cards', 'attack'); # FIXME: should not be alone like this, need a multiplexed in GR::GUI
-    # FIXME: even more since the gui always get this event, even if it's not its turn to play
+    $h->send_to_one($h->curplayer, 'attack');
 }
 
 
