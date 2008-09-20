@@ -226,44 +226,28 @@ sub _onpub_attack_move {
     if ( scalar($looser->countries) == 0 ) {
         # omg! one player left
         $h->player_lost($looser);
-        K->post('board', 'player_lost', $looser); # FIXME: broadcast
+        $h->send_to_all('player_lost', $looser);
 
         # distribute cards from lost player to the one who crushed her
         my @cards = $looser->cards;
         my $player = $h->curplayer;
-        my $session;
-        given ($player->type) {
-            when ('ai')    { $session = $player->name; }
-            when ('human') { $session = 'cards'; } #FIXME: broadcast
-        }
-        my $sessionloose;
-        given ($looser->type) {
-            when ('ai')    { $sessionloose = $player->name; }
-            when ('human') { $sessionloose = 'cards'; } #FIXME: broadcast
-        }
         foreach my $card ( @cards ) {
             $looser->card_del($card);
             $player->card_add($card);
-            K->post($session, 'card_add', $card);
-            K->post($sessionloose, 'card_del', $card);
+            $h->send_to_one($player, 'card_add', $card);
+            $h->send_to_one($looser, 'card_del', $card);
         }
 
         # check if game is over
         my @active = $h->players_active;
         if ( scalar @active == 1 ) {
-            K->post('board', 'game_over', $player); # FIXME: broadcast
+            $h->send_to_all('game_over', $player);
             return;
         }
     }
 
     # continue attack
-    my $session;
-    my $player = $h->curplayer;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'board'; } #FIXME: broadcast
-    }
-    K->post($session, 'attack');
+    $h->send_to_one($h->curplayer, 'attack');
 }
 
 
