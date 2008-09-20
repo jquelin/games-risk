@@ -181,7 +181,7 @@ sub _onpub_attack {
 
     # post damages
     # FIXME: only for human player?
-    K->post('board', 'attack_info', $src, $dst, \@attack, \@defence); # FIXME: broadcast
+    $h->send_to_all('attack_info', $src, $dst, \@attack, \@defence);
 
     my $wait = $player->type eq 'ai' ? $ATTACK_WAIT_AI : $ATTACK_WAIT_HUMAN;
     K->delay_set( '_attack_done' => $wait, $src, $dst );
