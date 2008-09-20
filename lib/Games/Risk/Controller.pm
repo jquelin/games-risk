@@ -485,13 +485,7 @@ sub _onpriv_attack_done {
 sub _onpriv_cards_exchange {
     my $h = $_[HEAP];
 
-    my $player = $h->curplayer;
-    my $session;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'move-armies'; } #FIXME: broadcast
-    }
-    K->post($session, 'exchange_cards');
+    $h->send_to_one($h->curplayer, 'exchange_cards');
     K->yield('_cards_exchanged');
 }
 
