@@ -283,12 +283,7 @@ sub _onpub_cards_exchange {
     $h->armies($armies);
 
     # signal that player has some more armies...
-    my $session;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'board'; } #FIXME: broadcast
-    }
-    K->post($session, 'place_armies', $bonus); # FIXME: broadcast
+    $h->send_to_one($player, 'place_armies', $bonus);
 
     # ... and maybe some country bonus...
     foreach my $card ( @cards ) {
@@ -301,11 +296,7 @@ sub _onpub_cards_exchange {
 
     # ... but some cards less.
     $player->card_del($_) foreach @cards;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'cards'; } #FIXME: broadcast
-    }
-    K->post($session, 'card_del', @cards);
+    $h->send_to_one($player, 'card_del', @cards);
 
     # finally, put back the cards on the deck
     $h->map->card_return($_) foreach @cards;
