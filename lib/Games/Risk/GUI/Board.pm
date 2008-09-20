@@ -854,13 +854,15 @@ sub _ongui_canvas_attack_from {
 # Called when user wants to deselect a country to attack.
 #
 sub _ongui_canvas_attack_cancel {
-    my $h = $_[HEAP];
+    my ($h, $s) = @_[HEAP, SESSION];
 
     # cancel attack source
     $h->{src} = undef;
 
     # update status msg
     $h->{status} = 'Attacking from ...';
+
+    $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_attack_from') );
 }
 
 
@@ -972,13 +974,16 @@ sub _ongui_canvas_motion {
 # Called when user wants to deselect a country to move from.
 #
 sub _ongui_canvas_move_armies_cancel {
-    my $h = $_[HEAP];
+    my ($h, $s) = @_[HEAP, SESSION];
 
     # cancel attack source
     $h->{src} = undef;
 
     # update status msg
     $h->{status} = 'Moving armies from ...';
+
+    # canvas click now selects the source
+    $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_move_armies_from') );
 }
 
 
