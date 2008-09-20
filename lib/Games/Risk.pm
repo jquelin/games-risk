@@ -168,6 +168,18 @@ sub players_reset {
 }
 
 
+#
+# $game->send_to_one($player, $event, @params);
+#
+# Send $event (with @params) to one $player.
+#
+sub send_to_one {
+    my ($self, $player, @msg) = @_;
+
+    K->post( $player->name, @msg );
+    return unless $player->type eq 'human';
+    K->post($_, @msg ) for qw{ board cards gameover gui move-armies };
+}
 
 
 1;
@@ -280,6 +292,11 @@ Return the list of active players (Games::Risk::Player objects).
 Mark all players to be in "turn to do", effectively marking them as
 still in play. Typically called during initial army placing, or real
 game start.
+
+
+=item * $game->send_to_one($player, $event, @params);
+
+Send C<$event> (with C<@params>) to one C<$player>.
 
 
 =back
