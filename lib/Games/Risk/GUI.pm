@@ -14,7 +14,6 @@ use strict;
 use warnings;
 
 use POE;
-use Tk;
 
 #--
 # CLASS METHODS
@@ -44,12 +43,6 @@ sub spawn {
 # -- public events
 # -- private events
 
-sub _onpriv_resize {
-    my ($k, $h) = @_[KERNEL, HEAP];
-    $h->{canvas}->configure(-width=>500);
-}
-
-
 #
 # Event: _start( \%params )
 #
@@ -60,22 +53,9 @@ sub _onpriv_start {
     my ($k, $h, $s) = @_[KERNEL, HEAP, SESSION];
 
     $k->alias_set('gui');
-
-    my $c = $poe_main_window->Canvas(-bg=>'peachpuff1')->pack;
-    $c->CanvasBind('<1>', $s->postback('_resize') );
-    $h->{canvas} = $c;
-
     $k->post('risk', 'gui_ready');
 }
 
-
-#--
-# SUBROUTINES
-
-# -- private subs
-
-sub _create_gui {
-}
 
 
 1;
@@ -86,19 +66,33 @@ __END__
 
 =head1 NAME
 
-Games::Risk::GUI - main window
+Games::Risk::GUI - gui multiplexer poe session
 
 
 
 =head1 SYNOPSIS
 
-    my $id = Games::Risk::GUI->new(\%params);
+    my $id = Games::Risk::GUI->spawn(\%params);
 
 
 
 =head1 DESCRIPTION
 
-This module is currently not used by C<Games::Risk>.
+C<Games::Risk> uses various windows to display the game: the board of
+course, but also the window displaying the cards owned by the player,
+and some others.
+
+Depending on the event, the controller needs to send events to a given
+window, or even to more than one. But it is clearly not the controller's
+job to know how the GUI works!
+
+Therefore, C<Games::Risk::GUI> is a poe session that will receive all
+the events fired by the controller, and forward them to the other
+windows. Of course, the controller now fires its events only to the
+C<Games::Risk::GUI> session.
+
+This poe session will have various aliases: the player's name, the
+player object stringified, and finally the alias C<gui>.
 
 
 
@@ -106,12 +100,21 @@ This module is currently not used by C<Games::Risk>.
 
 =head2 my $id = Games::Risk->spawn( \%params )
 
-This method will create a POE session responsible for the main window.
+This method will create a POE session responsible for multiplexing the
+events received from the controller to the various windows.
+
 It will return the poe id of the session newly created.
 
-You can tune the session by passing some arguments as a hash reference.
-Currently, no params can be tuned.
+You can tune the session by passing some arguments as a hash reference:
 
+
+=over 4
+
+=item * player => $player
+
+The human C<$player> that will control the GUI.
+
+=back
 
 
 
