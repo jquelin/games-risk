@@ -681,7 +681,7 @@ sub _onpriv_player_next {
     $h->got_card(0);
 
     # update various guis with current player
-    K->post('board', 'player_active', $player); # FIXME: broadcast
+    $h->send_to_all('player_active', $player);
 
     K->delay_set('_player_begun'=>$TURN_WAIT);
 }
