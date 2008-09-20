@@ -169,6 +169,18 @@ sub players_reset {
 
 
 #
+# $game->send_to_all($event, @params);
+#
+# Send $event (with @params) to all players.
+#
+sub send_to_all {
+    my ($self, @msg) = @_;
+
+    $self->send_to_one($_,@msg) for $self->players;
+}
+
+
+#
 # $game->send_to_one($player, $event, @params);
 #
 # Send $event (with @params) to one $player.
@@ -294,7 +306,12 @@ still in play. Typically called during initial army placing, or real
 game start.
 
 
-=item * $game->send_to_one($player, $event, @params);
+=item * $game->send_to_all($event, @params)
+
+Send C<$event> (with C<@params>) to all players.
+
+
+=item * $game->send_to_one($player, $event, @params)
 
 Send C<$event> (with C<@params>) to one C<$player>.
 
