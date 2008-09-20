@@ -438,23 +438,17 @@ sub _onpriv_attack {
 #
 # event: _attack_done($src, $dst)
 #
-# check the outcome of attack of $dst from $src only used as a
+# check the outcome of attack of $dst from $src. only used as a
 # temporization, so this handler will always serve the same event.
 #
 sub _onpriv_attack_done {
     my ($h, $src, $dst) = @_[HEAP, ARG0..$#_];
 
+    my $player = $h->curplayer;
+
     # update gui
     $h->send_to_all('chnum', $src);
     $h->send_to_all('chnum', $dst);
-
-    # get who to send msg to
-    my $player = $h->curplayer;
-    my $session;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'board'; } #FIXME: broadcast
-    }
 
     # check outcome
     if ( $dst->armies <= 0 ) {
@@ -465,14 +459,8 @@ sub _onpriv_attack_done {
         if ( not $h->got_card ) {
             $h->got_card(1);
             my $card = $h->map->card_get;
-            my $player = $h->curplayer;
-            my $session;
-            given ($player->type) {
-                when ('ai')    { $session = $player->name; }
-                when ('human') { $session = 'cards'; } #FIXME: broadcast
-            }
             $player->card_add($card);
-            K->post($session, 'card_add', $card);# FIXME: broadcast
+            $h->send_to_one($player, 'card_add', $card);
         }
 
         # move armies to invade country
@@ -482,16 +470,11 @@ sub _onpriv_attack_done {
 
         } else {
             # ask how many armies to move
-            my $session;
-            given ($player->type) {
-                when ('ai')    { $session = $player->name; }
-                when ('human') { $session = 'move-armies'; } #FIXME: broadcast
-            }
-            K->post($session, 'attack_move', $src, $dst, $h->nbdice);
+            $h->send_to_one($player, 'attack_move', $src, $dst, $h->nbdice);
         }
 
     } else {
-        K->post($session, 'attack');
+        $h->send_to_one($player, 'attack');
     }
 }
 
