@@ -220,7 +220,7 @@ sub _onpub_attack_move {
 
     # update the gui
     $h->send_to_all('chnum', $src);
-    K->post('board', 'chown', $dst); # FIXME: broadcast
+    $h->send_to_all('chown', $dst);
 
     # check if previous $dst owner has lost.
     if ( scalar($looser->countries) == 0 ) {
@@ -443,7 +443,7 @@ sub _onpriv_assign_countries {
         # store new owner & place one army to start with
         $country->chown($player);
         $country->armies(1);
-        K->post('board', 'chown', $country); # FIXME: broadcast
+        $h->send_to_all('chown', $country);
     }
 
     # go on to the next phase
