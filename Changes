@@ -16,6 +16,10 @@ High-level changelog
 Low-level changelog
 ===================
 
+1.0.1 Sat Sep 20 11:42:59 CEST 2008
+ - some ai tweaking
+ - bugfix in board: cancelling move wasn't working
+
 1.0.0 Fri Sep 19 15:09:17 CEST 2008
  - game over detected and announced
  - countries display fix when moving armies
