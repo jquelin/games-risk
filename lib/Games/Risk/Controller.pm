@@ -605,7 +605,7 @@ sub _onpriv_place_armies_initial {
 
         $h->armies($START_ARMIES); # FIXME: hardcoded
         $left = $h->{armies};
-        K->post('board', 'place_armies_initial_count', $left); # FIXME: broadcast & ai (?)
+        $h->send_to_all('place_armies_initial_count', $left);
     }
 
     # get next player that should place an army
@@ -628,15 +628,10 @@ sub _onpriv_place_armies_initial {
 
     # update various guis with current player
     $h->curplayer( $player );
-    K->post('board', 'player_active', $player); # FIXME: broadcast
+    $h->send_to_all('player_active', $player);
 
     # request army to be placed.
-    my $session;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'board'; } #FIXME: broadcast
-    }
-    K->post($session, 'place_armies_initial');
+    $h->send_to_one($player, 'place_armies_initial');
 }
 
 
