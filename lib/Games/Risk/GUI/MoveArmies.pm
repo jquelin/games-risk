@@ -40,10 +40,10 @@ sub spawn {
             _start       => \&_onpriv_start,
             _stop        => sub { warn "gui-movearmies shutdown\n" },
             # gui events
-            _but_move    => \&_onpriv_but_move,
-            _slide_wheel => \&_onpriv_slide_wheel,
+            _but_move        => \&_onpriv_but_move,
+            _slide_wheel     => \&_onpriv_slide_wheel,
             # public events
-            attack_move  => \&_onpub_attack_move,
+            attack_move      => \&_onpub_attack_move,
             ask_move_armies  => \&_onpub_ask_move_armies,
         },
     );
