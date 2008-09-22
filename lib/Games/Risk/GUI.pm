@@ -15,6 +15,8 @@ use warnings;
 
 use POE;
 
+use aliased 'POE::Kernel' => 'K';
+
 #--
 # CLASS METHODS
 
@@ -44,9 +46,9 @@ sub spawn {
 # -- public events
 
 sub _onpub_default {
-    my ($sender, $event, @args) = @_[SENDER, ARG0..$#_];
+    my ($sender, $event, $args) = @_[SENDER, ARG0, ARG1];
     return if $sender eq $poe_kernel;
-    K->post($_, $event, @args) foreach qw{ board cards gameover move-armies };
+    K->post($_, $event, @$args) foreach qw{ board cards gameover move-armies };
 }
 
 
