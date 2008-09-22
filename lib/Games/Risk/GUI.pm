@@ -62,8 +62,6 @@ sub _onpub_default {
 # to %params, same as spawn() received.
 #
 sub _onpriv_start {
-    my ($k) = @_[KERNEL];
-
     # prettyfying tk app.
     # see http://www.perltk.org/index.php?option=com_content&task=view&id=43&Itemid=37
     $poe_main_window->optionAdd('*BorderWidth' => 1);
@@ -72,9 +70,9 @@ sub _onpriv_start {
     Games::Risk::GUI::Board->spawn({toplevel=>$poe_main_window});
 
     # register aliases
-    $k->alias_set('gui');
+    K->alias_set('gui');
 
-    $k->post('risk', 'gui_ready');
+    K->post('risk', 'gui_ready');
 }
 
 
@@ -137,6 +135,13 @@ The human C<$player> that will control the GUI.
 
 =back
 
+
+
+=begin quiet_pod_coverage
+
+=head2 * K
+
+=end quiet_pod_coverage
 
 
 =head1 EVENTS RECEIVED
