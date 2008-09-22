@@ -14,7 +14,7 @@ use strict;
 use warnings;
 
 use Games::Risk::Controller;
-use Games::Risk::GUI::Board;
+use Games::Risk::GUI;
 use List::Util qw{ shuffle };
 use POE;
 use aliased 'POE::Kernel' => 'K';
@@ -51,11 +51,8 @@ sub new {
     # launch controller, and everything needed
     Games::Risk::Controller->spawn($singleton);
 
-    # prettyfying tk app.
-    # see http://www.perltk.org/index.php?option=com_content&task=view&id=43&Itemid=37
-    $poe_main_window->optionAdd('*BorderWidth' => 1);
-
-    Games::Risk::GUI::Board->spawn({toplevel=>$poe_main_window});
+    # launch gui
+    Games::Risk::GUI->spawn;
 }
 
 
