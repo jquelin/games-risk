@@ -31,6 +31,7 @@ sub spawn {
             _start         => \&_onpriv_start,
             _stop          => sub { warn "GUI shutdown\n" },
             # public events
+            _default       => \&_onpub_default,
         },
     );
     return $session->ID;
@@ -41,6 +42,14 @@ sub spawn {
 # EVENTS HANDLERS
 
 # -- public events
+
+sub _onpub_default {
+    my ($sender, $event, @args) = @_[SENDER, ARG0..$#_];
+    return if $sender eq $poe_kernel;
+    K->post($_, $event, @args) foreach qw{ board cards gameover move-armies };
+}
+
+
 # -- private events
 
 #
