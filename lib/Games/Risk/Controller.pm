@@ -507,15 +507,15 @@ sub _onpriv_create_players {
 
     @players = shuffle @players;
 
-    #FIXME: broadcast
+    $h->_players(\@players); # FIXME: private
+    $h->_players_active(\@players); # FIXME: private
+
+    # broadcast info
     $h->wait_for( {} );
     foreach my $player ( @players ) {
         $h->wait_for->{ $player->name } = 1;
-        K->post('board', 'player_add', $player);
+        $h->send_to_all('player_add', $player);
     }
-
-    $h->_players(\@players); # FIXME: private
-    $h->_players_active(\@players); # FIXME: private
 }
 
 
