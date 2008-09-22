@@ -187,7 +187,7 @@ sub send_to_one {
 
     K->post( $player->name, @msg );
     return unless $player->type eq 'human';
-    K->post($_, @msg ) for qw{ board cards gameover gui move-armies };
+    K->post('gui', @msg );
 }
 
 
