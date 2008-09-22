@@ -1045,7 +1045,7 @@ sub _ongui_canvas_move_armies_target {
     # request user how many armies to move
     my $src = $h->{src};
     my $max = $src->armies - 1 - ($h->{fake_armies_out}{ $src->id }//0);
-    K->post('move-armies', 'move_armies', $h->{src}, $country, $max);
+    K->post('move-armies', 'ask_move_armies', $h->{src}, $country, $max);
 }
 
 

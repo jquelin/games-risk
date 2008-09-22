@@ -44,7 +44,7 @@ sub spawn {
             _slide_wheel => \&_onpriv_slide_wheel,
             # public events
             attack_move  => \&_onpub_attack_move,
-            move_armies  => \&_onpub_move_armies,
+            ask_move_armies  => \&_onpub_ask_move_armies,
         },
     );
     return $session->ID;
@@ -99,12 +99,12 @@ sub _onpub_attack_move {
 
 
 #
-# event: move_armies( $src, $dst, $max );
+# event: ask_move_armies( $src, $dst, $max );
 #
 # request how many armies to move from $src to $dst, but no more than
 # $max (armies having already travelled this turn.
 #
-sub _onpub_move_armies {
+sub _onpub_ask_move_armies {
     my ($h, $src, $dst, $max) = @_[HEAP, ARG0..$#_];
 
     # store countries
