@@ -547,13 +547,7 @@ sub _onpriv_move_armies {
     $h->move_out( {} );
 
     # add current player to move
-    my $player = $h->curplayer;
-    my $session;
-    given ($player->type) {
-        when ('ai')    { $session = $player->name; }
-        when ('human') { $session = 'board'; } #FIXME: broadcast
-    }
-    K->post($session, 'move_armies');
+    $h->send_to_one($h->curplayer, 'move_armies');
 }
 
 
