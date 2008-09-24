@@ -16,7 +16,9 @@ High-level changelog
 Low-level changelog
 ===================
 
+1.0.3 Wed Sep 24 18:02:42 CEST 2008
  - faster background rendering
+ - bugfix: prevent user to reattack till he invaded the country
 
 1.0.2 Mon Sep 22 18:16:13 CEST 2008
  - using gr:gui as multiplexer session for gui
