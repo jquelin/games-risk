@@ -16,6 +16,8 @@ High-level changelog
 Low-level changelog
 ===================
 
+ - faster background rendering
+
 1.0.2 Mon Sep 22 18:16:13 CEST 2008
  - using gr:gui as multiplexer session for gui
  - removed 25 FIXMEs in the code

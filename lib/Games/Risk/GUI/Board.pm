@@ -918,7 +918,7 @@ sub _ongui_canvas_configure {
     my $gd   = $orig->resize($neww, $newh, 0);
 
     # install this new image inplace of previous background
-    my $img = $c->Photo( -data => encode_base64($gd->png) );
+    my $img = $c->Photo( -data => encode_base64($gd->jpeg) );
     $c->delete('background');
     $c->createImage(0, 0, -anchor=>'nw', -image=>$img, -tags=>['background']);
     $c->lower('background', 'all');
