@@ -55,8 +55,6 @@ sub spawn {
             _start               => \&_onpriv_start,
             _stop                => sub { warn "gui-board shutdown\n" },
             # private events - game
-            _clean_attack                  => \&_onpriv_clean_attack,
-            _country_redraw                => \&_onpub_country_redraw,
             # gui events
             _but_attack_done               => \&_ongui_but_attack_done,
             _but_attack_redo               => \&_ongui_but_attack_redo,
@@ -87,16 +85,6 @@ sub spawn {
 
 
 # -- private events
-
-#
-# event: _clean_attack( $i )
-#
-# remove line corresponding to attack $i from canvas.
-#
-sub _onpriv_clean_attack {
-    my ($h, $i) = @_[HEAP, ARG0];
-    $h->{canvas}->delete("attack$i");
-}
 
 
 #
