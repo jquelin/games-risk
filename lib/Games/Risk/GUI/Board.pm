@@ -76,6 +76,7 @@ sub spawn {
             # public events
             attack                         => \&_onpub_attack,
             attack_info                    => \&_onpub_attack_info,
+            attack_move                    => \&_onpub_attack_move,
             chnum                          => \&_onpub_country_redraw,
             chown                          => \&_onpub_country_redraw,
             game_over                      => \&_onpub_game_over,
@@ -185,6 +186,26 @@ sub _onpub_attack_info {
         : $nul;
     $h->{labels}{result_1}->configure( -image => $r1 );
     $h->{labels}{result_2}->configure( -image => $r2 );
+
+}
+
+
+#
+# event: attack_move
+#
+# Prevent user to re-attack till he moved the armies.
+#
+sub _onpub_attack_move {
+    my $h = $_[HEAP];
+
+    my $c = $h->{canvas};
+    $h->{toplevel}->bind('<Key-space>', undef);  # can't re-attack
+    $h->{toplevel}->bind('<Key-Return>', undef); # done attack
+    $c->CanvasBind('<1>', undef);
+    $c->CanvasBind('<3>', undef);
+    $h->{labels}{attack}->configure(@ENOFF);
+    $h->{buttons}{attack_redo}->configure(@ENOFF);
+    $h->{buttons}{attack_done}->configure(@ENOFF);
 
 }
 
