@@ -30,7 +30,6 @@ sub spawn {
         args          => [ $args ],
         inline_states => {
             # private events
-            _resize        => \&_onpriv_resize,
             _start         => \&_onpriv_start,
             _stop          => sub { warn "GUI shutdown\n" },
             # public events
@@ -71,8 +70,6 @@ sub _onpriv_start {
 
     # register aliases
     K->alias_set('gui');
-
-    K->post('risk', 'gui_ready');
 }
 
 
