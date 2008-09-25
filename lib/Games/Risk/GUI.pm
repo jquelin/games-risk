@@ -35,6 +35,7 @@ sub spawn {
             _stop          => sub { warn "GUI shutdown\n" },
             # public events
             _default       => \&_onpub_default,
+            new_game       => \&_onpub_new_game,
         },
     );
     return $session->ID;
@@ -50,6 +51,11 @@ sub _onpub_default {
     my ($sender, $event, $args) = @_[SENDER, ARG0, ARG1];
     return if $sender eq $poe_kernel;
     K->post($_, $event, @$args) foreach qw{ board cards gameover move-armies };
+}
+
+sub _onpub_new_game {
+    my $mw = $poe_main_window->Toplevel;
+    Games::Risk::GUI::Board->spawn({toplevel=>$mw});
 }
 
 
