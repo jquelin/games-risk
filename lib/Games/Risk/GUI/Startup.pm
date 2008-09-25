@@ -193,6 +193,10 @@ sub _onpriv_start {
     $b_quit->pack(@RIGHT,@PAD1);
     $b_start->pack(@RIGHT,@PAD1);
 
+    # window binding
+    $top->bind('<Key-Return>', $s->postback('_but_start'));
+    $top->bind('<Key-Escape>', $s->postback('_but_quit'));
+
 }
 
 # -- gui events
