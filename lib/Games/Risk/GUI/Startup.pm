@@ -14,6 +14,7 @@ use strict;
 use warnings;
 
 use Games::Risk::GUI::Constants;
+use List::Util qw{ shuffle };
 use POE;
 use Readonly;
 use Tk;
@@ -76,6 +77,7 @@ sub spawn {
             # private events - session
             _start               => \&_onpriv_start,
             _stop                => sub { warn "gui-startup shutdown\n" },
+            _load_defaults       => \&_onpriv_load_defaults,
             # private events - game
             # gui events
             _but_quit            => \&_ongui_quit,
@@ -93,6 +95,18 @@ sub spawn {
 
 
 # -- private events
+
+sub _onpriv_load_defaults {
+    my ($h, $s) = @_[HEAP, SESSION];
+
+    # FIXME: hardcoded
+    my @names  = ($ENV{USER}, shuffle @NAMES );
+    my @types  = ('human', ('computer, easy')x2, ('computer, hard')x3);
+    my @colors = @COLORS;
+    foreach my $i ( 0..5 ) {
+        K->yield('_new_player', $names[$i], $types[$i], $colors[$i]);
+    }
+}
 
 
 #
@@ -127,6 +141,8 @@ sub _onpriv_start {
     #-- frame for players
     my $fpl = $top->Frame->pack(@TOP, @FILL2, @PAD20);
     $fpl->Label(-text=>'Players', -anchor=>'w')->pack(@TOP, @FILLX);
+    $h->{frame}{players} = $fpl;
+    K->yield('_load_defaults');
 
     #-- bottom frame
     my $fbot = $top->Frame->pack(@BOTTOM, @FILLX, @PAD20);
