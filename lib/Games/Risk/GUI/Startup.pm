@@ -180,15 +180,18 @@ sub _onpriv_start {
 
     #-- bottom frame
     my $fbot = $top->Frame->pack(@BOTTOM, @FILLX, @PAD20);
-    $fbot->Button(
-        -text => 'Quit',
-        -command => $s->postback('_but_quit'),
-    )->pack(@RIGHT,@PAD1);
-
-    $fbot->Button(
+    my $b_start = $fbot->Button(
         -text => 'Start game',
         -command => $s->postback('_but_start'),
-    )->pack(@RIGHT,@PAD1);
+    );
+    my $b_quit = $fbot->Button(
+        -text => 'Quit',
+        -command => $s->postback('_but_quit'),
+    );
+    # pack after creation, to have clean focus order
+    $b_quit->pack(@RIGHT,@PAD1);
+    $b_start->pack(@RIGHT,@PAD1);
+
 }
 
 # -- gui events
