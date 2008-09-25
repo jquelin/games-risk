@@ -125,8 +125,9 @@ sub _onpriv_new_player {
     my @choices = ( 'Human', 'Computer, easy', 'Computer, hard' );
 
     # the frame
-    $h->{players}[$num]{name} = $name;
-    $h->{players}[$num]{type} = $type;
+    $h->{players}[$num]{name}  = $name;
+    $h->{players}[$num]{type}  = $type;
+    $h->{players}[$num]{color} = $color;
     my $f = $h->{frame}{players}->Frame(-bg=>$color)->pack(@TOP, @FILLX);
     my $e = $f->Entry(
         -textvariable => \$h->{players}[$num]{name}
