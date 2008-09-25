@@ -96,12 +96,16 @@ sub _onpriv_start {
     $fpl->Label(-text=>'Players')->pack(@TOP);
 
     #-- bottom frame
-    my $fbot = $top->Frame->pack(@BOTTOM, @FILLX);
+    my $fbot = $top->Frame->pack(@BOTTOM, @FILLX, @PAD20);
+    $fbot->Button(
+        -text => 'Quit',
+        -command => $s->postback('_but_quit'),
+    )->pack(@RIGHT,@PAD1);
+
     $fbot->Button(
         -text => 'Start game',
         -command => $s->postback('_but_start'),
     )->pack(@RIGHT,@PAD1);
-
 }
 
 # -- gui events
