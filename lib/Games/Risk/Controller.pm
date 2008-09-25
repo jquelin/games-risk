@@ -687,10 +687,7 @@ sub _onpriv_turn_begin {
 # to %params, same as spawn() received.
 #
 sub _onpriv_start {
-    my $h = $_[HEAP];
-
     K->alias_set('risk');
-    K->yield( '_started' );
 }
 
 
