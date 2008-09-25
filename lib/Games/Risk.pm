@@ -24,7 +24,7 @@ our $VERSION = '1.0.3';
 
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{
-    armies curplayer dst got_card map move_in move_out nbdice src wait_for
+    armies curplayer dst got_card map move_in move_out nbdice src startup_info wait_for
     _players _players_active _players_turn_done _players_turn_todo
 } );
 
