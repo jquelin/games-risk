@@ -92,8 +92,8 @@ sub _onpriv_start {
     $h->{balloon} = $top->Balloon;
 
     #-- frame for players
-    my $fpl = $top->Frame->pack(@TOP, @FILL2);
-    $fpl->Label(-text=>'Players')->pack(@TOP);
+    my $fpl = $top->Frame->pack(@TOP, @FILL2, @PAD20);
+    $fpl->Label(-text=>'Players', -anchor=>'w')->pack(@TOP, @FILLX);
 
     #-- bottom frame
     my $fbot = $top->Frame->pack(@BOTTOM, @FILLX, @PAD20);
