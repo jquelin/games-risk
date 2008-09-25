@@ -27,7 +27,7 @@ use POE;
 use Readonly;
 use Tk;
 use Tk::Balloon;
-use Tk::JPEG;
+use Tk::Font;
 use Tk::PNG;
 
 use aliased 'POE::Kernel' => 'K';
@@ -98,6 +98,15 @@ sub _onpriv_start {
 
     K->alias_set('board');
     my $top = $h->{toplevel} = $args->{toplevel};
+
+    #-- title
+    my $font = $top->Font(-size=>16);
+    my $title = $top->Label(
+        -bg   => 'black',
+        -fg   => 'white',
+        -font => $font,
+        -text => 'New game',
+    )->pack(@TOP,@PAD20,@XFILL2);
 
     #-- various resources
 
