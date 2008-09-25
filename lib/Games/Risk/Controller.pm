@@ -81,6 +81,7 @@ sub spawn {
             attack_move             => \&_onpub_attack_move,
             attack_end              => \&_onpub_attack_end,
             move_armies             => \&_onpub_move_armies,
+            new_game                => \&_onpub_new_game,
             quit                    => \&_onpub_quit,
         },
     );
@@ -331,6 +332,17 @@ sub _onpub_initial_armies_placed {
 sub _onpub_map_loaded {
     # FIXME: sync & wait when more than one window
     K->yield('_gui_ready');
+}
+
+
+#
+# event: new_game
+#
+# fired when user wants to start a new game.
+#
+sub _onpub_new_game {
+    my ($h, $args) = @_[HEAP, ARG0];
+    K->yield('_started');
 }
 
 
