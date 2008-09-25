@@ -83,6 +83,7 @@ sub spawn {
             # private events - game
             # gui events
             _but_quit            => \&_ongui_quit,
+            _but_start           => \&_ongui_but_start,
             # public events
         },
     );
@@ -202,6 +203,17 @@ sub _ongui_quit {
     K->alias_remove('startup');
     $h->{toplevel}->destroy; # this should be enough by itself
 }
+
+#
+# event: _but_start()
+#
+# called when button start is clicked. signal controller to really load
+# a game.
+#
+sub _ongui_but_start {
+    say 'start';
+}
+
 
 
 1;
