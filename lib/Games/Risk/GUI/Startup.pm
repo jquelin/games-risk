@@ -121,6 +121,9 @@ sub _onpriv_start {
     K->alias_set('startup');
     my $top = $h->{toplevel} = $args->{toplevel};
 
+    #-- initializations
+    $h->{players} = [];
+
     #-- title
     my $font = $top->Font(-size=>16);
     my $title = $top->Label(
