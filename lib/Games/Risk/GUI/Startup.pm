@@ -121,6 +121,7 @@ sub _onpriv_new_player {
     my ($name, $type, $color) = @args;
     my @players = @{ $h->{players} };
     my $num = scalar @players;
+    my @choices = ( 'Human', 'Computer, easy', 'Computer, hard' );
 
     # the frame
     $h->{players}[$num]{name} = $name;
@@ -130,7 +131,11 @@ sub _onpriv_new_player {
         -textvariable => \$h->{players}[$num]{name}
     )->pack(@LEFT,@XFILLX);
     my $be = $f->BrowseEntry(
-        -textvariable => \$h->{players}[$num]{type},
+        -variable           => \$h->{players}[$num]{type},
+        -listheight         => scalar(@choices)+1,
+        -choices            => \@choices,
+        -state              => 'readonly',
+        -disabledforeground => 'black',
     )->pack(@LEFT);
 }
 
