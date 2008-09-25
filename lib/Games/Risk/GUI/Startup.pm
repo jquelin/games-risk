@@ -81,7 +81,7 @@ sub _onpriv_start {
         -fg   => 'white',
         -font => $font,
         -text => 'New game',
-    )->pack(@TOP,@PAD20,@XFILL2);
+    )->pack(@TOP,@PAD20,@FILLX);
 
     #-- various resources
 
