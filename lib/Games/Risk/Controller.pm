@@ -521,16 +521,47 @@ sub _onpriv_cards_exchange {
 sub _onpriv_create_players {
     my $h = $_[HEAP];
 
-    # create players - FIXME: number of players
+    # create players according to startup information.
+    my $players = delete $h->startup_info->{players};
     my @players;
-    push @players, Games::Risk::Player->new({type=>'human'});
-    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Blitzkrieg'});
-    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Blitzkrieg'});
-    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Hegemon'});
-    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Hegemon'});
-    push @players, Games::Risk::Player->new({type=>'ai', ai_class => 'Games::Risk::AI::Hegemon'});
+    foreach my $p ( shuffle @$players ) {
+        my $name  = $p->{name};
+        my $type  = $p->{type};
+        my $color = $p->{color};
+        die "player cannot have an empty name" unless $name;
 
-    @players = shuffle @players;
+        my $player;
+        given ($type) {
+            when ('Human') {
+                # human player
+                $player = Games::Risk::Player->new({
+                        name  => $name,
+                        color => $color,
+                        type  => 'human',
+                });
+            }
+            when (/^Computer, (\w+)$/) {
+                # artificial intelligence
+                my %class = (
+                    'easy' => 'Games::Risk::AI::Blitzkrieg',
+                    'hard' => 'Games::Risk::AI::Hegemon',
+                );
+                $player = Games::Risk::Player->new({
+                        name     => $name,
+                        color    => $color,
+                        type     => 'ai',
+                        ai_class => $class{$1},
+                });
+            }
+            default {
+                # error
+                die "unknown player type: $type";
+            }
+        }
+
+        # store new player
+        push @players, $player;
+    }
 
     $h->_players(\@players); # FIXME: private
     $h->_players_active(\@players); # FIXME: private

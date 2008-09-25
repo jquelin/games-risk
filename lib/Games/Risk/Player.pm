@@ -21,26 +21,6 @@ use Readonly;
 use UNIVERSAL::require;
 use aliased 'POE::Kernel' => 'K';
 
-Readonly my @COLORS => (
-    '#333333',  # grey20
-    '#FF2052',  # awesome
-    '#01A368',  # green
-    '#0066FF',  # blue
-    '#9E5B40',  # sepia
-    '#A9B2C3',  # cadet blue
-    '#BB3385',  # red violet
-    '#FF681F',  # orange
-    '#DCB63B',  # ~ dirty yellow
-    '#00CCCC',  # robin's egg blue
-    #'#1560BD',  # denim
-    #'#33CC99',  # shamrock
-    #'#FF9966',  # atomic tangerine
-    #'#00755E',  # tropical rain forest
-    #'#A50B5E',  # jazzberry jam
-    #'#A3E3ED',  # blizzard blue
-);
-my $Color_id = 0;
-
 
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ ai ai_class color name type _cards _countries } );
@@ -60,19 +40,12 @@ __PACKAGE__->mk_accessors( qw{ ai ai_class color name type _cards _countries } )
 sub new {
     my ($pkg, $args) = @_;
 
-    # assign a new color
-    my $nbcols = scalar(@COLORS);
-    croak "can't assign more than $nbcols colors" if $Color_id >= $nbcols;
-    my $color = $COLORS[ $Color_id++ ];
-
     # create the object
     my $self = bless $args, $pkg;
 
     # update other object attributes
-    $self->color( $color );
     given ( $self->type ) {
         when ('human') {
-            $self->name( $ENV{USER} ); # FIXME: portable enough?
             K->post('risk', 'player_created', $self);
         }
         when ('ai') {
