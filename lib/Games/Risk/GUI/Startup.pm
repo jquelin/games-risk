@@ -45,7 +45,7 @@ Readonly my @COLORS => (
     #'#A3E3ED',  # blizzard blue
 );
 Readonly my @NAMES => (
-    'Napoleon',             # france,   1769  - 1821
+    'Napoleon Bonaparte',   # france,   1769  - 1821
     'Staline',              # russia,   1878  - 1953
     'Alexander the Great',  # greece,   356BC - 323BC
     'Julius Caesar',        # rome,     100BC - 44BC
@@ -53,8 +53,8 @@ Readonly my @NAMES => (
     'Genghis Kahn',         # mongolia, 1162  - 1227
     'Charlemagne',          # france,   747   - 814
     'Saladin',              # iraq,     1137  - 1193
-    'foo',                  # perl
-    'bar',                  # perl
+    'Otto von Bismarck',    # germany,  1815  - 1898
+    'Ramses II',            # egypt,    1303BC - 1213BC
 );
 
 
