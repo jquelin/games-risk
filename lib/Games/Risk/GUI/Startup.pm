@@ -218,7 +218,7 @@ sub _ongui_but_quit {
 # a game.
 #
 sub _ongui_but_start {
-    say 'start';
+    K->post('risk', 'new_game');
 }
 
 
