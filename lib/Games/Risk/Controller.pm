@@ -342,6 +342,7 @@ sub _onpub_map_loaded {
 #
 sub _onpub_new_game {
     my ($h, $args) = @_[HEAP, ARG0];
+    K->post('gui', 'new_game');
     K->yield('_started');
 }
 
