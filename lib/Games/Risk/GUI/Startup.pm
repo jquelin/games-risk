@@ -222,7 +222,9 @@ sub _ongui_but_quit {
 # a game.
 #
 sub _ongui_but_start {
+    my $h = $_[HEAP];
     K->post('risk', 'new_game');
+    $h->{toplevel}->withdraw;
 }
 
 
