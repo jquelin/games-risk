@@ -25,6 +25,38 @@ use aliased 'POE::Kernel' => 'K';
 Readonly my $WAIT_CLEAN_AI    => 1.000;
 Readonly my $WAIT_CLEAN_HUMAN => 0.250;
 
+Readonly my @COLORS => (
+    '#333333',  # grey20
+    '#FF2052',  # awesome
+    '#01A368',  # green
+    '#0066FF',  # blue
+    '#9E5B40',  # sepia
+    '#A9B2C3',  # cadet blue
+    '#BB3385',  # red violet
+    '#FF681F',  # orange
+    '#DCB63B',  # ~ dirty yellow
+    '#00CCCC',  # robin's egg blue
+    #'#1560BD',  # denim
+    #'#33CC99',  # shamrock
+    #'#FF9966',  # atomic tangerine
+    #'#00755E',  # tropical rain forest
+    #'#A50B5E',  # jazzberry jam
+    #'#A3E3ED',  # blizzard blue
+);
+Readonly my @NAMES => (
+    'Napoleon',             # france,   1769  - 1821
+    'Staline',              # russia,   1878  - 1953
+    'Alexander the Great',  # greece,   356BC - 323BC
+    'Julius Caesar',        # rome,     100BC - 44BC
+    'Attila',               # hun,      406   - 453
+    'Genghis Kahn',         # mongolia, 1162  - 1227
+    'Charlemagne',          # france,   747   - 814
+    'Saladin',              # iraq,     1137  - 1193
+    'foo',                  # perl
+    'bar',                  # perl
+);
+
+
 
 #--
 # Constructor
