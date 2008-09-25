@@ -81,6 +81,7 @@ sub spawn {
             attack_move             => \&_onpub_attack_move,
             attack_end              => \&_onpub_attack_end,
             move_armies             => \&_onpub_move_armies,
+            quit                    => \&_onpub_quit,
         },
     );
     return $session->ID;
@@ -372,6 +373,16 @@ sub _onpub_player_created {
 
     # go on to the next phase
     K->yield( '_players_created' ) if scalar keys %{ $h->wait_for } == 0;
+}
+
+
+#
+# event: quit()
+#
+# fired by startup window to quit the game.
+#
+sub _onpub_quit {
+    K->alias_remove('risk');
 }
 
 
