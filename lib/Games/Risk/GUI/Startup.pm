@@ -19,6 +19,7 @@ use POE;
 use Readonly;
 use Tk;
 use Tk::Balloon;
+use Tk::BrowseEntry;
 use Tk::Font;
 
 use aliased 'POE::Kernel' => 'K';
@@ -78,6 +79,7 @@ sub spawn {
             _start               => \&_onpriv_start,
             _stop                => sub { warn "gui-startup shutdown\n" },
             _load_defaults       => \&_onpriv_load_defaults,
+            _new_player          => \&_onpriv_new_player,
             # private events - game
             # gui events
             _but_quit            => \&_ongui_quit,
@@ -106,6 +108,30 @@ sub _onpriv_load_defaults {
     foreach my $i ( 0..5 ) {
         K->yield('_new_player', $names[$i], $types[$i], $colors[$i]);
     }
+}
+
+
+#
+# event: _new_player([$name], [)
+#
+#
+sub _onpriv_new_player {
+    my ($h, $s, @args) = @_[HEAP, SESSION, ARG0..$#_];
+
+    my ($name, $type, $color) = @args;
+    my @players = @{ $h->{players} };
+    my $num = scalar @players;
+
+    # the frame
+    $h->{players}[$num]{name} = $name;
+    $h->{players}[$num]{type} = $type;
+    my $f = $h->{frame}{players}->Frame(-bg=>$color)->pack(@TOP, @FILLX);
+    my $e = $f->Entry(
+        -textvariable => \$h->{players}[$num]{name}
+    )->pack(@LEFT,@XFILLX);
+    my $be = $f->BrowseEntry(
+        -textvariable => \$h->{players}[$num]{type},
+    )->pack(@LEFT);
 }
 
 
