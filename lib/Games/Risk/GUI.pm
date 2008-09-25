@@ -14,6 +14,7 @@ use strict;
 use warnings;
 
 use Games::Risk::GUI::Board;
+use Games::Risk::GUI::Startup;
 use POE;
 
 use aliased 'POE::Kernel' => 'K';
@@ -66,7 +67,7 @@ sub _onpriv_start {
     $poe_main_window->optionAdd('*BorderWidth' => 1);
 
     # create main window
-    Games::Risk::GUI::Board->spawn({toplevel=>$poe_main_window});
+    Games::Risk::GUI::Startup->spawn({toplevel=>$poe_main_window});
 
     # register aliases
     K->alias_set('gui');
