@@ -82,7 +82,7 @@ sub spawn {
             _new_player          => \&_onpriv_new_player,
             # private events - game
             # gui events
-            _but_quit            => \&_ongui_quit,
+            _but_quit            => \&_ongui_but_quit,
             _but_start           => \&_ongui_but_start,
             # public events
         },
@@ -197,12 +197,19 @@ sub _onpriv_start {
 
 # -- gui events
 
-sub _ongui_quit {
+#
+# event: _but_quit()
+#
+# called when button quit is clicked, ie user wants to cancel new game.
+# effectively kills the application.
+#
+sub _ongui_but_quit {
     my $h = $_[HEAP];
     K->post('risk', 'quit');
     K->alias_remove('startup');
     $h->{toplevel}->destroy; # this should be enough by itself
 }
+
 
 #
 # event: _but_start()
