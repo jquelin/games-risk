@@ -46,6 +46,7 @@ sub spawn {
             _stop                => sub { warn "gui-startup shutdown\n" },
             # private events - game
             # gui events
+            _but_quit            => \&_ongui_quit,
             # public events
         },
     );
@@ -109,6 +110,13 @@ sub _onpriv_start {
 }
 
 # -- gui events
+
+sub _ongui_quit {
+    my $h = $_[HEAP];
+    K->post('risk', 'quit');
+    K->alias_remove('startup');
+    $h->{toplevel}->destroy; # this should be enough by itself
+}
 
 
 1;
