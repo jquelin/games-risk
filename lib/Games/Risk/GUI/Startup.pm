@@ -142,7 +142,7 @@ sub _onpriv_start {
     $h->{balloon} = $top->Balloon;
 
     #-- frame for players
-    my $fpl = $top->Frame->pack(@TOP, @FILL2, @PAD20);
+    my $fpl = $top->Frame->pack(@TOP, @XFILL2, @PAD20);
     $fpl->Label(-text=>'Players', -anchor=>'w')->pack(@TOP, @FILLX);
     $h->{frame}{players} = $fpl;
     K->yield('_load_defaults');
