@@ -23,6 +23,8 @@ use aliased 'Games::Risk::Map::Country';
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ background _cards greyscale _continents _countries _dirname } );
 
+my $id_continent;
+
 
 #--
 # SUBROUTINES
@@ -117,6 +119,7 @@ sub load_file {
     $self->_dirname( $dirname );
     $self->_continents({});
     $self->_countries({});
+    $id_continent = 0; # reset continent id
 
     open my $fh, '<', $file; # FIXME: error handling
     my $section = '';
@@ -182,15 +185,14 @@ sub _parse_file_section_borders {
 
 sub _parse_file_section_continents {
     my ($self, $line) = @_;
-    state $id = 0;
 
     # get continent params
-    $id++;
+    $id_continent++;
     my ($name, $bonus, undef) = split /\s+/, $line;
 
     # create and store continent
-    my $continent = Continent->new({id=>$id, name=>$name, bonus=>$bonus});
-    $self->_continents->{ $id } = $continent;
+    my $continent = Continent->new({id=>$id_continent, name=>$name, bonus=>$bonus});
+    $self->_continents->{ $id_continent } = $continent;
 
     return;
 }
