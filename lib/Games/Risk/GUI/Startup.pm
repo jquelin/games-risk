@@ -88,6 +88,7 @@ sub spawn {
             # private events - game
             # gui events
             _but_color           => \&_ongui_but_color,
+            _but_delete          => \&_ongui_but_delete,
             _but_quit            => \&_ongui_but_quit,
             _but_start           => \&_ongui_but_start,
             # public events
@@ -372,6 +373,20 @@ sub _ongui_but_color {
     #$tc->bind('<1>', sub { $tc->destroy; $top->bind('<1>',undef); });
 
     K->yield('_check_errors');
+}
+
+
+#
+# event: _but_delete([$num])
+#
+# called when button to delete player number $num has been clicked.
+#
+sub _ongui_but_delete {
+    my ($h, $s, $args) = @_[HEAP, SESSION, ARG0];
+
+    my ($num) = @$args;
+    $h->{players}[$num]{frame}->destroy;
+    delete $h->{players}[$num];
 }
 
 
