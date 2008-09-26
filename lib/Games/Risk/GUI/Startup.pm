@@ -82,6 +82,7 @@ sub spawn {
             _new_player          => \&_onpriv_new_player,
             # private events - game
             # gui events
+            _but_color           => \&_ongui_but_color,
             _but_quit            => \&_ongui_but_quit,
             _but_start           => \&_ongui_but_start,
             # public events
@@ -139,6 +140,15 @@ sub _onpriv_new_player {
         -state              => 'readonly',
         -disabledforeground => 'black',
     )->pack(@LEFT);
+    my $b = $f->Button(
+        -bg               => $color,
+        -fg               => 'white',
+        -activebackground => $color,
+        -activeforeground => 'white',
+        -text             => 'color',
+        -command          => $s->postback('_but_color', $num),
+    )->pack(@LEFT);
+    $h->{players}[$num]{but_color} = $b;
 }
 
 
@@ -201,6 +211,38 @@ sub _onpriv_start {
 }
 
 # -- gui events
+
+#
+# event: _but_color()
+#
+# called when button to choose another color has been clicked.
+#
+sub _ongui_but_color {
+    my ($h, $args) = @_[HEAP, ARG0];
+
+    my ($num) = @$args;
+    say $num;
+
+    my $tc =$h->{toplevel}->Toplevel;
+    $tc->overrideredirect(1);
+    foreach my $i ( 0..$#COLORS ) {
+        my $color = $COLORS[$i];
+        my $row = $i < 5 ? 0 : 1;
+        my $col = $i % 5;
+        $tc->Label(
+            -bg               => $color,
+            -width  => 2,
+            #-activebackground => $color,
+        )->grid(-row=>$row, -column=>$col);
+    }
+    $tc->Popup(
+        -popover => $h->{players}[$num]{but_color},
+        -overanchor => 'sw',
+        -popanchor  => 'nw',
+    );
+
+}
+
 
 #
 # event: _but_quit()
