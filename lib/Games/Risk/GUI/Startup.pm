@@ -154,6 +154,9 @@ sub _onpriv_check_errors {
     $errstr = 'A player cannot have an empty name.'
         if any { $_->{name} eq '' } @players;
 
+    # there should be at least 2 players
+    $errstr = 'Game should have at least 2 players.' if scalar @players < 2;
+
     # check if there are some errors
     if ( $errstr ) {
         # add warning
@@ -385,9 +388,13 @@ sub _ongui_but_color {
 sub _ongui_but_delete {
     my ($h, $s, $args) = @_[HEAP, SESSION, ARG0];
 
+    # remove player
     my ($num) = @$args;
     $h->{players}[$num]{frame}->destroy;
     delete $h->{players}[$num];
+
+    # check if we have enough players
+    K->yield('_check_errors');
 }
 
 
