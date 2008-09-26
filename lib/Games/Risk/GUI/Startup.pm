@@ -209,7 +209,8 @@ sub _onpriv_new_player {
     $h->{players}[$num]{name}  = $name;
     $h->{players}[$num]{type}  = $type;
     $h->{players}[$num]{color} = $color;
-    my $fpl = $h->{frame}{players}->Frame->pack(@TOP, @FILLX);
+    my $fpl = $h->{frame}{players}->Frame
+        ->pack(@TOP, @FILLX, -before=>$h->{button}{add_player});
     my $f = $fpl->Frame(-bg=>$color)->pack(@LEFT, @FILLX);
     $h->{players}[$num]{line}  = $fpl;
     $h->{players}[$num]{frame} = $f;
@@ -316,6 +317,7 @@ sub _onpriv_start {
     #-- frame for players
     my $fpl = $top->Frame->pack(@TOP, @XFILL2, @PAD20);
     $fpl->Label(-text=>'Players', -anchor=>'w')->pack(@TOP, @FILLX);
+    $h->{button}{add_player} = $fpl->Button(-text=>'New player...')->pack(@TOP,@FILLX);
     $h->{frame}{players} = $fpl;
     K->yield('_load_defaults');
 
