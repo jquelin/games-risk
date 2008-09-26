@@ -13,8 +13,10 @@ use 5.010;
 use strict;
 use warnings;
 
+use File::Basename qw{ fileparse };
 use Games::Risk::GUI::Constants;
-use List::Util qw{ shuffle };
+use List::Util     qw{ shuffle };
+use Module::Util   qw{ find_installed };
 use POE;
 use Readonly;
 use Tk;
@@ -147,7 +149,7 @@ sub _onpriv_new_player {
         -fg               => 'white',
         -activebackground => $color,
         -activeforeground => 'white',
-        -text             => 'color',
+        -image            => $h->{images}{paint},
         -command          => $s->postback('_but_color', $num),
     )->pack(@LEFT);
     $h->{players}[$num]{but_color} = $b;
@@ -180,6 +182,12 @@ sub _onpriv_start {
 
     #-- initializations
     $h->{players} = [];
+
+    #-- load images
+    # FIXME: this should be in a sub/method somewhere
+    my $path = find_installed(__PACKAGE__);
+    my (undef, $dirname, undef) = fileparse($path);
+    $h->{images}{paint} = $top->Photo(-file=>"$dirname/icons/paintbrush.png");
 
     #-- title
     my $font = $top->Font(-size=>16);
