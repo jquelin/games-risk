@@ -136,10 +136,6 @@ sub _onpriv_check_errors {
     $errstr = 'Two players cannot have the same color.'
         if any { $colors{$_} > 1 } keys %colors;
 
-    # all players should have a name
-    $errstr = 'A player cannot have an empty name.'
-        if any { $_->{name} eq '' } @$players;
-
     # 2 players cannot have the same name
     my %names;
     @names{ map { $_->{name} } @$players } = (0) x @$players;
@@ -153,6 +149,10 @@ sub _onpriv_check_errors {
     $types{ $_->{type} }++ for @$players;
     $errstr = 'Cannot have more than one human player.'            if $types{Human} > 1;
     $errstr = 'Game without any human player not (yet) supported.' if $types{Human} < 1;
+
+    # all players should have a name
+    $errstr = 'A player cannot have an empty name.'
+        if any { $_->{name} eq '' } @$players;
 
     # check if there are some errors
     if ( $errstr ) {
