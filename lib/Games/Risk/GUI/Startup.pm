@@ -94,6 +94,7 @@ sub spawn {
             _but_quit            => \&_ongui_but_quit,
             _but_start           => \&_ongui_but_start,
             # public events
+            new_game             => \&_onpub_new_game,
         },
     );
     return $session->ID;
@@ -104,6 +105,11 @@ sub spawn {
 # EVENT HANDLERS
 
 # -- public events
+
+sub _onpub_new_game {
+    my $h = $_[HEAP];
+    $h->{toplevel}->deiconify;
+}
 
 
 # -- private events
