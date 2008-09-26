@@ -82,6 +82,7 @@ sub spawn {
             _start               => \&_onpriv_start,
             _stop                => sub { warn "gui-startup shutdown\n" },
             _check_errors        => \&_onpriv_check_errors,
+            _check_nb_players    => \&_onpriv_check_nb_players,
             _load_defaults       => \&_onpriv_load_defaults,
             _new_player          => \&_onpriv_new_player,
             _player_color        => \&_onpriv_player_color,
@@ -175,6 +176,23 @@ sub _onpriv_check_errors {
 
 
 #
+# event: _check_nb_players
+#
+# check whether one can add new players.
+#
+sub _onpriv_check_nb_players {
+    my $h = $_[HEAP];
+
+    my $players = $h->{players};
+    my @players = grep { defined $_ } @$players;
+
+    # check whether we can add another player
+    my @config = ( scalar(@players) >= 10 ) ? @ENOFF : @ENON;
+    $h->{button}{add_player}->configure(@config);
+}
+
+
+#
 # _load_defaults()
 #
 # load default players, currently hardcoded (FIXME), but later from the
@@ -242,6 +260,9 @@ sub _onpriv_new_player {
     $ld->bind('<1>', $s->postback('_but_delete', $num));
     $players->[$num]{be_type}   = $be;
     $players->[$num]{but_color} = $bc;
+
+    # max players reached?
+    K->yield('_check_nb_players');
 }
 
 
@@ -342,7 +363,6 @@ sub _onpriv_start {
     # window binding
     $top->bind('<Key-Return>', $s->postback('_but_start'));
     $top->bind('<Key-Escape>', $s->postback('_but_quit'));
-
 }
 
 
@@ -399,6 +419,9 @@ sub _ongui_but_delete {
     my ($num) = @$args;
     $h->{players}[$num]{line}->destroy;
     delete $h->{players}[$num];
+
+    # max players reached?
+    K->yield('_check_nb_players');
 
     # check if we have enough players
     K->yield('_check_errors');
