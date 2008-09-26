@@ -136,6 +136,13 @@ sub _onpriv_check_errors {
     $errstr = 'Two players cannot have the same color.'
         if any { $colors{$_} > 1 } keys %colors;
 
+    # 2 players cannot have the same name
+    my %names;
+    @names{ map { $_->{name} } @$players } = (0) x @$players;
+    $names{ $_->{name} }++ for @$players;
+    $errstr = 'Two players cannot have the same name.'
+        if any { $names{$_} > 1 } keys %names;
+
     # check if there are some errors
     if ( $errstr ) {
         # add warning
@@ -168,6 +175,7 @@ sub _onpriv_load_defaults {
 #
 # event: _new_player([$name], [)
 #
+# fired when there's a new player created.
 #
 sub _onpriv_new_player {
     my ($h, $s, @args) = @_[HEAP, SESSION, ARG0..$#_];
@@ -185,6 +193,8 @@ sub _onpriv_new_player {
     $h->{players}[$num]{frame} = $f;
     my $e = $f->Entry(
         -textvariable => \$h->{players}[$num]{name},
+        -validate     => 'all',
+        -vcmd         => sub { $s->postback('_check_errors')->(); 1; },
         #-highlightbackground => $color,
     )->pack(@LEFT,@XFILLX);
     my $be = $f->BrowseEntry(
