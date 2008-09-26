@@ -136,6 +136,10 @@ sub _onpriv_check_errors {
     $errstr = 'Two players cannot have the same color.'
         if any { $colors{$_} > 1 } keys %colors;
 
+    # all players should have a name
+    $errstr = 'A player cannot have an empty name.'
+        if any { $_->{name} eq '' } @$players;
+
     # 2 players cannot have the same name
     my %names;
     @names{ map { $_->{name} } @$players } = (0) x @$players;
