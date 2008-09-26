@@ -135,7 +135,8 @@ sub _onpriv_new_player {
     my $f = $h->{frame}{players}->Frame(-bg=>$color)->pack(@TOP, @FILLX);
     $h->{players}[$num]{frame} = $f;
     my $e = $f->Entry(
-        -textvariable => \$h->{players}[$num]{name}
+        -textvariable => \$h->{players}[$num]{name},
+        #-highlightbackground => $color,
     )->pack(@LEFT,@XFILLX);
     my $be = $f->BrowseEntry(
         -variable           => \$h->{players}[$num]{type},
