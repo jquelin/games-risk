@@ -221,7 +221,7 @@ sub _onpriv_new_player {
         -disabledforeground => 'black',
         -browsecmd          => $s->postback('_check_errors'),
     )->pack(@LEFT);
-    my $b = $f->Button(
+    my $bc = $f->Button(
         -bg               => $color,
         -fg               => 'white',
         -activebackground => $color,
@@ -230,7 +230,7 @@ sub _onpriv_new_player {
         -command          => $s->postback('_but_color', $num),
     )->pack(@LEFT);
     $h->{players}[$num]{be_type}   = $be;
-    $h->{players}[$num]{but_color} = $b;
+    $h->{players}[$num]{but_color} = $bc;
 }
 
 
