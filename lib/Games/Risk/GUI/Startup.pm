@@ -80,6 +80,7 @@ sub spawn {
             _stop                => sub { warn "gui-startup shutdown\n" },
             _load_defaults       => \&_onpriv_load_defaults,
             _new_player          => \&_onpriv_new_player,
+            _player_color        => \&_onpriv_player_color,
             # private events - game
             # gui events
             _but_color           => \&_ongui_but_color,
@@ -130,6 +131,7 @@ sub _onpriv_new_player {
     $h->{players}[$num]{type}  = $type;
     $h->{players}[$num]{color} = $color;
     my $f = $h->{frame}{players}->Frame(-bg=>$color)->pack(@TOP, @FILLX);
+    $h->{players}[$num]{frame} = $f;
     my $e = $f->Entry(
         -textvariable => \$h->{players}[$num]{name}
     )->pack(@LEFT,@XFILLX);
@@ -149,6 +151,18 @@ sub _onpriv_new_player {
         -command          => $s->postback('_but_color', $num),
     )->pack(@LEFT);
     $h->{players}[$num]{but_color} = $b;
+}
+
+
+sub _onpriv_player_color {
+    my ($h, $args) = @_[HEAP, ARG0];
+    my ($num, $color) = @$args;
+
+    $h->{players}[$num]{color} = $color;
+    $h->{players}[$num]{frame}->configure(-bg=>$color);
+    $h->{players}[$num]{but_color}->configure(
+        -background => $color,
+        -activebackground => $color);
 }
 
 
@@ -218,31 +232,33 @@ sub _onpriv_start {
 # called when button to choose another color has been clicked.
 #
 sub _ongui_but_color {
-    my ($h, $args) = @_[HEAP, ARG0];
+    my ($h, $s, $args) = @_[HEAP, SESSION, ARG0];
 
     my ($num) = @$args;
     my $top = $h->{toplevel};
 
+    # creating popup window
     my $tc =$top->Toplevel;
-    $tc->overrideredirect(1);
+    $tc->overrideredirect(1);  # no window decoration
     foreach my $i ( 0..$#COLORS ) {
         my $color = $COLORS[$i];
         my $row = $i < 5 ? 0 : 1;
         my $col = $i % 5;
-        $tc->Label(
-            -bg               => $color,
+        my $l = $tc->Label(
+            -bg     => $color,
             -width  => 2,
-            #-activebackground => $color,
         )->grid(-row=>$row, -column=>$col);
+        $l->bind('<1>', $s->postback('_player_color', $num, $color));
     }
+
+    # poping up
     $tc->Popup(
         -popover => $h->{players}[$num]{but_color},
         -overanchor => 'sw',
         -popanchor  => 'nw',
     );
-
     $top->bind('<1>', sub { $tc->destroy; $top->bind('<1>',undef); });
-
+    $tc->bind('<1>', sub { $tc->destroy; $top->bind('<1>',undef); });
 }
 
 
