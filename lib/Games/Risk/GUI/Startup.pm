@@ -16,6 +16,7 @@ use warnings;
 use File::Basename qw{ fileparse };
 use Games::Risk::GUI::Constants;
 use List::Util     qw{ shuffle };
+use List::MoreUtils qw{ any };
 use Module::Util   qw{ find_installed };
 use POE;
 use Readonly;
@@ -80,6 +81,7 @@ sub spawn {
             # private events - session
             _start               => \&_onpriv_start,
             _stop                => sub { warn "gui-startup shutdown\n" },
+            _check_errors        => \&_onpriv_check_errors,
             _load_defaults       => \&_onpriv_load_defaults,
             _new_player          => \&_onpriv_new_player,
             _player_color        => \&_onpriv_player_color,
@@ -102,6 +104,53 @@ sub spawn {
 
 
 # -- private events
+
+#
+# event: _check_errors()
+#
+# check various config errors, such as player without a name, 2 human
+# players, etc. disable start game if any error spotted.
+#
+sub _onpriv_check_errors {
+    my ($h, $s) = @_[HEAP, SESSION];
+
+    my $players = $h->{players};
+    my $top = $h->{toplevel};
+    my $errstr;
+
+    # remove previous error message
+    if ( $h->{error} ) {
+        # remove label
+        $h->{error}->destroy;
+        $h->{error} = undef;
+
+        # allow start to be clicked
+        $h->{button}{start}->configure(@ENON);
+        $top->bind('<Key-Return>', $s->postback('_but_start'));
+    }
+
+    # 2 players cannot have the same color
+    my %colors;
+    @colors{ map { $_->{color} } @$players } = (0) x @$players;
+    $colors{ $_->{color} }++ for @$players;
+    $errstr = 'Two players cannot have the same color.'
+        if any { $colors{$_} > 1 } keys %colors;
+
+    # check if there are some errors
+    if ( $errstr ) {
+        # add warning
+        $h->{error} = $h->{frame}{players}->Label(
+            -bg => 'red',
+            -text => $errstr,
+        )->pack(@TOP, @FILLX);
+
+        # prevent start to be clicked
+        $h->{button}{start}->configure(@ENOFF);
+        $top->bind('<Key-Return>', undef);
+
+    }
+}
+
 
 sub _onpriv_load_defaults {
     my ($h, $s) = @_[HEAP, SESSION];
@@ -169,6 +218,8 @@ sub _onpriv_player_color {
     $h->{players}[$num]{but_color}->configure(
         -background => $color,
         -activebackground => $color);
+
+    K->yield('_check_errors');
 }
 
 
@@ -218,7 +269,7 @@ sub _onpriv_start {
 
     #-- bottom frame
     my $fbot = $top->Frame->pack(@BOTTOM, @FILLX, @PAD20);
-    my $b_start = $fbot->Button(
+    my $b_start = $h->{button}{start} = $fbot->Button(
         -text => 'Start game',
         -command => $s->postback('_but_start'),
     );
@@ -271,6 +322,8 @@ sub _ongui_but_color {
     );
     $top->bind('<1>', sub { $tc->destroy; $top->bind('<1>',undef); });
     #$tc->bind('<1>', sub { $tc->destroy; $top->bind('<1>',undef); });
+
+    K->yield('_check_errors');
 }
 
 
