@@ -147,6 +147,13 @@ sub _onpriv_check_errors {
     $errstr = 'Two players cannot have the same name.'
         if any { $names{$_} > 1 } keys %names;
 
+    # human players
+    my %types;
+    @types{ map { $_->{type} } @$players } = (0) x @$players;
+    $types{ $_->{type} }++ for @$players;
+    $errstr = 'Cannot have more than one human player.'            if $types{Human} > 1;
+    $errstr = 'Game without any human player not (yet) supported.' if $types{Human} < 1;
+
     # check if there are some errors
     if ( $errstr ) {
         # add warning
@@ -208,6 +215,7 @@ sub _onpriv_new_player {
         -choices            => \@choices,
         -state              => 'readonly',
         -disabledforeground => 'black',
+        -browsecmd          => $s->postback('_check_errors'),
     )->pack(@LEFT);
     my $b = $f->Button(
         -bg               => $color,
