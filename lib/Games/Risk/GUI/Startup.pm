@@ -275,6 +275,18 @@ sub _onpriv_start {
     my (undef, $dirname, undef) = fileparse($path);
     $h->{images}{paint} = $top->Photo(-file=>"$dirname/icons/paintbrush.png");
 
+    # load icons
+    # code & artwork taken from Tk::ToolBar
+    $path = "$dirname/icons/tk_icons";
+    open my $fh, '<', $path or die "can't open '$path': $!";
+    while (<$fh>) {
+        chomp;
+        last if /^#/; # skip rest of file
+        my ($n, $d) = (split /:/)[0, 4];
+        $h->{images}{$n} = $top->Photo(-data => $d);
+    }
+	close $fh;
+
     #-- title
     my $font = $top->Font(-size=>16);
     my $title = $top->Label(
