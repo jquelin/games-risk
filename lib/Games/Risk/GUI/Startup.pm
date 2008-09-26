@@ -176,7 +176,6 @@ sub _onpriv_check_errors {
         # prevent start to be clicked
         $h->{button}{start}->configure(@ENOFF);
         $top->bind('<Key-Return>', undef);
-
     }
 }
 
