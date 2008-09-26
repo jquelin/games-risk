@@ -202,27 +202,27 @@ sub _onpriv_new_player {
     my ($h, $s, @args) = @_[HEAP, SESSION, ARG0..$#_];
 
     my ($name, $type, $color) = @args;
-    my @players = @{ $h->{players} };
-    my $num = scalar @players;
+    my $players = $h->{players};
+    my $num = scalar @$players;
     my @choices = ( 'Human', 'Computer, easy', 'Computer, hard' );
 
     # the frame
-    $h->{players}[$num]{name}  = $name;
-    $h->{players}[$num]{type}  = $type;
-    $h->{players}[$num]{color} = $color;
+    $players->[$num]{name}  = $name;
+    $players->[$num]{type}  = $type;
+    $players->[$num]{color} = $color;
     my $fpl = $h->{frame}{players}->Frame
         ->pack(@TOP, @FILLX, -before=>$h->{button}{add_player});
     my $f = $fpl->Frame(-bg=>$color)->pack(@LEFT, @FILLX);
-    $h->{players}[$num]{line}  = $fpl;
-    $h->{players}[$num]{frame} = $f;
+    $players->[$num]{line}  = $fpl;
+    $players->[$num]{frame} = $f;
     my $e = $f->Entry(
-        -textvariable => \$h->{players}[$num]{name},
+        -textvariable => \$players->[$num]{name},
         -validate     => 'all',
         -vcmd         => sub { $s->postback('_check_errors')->(); 1; },
         #-highlightbackground => $color,
     )->pack(@LEFT,@XFILLX);
     my $be = $f->BrowseEntry(
-        -variable           => \$h->{players}[$num]{type},
+        -variable           => \$players->[$num]{type},
         -background         => $color,
         -listheight         => scalar(@choices)+1,
         -choices            => \@choices,
@@ -240,8 +240,8 @@ sub _onpriv_new_player {
     )->pack(@LEFT);
     my $ld = $fpl->Label(-image=>$h->{images}{fileclose16})->pack(@LEFT);
     $ld->bind('<1>', $s->postback('_but_delete', $num));
-    $h->{players}[$num]{be_type}   = $be;
-    $h->{players}[$num]{but_color} = $bc;
+    $players->[$num]{be_type}   = $be;
+    $players->[$num]{but_color} = $bc;
 }
 
 
