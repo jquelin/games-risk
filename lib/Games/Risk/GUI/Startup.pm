@@ -250,7 +250,7 @@ sub _ongui_but_color {
     my $top = $h->{toplevel};
 
     # creating popup window
-    my $tc =$top->Toplevel;
+    my $tc =$top->Menu;
     $tc->overrideredirect(1);  # no window decoration
     foreach my $i ( 0..$#COLORS ) {
         my $color = $COLORS[$i];
@@ -270,7 +270,7 @@ sub _ongui_but_color {
         -popanchor  => 'nw',
     );
     $top->bind('<1>', sub { $tc->destroy; $top->bind('<1>',undef); });
-    $tc->bind('<1>', sub { $tc->destroy; $top->bind('<1>',undef); });
+    #$tc->bind('<1>', sub { $tc->destroy; $top->bind('<1>',undef); });
 }
 
 
