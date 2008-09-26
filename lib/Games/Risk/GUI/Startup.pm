@@ -170,6 +170,12 @@ sub _onpriv_check_errors {
 }
 
 
+#
+# _load_defaults()
+#
+# load default players, currently hardcoded (FIXME), but later from the
+# last choices (saved in a config file somewhere).
+#
 sub _onpriv_load_defaults {
     my ($h, $s) = @_[HEAP, SESSION];
 
@@ -230,6 +236,11 @@ sub _onpriv_new_player {
 }
 
 
+#
+# event: _player_color( [$num, $color] )
+#
+# called to change color of player number $num to $color.
+#
 sub _onpriv_player_color {
     my ($h, $args) = @_[HEAP, ARG0];
     my ($num, $color) = @$args;
@@ -309,12 +320,14 @@ sub _onpriv_start {
 
 }
 
+
 # -- gui events
 
 #
-# event: _but_color()
+# event: _but_color([$num])
 #
-# called when button to choose another color has been clicked.
+# called when button to choose another color for player number $num has
+# been clicked.
 #
 sub _ongui_but_color {
     my ($h, $s, $args) = @_[HEAP, SESSION, ARG0];
