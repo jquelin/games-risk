@@ -73,6 +73,7 @@ sub spawn {
             _canvas_place_armies           => \&_ongui_canvas_place_armies,
             _canvas_place_armies_initial   => \&_ongui_canvas_place_armies_initial,
             _canvas_motion                 => \&_ongui_canvas_motion,
+            _window_close                  => \&_ongui_window_close,
             # public events
             attack                         => \&_onpub_attack,
             attack_info                    => \&_onpub_attack_info,
@@ -683,6 +684,8 @@ sub _onpriv_start {
     $h->{labels}{defence_1} = $d1;
     $h->{labels}{defence_2} = $d2;
 
+    #-- trap close events
+    $top->protocol( WM_DELETE_WINDOW => $s->postback('_window_close') );
 
     #-- other window
     Games::Risk::GUI::Cards->spawn({parent=>$top});
@@ -1157,6 +1160,22 @@ sub _ongui_canvas_place_armies_initial {
     # tell controller that we've placed an army. controller will then
     # ask us to redraw the country.
     K->post('risk', 'initial_armies_placed', $country, 1);
+}
+
+#
+# event: _window_close()
+#
+# called when user wants to close the window.
+#
+sub _ongui_window_close {
+    my $h = $_[HEAP];
+    # FIXME: break circular refs
+
+    # close window
+    $h->{toplevel}->destroy;
+
+    # start another game
+    K->post('startup', 'new_game');
 }
 
 
