@@ -116,6 +116,7 @@ sub _onpriv_check_errors {
     my ($h, $s) = @_[HEAP, SESSION];
 
     my $players = $h->{players};
+    my @players = grep { defined $_ } @$players;
     my $top = $h->{toplevel};
     my $errstr;
 
@@ -132,26 +133,26 @@ sub _onpriv_check_errors {
 
     # 2 players cannot have the same color
     my %colors;
-    @colors{ map { $_->{color} } @$players } = (0) x @$players;
-    $colors{ $_->{color} }++ for @$players;
+    @colors{ map { $_->{color} } @players } = (0) x @players;
+    $colors{ $_->{color} }++ for @players;
     $errstr = 'Two players cannot have the same color.'
         if any { $colors{$_} > 1 } keys %colors;
 
     # 2 players cannot have the same name
     my %names;
-    @names{ map { $_->{name} } @$players } = (0) x @$players;
-    $names{ $_->{name} }++ for @$players;
+    @names{ map { $_->{name} } @players } = (0) x @players;
+    $names{ $_->{name} }++ for @players;
     $errstr = 'Two players cannot have the same name.'
         if any { $names{$_} > 1 } keys %names;
 
     # human players
-    my $nbhuman = grep { $_->{type} eq 'Human' } @$players;
+    my $nbhuman = grep { $_->{type} eq 'Human' } @players;
     $errstr = 'Cannot have more than one human player.'            if $nbhuman > 1;
     $errstr = 'Game without any human player not (yet) supported.' if $nbhuman < 1;
 
     # all players should have a name
     $errstr = 'A player cannot have an empty name.'
-        if any { $_->{name} eq '' } @$players;
+        if any { $_->{name} eq '' } @players;
 
     # check if there are some errors
     if ( $errstr ) {
