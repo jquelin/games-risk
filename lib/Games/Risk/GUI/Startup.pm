@@ -413,7 +413,13 @@ sub _ongui_but_quit {
 sub _ongui_but_start {
     my $h = $_[HEAP];
 
-    K->post('risk', 'new_game', { players => $h->{players} } );
+    # remove undef players from list of players. this can happen when
+    # deleting some players: it is removed, but the list keeps an undef
+    # value.
+    my $players = $h->{players};
+    my @players = grep { defined $_ } @$players;
+
+    K->post('risk', 'new_game', { players => \@players } );
     $h->{toplevel}->withdraw;
 }
 
