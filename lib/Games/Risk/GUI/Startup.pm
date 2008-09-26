@@ -221,9 +221,9 @@ sub _ongui_but_color {
     my ($h, $args) = @_[HEAP, ARG0];
 
     my ($num) = @$args;
-    say $num;
+    my $top = $h->{toplevel};
 
-    my $tc =$h->{toplevel}->Toplevel;
+    my $tc =$top->Toplevel;
     $tc->overrideredirect(1);
     foreach my $i ( 0..$#COLORS ) {
         my $color = $COLORS[$i];
@@ -240,6 +240,8 @@ sub _ongui_but_color {
         -overanchor => 'sw',
         -popanchor  => 'nw',
     );
+
+    $top->bind('<1>', sub { $tc->destroy; $top->bind('<1>',undef); });
 
 }
 
