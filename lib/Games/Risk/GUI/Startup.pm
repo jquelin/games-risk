@@ -89,6 +89,7 @@ sub spawn {
             # gui events
             _but_color           => \&_ongui_but_color,
             _but_delete          => \&_ongui_but_delete,
+            _but_new_player      => \&_ongui_but_new_player,
             _but_quit            => \&_ongui_but_quit,
             _but_start           => \&_ongui_but_start,
             # public events
@@ -317,7 +318,10 @@ sub _onpriv_start {
     #-- frame for players
     my $fpl = $top->Frame->pack(@TOP, @XFILL2, @PAD20);
     $fpl->Label(-text=>'Players', -anchor=>'w')->pack(@TOP, @FILLX);
-    $h->{button}{add_player} = $fpl->Button(-text=>'New player...')->pack(@TOP,@FILLX);
+    $h->{button}{add_player} = $fpl->Button(
+        -text    => 'New player...',
+        -command => $s->postback('_but_new_player'),
+    )->pack(@TOP,@FILLX);
     $h->{frame}{players} = $fpl;
     K->yield('_load_defaults');
 
@@ -398,6 +402,37 @@ sub _ongui_but_delete {
 
     # check if we have enough players
     K->yield('_check_errors');
+}
+
+
+#
+# event: _but_new_player()
+#
+# called when button to create a player has been clicked.
+#
+sub _ongui_but_new_player {
+    my $h = $_[HEAP];
+
+    my $players = $h->{players};
+    my @players = grep { defined $_ } @$players;
+
+    # pick a name
+    my %names;
+    @names{ @NAMES } = ();
+    delete @names{ map { $_->{name} } @players };
+    my $name = ( shuffle keys %names )[0];
+
+    # pick a color
+    my %colors;
+    @colors{ @COLORS } = ();
+    delete @colors{ map { $_->{color} } @players };
+    my $color = ( shuffle keys %colors )[0];
+
+    # default type
+    my $type = 'Computer, hard';
+
+    # create new player
+    K->yield('_new_player', $name, $type, $color);
 }
 
 
