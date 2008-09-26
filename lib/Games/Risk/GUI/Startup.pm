@@ -204,8 +204,9 @@ sub _onpriv_new_player {
     $h->{players}[$num]{name}  = $name;
     $h->{players}[$num]{type}  = $type;
     $h->{players}[$num]{color} = $color;
-    my $f = $h->{frame}{players}->Frame(-bg=>$color)->pack(@TOP, @FILLX);
-    $h->{players}[$num]{frame} = $f;
+    my $fpl = $h->{frame}{players}->Frame->pack(@TOP, @FILLX);
+    my $f = $fpl->Frame(-bg=>$color)->pack(@LEFT, @FILLX);
+    $h->{players}[$num]{frame} = $fpl;
     my $e = $f->Entry(
         -textvariable => \$h->{players}[$num]{name},
         -validate     => 'all',
@@ -229,6 +230,8 @@ sub _onpriv_new_player {
         -image            => $h->{images}{paint},
         -command          => $s->postback('_but_color', $num),
     )->pack(@LEFT);
+    my $ld = $fpl->Label(-image=>$h->{images}{fileclose16})->pack(@LEFT);
+    $ld->bind('<1>', $s->postback('_but_delete', $num));
     $h->{players}[$num]{be_type}   = $be;
     $h->{players}[$num]{but_color} = $bc;
 }
