@@ -55,7 +55,6 @@ sub spawn {
             _start                  => \&_onpriv_start,
             _stop                   => sub { warn "GR shutdown\n" },
             # private events - game states
-            _started                => \&_onpriv_load_map,
             _gui_ready              => \&_onpriv_create_players,
             _players_created        => \&_onpriv_assign_countries,
             _countries_assigned     => \&_onpriv_place_armies_initial,
@@ -342,9 +341,18 @@ sub _onpub_map_loaded {
 #
 sub _onpub_new_game {
     my ($h, $args) = @_[HEAP, ARG0];
+
+    # load map
+    # FIXME: hardcoded
+    my $path = find_installed(__PACKAGE__);
+    my (undef, $dirname, undef) = fileparse($path);
+    $path = "$dirname/maps/risk.map";
+    my $map = Games::Risk::Map->new;
+    $map->load_file($path);
+    $h->map($map);
+
     K->post('gui', 'new_game');
     $h->startup_info($args);
-    K->yield('_started');
 }
 
 
@@ -572,23 +580,6 @@ sub _onpriv_create_players {
         $h->wait_for->{ $player->name } = 1;
         $h->send_to_all('player_add', $player);
     }
-}
-
-
-#
-# load map in memory.
-#
-sub _onpriv_load_map {
-    my $h = $_[HEAP];
-
-    # load model
-    # FIXME: hardcoded
-    my $path = find_installed(__PACKAGE__);
-    my (undef, $dirname, undef) = fileparse($path);
-    $path = "$dirname/maps/risk.map";
-    my $map = Games::Risk::Map->new;
-    $map->load_file($path);
-    $h->map($map);
 }
 
 
