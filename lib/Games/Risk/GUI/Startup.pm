@@ -139,6 +139,7 @@ sub _onpriv_new_player {
     )->pack(@LEFT,@XFILLX);
     my $be = $f->BrowseEntry(
         -variable           => \$h->{players}[$num]{type},
+        -background         => $color,
         -listheight         => scalar(@choices)+1,
         -choices            => \@choices,
         -state              => 'readonly',
@@ -152,6 +153,7 @@ sub _onpriv_new_player {
         -image            => $h->{images}{paint},
         -command          => $s->postback('_but_color', $num),
     )->pack(@LEFT);
+    $h->{players}[$num]{be_type}   = $be;
     $h->{players}[$num]{but_color} = $b;
 }
 
@@ -162,6 +164,7 @@ sub _onpriv_player_color {
 
     $h->{players}[$num]{color} = $color;
     $h->{players}[$num]{frame}->configure(-bg=>$color);
+    $h->{players}[$num]{be_type}->configure(-bg=>$color);
     $h->{players}[$num]{but_color}->configure(
         -background => $color,
         -activebackground => $color);
