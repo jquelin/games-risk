@@ -211,7 +211,8 @@ sub _onpriv_new_player {
     $h->{players}[$num]{color} = $color;
     my $fpl = $h->{frame}{players}->Frame->pack(@TOP, @FILLX);
     my $f = $fpl->Frame(-bg=>$color)->pack(@LEFT, @FILLX);
-    $h->{players}[$num]{frame} = $fpl;
+    $h->{players}[$num]{line}  = $fpl;
+    $h->{players}[$num]{frame} = $f;
     my $e = $f->Entry(
         -textvariable => \$h->{players}[$num]{name},
         -validate     => 'all',
@@ -390,7 +391,7 @@ sub _ongui_but_delete {
 
     # remove player
     my ($num) = @$args;
-    $h->{players}[$num]{frame}->destroy;
+    $h->{players}[$num]{line}->destroy;
     delete $h->{players}[$num];
 
     # check if we have enough players
