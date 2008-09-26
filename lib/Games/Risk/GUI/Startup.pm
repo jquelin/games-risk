@@ -144,11 +144,9 @@ sub _onpriv_check_errors {
         if any { $names{$_} > 1 } keys %names;
 
     # human players
-    my %types;
-    @types{ map { $_->{type} } @$players } = (0) x @$players;
-    $types{ $_->{type} }++ for @$players;
-    $errstr = 'Cannot have more than one human player.'            if $types{Human} > 1;
-    $errstr = 'Game without any human player not (yet) supported.' if $types{Human} < 1;
+    my $nbhuman = grep { $_->{type} eq 'Human' } @$players;
+    $errstr = 'Cannot have more than one human player.'            if $nbhuman > 1;
+    $errstr = 'Game without any human player not (yet) supported.' if $nbhuman < 1;
 
     # all players should have a name
     $errstr = 'A player cannot have an empty name.'
