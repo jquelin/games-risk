@@ -1174,6 +1174,10 @@ sub _ongui_window_close {
     # close window
     $h->{toplevel}->destroy;
 
+    # remove all possible pending events - such as attack vector
+    # cleaning.
+    K->alarm_remove_all;
+
     # remove aliases & shut down the other windows
     K->alias_remove('board');
     K->post('risk', 'shutdown');
