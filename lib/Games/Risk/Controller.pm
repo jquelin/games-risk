@@ -81,6 +81,7 @@ sub spawn {
             move_armies             => \&_onpub_move_armies,
             new_game                => \&_onpub_new_game,
             quit                    => \&_onpub_quit,
+            shutdown                => \&_onpub_shutdown,
         },
     );
     return $session->ID;
@@ -404,6 +405,17 @@ sub _onpub_player_created {
 #
 sub _onpub_quit {
     K->alias_remove('risk');
+}
+
+#
+# event: shutdown()
+#
+# fired when board window has been closed, requesting all ais and
+# remaining windows to shutdown too.
+#
+sub _onpub_shutdown {
+    my $h = $_[HEAP];
+    $h->send_to_all('shutdown');
 }
 
 
