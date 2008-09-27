@@ -1174,6 +1174,11 @@ sub _ongui_window_close {
     # close window
     $h->{toplevel}->destroy;
 
+    # remove aliases & shut down the other windows
+    K->alias_remove('board');
+    K->post('move-armies', 'shutdown');
+    K->post('cards', 'shutdown');
+
     # start another game
     K->post('startup', 'new_game');
 }
