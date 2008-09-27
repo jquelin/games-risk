@@ -151,12 +151,12 @@ sub players {
 
 
 #
-# $game->players_reset;
+# $game->players_reset_turn;
 #
 # Mark all players to be in "turn to do". Typically called during
 # initial army placing, or real game start.
 #
-sub players_reset {
+sub players_reset_turn {
     my ($self) = @_;
 
     my @players = @{ $self->_players_active };
@@ -296,7 +296,7 @@ some of those players may have already lost.
 Return the list of active players (Games::Risk::Player objects).
 
 
-=item * $game->players_reset()
+=item * $game->players_reset_turn()
 
 Mark all players to be in "turn to do", effectively marking them as
 still in play. Typically called during initial army placing, or real

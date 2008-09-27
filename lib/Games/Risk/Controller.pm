@@ -620,7 +620,7 @@ sub _onpriv_place_armies_initial {
     if ( not defined $left ) {
         # undef means that we are just beginning initial armies
         # placement. let's initialize list of players.
-        $h->players_reset;
+        $h->players_reset_turn;
 
         $h->armies($START_ARMIES); # FIXME: hardcoded
         $left = $h->{armies};
@@ -685,7 +685,7 @@ sub _onpriv_turn_begin {
     my $h = $_[HEAP];
 
     # get next player
-    $h->players_reset;
+    $h->players_reset_turn;
 
     # placing armies
     K->yield('_turn_begun');
