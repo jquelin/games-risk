@@ -692,7 +692,7 @@ sub _onpriv_start {
     Games::Risk::GUI::MoveArmies->spawn({parent=>$top});
 
     #-- say that we're done
-    K->post('risk', 'window_created', 'board');
+    K->yield('load_map', $args->{map});
 }
 
 # -- gui events

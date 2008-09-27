@@ -69,7 +69,6 @@ sub spawn {
             _attack_end             => \&_onpriv_move_armies,
             _armies_moved           => \&_onpriv_player_next,
             # public events
-            window_created          => \&_onpub_window_created,
             map_loaded              => \&_onpub_map_loaded,
             player_created          => \&_onpub_player_created,
             initial_armies_placed   => \&_onpub_initial_armies_placed,
@@ -405,27 +404,6 @@ sub _onpub_player_created {
 #
 sub _onpub_quit {
     K->alias_remove('risk');
-}
-
-
-#
-# event: window_created( $window );
-#
-# fired when a gui window has finished initialized.
-#
-sub _onpub_window_created {
-    my ($h, $state, $win) = @_[HEAP, STATE, ARG0];
-
-    # board needs to load the map
-    if ( $win eq 'board' ) {
-        if ( not defined $h->map ) {
-            # map is not yet loaded, let's give it some more time
-            # by just re-firing current event
-            K->yield($state, $win);
-            return;
-        }
-        K->post('board', 'load_map', $h->map);
-    }
 }
 
 
