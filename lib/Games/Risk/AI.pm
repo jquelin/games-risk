@@ -78,6 +78,7 @@ sub spawn {
             move_armies           => \&_onpub_move_armies,
             place_armies          => \&_onpub_place_armies,
             place_armies_initial  => \&_onpub_place_armies_initial,
+            shutdown              => \&_onpub_shutdown,
         },
     );
     return $session->ID;
@@ -253,6 +254,17 @@ sub _onpub_place_armies_initial {
     my ($where) = $ai->place_armies(1);
     my ($country, $nb) = @$where;
     K->post('risk', 'initial_armies_placed', $country, $nb);
+}
+
+
+#
+# event: shutdown()
+#
+# request the ai to terminate itself.
+#
+sub _onpub_shutdown {
+    my $ai = $_[HEAP];
+    K->alias_remove( $ai->player->name );
 }
 
 
