@@ -549,8 +549,8 @@ sub _onpriv_create_players {
         push @players, $player;
     }
 
-    $h->_players(\@players); # FIXME: private
-    $h->_players_active(\@players); # FIXME: private
+    # store new set of players
+    $h->players_reset(@players);
 
     # broadcast info
     $h->wait_for( {} );

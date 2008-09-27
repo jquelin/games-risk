@@ -151,6 +151,21 @@ sub players {
 
 
 #
+# $game->players_reset( @players );
+#
+# Remove all players, and replace them by @players.
+#
+sub players_reset {
+    my ($self, @players) = @_;
+
+    $self->_players(\@players);
+    $self->_players_active(\@players);
+    $self->_players_turn_done([]);
+    $self->_players_turn_todo(\@players);
+}
+
+
+#
 # $game->players_reset_turn;
 #
 # Mark all players to be in "turn to do". Typically called during
@@ -294,6 +309,11 @@ some of those players may have already lost.
 =item * my @players = $game->players_active;
 
 Return the list of active players (Games::Risk::Player objects).
+
+
+=item * $game->players_reset( @players )
+
+Remove all players, and replace them by C<@players>.
 
 
 =item * $game->players_reset_turn()
