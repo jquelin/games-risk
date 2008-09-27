@@ -56,6 +56,7 @@ sub spawn {
             card_add             => \&_onpub_card_add,
             card_del             => \&_onpub_card_del,
             place_armies         => \&_onpub_change_button_state,
+            shutdown             => \&_onpub_shutdown,
         },
     );
     return $session->ID;
@@ -136,6 +137,16 @@ sub _onpub_change_button_state {
     $h->{button}->configure( $select ? @ENON : @ENOFF );
 }
 
+
+#
+# event: shutdown()
+#
+# kill current session. the toplevel window has already been destroyed.
+#
+sub _onpub_shutdown {
+    my $h = $_[HEAP];
+    K->alias_remove('cards');
+}
 
 # -- private events
 

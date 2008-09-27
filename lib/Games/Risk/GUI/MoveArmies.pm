@@ -45,6 +45,7 @@ sub spawn {
             # public events
             attack_move      => \&_onpub_attack_move,
             ask_move_armies  => \&_onpub_ask_move_armies,
+            shutdown         => \&_onpub_shutdown,
         },
     );
     return $session->ID;
@@ -136,6 +137,17 @@ sub _onpub_ask_move_armies {
     #$top->resizable(0,0);
     #my ($maxw,$maxh) = $top->geometry =~ /^(\d+)x(\d+)/;
     #$top->maxsize($maxw,$maxh); # bug in resizable: minsize in effet but not maxsize
+}
+
+
+#
+# event: shutdown()
+#
+# kill current session. the toplevel window has already been destroyed.
+#
+sub _onpub_shutdown {
+    my $h = $_[HEAP];
+    K->alias_remove('move-armies');
 }
 
 
