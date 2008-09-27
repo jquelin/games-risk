@@ -57,7 +57,7 @@ sub spawn {
             # private events - game states
             _gui_ready              => \&_onpriv_create_players,
             _players_created        => \&_onpriv_assign_countries,
-            _countries_assigned     => \&_onpriv_place_armies_initial,
+            _countries_assigned     => \&_onpriv_place_armies_initial_count,
             _place_armies_initial   => \&_onpriv_place_armies_initial,
             _initial_armies_placed  => \&_onpriv_turn_begin,
             _begin_turn             => \&_onpriv_turn_begin,
@@ -629,16 +629,6 @@ sub _onpriv_place_armies_initial {
     # get number of armies to place left
     my $left = $h->armies;
 
-    if ( not defined $left ) {
-        # undef means that we are just beginning initial armies
-        # placement. let's initialize list of players.
-        $h->players_reset_turn;
-
-        $h->armies($START_ARMIES); # FIXME: hardcoded
-        $left = $h->{armies};
-        $h->send_to_all('place_armies_initial_count', $left);
-    }
-
     # get next player that should place an army
     my $player = $h->player_next;
 
@@ -664,6 +654,23 @@ sub _onpriv_place_armies_initial {
     # request army to be placed.
     $h->send_to_one($player, 'place_armies_initial');
 }
+
+
+#
+# tell players how many initial armies they have.
+#
+sub _onpriv_place_armies_initial_count {
+    my $h = $_[HEAP];
+
+    # initialize number of initial armies, and tell players about it.
+    $h->armies($START_ARMIES); # FIXME: hardcoded
+    $h->send_to_all('place_armies_initial_count', $h->armies);
+
+    # let's initialize list of players.
+    $h->players_reset_turn;
+    K->yield('_place_armies_initial');
+}
+
 
 
 #
