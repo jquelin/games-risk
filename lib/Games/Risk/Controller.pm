@@ -351,7 +351,7 @@ sub _onpub_new_game {
     $map->load_file($path);
     $h->map($map);
 
-    K->post('gui', 'new_game');
+    K->post('gui', 'new_game', { map => $map });
     $h->startup_info($args);
 }
 

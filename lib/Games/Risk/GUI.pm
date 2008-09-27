@@ -54,8 +54,9 @@ sub _onpub_default {
 }
 
 sub _onpub_new_game {
+    my $args = $_[ARG0];
     my $mw = $poe_main_window->Toplevel;
-    Games::Risk::GUI::Board->spawn({toplevel=>$mw});
+    Games::Risk::GUI::Board->spawn( { toplevel=>$mw, %$args } );
 }
 
 
