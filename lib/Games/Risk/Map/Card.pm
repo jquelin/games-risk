@@ -16,8 +16,6 @@ use warnings;
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ country type } );
 
-# FIXME: resolve circular references for countries
-
 
 #--
 # METHODS

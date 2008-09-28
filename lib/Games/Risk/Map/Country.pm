@@ -19,8 +19,6 @@ use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ armies continent greyval name owner x y
     _neighbours } );
 
-# FIXME: resolve circular references for continents and owner
-
 
 #--
 # METHODS

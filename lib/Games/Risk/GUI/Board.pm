@@ -1169,7 +1169,6 @@ sub _ongui_canvas_place_armies_initial {
 #
 sub _ongui_window_close {
     my $h = $_[HEAP];
-    # FIXME: break circular refs
 
     # close window
     $h->{toplevel}->destroy;
