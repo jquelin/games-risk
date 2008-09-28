@@ -27,9 +27,9 @@ my $id_continent;
 
 
 #--
-# SUBROUTINES
+# METHODS
 
-# -- public subs
+# -- public methods
 
 #
 # my $card = $map->card_get;
@@ -162,8 +162,12 @@ sub load_file {
     #use YAML; say Dump($self);
 }
 
+#--
+# SUBROUTINES
+
 # -- private subs
-# the following are UGLY, UGLY, UGLY!
+
+# FIXME: the following are UGLY, UGLY, UGLY!
 
 sub _parse_file_section_ {
     my ($self, $line) = @_;
