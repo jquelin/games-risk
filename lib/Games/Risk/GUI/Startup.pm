@@ -208,9 +208,9 @@ sub _onpriv_load_defaults {
 
     # FIXME: hardcoded
     my @names  = ($ENV{USER}, shuffle @NAMES );
-    my @types  = ('Human', ('Computer, easy')x2, ('Computer, hard')x3);
+    my @types  = ('Human', ('Computer, easy')x1, ('Computer, hard')x2);
     my @colors = @COLORS;
-    foreach my $i ( 0..5 ) {
+    foreach my $i ( 0..$#types ) {
         K->yield('_new_player', $names[$i], $types[$i], $colors[$i]);
     }
 }
