@@ -49,6 +49,18 @@ sub countries {
 
 
 #
+# $continent->destroy;
+#
+# Remove all circular references of $continent, to prevent memory leaks.
+#
+#sub DESTROY { say "destroy: $_[0]"; }
+sub destroy {
+    my ($self) = @_;
+    $self->_countries([]);
+}
+
+
+#
 # my $p0wned = $continent->is_owned( $player );
 #
 # Return true if $player is the owner of all $continent's countries.
@@ -134,6 +146,11 @@ continent name.
 
 Store C<$country> (a C<Games::Risk::Map::Country> object) as a country
 located within the C<$continent>.
+
+
+=item * $continent->destroy()
+
+Remove all circular references of C<$continent>, to prevent memory leaks.
 
 
 =item * my @countries = $continent->countries()

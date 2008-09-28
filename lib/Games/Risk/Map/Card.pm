@@ -24,6 +24,19 @@ __PACKAGE__->mk_accessors( qw{ country type } );
 
 # -- public methods
 
+#
+# $card->destroy;
+#
+# Remove all circular references of $card, to prevent memory leaks.
+#
+#sub DESTROY { say "destroy: $_[0]"; }
+sub destroy {
+    my ($self) = @_;
+    $self->country(undef);
+}
+
+
+
 
 1;
 
@@ -82,6 +95,18 @@ country corresponding to the card.
 
 the type of the card: C<artillery>, C<cavalry>, C<infantery> or
 C<wildcard>
+
+
+=back
+
+
+=head2 Methods
+
+=over 4
+
+=item * $card->destroy()
+
+Remove all circular references of C<$card>, to prevent memory leaks.
 
 
 =back

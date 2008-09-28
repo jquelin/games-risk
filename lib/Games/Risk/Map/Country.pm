@@ -47,6 +47,20 @@ sub chown {
 
 
 #
+# $country->destroy;
+#
+# Remove all circular references of $country, to prevent memory leaks.
+#
+#sub DESTROY { say "destroy: $_[0]"; }
+sub destroy {
+    my ($self) = @_;
+    $self->continent(undef);
+    $self->owner(undef);
+    $self->_neighbours([]);
+}
+
+
+#
 # my $id = $country->id;
 #
 # For all intents & purposes, id is an alias to greyval
@@ -192,6 +206,11 @@ the y location of the country capital.
 
 Change the owner of the C<$country> to be C<$player>. This implies updating
 cross-reference for previous owner and new one.
+
+
+=item * $country->destroy()
+
+Remove all circular references of C<$country>, to prevent memory leaks.
 
 
 =item * my $bool = $country->is_neighbour( $c )
