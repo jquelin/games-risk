@@ -144,9 +144,9 @@ sub country_del {
 #
 # $player->destroy;
 #
-# Break all circular references in $player, to reclaim all objects
-# referenced.
+# Break all circular references in $player, to prevent memory leaks.
 #
+#sub DESTROY { say "destroy: $_[0]"; }
 sub destroy {
     my ($self) = @_;
     $self->ai(undef);
@@ -283,8 +283,7 @@ Delete C<$country> from the set of countries owned by C<$player>.
 
 =item * $player->destroy()
 
-Break all circular references in C<$player>, to reclaim all objects
-referenced.
+Break all circular references in C<$player>, to prevent memory leaks.
 
 
 =item * my $greatness = $player->greatness()
