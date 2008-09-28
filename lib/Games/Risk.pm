@@ -383,7 +383,7 @@ in the future for C<Games::Risk>:
 
 =over 4
 
-=item * screen to customize the new game to be played
+=item * screen to customize the new game to be played - DONE - 1.1.0
 
 =item * config save / restore
 
