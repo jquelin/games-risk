@@ -79,6 +79,20 @@ sub cards_reset {
 
 
 #
+# $game->destroy;
+#
+# Break all circular references in $game, to reclaim all objects
+# referenced.
+#
+sub destroy {
+    my ($self) = @_;
+
+    $_->destroy for $self->players;
+    use Data::Dumper; $Data::Dumper::Maxdepth=3; say Dumper($self);
+}
+
+
+#
 # $game->player_lost( $player );
 #
 # Remove a player from the list of active players.
@@ -287,6 +301,12 @@ the current C<Games::Risk::Map> object of the game.
 =item * $game->cards_reset;
 
 Put back all cards given to players to the deck.
+
+
+=item * $game->destroy;
+
+Break all circular references in C<$game>, to reclaim all objects
+referenced.
 
 
 =item * $game->player_lost( $player )

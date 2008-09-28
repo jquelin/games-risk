@@ -415,6 +415,11 @@ sub _onpub_quit {
 #
 sub _onpub_shutdown {
     my $h = $_[HEAP];
+
+    # remove all circular references
+    $h->destroy;
+
+    # close all ais & windows
     $h->send_to_all('shutdown');
 }
 
