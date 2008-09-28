@@ -142,6 +142,20 @@ sub country_del {
 
 
 #
+# $player->destroy;
+#
+# Break all circular references in $player, to reclaim all objects
+# referenced.
+#
+sub destroy {
+    my ($self) = @_;
+    $self->ai(undef);
+    $self->_cards([]);
+    $self->_countries([]);
+}
+
+
+#
 # my $greatness = $player->greatness;
 #
 # Return an integer reflecting the greatness of $player. It will raise
@@ -265,6 +279,12 @@ Add C<$country> to the set of countries owned by C<$player>.
 =item * $player->country_del( $country )
 
 Delete C<$country> from the set of countries owned by C<$player>.
+
+
+=item * $player->destroy()
+
+Break all circular references in C<$player>, to reclaim all objects
+referenced.
 
 
 =item * my $greatness = $player->greatness()
