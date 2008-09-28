@@ -32,6 +32,25 @@ my $id_continent;
 # -- public methods
 
 #
+# $map->destroy;
+#
+# Break all circular references in $map, to reclaim all continents and
+# countries objects.
+#
+sub destroy {
+    my ($self) = @_;
+
+    $_->destroy for @{ $self->_cards };
+    $_->destroy for $self->continents;
+    $_->destroy for $self->countries;
+
+    $self->_cards([]);
+    $self->_continents([]);
+    $self->_countries([]);
+}
+
+
+#
 # my $card = $map->card_get;
 #
 # Return the next card from the card stack.
@@ -338,6 +357,11 @@ the path to the greyscale bitmap for the board.
 =head2 Object methods
 
 =over 4
+
+=item * $map->destroy()
+
+Break all circular references in C<$map>, to prevent memory leaks.
+
 
 =item * my $card = $map->card_get()
 
