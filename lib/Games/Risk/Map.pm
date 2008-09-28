@@ -212,6 +212,7 @@ sub _parse_file_section_continents {
     # get continent params
     $id_continent++;
     my ($name, $bonus, undef) = split /\s+/, $line;
+    $name =~ s/-/ /g;
 
     # create and store continent
     my $continent = Continent->new({id=>$id_continent, name=>$name, bonus=>$bonus});
