@@ -87,8 +87,19 @@ sub cards_reset {
 sub destroy {
     my ($self) = @_;
 
+    # breaking players (& ais) references
     $_->destroy for $self->players;
-    use Data::Dumper; $Data::Dumper::Maxdepth=3; say Dumper($self);
+    $self->curplayer(undef);
+    $self->_players([]);
+    $self->_players_active([]);
+    $self->_players_turn_done([]);
+    $self->_players_turn_todo([]);
+
+    # breaking map (& countries & continents) references
+    $self->map->destroy;
+    $self->map(undef);
+    $self->src(undef);
+    $self->dst(undef);
 }
 
 

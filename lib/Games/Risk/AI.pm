@@ -25,7 +25,6 @@ use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ game player } );
 
 
-
 #--
 # CLASS METHODS
 
