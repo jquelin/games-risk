@@ -122,6 +122,10 @@ sub _onpub_attack {
         && $h->{src}->armies > 1 ) {
         $h->{buttons}{attack_redo}->configure(@ENON);
         $h->{toplevel}->bind('<Key-space>', $s->postback('_but_attack_redo'));
+
+        # auto-reattack?
+        K->yield('_but_attack_redo') if $h->{auto_reattack} && $h->{src}->armies >= 4;
+
     } else {
         $h->{buttons}{attack_redo}->configure(@ENOFF);
         $h->{toplevel}->bind('<Key-space>', undef);
@@ -187,7 +191,6 @@ sub _onpub_attack_info {
         : $nul;
     $h->{labels}{result_1}->configure( -image => $r1 );
     $h->{labels}{result_2}->configure( -image => $r2 );
-
 }
 
 
