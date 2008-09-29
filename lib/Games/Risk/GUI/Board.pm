@@ -689,11 +689,12 @@ sub _onpriv_start {
 
     #-- redo checkbox
     $h->{auto_reattack} = 0; # FIXME: from config
-    $fright->Checkbutton(
+    my $cb_reattack = $fright->Checkbutton(
         -text     => 'Auto-reattack',
         -variable => \$h->{auto_reattack},
         -anchor   => 'w',
     )->pack(@TOP,@FILLX);
+    $h->{balloon}->attach($cb_reattack, -msg=>'Automatically re-do last attack if attacker still has more than 3 armies');
 
     #-- trap close events
     $top->protocol( WM_DELETE_WINDOW => $s->postback('_window_close') );
