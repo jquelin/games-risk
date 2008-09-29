@@ -17,6 +17,9 @@ High-level changelog
 Low-level changelog
 ===================
 
+1.1.2 Mon Sep 29 17:43:49 CEST 2008
+ - new feature: do-or-die mode (slanning's request)
+
 1.1.1 Sun Sep 28 16:33:41 CEST 2008
  - breaking all circular references: no more memory leaks
  - changing default set of opponents

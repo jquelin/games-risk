@@ -20,7 +20,7 @@ use POE;
 use aliased 'POE::Kernel' => 'K';
 
 # Public variables of the module.
-our $VERSION = '1.1.1';
+our $VERSION = '1.1.2';
 
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{
@@ -411,7 +411,7 @@ in the future for C<Games::Risk>:
 
 =item * remove all the FIXMEs in the code :-)
 
-=item * do-or-die mode (slanning's request)
+=item * do-or-die mode (slanning's request) - DONE - 1.1.2
 
 =item * "attack trip" planning (slanning's request)
 
