@@ -684,6 +684,14 @@ sub _onpriv_start {
     $h->{labels}{defence_1} = $d1;
     $h->{labels}{defence_2} = $d2;
 
+    #-- redo checkbox
+    $h->{auto_reattack} = 0; # FIXME: from config
+    $fright->Checkbutton(
+        -text     => 'Auto-reattack',
+        -variable => \$h->{auto_reattack},
+        -anchor   => 'w',
+    )->pack(@TOP,@FILLX);
+
     #-- trap close events
     $top->protocol( WM_DELETE_WINDOW => $s->postback('_window_close') );
 
