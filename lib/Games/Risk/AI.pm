@@ -135,16 +135,16 @@ sub exchange_cards {
     return ($a[0],$c[0],$j[0]) if $nba && $nbc && $nbj;
     return ($a[0],$i[0],$j[0]) if $nba && $nbi && $nbj;
     return ($c[0],$i[0],$j[0]) if $nbc && $nbi && $nbj;
-    return ($a[0],@j[0..1])    if $nba && $nbj == 2;
-    return ($c[0],@j[0..1])    if $nbc && $nbj == 2;
-    return ($i[0],@j[0..1])    if $nbi && $nbj == 2;
-    return (@j[0..2])          if $nbj == 3;
-    return (@a[0..2])          if $nba == 3;
-    return (@a[0..1],$j[0])    if $nba == 2 && $nbj;
-    return (@c[0..2])          if $nbc == 3;
-    return (@c[0..1],$j[0])    if $nbc == 2 && $nbj;
-    return (@i[0..2])          if $nbi == 3;
-    return (@i[0..1],$j[0])    if $nbi == 2 && $nbj;
+    return ($a[0],@j[0..1])    if $nba && $nbj >= 2;
+    return ($c[0],@j[0..1])    if $nbc && $nbj >= 2;
+    return ($i[0],@j[0..1])    if $nbi && $nbj >= 2;
+    return (@j[0..2])          if $nbj >= 3;
+    return (@a[0..2])          if $nba >= 3;
+    return (@a[0..1],$j[0])    if $nba >= 2 && $nbj;
+    return (@c[0..2])          if $nbc >= 3;
+    return (@c[0..1],$j[0])    if $nbc >= 2 && $nbj;
+    return (@i[0..2])          if $nbi >= 3;
+    return (@i[0..1],$j[0])    if $nbi >= 2 && $nbj;
 
     return;
 }
