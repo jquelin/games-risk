@@ -17,6 +17,9 @@ High-level changelog
 Low-level changelog
 ===================
 
+1.1.3 Fri Oct 10 17:04:50 CEST 2008
+ - bugfix: ai change their cards even if more than 3 matching cards
+
 1.1.2 Mon Sep 29 17:43:49 CEST 2008
  - new feature: do-or-die mode (slanning's request)
 
