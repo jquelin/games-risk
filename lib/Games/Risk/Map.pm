@@ -143,6 +143,9 @@ sub load_file {
     open my $fh, '<', $file; # FIXME: error handling
     my $section = '';
     while ( defined( my $line = <$fh> ) ) {
+        $line =~ s/[\r\n]//g;  # remove all end of lines
+        $line =~ s/^\s+//;     # trim heading whitespaces
+        $line =~ s/\s+$//;     # trim trailing whitespaces
         given ($line) {
             when (/^\s*$/)    { } # empty lines
             when (/^\s*[#;]/) { } # comments
@@ -153,9 +156,6 @@ sub load_file {
             }
 
             # further parsing
-            $line =~ s/[\r\n]//g;  # remove all end of lines
-            $line =~ s/^\s+//;     # trim heading whitespaces
-            $line =~ s/\s+$//;     # trim trailing whitespaces
             my $meth = "_parse_file_section_$section";
             my $rv = $self->$meth($line);
             if ( $rv ) {
