@@ -344,9 +344,10 @@ sub _onpub_new_game {
 
     # load map
     # FIXME: hardcoded
+    my $m = delete $args->{map};
     my $path = find_installed(__PACKAGE__);
     my (undef, $dirname, undef) = fileparse($path);
-    $path = "$dirname/maps/risk.map";
+    $path = "$dirname/maps/$m.map";
     my $map = Games::Risk::Map->new;
     $map->load_file($path);
     $h->map($map);
