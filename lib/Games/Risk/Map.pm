@@ -212,7 +212,7 @@ sub _parse_file_section_continents {
     # get continent params
     $id_continent++;
     my ($name, $bonus, undef) = split /\s+/, $line;
-    $name =~ s/-/ /g;
+    $name =~ s/[-_]/ /g;
 
     # create and store continent
     my $continent = Continent->new({id=>$id_continent, name=>$name, bonus=>$bonus});
@@ -226,7 +226,7 @@ sub _parse_file_section_countries {
 
     # get country param
     my ($greyval, $name, $idcont, $x, $y) = split /\s+/, $line;
-    $name =~ s/-/ /g;
+    $name =~ s/[-_]/ /g;
     my $continent = $self->_continents->{$idcont};
     return "continent '$idcont' does not exist" unless defined $continent;
 
