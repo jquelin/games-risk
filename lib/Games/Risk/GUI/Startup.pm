@@ -506,7 +506,7 @@ sub _ongui_but_start {
     my $players = $h->{players};
     my @players = grep { defined $_ } @$players;
 
-    K->post('risk', 'new_game', { players => \@players } );
+    K->post('risk', 'new_game', { players => \@players, map => $h->{map} } );
     $h->{toplevel}->withdraw;
 }
 
