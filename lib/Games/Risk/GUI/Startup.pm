@@ -13,7 +13,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use File::Basename qw{ fileparse };
+use File::Basename qw{ basename fileparse };
 use Games::Risk::GUI::Constants;
 use List::Util     qw{ shuffle };
 use List::MoreUtils qw{ any };
@@ -340,6 +340,19 @@ sub _onpriv_start {
 
     # ballon
     $h->{balloon} = $top->Balloon;
+
+    #-- map selection
+    my @choices = map { basename $_, '.map' } glob "$dirname/../maps/*.map";
+    $h->{map} = 'risk';
+    my $fmap = $top->Frame->pack(@TOP, @XFILL2, @PAD20);
+    $fmap->Label(-text=>'Map', -anchor=>'w')->pack(@TOP, @FILLX);
+    my $be = $fmap->BrowseEntry(
+        -variable           => \$h->{map},
+        -listheight         => scalar(@choices)+1,
+        -choices            => \@choices,
+        -state              => 'readonly',
+        -disabledforeground => 'black',
+    )->pack(@TOP);
 
     #-- frame for players
     my $fpl = $top->Frame->pack(@TOP, @XFILL2, @PAD20);
