@@ -1,0 +1,82 @@
+; Adrien Schvalberg
+; Roman empire provinces cards file
+
+[cards]
+Infantry 1
+Cannon 2
+Infantry 3
+Infantry 4
+Cavalry 5
+Cavalry 6
+Cavalry 7
+Cannon 8
+Cannon 9
+Cannon 10
+Cavalry 11
+Cannon 12
+Infantry 13
+Infantry 14
+Cannon 15
+Cannon 16
+Cavalry 17
+Cavalry 18
+Infantry 19
+Cavalry 20
+Infantry 21
+Infantry 22
+Cavalry 23
+Cannon 24
+Cannon 25
+Infantry 26
+Cannon 27
+Cavalry 28
+Cavalry 29
+Infantry 30
+Cannon 31
+Infantry 32
+Cannon 33
+Cavalry 34
+Infantry 35
+Cannon 36
+Infantry 37
+Cavalry 38
+Cavalry 39
+Cavalry 40
+Cannon 41
+Infantry 42
+Cavalry 43
+Cannon 44
+wildcard
+wildcard
+
+;destroy x occupy x x continents x x x
+;destroy (Player) occupy (int int) continents (Continent Continent Continent)
+; * = any
+[missions]
+0	0 0	2 6 0	Conquer the dioceses of ASIA and ITALIA.
+0	0 0	3 4 *	Conquer the dioceses of GALLIA and HISPANIA and a third diocese of your choice.
+0	0 0	5 1 0	Conquer the dioceses of ILLYRIUM and AFRICA.
+0	0 0	5 4 *	Conquer the dioceses of ILLYRIUM and HISPANIA and a third diocese of your choice.
+0	0 0	3 2 0	Conquer the dioceses of GALLIA and ASIA.
+0	0 0	6 1 0	Conquer the dioceses of ITALIA and AFRICA.
+0	14 3	0 0 0	Occupy 14 provinces of your choice and occupy each with at least 3 armies.
+0	18 2	0 0 0	Occupy 18 provinces of your choice and occupy each with at least 2 armies.
+0	24 1	0 0 0	Occupy 24 provinces of your choice and occupy each with at least 1 army.
+1	14 3	0 0 0	Destroy all of PLAYER1's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 14 provinces with at least 3 armies.
+2	14 3	0 0 0	Destroy all of PLAYER2's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 14 provinces with at least 3 armies.
+3	14 3	0 0 0	Destroy all of PLAYER3's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 14 provinces with at least 3 armies.
+4	14 3	0 0 0	Destroy all of PLAYER4's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 14 provinces with at least 3 armies.
+5	14 3	0 0 0	Destroy all of PLAYER5's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 14 provinces with at least 3 armies.
+6	14 3	0 0 0	Destroy all of PLAYER6's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 14 provinces with at least 3 armies.
+1	18 2	0 0 0	Destroy all of PLAYER1's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 18 provinces with at least 2 armies.
+2	18 2	0 0 0	Destroy all of PLAYER2's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 18 provinces with at least 2 armies.
+3	18 2	0 0 0	Destroy all of PLAYER3's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 18 provinces with at least 2 armies.
+4	18 2	0 0 0	Destroy all of PLAYER4's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 18 provinces with at least 2 armies.
+5	18 2	0 0 0	Destroy all of PLAYER5's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 18 provinces with at least 2 armies.
+6	18 2	0 0 0	Destroy all of PLAYER6's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 18 provinces with at least 2 armies.
+1	24 1	0 0 0	Destroy all of PLAYER1's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 24 provinces.
+2	24 1	0 0 0	Destroy all of PLAYER2's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 24 provinces.
+3	24 1	0 0 0	Destroy all of PLAYER3's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 24 provinces.
+4	24 1	0 0 0	Destroy all of PLAYER4's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 24 provinces.
+5	24 1	0 0 0	Destroy all of PLAYER5's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 24 provinces.
+6	24 1	0 0 0	Destroy all of PLAYER6's troops. If they are yours or they have already been destroyed by another player then your mission is: Occupy 24 provinces.
