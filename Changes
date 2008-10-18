@@ -3,7 +3,8 @@ Revision history for Games::Risk.
 High-level changelog
 ====================
 
-1.1.x    startup window to customize game
+2.0.x    possibility to choose map
+1.1.x    startup window to customize game, do-or-die mode
 1.0.x    game over detection, code cleaning, gui enhancements
 0.6.x    cards support, gui enhancements
 0.5.x    new ais, gui enhancements
@@ -16,6 +17,12 @@ High-level changelog
 
 Low-level changelog
 ===================
+
+2.0.0 Sat Oct 18 11:38:38 CEST 2008
+ - possibility to choose map
+ - new maps taken from jrisk: godstorm, france, roman_empire
+
+**
 
 1.1.3 Fri Oct 10 17:04:50 CEST 2008
  - bugfix: ai change their cards even if more than 3 matching cards
