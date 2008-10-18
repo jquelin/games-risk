@@ -1,0 +1,231 @@
+; Thierry Baldo
+; Risk Map
+
+; Map for France
+; Dimensions: 677 x 425 pixels
+; france.jpg comes from Wikipedia under the GFDL (GNU Free Documentation License)
+
+[files]
+pic france.jpg
+map france.gif
+crd france.cards
+
+[continents]
+Bretagne 3 col1
+Basse-Normandie 2 col2
+Haute-Normandie 2 col3
+Picardie 2 col4
+Nord-Pas-de-Calais 5 col5
+Champagne-Ardenne 2 col6
+Lorraine 3 col7
+Alsace 2 col8
+Franche-Comte 2 col9
+Rhone-Alpes 6 col10
+Provence-Alpes-Cote-d-Azur 5 col11
+Corse 1 col12
+Languedoc-Roussillon 3 col13
+Midi-Pyrenees 3 col14
+Aquitaine 3 col15
+Poitou-Charente 2 col16
+Pays-de-la-Loire 4 col17
+Centre 3 col18
+Ile-de-France 11 col19
+Bourgogne 2 col20
+Auvergne 2 col21
+Limousin 1 col22
+
+[countries]
+1 Ain 10 343 230
+2 Aisne 4 290 77
+3 Allier 21 284 216
+4 Alpes-de-Haute-Provence 11 381 323
+5 Hautes-Alpes 11 380 301
+6 Alpes-Maritimes 11 414 333
+7 Ardeche 10 324 298
+8 Ardennes 6 321 71
+9 Ariege 14 226 378
+10 Aube 6 305 136
+11 Aude 13 254 369
+12 Aveyron 14 261 317
+13 Bouches-du-Rhone 11 354 354
+14 Calvados 2 172 97
+15 Cantal 21 256 288
+16 Charente 16 182 254
+17 Charente-Maritime 16 151 246
+18 Cher 18 258 191
+19 Correze 22 235 271
+20 Corse-du-Sud 12 443 398
+21 Cote-d-Or 20 335 178
+22 Cotes-d-Armor 1 100 128
+23 Creuse 22 247 237
+24 Dordogne 15 202 281
+25 Doubs 9 376 182
+26 Drome 10 342 301
+27 Eure 3 212 103
+28 Eure-et-Loire 18 224 131
+29 Finistere 1 63 126
+30 Gard 13 320 336
+31 Haute-Garonne 14 223 351
+32 Gers 14 195 344
+33 Gironde 15 155 299
+34 Herault 13 296 346
+35 Ille-et-Vilaine 1 131 141
+36 Indre 18 233 203
+37 Indre-et-Loire 18 201 181
+38 Isere 10 363 276
+39 Jura 9 360 208
+40 Landes 15 150 335
+41 Loire-et-Cher 18 221 165
+42 Loire 10 315 261
+43 Haute-Loire 21 304 281
+44 Loire-Atlantique 17 132 176
+45 Loiret 18 248 155
+46 Lot 14 226 309
+47 Lot-et-Garonne 15 190 317
+48 Lozere 13 292 308
+49 Maine-et-Loire 17 168 175
+50 Manche 2 143 94
+51 Marne 6 314 106
+52 Haute-Marne 6 342 145
+53 Mayenne 17 161 144
+54 Meurthe-et-Moselle 7 370 115
+55 Meuse 7 344 99
+56 Morbihan 1 102 153
+57 Moselle 7 379 94
+58 Nievre 20 292 191
+59 Nord 5 274 29
+60 Oise 4 251 85
+61 Orne 2 191 117
+62 Pas-de-Calais 5 262 45
+63 Puy-de-Dome 21 278 249
+64 Pyrenees-Atlantiques 15 159 360
+65 Hautes-Pyrenees 14 187 378
+66 Pyrenees-Orientales 13 261 395
+67 Bas-Rhin 8 410 112
+68 Haut-Rhin 8 404 146
+69 Rhone 10 329 250
+70 Haute-Saone 9 368 160
+71 Saone-et-Loire 20 323 208
+72 Sarthe 17 190 147
+73 Savoie 10 388 264
+74 Haute-Savoie 10 382 236
+75 Paris 19 49 208
+76 Seine-Maritime 3 216 74
+77 Seine-et-Marne 19 271 118
+78 Yvelines 19 239 116
+79 Deux-Sevres 16 170 224
+80 Somme 4 252 63
+81 Tarn 14 249 341
+82 Tarn-et-Garonne 14 216 330
+83 Var 11 381 361
+84 Vaucluse 11 346 333
+85 Vendee 17 142 211
+86 Vienne 16 193 215
+87 Haute-Vienne 22 218 249
+88 Vosges 7 378 139
+89 Yonne 20 291 157
+90 Territoire-de-Belfort 9 395 163
+91 Essonne 19 252 124
+92 Hauts-de-Seine 19 15 204
+93 Seine-Saint-Denis 19 71 189
+94 Val-de-Marne 19 64 233
+95 Val-d-Oise 19 252 101
+96 Haute-Corse 12 447 366
+
+[borders]
+1 39 74 73 38 69 71
+2 59 8 51 77 60 80
+3 18 58 71 63 23 42
+4 5 6 83 13 84 26
+5 38 73 4 26
+6 4 83 96
+7 43 42 26 84 30 48
+8 2 55 51
+9 31 11 66
+10 51 52 21 89 77
+11 81 34 66 9 31
+12 15 48 30 34 81 82 46
+13 20 30 84 4 83
+14 50 27 61
+15 63 43 48 12 46 19 
+16 17 79 86 87 24
+17 85 79 16 33
+18 45 58 3 23 36 41
+19 87 23 63 15 46 24
+20 96 13 83
+21 10 52 70 39 71 58 89
+22 29 56 35
+23 19 87 36 18 3 63
+24 87 19 46 47 33 16
+25 70 90 39
+26 4 7 42 38 5 84
+27 76 95 78 28 61 14 60
+28 27 78 91 45 41 72 61
+29 22 56
+30 48 7 84 13 34 12
+31 65 32 82 81 11 9
+32 40 47 82 31 65 64
+33 17 24 47 40
+34 81 12 30 11
+35 22 50 53 44 56
+36 37 41 18 23 87 86
+37 72 41 36 86 49
+38 1 73 5 26 42 69
+39 1 71 21 70 25
+40 33 47 32 64
+41 28 45 18 36 37 72
+42 69 38 26 7 43 63 3 71
+43 42 7 48 15 63
+44 56 35 49 85
+45 28 91 77 89 18 41 58
+46 24 19 15 12 82 47
+47 24 46 82 32 40 33
+48 15 43 7 30 12
+49 44 53 72 37 86 79 85
+50 14 61 53 35
+51 2 8 55 52 10 77
+52 51 55 88 70 21 10
+53 35 50 61 72 49
+54 55 57 67 88
+55 8 54 88 52 51
+56 29 22 35 44
+57 54 67
+58 89 21 71 3 18 45
+59 2 80 62
+60 2 77 95 27 76 80
+61 14 27 28 72 53 50
+62 59 80
+63 3 42 43 15 19 23
+64 40 32 65
+65 64 32 31
+66 9 11
+67 57 54 68
+68 67 88 90
+69 1 38 42 71
+70 88 90 25 21 52 39
+71 1 69 42 3 58 21 39
+72 53 61 28 41 37 49
+73 1 74 38 5
+74 1 73
+75 92 93 94
+76 80 60 27
+77 2 60 2 51 10 89 45 91 94 93 95
+78 27 95 92 91 28
+79 86 16 17 85 49
+80 2 62 2 60 76 59
+81 82 12 34 11 31
+82 46 12 81 31 32 47
+83 13 84 4 6 20 96
+84 30 7 26 4 83 13
+85 44 49 79 17
+86 37 36 87 16 79 49
+87 23 19 24 16 86 36
+88 54 55 90 52 68 70
+89 10 21 58 45 77
+90 88 68 25 70
+91 78 92 94 77 45 28
+92 75 94 93 91 78 95
+93 95 77 75 92 94
+94 75 93 77 91 92
+95 60 77 93 92 78 27
+96 20 83 6
