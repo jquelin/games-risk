@@ -13,10 +13,12 @@ use 5.010;
 use strict;
 use warnings;
 
-use File::Basename qw{ fileparse };
+use File::Basename qw{ basename fileparse };
 use File::Spec::Functions;
 use Module::Util   qw{ find_installed };
 use Tk;
+use Tk::JPEG;
+use Tk::PNG;
 use POE;
 
 use base qw{ Exporter };
@@ -54,6 +56,22 @@ sub _find_resources_path {
 
 
 #
+# _load_images( $dirname );
+#
+# load images from $dirname/images/*.png
+#
+sub _load_images {
+    my ($dirname) = @_;
+
+    my $glob = catfile($dirname, 'images', '*.png');
+    foreach my $path ( glob $glob ) {
+        my $name = basename( $path, qw{.png} );
+        $images{$name} = $poe_main_window->Photo(-file => $path);
+    }
+}
+
+
+#
 # _load_tk_icons( $dirname );
 #
 # load tk icons from $dirname/images/tk_icons.
@@ -80,6 +98,7 @@ sub _load_tk_icons {
 BEGIN {
     my $dirname = _find_resources_path();
     _load_tk_icons($dirname);
+    _load_images($dirname);
 }
 
 
