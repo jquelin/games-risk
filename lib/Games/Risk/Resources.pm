@@ -23,8 +23,20 @@ use base qw{ Exporter };
 our @EXPORT_OK = qw{ image };
 my %images;
 
+
 #--
 # SUBROUTINES
+
+# -- public subs
+
+#
+# my $img = image( $name );
+#
+# return the Tk image called $name.
+#
+sub image {
+    return $images{ $_[0] };
+}
 
 
 # -- private subs
@@ -102,6 +114,10 @@ that they are not loaded twice, cutting memory eating.
 
 
 =head1 SUBROUTINES
+
+=head2 my $img = image( $name )
+
+Return the Tk image called C<$name>.
 
 
 
