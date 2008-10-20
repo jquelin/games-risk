@@ -62,104 +62,22 @@ Games::Risk::Resources - utility module to load bundled resources
 =head1 SYNOPSIS
 
     use Games::Risk::Resources;
-    
+    my $image = image('actexit16');
+
 
 
 =head1 DESCRIPTION
 
-This module implements a map, pointing to the continents, the
-countries, etc. of the game currently in play.
+This module is a focal point to access all resources bundled with
+C<Games::Risk>. Indeed, instead of each package to reinvent its loading
+mechanism, this package provides handy functions to do that.
+
+Moreover, by loading all the images at the same location, it will ensure
+that they are not loaded twice, cutting memory eating.
 
 
 
-=head1 METHODS
-
-=head2 Constructor
-
-=over 4
-
-=item * my $player = Games::Risk::Map->new( \%params )
-
-
-=back
-
-
-=head2 Accessors
-
-
-The following accessors (acting as mutators, ie getters and setters) are
-available for C<Games::Risk::Map> objects:
-
-
-=over 4
-
-=item * background()
-
-the path to the background image for the board.
-
-
-=item * greyscale()
-
-the path to the greyscale bitmap for the board.
-
-
-=back
-
-
-=head2 Object methods
-
-=over 4
-
-=item * $map->destroy()
-
-Break all circular references in C<$map>, to prevent memory leaks.
-
-
-=item * my $card = $map->card_get()
-
-Return the next card from the cards stack.
-
-
-=item * $map->card_return( $card )
-
-Push back a $card in the card stack.
-
-
-=item * my @continents = $map->continents()
-
-Return the list of all continents in the C<$map>.
-
-
-=item * my @owned = $map->continents_owned;
-
-Return a list with all continents that are owned by a single player.
-
-
-=item * my @countries = $map->countries()
-
-Return the list of all countries in the C<$map>.
-
-
-=item * my $country = $map->country_get($id)
-
-Return the country which id matches C<$id>.
-
-
-=item * $map->load_file( \%params )
-
-=back
-
-
-
-=begin quiet_pod_coverage
-
-=item Card (inserted by aliased)
-
-=item Continent (inserted by aliased)
-
-=item Country (inserted by aliased)
-
-=end quiet_pod_coverage
+=head1 SUBROUTINES
 
 
 
