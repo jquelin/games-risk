@@ -27,7 +27,6 @@ lib/Games/Risk/GUI/icons/empty16.png
 lib/Games/Risk/GUI/icons/paintbrush.png
 lib/Games/Risk/GUI/icons/player-active.png
 lib/Games/Risk/GUI/icons/player-lost.png
-lib/Games/Risk/GUI/icons/tk_icons
 lib/Games/Risk/GUI/MoveArmies.pm
 lib/Games/Risk/GUI/Startup.pm
 lib/Games/Risk/Map.pm
@@ -52,6 +51,7 @@ lib/Games/Risk/maps/roman_empire_map.gif
 lib/Games/Risk/maps/roman_empire_pic.png
 lib/Games/Risk/Player.pm
 lib/Games/Risk/Resources.pm
+lib/Games/Risk/resources/images/tk_icons
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
