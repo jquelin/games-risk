@@ -569,6 +569,33 @@ sub _onpriv_start {
     $h->{balloon} = $top->Balloon;
 
 
+    #-- menu
+    $top->optionAdd('*tearOff', 'false'); # no tear-off menus
+    my $menubar = $top->Menu;
+    $top->configure(-menu => $menubar );
+
+    my $game = $menubar->cascade(-label => '~Game');
+    $game->command(
+        -label       => '~Quit',
+        -accelerator => 'Ctrl+Q',
+        -command     => $s->postback('_quit'),
+        -image       => $h->{images}{actexit16},
+        -compound    => 'left',
+    );
+
+    my $view = $menubar->cascade(-label => '~View');
+    $view->command(
+        -label       => '~Cards',
+        -accelerator => 'F5',
+        -command     => $s->postback('_toggle_cards'),
+#        -image       => $h->{images}{actexit16},
+#        -compound    => 'left',
+    );
+
+
+    #$h->{menu}{view} = $menubar->entrycget(1, '-menu');
+
+
     #-- main frames
     my $fleft  = $top->Frame->pack(@LEFT,  @XFILL2);
     my $fright = $top->Frame->pack(@RIGHT, @FILL2);
