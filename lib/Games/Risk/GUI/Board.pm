@@ -548,11 +548,6 @@ sub _onpriv_start {
     # FIXME: this should be in a sub/method somewhere
     my $path = find_installed(__PACKAGE__);
     my (undef, $dirname, undef) = fileparse($path);
-    $h->{images}{empty16}   = $top->Photo(-file=>"$dirname/icons/empty16.png");
-    $h->{images}{lost}      = $top->Photo(-file=>"$dirname/icons/player-lost.png");
-    $h->{images}{active}    = $top->Photo(-file=>"$dirname/icons/player-active.png");
-    $h->{images}{inactive}  = $h->{images}{empty16};
-    $h->{images}{"dice_$_"} = $top->Photo(-file=>"$dirname/icons/dice-$_.png") for 0..6;
 
 
     # ballon

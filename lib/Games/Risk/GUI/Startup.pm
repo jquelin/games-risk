@@ -311,7 +311,6 @@ sub _onpriv_start {
     # FIXME: this should be in a sub/method somewhere
     my $path = find_installed(__PACKAGE__);
     my (undef, $dirname, undef) = fileparse($path);
-    $h->{images}{paint} = $top->Photo(-file=>"$dirname/icons/paintbrush.png");
 
 
     #-- title

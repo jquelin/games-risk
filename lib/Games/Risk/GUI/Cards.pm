@@ -246,8 +246,6 @@ sub _onpriv_start {
     # FIXME: this should be in a sub/method somewhere
     my $path = find_installed(__PACKAGE__);
     my (undef, $dirname, undef) = fileparse($path);
-    $h->{images}{$_} = $top->Photo(-file=>"$dirname/icons/card-$_.png")
-        foreach qw{ bg artillery cavalry infantry joker };
 
     #- top label
     $h->{label} = $top->Label(
