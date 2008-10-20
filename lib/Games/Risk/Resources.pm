@@ -16,13 +16,12 @@ use warnings;
 use File::Basename qw{ fileparse };
 use File::Spec::Functions;
 use Module::Util   qw{ find_installed };
+use Tk;
+use POE;
 
 use base qw{ Exporter };
-
-# -- module vars
 our @EXPORT_OK = qw{ image };
-my $resources;
-
+my %images;
 
 #--
 # SUBROUTINES
@@ -38,12 +37,37 @@ my $resources;
 sub _find_resources_path {
     my $path = find_installed(__PACKAGE__);
     my (undef, $dirname, undef) = fileparse($path);
-    return catfile($path, 'resources');
+    return catfile($dirname, 'resources');
 }
 
-# -- init
+
+#
+# _load_tk_icons( $dirname );
+#
+# load tk icons from $dirname/images/tk_icons.
+# code & artwork taken from Tk::ToolBar
+#
+sub _load_tk_icons {
+    my ($dirname) = @_;
+
+    my $path = catfile($dirname, 'images', 'tk_icons');
+    open my $fh, '<', $path or die "can't open '$path': $!";
+    while (<$fh>) {
+        chomp;
+        last if /^#/; # skip rest of file
+        my ($name, $data) = (split /:/)[0, 4];
+        $images{$name} = $poe_main_window->Photo(-data => $data);
+    }
+    close $fh;
+}
+
+
+#--
+# INITIALIZATION
+
 BEGIN {
-    $resources = _find_resources_path();
+    my $dirname = _find_resources_path();
+    _load_tk_icons($dirname);
 }
 
 
