@@ -15,6 +15,7 @@ use warnings;
 
 use File::Basename  qw{ fileparse };
 use Games::Risk::GUI::Constants;
+use Games::Risk::Resources qw{ image };
 use List::MoreUtils qw{ any firstidx };
 use Module::Util    qw{ find_installed };
 use POE;
@@ -185,12 +186,12 @@ sub _onpriv_redraw_cards {
         $c->CanvasBind('<1>', [$s->postback('_card_clicked'), $card]);
 
         # the info themselves
-        $c->createImage(1, 1, -anchor=>'nw', -image=>$h->{images}{bg}, -tags=>['bg']);
+        $c->createImage(1, 1, -anchor=>'nw', -image=>image('card-bg'), -tags=>['bg']);
         if ( $card->type eq 'joker' ) {
             # only the joker!
             $c->createImage(
                 $WIDTH/2, $HEIGHT/2,
-                -image  => $h->{images}{$card->type},
+                -image  => image('card-joker'),
             );
         } else {
             # country name
@@ -204,7 +205,7 @@ sub _onpriv_redraw_cards {
             $c->createImage(
                 $WIDTH/2, $HEIGHT-10,
                 -anchor => 's',
-                -image  => $h->{images}{$card->type},
+                -image  => image('card-' . $card->type),
             );
         }
 

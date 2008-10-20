@@ -259,7 +259,7 @@ sub _onpriv_new_player {
         -fg               => 'white',
         -activebackground => $color,
         -activeforeground => 'white',
-        -image            => $h->{images}{paint},
+        -image            => image('paintbrush'),
         -command          => $s->postback('_but_color', $num),
     )->pack(@LEFT);
     my $ld = $fpl->Label(-image=>image('fileclose16'))->pack(@LEFT);
