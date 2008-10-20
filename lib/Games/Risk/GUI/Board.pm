@@ -553,17 +553,6 @@ sub _onpriv_start {
     $h->{images}{inactive}  = $h->{images}{empty16};
     $h->{images}{"dice_$_"} = $top->Photo(-file=>"$dirname/icons/dice-$_.png") for 0..6;
 
-    # load icons
-    # code & artwork taken from Tk::ToolBar
-    $path = "$dirname/icons/tk_icons";
-    open my $fh, '<', $path or die "can't open '$path': $!";
-    while (<$fh>) {
-        chomp;
-        last if /^#/; # skip rest of file
-        my ($n, $d) = (split /:/)[0, 4];
-        $h->{images}{$n} = $top->Photo(-data => $d);
-    }
-	close $fh;
 
     # ballon
     $h->{balloon} = $top->Balloon;
