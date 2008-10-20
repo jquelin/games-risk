@@ -18,6 +18,7 @@ use Games::Risk::GUI::Cards;
 use Games::Risk::GUI::Constants;
 use Games::Risk::GUI::GameOver;
 use Games::Risk::GUI::MoveArmies;
+use Games::Risk::Resources qw{ image };
 use Image::Resize;
 use Image::Size;
 use List::Util     qw{ min };
@@ -182,8 +183,8 @@ sub _onpub_attack_info {
     $i++;
 
     # update result labels
-    my $ok  = $h->{images}{actcheck16};
-    my $nok = $h->{images}{actcross16};
+    my $ok  = image('actcheck16');
+    my $nok = image('actcross16');
     my $nul = $h->{images}{empty16};
     my $r1 = $attack->[0] <= $defence->[0] ? $nok : $ok;
     my $r2 = scalar(@$attack) >= 2 && scalar(@$defence) == 2
@@ -569,29 +570,29 @@ sub _onpriv_start {
     my $labp = $fgs->Label(-text=>'place armies', @ENOFF)->pack(@LEFT, @XFILL2);
     my $but_predo = $fgs->Button(
         -command => $s->postback('_but_place_armies_redo'),
-        -image   => $h->{images}{actreload16},
+        -image   => image('actreload16'),
         @ENOFF,
     )->pack(@LEFT);
     my $but_pdone = $fgs->Button(
         -command => $s->postback('_but_place_armies_done'),
-        -image   => $h->{images}{navforward16},
+        -image   => image('navforward16'),
         @ENOFF,
     )->pack(@LEFT);
     my $laba = $fgs->Label(-text=>'attack', @ENOFF)->pack(@LEFT, @XFILL2);
     my $but_aredo = $fgs->Button(
         -command => $s->postback('_but_attack_redo'),
-        -image   => $h->{images}{actredo16},
+        -image   => image('actredo16'),
         @ENOFF,
     )->pack(@LEFT);
     my $but_adone = $fgs->Button(
         -command => $s->postback('_but_attack_done'),
-        -image   => $h->{images}{navforward16},
+        -image   => image('navforward16'),
         @ENOFF,
     )->pack(@LEFT);
     my $labm = $fgs->Label(-text=>'move armies', @ENOFF)->pack(@LEFT, @XFILL2);
     my $but_mdone = $fgs->Button(
         -command => $s->postback('_but_move_armies_done'),
-        -image   => $h->{images}{playstop16},
+        -image   => image('playstop16'),
         @ENOFF,
     )->pack(@LEFT);
     $h->{labels}{place_armies} = $labp;

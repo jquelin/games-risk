@@ -15,6 +15,7 @@ use warnings;
 
 use File::Basename qw{ basename fileparse };
 use Games::Risk::GUI::Constants;
+use Games::Risk::Resources qw{ image };
 use List::Util     qw{ shuffle };
 use List::MoreUtils qw{ any };
 use Module::Util   qw{ find_installed };
@@ -261,7 +262,7 @@ sub _onpriv_new_player {
         -image            => $h->{images}{paint},
         -command          => $s->postback('_but_color', $num),
     )->pack(@LEFT);
-    my $ld = $fpl->Label(-image=>$h->{images}{fileclose16})->pack(@LEFT);
+    my $ld = $fpl->Label(-image=>image('fileclose16'))->pack(@LEFT);
     $ld->bind('<1>', $s->postback('_but_delete', $num));
     $players->[$num]{be_type}   = $be;
     $players->[$num]{but_color} = $bc;
