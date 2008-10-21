@@ -13,12 +13,10 @@ use 5.010;
 use strict;
 use warnings;
 
-use File::Basename  qw{ fileparse };
 use Games::Risk::Map;
 use Games::Risk::Player;
 use Games::Risk::Resources qw{ map_path };
 use List::Util      qw{ min shuffle };
-use Module::Util    qw{ find_installed };
 use POE;
 use Readonly;
 use aliased 'POE::Kernel' => 'K';

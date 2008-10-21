@@ -13,12 +13,10 @@ use 5.010;
 use strict;
 use warnings;
 
-use File::Basename qw{ basename fileparse };
 use Games::Risk::GUI::Constants;
 use Games::Risk::Resources qw{ image maps };
 use List::Util     qw{ shuffle };
 use List::MoreUtils qw{ any };
-use Module::Util   qw{ find_installed };
 use POE;
 use Readonly;
 use Tk;
@@ -306,12 +304,6 @@ sub _onpriv_start {
 
     #-- initializations
     $h->{players} = [];
-
-    #-- load images
-    # FIXME: this should be in a sub/method somewhere
-    my $path = find_installed(__PACKAGE__);
-    my (undef, $dirname, undef) = fileparse($path);
-
 
     #-- title
     my $font = $top->Font(-size=>16);
