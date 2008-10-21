@@ -22,7 +22,7 @@ use Tk::PNG;
 use POE;
 
 use base qw{ Exporter };
-our @EXPORT_OK = qw{ image maps };
+our @EXPORT_OK = qw{ image map_path maps };
 my (%images, %maps);
 
 
@@ -38,6 +38,17 @@ my (%images, %maps);
 #
 sub image {
     return $images{ $_[0] };
+}
+
+
+#
+# my $path = map_path( $name );
+#
+# return the absolute path of the map $name.
+#
+sub map_path {
+    my ($map) = @_;
+    return $maps{$map};
 }
 
 
@@ -161,6 +172,11 @@ that they are not loaded twice, cutting memory eating.
 =head2 my $img = image( $name )
 
 Return the Tk image called C<$name>.
+
+
+=head2 my $path = map_path( $name )
+
+Return the absolute path of the map C<$name>.
 
 
 =head2 my @maps = maps()
