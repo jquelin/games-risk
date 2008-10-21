@@ -15,7 +15,7 @@ use warnings;
 
 use File::Basename qw{ basename fileparse };
 use Games::Risk::GUI::Constants;
-use Games::Risk::Resources qw{ image };
+use Games::Risk::Resources qw{ image maps };
 use List::Util     qw{ shuffle };
 use List::MoreUtils qw{ any };
 use Module::Util   qw{ find_installed };
@@ -328,7 +328,7 @@ sub _onpriv_start {
     $h->{balloon} = $top->Balloon;
 
     #-- map selection
-    my @choices = map { basename $_, '.map' } glob "$dirname/../maps/*.map";
+    my @choices = maps();
     $h->{map} = 'risk';
     my $fmap = $top->Frame->pack(@TOP, @XFILL2, @PAD20);
     $fmap->Label(-text=>'Map', -anchor=>'w')->pack(@TOP, @FILLX);
