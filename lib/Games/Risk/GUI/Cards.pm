@@ -13,11 +13,9 @@ use 5.010;
 use strict;
 use warnings;
 
-use File::Basename  qw{ fileparse };
 use Games::Risk::GUI::Constants;
 use Games::Risk::Resources qw{ image };
 use List::MoreUtils qw{ any firstidx };
-use Module::Util    qw{ find_installed };
 use POE;
 use Readonly;
 use Tk::Pane;
@@ -242,11 +240,6 @@ sub _onpriv_start {
     #$top->withdraw;           # window is hidden first
     $h->{toplevel} = $top;
     $top->title('Cards');
-
-    #- load pictures
-    # FIXME: this should be in a sub/method somewhere
-    my $path = find_installed(__PACKAGE__);
-    my (undef, $dirname, undef) = fileparse($path);
 
     #- top label
     $h->{label} = $top->Label(

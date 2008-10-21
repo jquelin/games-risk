@@ -324,9 +324,6 @@ sub _onpriv_start {
 
     #-- various resources
 
-    # load images
-    # FIXME: this should be in a sub/method somewhere
-
     # ballon
     $h->{balloon} = $top->Balloon;
 

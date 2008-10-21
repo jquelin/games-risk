@@ -13,7 +13,6 @@ use 5.010;
 use strict;
 use warnings;
 
-use File::Basename qw{ fileparse };
 use Games::Risk::GUI::Cards;
 use Games::Risk::GUI::Constants;
 use Games::Risk::GUI::GameOver;
@@ -23,7 +22,6 @@ use Image::Resize;
 use Image::Size;
 use List::Util     qw{ min };
 use MIME::Base64;
-use Module::Util   qw{ find_installed };
 use POE;
 use Readonly;
 use Tk;
@@ -543,12 +541,6 @@ sub _onpriv_start {
     my $top = $h->{toplevel} = $args->{toplevel};
 
     #-- various resources
-
-    # load images
-    # FIXME: this should be in a sub/method somewhere
-    my $path = find_installed(__PACKAGE__);
-    my (undef, $dirname, undef) = fileparse($path);
-
 
     # ballon
     $h->{balloon} = $top->Balloon;
