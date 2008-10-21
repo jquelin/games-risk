@@ -151,7 +151,7 @@ Games::Risk::Resources - utility module to load bundled resources
 
 =head1 SYNOPSIS
 
-    use Games::Risk::Resources;
+    use Games::Risk::Resources qw{ image };
     my $image = image('actexit16');
 
 
@@ -169,19 +169,46 @@ that they are not loaded twice, cutting memory eating.
 
 =head1 SUBROUTINES
 
-=head2 my $img = image( $name )
+C<Games::Risk::Resources> deals with various resources bundled within
+the distribution. It doesn't export anything by default, but the
+following subs are available for your import pleasure.
 
-Return the Tk image called C<$name>.
+
+=head2 Image resources
+
+The images used for the GUI are bundled and loaded as C<Tk::Photo> of
+C<$poe_main_window>.
 
 
-=head2 my $path = map_path( $name )
+=over 4
+
+=item my $img = image( $name )
+
+Return the Tk image called C<$name>. It can be directly used within Tk.
+
+
+=back
+
+
+
+=head2 Map resources
+
+Map resources are playable maps, to allow more playing fun.
+
+
+=over 4
+
+=item my $path = map_path( $name )
 
 Return the absolute path of the map C<$name>.
 
 
-=head2 my @maps = maps()
+=item my @names = maps( )
 
 Return the names of all the maps bundled with C<Games::Risk>.
+
+
+=back
 
 
 
