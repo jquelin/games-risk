@@ -22,7 +22,7 @@ use Tk::PNG;
 use POE;
 
 use base qw{ Exporter };
-our @EXPORT_OK = qw{ image };
+our @EXPORT_OK = qw{ image maps };
 my (%images, %maps);
 
 
@@ -38,6 +38,16 @@ my (%images, %maps);
 #
 sub image {
     return $images{ $_[0] };
+}
+
+
+#
+# my @maps = maps();
+#
+# return the names of all the maps bundled with GR.
+#
+sub maps {
+    return sort keys %maps;
 }
 
 
@@ -151,6 +161,11 @@ that they are not loaded twice, cutting memory eating.
 =head2 my $img = image( $name )
 
 Return the Tk image called C<$name>.
+
+
+=head2 my @maps = maps()
+
+Return the names of all the maps bundled with C<Games::Risk>.
 
 
 
