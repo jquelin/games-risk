@@ -23,7 +23,7 @@ use POE;
 
 use base qw{ Exporter };
 our @EXPORT_OK = qw{ image };
-my %images;
+my (%images, %maps);
 
 
 #--
@@ -42,6 +42,19 @@ sub image {
 
 
 # -- private subs
+
+#
+# _find_maps( $dirname );
+#
+# find all maps bundled with the package.
+#
+sub _find_maps {
+    my ($dirname) = @_;
+
+    my $glob = catfile($dirname, 'maps', '*.map');
+    %maps = map { ( basename($_,qw{.map}) => $_ ) } glob $glob;
+}
+
 
 #
 # my $path = _find_resources_path();
@@ -99,6 +112,7 @@ BEGIN {
     my $dirname = _find_resources_path();
     _load_tk_icons($dirname);
     _load_images($dirname);
+    _find_maps($dirname);
 }
 
 
