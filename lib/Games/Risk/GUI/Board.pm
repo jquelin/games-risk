@@ -13,16 +13,15 @@ use 5.010;
 use strict;
 use warnings;
 
-use File::Basename qw{ fileparse };
 use Games::Risk::GUI::Cards;
 use Games::Risk::GUI::Constants;
 use Games::Risk::GUI::GameOver;
 use Games::Risk::GUI::MoveArmies;
+use Games::Risk::Resources qw{ image };
 use Image::Resize;
 use Image::Size;
 use List::Util     qw{ min };
 use MIME::Base64;
-use Module::Util   qw{ find_installed };
 use POE;
 use Readonly;
 use Tk;
@@ -150,13 +149,13 @@ sub _onpub_attack_info {
     # update attack dices
     foreach my $i ( 1 .. 3 ) {
         my $d = $attack->[$i-1] // 0;
-        $h->{labels}{"attack_$i"}->configure(-image=>$h->{images}{"dice_$d"});
+        $h->{labels}{"attack_$i"}->configure(-image=>image("dice-$d"));
     }
 
     # update defence dices
     foreach my $i ( 1 .. 2 ) {
         my $d = $defence->[$i-1] // 0;
-        $h->{labels}{"defence_$i"}->configure(-image=>$h->{images}{"dice_$d"});
+        $h->{labels}{"defence_$i"}->configure(-image=>image("dice-$d"));
     }
 
     # draw a line on the canvas
@@ -182,9 +181,9 @@ sub _onpub_attack_info {
     $i++;
 
     # update result labels
-    my $ok  = $h->{images}{actcheck16};
-    my $nok = $h->{images}{actcross16};
-    my $nul = $h->{images}{empty16};
+    my $ok  = image('actcheck16');
+    my $nok = image('actcross16');
+    my $nul = image('empty16');
     my $r1 = $attack->[0] <= $defence->[0] ? $nok : $ok;
     my $r2 = scalar(@$attack) >= 2 && scalar(@$defence) == 2
         ? $attack->[1] <= $defence->[1] ? $nok : $ok
@@ -459,8 +458,8 @@ sub _onpub_player_active {
 
     my $plabels = $h->{labels}{players};
     my $old = $h->{curplayer};
-    $plabels->{ $old->name }->configure(-image=>$h->{images}{inactive}) if defined $old;
-    $plabels->{ $new->name }->configure(-image=>$h->{images}{active});
+    $plabels->{ $old->name }->configure(-image=>image('empty16')) if defined $old;
+    $plabels->{ $new->name }->configure(-image=>image('player-active'));
     $h->{curplayer} = $new;
 }
 
@@ -477,7 +476,7 @@ sub _onpub_player_add {
     my $f = $h->{frames}{players};
     my $label = $f->Label(
         -bg    => $player->color,
-        -image => $h->{images}{inactive},
+        -image => image('empty16'),
     )->pack(@LEFT);
     $h->{labels}{players}{ $player->name } = $label;
 
@@ -511,7 +510,7 @@ sub _onpub_player_lost {
 
     # update gui
     my $name = $player->name;
-    $h->{labels}{players}{$name} ->configure( -image => $h->{images}{lost} );
+    $h->{labels}{players}{$name} ->configure( -image => image('lost') );
     $h->{status} = "Player $name has lost";
 }
 
@@ -542,28 +541,6 @@ sub _onpriv_start {
     my $top = $h->{toplevel} = $args->{toplevel};
 
     #-- various resources
-
-    # load images
-    # FIXME: this should be in a sub/method somewhere
-    my $path = find_installed(__PACKAGE__);
-    my (undef, $dirname, undef) = fileparse($path);
-    $h->{images}{empty16}   = $top->Photo(-file=>"$dirname/icons/empty16.png");
-    $h->{images}{lost}      = $top->Photo(-file=>"$dirname/icons/player-lost.png");
-    $h->{images}{active}    = $top->Photo(-file=>"$dirname/icons/player-active.png");
-    $h->{images}{inactive}  = $h->{images}{empty16};
-    $h->{images}{"dice_$_"} = $top->Photo(-file=>"$dirname/icons/dice-$_.png") for 0..6;
-
-    # load icons
-    # code & artwork taken from Tk::ToolBar
-    $path = "$dirname/icons/tk_icons";
-    open my $fh, '<', $path or die "can't open '$path': $!";
-    while (<$fh>) {
-        chomp;
-        last if /^#/; # skip rest of file
-        my ($n, $d) = (split /:/)[0, 4];
-        $h->{images}{$n} = $top->Photo(-data => $d);
-    }
-	close $fh;
 
     # ballon
     $h->{balloon} = $top->Balloon;
@@ -607,29 +584,29 @@ sub _onpriv_start {
     my $labp = $fgs->Label(-text=>'place armies', @ENOFF)->pack(@LEFT, @XFILL2);
     my $but_predo = $fgs->Button(
         -command => $s->postback('_but_place_armies_redo'),
-        -image   => $h->{images}{actreload16},
+        -image   => image('actreload16'),
         @ENOFF,
     )->pack(@LEFT);
     my $but_pdone = $fgs->Button(
         -command => $s->postback('_but_place_armies_done'),
-        -image   => $h->{images}{navforward16},
+        -image   => image('navforward16'),
         @ENOFF,
     )->pack(@LEFT);
     my $laba = $fgs->Label(-text=>'attack', @ENOFF)->pack(@LEFT, @XFILL2);
     my $but_aredo = $fgs->Button(
         -command => $s->postback('_but_attack_redo'),
-        -image   => $h->{images}{actredo16},
+        -image   => image('actredo16'),
         @ENOFF,
     )->pack(@LEFT);
     my $but_adone = $fgs->Button(
         -command => $s->postback('_but_attack_done'),
-        -image   => $h->{images}{navforward16},
+        -image   => image('navforward16'),
         @ENOFF,
     )->pack(@LEFT);
     my $labm = $fgs->Label(-text=>'move armies', @ENOFF)->pack(@LEFT, @XFILL2);
     my $but_mdone = $fgs->Button(
         -command => $s->postback('_but_move_armies_done'),
-        -image   => $h->{images}{playstop16},
+        -image   => image('playstop16'),
         @ENOFF,
     )->pack(@LEFT);
     $h->{labels}{place_armies} = $labp;
@@ -691,21 +668,21 @@ sub _onpriv_start {
     my $fdice = $fright->Frame->pack(@TOP,@FILLX, -pady=>10);
     $fdice->Label(-text=>'Dice arena')->pack(@TOP,@FILLX);
     my $fd1 = $fdice->Frame->pack(@TOP,@FILL2);
-    my $a1 = $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
-    my $a2 = $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
-    my $a3 = $fd1->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
+    my $a1 = $fd1->Label(-image=>image('dice-0'))->pack(@LEFT);
+    my $a2 = $fd1->Label(-image=>image('dice-0'))->pack(@LEFT);
+    my $a3 = $fd1->Label(-image=>image('dice-0'))->pack(@LEFT);
     my $fd3 = $fdice->Frame->pack(@TOP,@FILL2);
     my $r1 = $fd3->Label(
-        -image => $h->{images}{empty16},
+        -image => image('empty16'),
         -width => 38,
     )->pack(@LEFT);
     my $r2 = $fd3->Label(
-        -image => $h->{images}{empty16},
+        -image => image('empty16'),
         -width => 38,
     )->pack(@LEFT);
     my $fd2 = $fdice->Frame->pack(@TOP,@FILL2);
-    my $d1 = $fd2->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
-    my $d2 = $fd2->Label(-image=>$h->{images}{dice_0})->pack(@LEFT);
+    my $d1 = $fd2->Label(-image=>image('dice-0'))->pack(@LEFT);
+    my $d2 = $fd2->Label(-image=>image('dice-0'))->pack(@LEFT);
     $h->{labels}{attack_1}  = $a1;
     $h->{labels}{attack_2}  = $a2;
     $h->{labels}{attack_3}  = $a3;

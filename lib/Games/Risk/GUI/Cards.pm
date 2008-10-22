@@ -13,10 +13,9 @@ use 5.010;
 use strict;
 use warnings;
 
-use File::Basename  qw{ fileparse };
 use Games::Risk::GUI::Constants;
+use Games::Risk::Resources qw{ image };
 use List::MoreUtils qw{ any firstidx };
-use Module::Util    qw{ find_installed };
 use POE;
 use Readonly;
 use Tk::Pane;
@@ -185,12 +184,12 @@ sub _onpriv_redraw_cards {
         $c->CanvasBind('<1>', [$s->postback('_card_clicked'), $card]);
 
         # the info themselves
-        $c->createImage(1, 1, -anchor=>'nw', -image=>$h->{images}{bg}, -tags=>['bg']);
+        $c->createImage(1, 1, -anchor=>'nw', -image=>image('card-bg'), -tags=>['bg']);
         if ( $card->type eq 'joker' ) {
             # only the joker!
             $c->createImage(
                 $WIDTH/2, $HEIGHT/2,
-                -image  => $h->{images}{$card->type},
+                -image  => image('card-joker'),
             );
         } else {
             # country name
@@ -204,7 +203,7 @@ sub _onpriv_redraw_cards {
             $c->createImage(
                 $WIDTH/2, $HEIGHT-10,
                 -anchor => 's',
-                -image  => $h->{images}{$card->type},
+                -image  => image('card-' . $card->type),
             );
         }
 
@@ -241,13 +240,6 @@ sub _onpriv_start {
     #$top->withdraw;           # window is hidden first
     $h->{toplevel} = $top;
     $top->title('Cards');
-
-    #- load pictures
-    # FIXME: this should be in a sub/method somewhere
-    my $path = find_installed(__PACKAGE__);
-    my (undef, $dirname, undef) = fileparse($path);
-    $h->{images}{$_} = $top->Photo(-file=>"$dirname/icons/card-$_.png")
-        foreach qw{ bg artillery cavalry infantry joker };
 
     #- top label
     $h->{label} = $top->Label(

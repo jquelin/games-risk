@@ -13,11 +13,10 @@ use 5.010;
 use strict;
 use warnings;
 
-use File::Basename  qw{ fileparse };
 use Games::Risk::Map;
 use Games::Risk::Player;
+use Games::Risk::Resources qw{ map_path };
 use List::Util      qw{ min shuffle };
-use Module::Util    qw{ find_installed };
 use POE;
 use Readonly;
 use aliased 'POE::Kernel' => 'K';
@@ -345,9 +344,7 @@ sub _onpub_new_game {
     # load map
     # FIXME: hardcoded
     my $m = delete $args->{map};
-    my $path = find_installed(__PACKAGE__);
-    my (undef, $dirname, undef) = fileparse($path);
-    $path = "$dirname/maps/$m.map";
+    my $path = map_path($m);
     my $map = Games::Risk::Map->new;
     $map->load_file($path);
     $h->map($map);

@@ -13,11 +13,10 @@ use 5.010;
 use strict;
 use warnings;
 
-use File::Basename qw{ basename fileparse };
 use Games::Risk::GUI::Constants;
+use Games::Risk::Resources qw{ image maps };
 use List::Util     qw{ shuffle };
 use List::MoreUtils qw{ any };
-use Module::Util   qw{ find_installed };
 use POE;
 use Readonly;
 use Tk;
@@ -258,10 +257,10 @@ sub _onpriv_new_player {
         -fg               => 'white',
         -activebackground => $color,
         -activeforeground => 'white',
-        -image            => $h->{images}{paint},
+        -image            => image('paintbrush'),
         -command          => $s->postback('_but_color', $num),
     )->pack(@LEFT);
-    my $ld = $fpl->Label(-image=>$h->{images}{fileclose16})->pack(@LEFT);
+    my $ld = $fpl->Label(-image=>image('fileclose16'))->pack(@LEFT);
     $ld->bind('<1>', $s->postback('_but_delete', $num));
     $players->[$num]{be_type}   = $be;
     $players->[$num]{but_color} = $bc;
@@ -306,24 +305,6 @@ sub _onpriv_start {
     #-- initializations
     $h->{players} = [];
 
-    #-- load images
-    # FIXME: this should be in a sub/method somewhere
-    my $path = find_installed(__PACKAGE__);
-    my (undef, $dirname, undef) = fileparse($path);
-    $h->{images}{paint} = $top->Photo(-file=>"$dirname/icons/paintbrush.png");
-
-    # load icons
-    # code & artwork taken from Tk::ToolBar
-    $path = "$dirname/icons/tk_icons";
-    open my $fh, '<', $path or die "can't open '$path': $!";
-    while (<$fh>) {
-        chomp;
-        last if /^#/; # skip rest of file
-        my ($n, $d) = (split /:/)[0, 4];
-        $h->{images}{$n} = $top->Photo(-data => $d);
-    }
-	close $fh;
-
     #-- title
     my $font = $top->Font(-size=>16);
     my $title = $top->Label(
@@ -335,14 +316,11 @@ sub _onpriv_start {
 
     #-- various resources
 
-    # load images
-    # FIXME: this should be in a sub/method somewhere
-
     # ballon
     $h->{balloon} = $top->Balloon;
 
     #-- map selection
-    my @choices = map { basename $_, '.map' } glob "$dirname/../maps/*.map";
+    my @choices = maps();
     $h->{map} = 'risk';
     my $fmap = $top->Frame->pack(@TOP, @XFILL2, @PAD20);
     $fmap->Label(-text=>'Map', -anchor=>'w')->pack(@TOP, @FILLX);
