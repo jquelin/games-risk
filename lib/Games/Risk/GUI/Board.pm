@@ -510,7 +510,7 @@ sub _onpub_player_lost {
 
     # update gui
     my $name = $player->name;
-    $h->{labels}{players}{$name} ->configure( -image => image('lost') );
+    $h->{labels}{players}{$name} ->configure( -image => image('player-lost') );
     $h->{status} = "Player $name has lost";
 }
 
