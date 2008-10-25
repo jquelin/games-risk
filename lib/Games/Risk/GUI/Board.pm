@@ -72,6 +72,7 @@ sub spawn {
             _canvas_place_armies           => \&_ongui_canvas_place_armies,
             _canvas_place_armies_initial   => \&_ongui_canvas_place_armies_initial,
             _canvas_motion                 => \&_ongui_canvas_motion,
+            _show_cards                    => \&_show_cards,
             _window_close                  => \&_ongui_window_close,
             # public events
             attack                         => \&_onpub_attack,
@@ -707,6 +708,8 @@ sub _onpriv_start {
     Games::Risk::GUI::Cards->spawn({parent=>$top});
     Games::Risk::GUI::MoveArmies->spawn({parent=>$top});
 
+    $top->bind('<F5>', $s->postback('_show_cards'));
+
     #-- say that we're done
     K->yield('load_map', $args->{map});
 }
@@ -1177,6 +1180,17 @@ sub _ongui_canvas_place_armies_initial {
     # ask us to redraw the country.
     K->post('risk', 'initial_armies_placed', $country, 1);
 }
+
+
+#
+# _show_cards()
+#
+# request card window to be shown/hidden.
+#
+sub _show_cards {
+    K->post('cards', 'visibility_toggle');
+}
+
 
 #
 # event: _window_close()
