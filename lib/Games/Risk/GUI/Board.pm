@@ -557,7 +557,7 @@ sub _onpriv_start {
         -label       => '~Quit',
         -accelerator => 'Ctrl+Q',
         -command     => $s->postback('_quit'),
-        -image       => $h->{images}{actexit16},
+        -image       => image('actexit16'),
         -compound    => 'left',
     );
 
