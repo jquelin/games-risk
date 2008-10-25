@@ -257,7 +257,7 @@ sub _onpriv_start {
     $top->withdraw;           # window is hidden first
     $h->{toplevel} = $top;
     $top->title('Cards');
-    $top->iconimage( image('card-bg16') );
+    $top->iconimage( image('icon-cards') );
 
     #- top label
     $h->{label} = $top->Label(
