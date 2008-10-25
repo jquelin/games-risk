@@ -555,6 +555,16 @@ sub _onpriv_start {
 
     my $game = $menubar->cascade(-label => '~Game');
     $game->command(
+        -label       => '~Close',
+        -accelerator => 'Ctrl+W',
+        -command     => $s->postback('_window_close'),
+        -image       => image('fileclose16'),
+        -compound    => 'left',
+    );
+    $top->bind('<Control-w>', $s->postback('_window_close'));
+    $top->bind('<Control-W>', $s->postback('_window_close'));
+
+    $game->command(
         -label       => '~Quit',
         -accelerator => 'Ctrl+Q',
         -command     => $s->postback('_quit'),
