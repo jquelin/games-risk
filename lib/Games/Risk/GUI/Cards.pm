@@ -56,6 +56,7 @@ sub spawn {
             card_del             => \&_onpub_card_del,
             place_armies         => \&_onpub_change_button_state,
             shutdown             => \&_onpub_shutdown,
+            visibility_toggle    => \&visibility_toggle,
         },
     );
     return $session->ID;
@@ -146,6 +147,20 @@ sub _onpub_shutdown {
     my $h = $_[HEAP];
     K->alias_remove('cards');
 }
+
+
+#
+# visibility_toggle();
+#
+# Request window to be hidden / shown depending on its previous state.
+#
+sub visibility_toggle {
+    my ($h) = $_[HEAP];
+
+    my $method = $h->{top}->state eq 'normal' ? 'withdraw' : 'deiconify';
+    $h->{top}->$method;
+}
+
 
 # -- private events
 
@@ -419,6 +434,25 @@ parameter is mandatory.
 
 
 =back
+
+
+
+=head1 EVENTS
+
+The following events can be sent to the session.
+
+
+=over 4
+
+=item * visibility_toggle()
+
+Request window to be hidden / shown depending on its previous state.
+
+
+=back
+
+
+
 
 
 =begin quiet_pod_coverage
