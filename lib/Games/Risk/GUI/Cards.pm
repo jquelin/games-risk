@@ -157,8 +157,9 @@ sub _onpub_shutdown {
 sub visibility_toggle {
     my ($h) = $_[HEAP];
 
-    my $method = $h->{top}->state eq 'normal' ? 'withdraw' : 'deiconify';
-    $h->{top}->$method;
+    my $top = $h->{toplevel};
+    my $method = $top->state eq 'normal' ? 'withdraw' : 'deiconify';
+    $top->$method;
 }
 
 
