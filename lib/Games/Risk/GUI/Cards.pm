@@ -232,6 +232,7 @@ sub _onpriv_redraw_cards {
 
     # move window & enforce geometry
     #$top->update;               # force redraw
+    $h->{toplevel}->deiconify;
 
     #$top->resizable(0,0);
     #my ($maxw,$maxh) = $top->geometry =~ /^(\d+)x(\d+)/;
