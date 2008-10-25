@@ -566,8 +566,8 @@ sub _onpriv_start {
         -label       => '~Cards',
         -accelerator => 'F5',
         -command     => $s->postback('_show_cards'),
-#        -image       => $h->{images}{actexit16},
-#        -compound    => 'left',
+        -image       => image('card-bg16'),
+        -compound    => 'left',
     );
     $top->bind('<F5>', $s->postback('_show_cards'));
 
