@@ -565,10 +565,12 @@ sub _onpriv_start {
     $view->command(
         -label       => '~Cards',
         -accelerator => 'F5',
-        -command     => $s->postback('_toggle_cards'),
+        -command     => $s->postback('_show_cards'),
 #        -image       => $h->{images}{actexit16},
 #        -compound    => 'left',
     );
+    $top->bind('<F5>', $s->postback('_show_cards'));
+
 
 
     #$h->{menu}{view} = $menubar->entrycget(1, '-menu');
@@ -707,8 +709,6 @@ sub _onpriv_start {
     #-- other window
     Games::Risk::GUI::Cards->spawn({parent=>$top});
     Games::Risk::GUI::MoveArmies->spawn({parent=>$top});
-
-    $top->bind('<F5>', $s->postback('_show_cards'));
 
     #-- say that we're done
     K->yield('load_map', $args->{map});
