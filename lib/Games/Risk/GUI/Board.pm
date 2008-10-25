@@ -72,6 +72,7 @@ sub spawn {
             _canvas_place_armies           => \&_ongui_canvas_place_armies,
             _canvas_place_armies_initial   => \&_ongui_canvas_place_armies_initial,
             _canvas_motion                 => \&_ongui_canvas_motion,
+            _quit                          => \&_quit,
             _show_cards                    => \&_show_cards,
             _window_close                  => \&_ongui_window_close,
             # public events
@@ -560,6 +561,8 @@ sub _onpriv_start {
         -image       => image('actexit16'),
         -compound    => 'left',
     );
+    $top->bind('<Control-q>', $s->postback('_quit'));
+    $top->bind('<Control-Q>', $s->postback('_quit'));
 
     my $view = $menubar->cascade(-label => '~View');
     $view->command(
@@ -1179,6 +1182,17 @@ sub _ongui_canvas_place_armies_initial {
     # tell controller that we've placed an army. controller will then
     # ask us to redraw the country.
     K->post('risk', 'initial_armies_placed', $country, 1);
+}
+
+
+#
+# _quit()
+#
+# request whole game to be shut down.
+#
+sub _quit {
+    # FIXME: cleaner way of exiting?
+    exit;
 }
 
 
