@@ -290,7 +290,7 @@ sub _onpriv_start {
 
 
     #-- trap some events
-    $top->protocol( WM_DELETE_WINDOW => sub{} );
+    $top->protocol( WM_DELETE_WINDOW => $s->postback('visibility_toggle'));
 }
 
 
