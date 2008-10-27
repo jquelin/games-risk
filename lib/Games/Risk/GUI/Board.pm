@@ -15,6 +15,7 @@ use warnings;
 
 use Games::Risk::GUI::Cards;
 use Games::Risk::GUI::Constants;
+use Games::Risk::GUI::Continents;
 use Games::Risk::GUI::GameOver;
 use Games::Risk::GUI::MoveArmies;
 use Games::Risk::Resources qw{ image };
@@ -74,6 +75,7 @@ sub spawn {
             _canvas_motion                 => \&_ongui_canvas_motion,
             _quit                          => \&_quit,
             _show_cards                    => \&_show_cards,
+            _show_continents               => \&_show_continents,
             _window_close                  => \&_ongui_window_close,
             # public events
             attack                         => \&_onpub_attack,
@@ -583,6 +585,14 @@ sub _onpriv_start {
         -compound    => 'left',
     );
     $top->bind('<F5>', $s->postback('_show_cards'));
+    $view->command(
+        -label       => 'C~ontinents',
+        -accelerator => 'F6',
+        -command     => $s->postback('_show_continents'),
+        #-image       => image('icon-cards'),
+        #-compound    => 'left',
+    );
+    $top->bind('<F6>', $s->postback('_show_continents'));
 
 
 
@@ -721,6 +731,7 @@ sub _onpriv_start {
 
     #-- other window
     Games::Risk::GUI::Cards->spawn({parent=>$top});
+    Games::Risk::GUI::Continents->spawn({parent=>$top});
     Games::Risk::GUI::MoveArmies->spawn({parent=>$top});
 
     #-- say that we're done
@@ -1213,6 +1224,16 @@ sub _quit {
 #
 sub _show_cards {
     K->post('cards', 'visibility_toggle');
+}
+
+
+#
+# _show_continents()
+#
+# request continents window to be shown/hidden.
+#
+sub _show_continents {
+    K->post('continents', 'visibility_toggle');
 }
 
 
