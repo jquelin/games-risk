@@ -426,7 +426,7 @@ armies during reinforcement.
 
 =head2 my $id = Games::Risk::GUI::Cards->spawn( %opts );
 
-Create a window requesting for amies move, and return the associated POE
+Create a window listing player cards, and return the associated POE
 session ID. One can pass the following options:
 
 =over 4
@@ -438,24 +438,6 @@ parameter is mandatory.
 
 
 =back
-
-
-
-=head1 EVENTS
-
-The following events can be sent to the session.
-
-
-=over 4
-
-=item * visibility_toggle()
-
-Request window to be hidden / shown depending on its previous state.
-
-
-=back
-
-
 
 
 
@@ -474,9 +456,19 @@ The newly created POE session accepts the following events:
 
 =over 4
 
-=item card( $card )
+=item * card_add( $card )
 
 Add C<$card> to the list of cards owned by the player to be shown.
+
+
+=item * card_del( $card )
+
+Remove C<$card> from the list of cards owned by the player to be shown.
+
+
+=item * visibility_toggle()
+
+Request window to be hidden / shown depending on its previous state.
 
 
 =back
