@@ -11,7 +11,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 18;
+use Test::More tests => 19;
 
 use Tk;
 use POE;
@@ -27,6 +27,7 @@ BEGIN { use_ok( 'Games::Risk::GUI'             ); }
 BEGIN { use_ok( 'Games::Risk::GUI::Board'      ); }
 BEGIN { use_ok( 'Games::Risk::GUI::Cards'      ); }
 BEGIN { use_ok( 'Games::Risk::GUI::Constants'  ); }
+BEGIN { use_ok( 'Games::Risk::GUI::Continents' ); }
 BEGIN { use_ok( 'Games::Risk::GUI::GameOver'   ); }
 BEGIN { use_ok( 'Games::Risk::GUI::MoveArmies' ); }
 BEGIN { use_ok( 'Games::Risk::GUI::Startup'    ); }

@@ -10,6 +10,7 @@ lib/Games/Risk/GUI.pm
 lib/Games/Risk/GUI/Board.pm
 lib/Games/Risk/GUI/Cards.pm
 lib/Games/Risk/GUI/Constants.pm
+lib/Games/Risk/GUI/Continents.pm
 lib/Games/Risk/GUI/GameOver.pm
 lib/Games/Risk/GUI/MoveArmies.pm
 lib/Games/Risk/GUI/Startup.pm
