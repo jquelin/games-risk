@@ -18,6 +18,11 @@ High-level changelog
 Low-level changelog
 ===================
 
+2.1.0 Mon Oct 27 18:45:25 CET 2008
+ - added a window to list continents & their bonus
+ - added a menu to main window
+ - possibility to hide / show secondary windows
+
 2.0.3 Wed Oct 22 18:36:05 CEST 2008
  - fix resource name of player-lost image
 
