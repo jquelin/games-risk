@@ -38,7 +38,7 @@ sub spawn {
             _start               => \&_start,
             _stop                => sub { warn "gui-continents shutdown\n" },
             # public events
-            shutdown             => \&_onpub_shutdown,
+            shutdown             => \&shutdown,
             visibility_toggle    => \&visibility_toggle,
         },
     );
@@ -56,7 +56,7 @@ sub spawn {
 #
 # kill current session. the toplevel window has already been destroyed.
 #
-sub _onpub_shutdown {
+sub shutdown {
     my $h = $_[HEAP];
     K->alias_remove('continents');
 }
@@ -155,6 +155,11 @@ The newly created POE session accepts the following events:
 
 
 =over 4
+
+=item * shutdown()
+
+Kill current session. the toplevel window has already been destroyed.
+
 
 =item * visibility_toggle()
 
