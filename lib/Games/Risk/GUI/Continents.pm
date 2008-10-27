@@ -13,6 +13,7 @@ use 5.010;
 use strict;
 use warnings;
 
+use Games::Risk;
 use Games::Risk::GUI::Constants;
 use Games::Risk::Resources qw{ image };
 use POE;
@@ -96,6 +97,23 @@ sub _start {
     $h->{toplevel} = $top;
     $top->title('Continents');
     $top->iconimage( image('icon-continents') );
+
+    #- populate continents list
+    my $map = Games::Risk->new->map;
+    my @continents =
+        sort {
+             $b->bonus <=> $a->bonus ||
+             $a->name  cmp $b->name
+        }
+        $map->continents;
+    my $row = 0;
+    my @opts = qw{ -anchor w };
+    foreach my $c ( @continents ) {
+        $top->Label(-text=>$c->name
+        )->grid(-row=>$row,-column=>0,-sticky=>'w');
+        $top->Label(-text=>$c->bonus)->grid(-row=>$row,-column=>1);
+        $row++;
+    }
 
     #- force window geometry
     $top->update;    # force redraw
