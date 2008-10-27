@@ -50,7 +50,7 @@ sub spawn {
 sub _onpub_default {
     my ($sender, $event, $args) = @_[SENDER, ARG0, ARG1];
     return if $sender eq $poe_kernel;
-    K->post($_, $event, @$args) foreach qw{ board cards gameover move-armies };
+    K->post($_, $event, @$args) foreach qw{ board cards continents gameover move-armies };
 }
 
 sub _onpub_new_game {
