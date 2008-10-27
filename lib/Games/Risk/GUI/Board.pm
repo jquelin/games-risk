@@ -589,8 +589,8 @@ sub _onpriv_start {
         -label       => 'C~ontinents',
         -accelerator => 'F6',
         -command     => $s->postback('_show_continents'),
-        #-image       => image('icon-cards'),
-        #-compound    => 'left',
+        -image       => image('icon-continents'),
+        -compound    => 'left',
     );
     $top->bind('<F6>', $s->postback('_show_continents'));
 

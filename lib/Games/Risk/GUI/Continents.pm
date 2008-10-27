@@ -14,6 +14,7 @@ use strict;
 use warnings;
 
 use Games::Risk::GUI::Constants;
+use Games::Risk::Resources qw{ image };
 use POE;
 
 use aliased 'POE::Kernel' => 'K';
@@ -94,6 +95,7 @@ sub _start {
     $top->withdraw;           # window is hidden first
     $h->{toplevel} = $top;
     $top->title('Continents');
+    $top->iconimage( image('icon-continents') );
 
     #- force window geometry
     $top->update;    # force redraw
