@@ -11,9 +11,13 @@
 use strict;
 use warnings;
 
-use Test::More tests => 19;
-
+use Test::More;
 use Tk;
+BEGIN {
+    eval { my $mw = Tk::MainWindow->new; };
+    plan $@ ? ( skip_all => 'working Tk required' ) : ( tests => 19 );
+}
+
 use POE;
 
 BEGIN { use_ok( 'Games::Risk' ); }
