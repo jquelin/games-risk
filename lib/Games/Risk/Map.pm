@@ -16,7 +16,7 @@ use warnings;
 use File::Basename qw{ fileparse };
 use List::Util      qw{ shuffle };
 use List::MoreUtils qw{ uniq };
-use aliased 'Games::Risk::Map::Card';
+use aliased 'Games::Risk::Card';
 use aliased 'Games::Risk::Continent';
 use aliased 'Games::Risk::Country';
 

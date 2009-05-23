@@ -69,7 +69,7 @@ sub new {
 #
 # my @cards = $player->cards;
 #
-# Return the list of cards (Games::Risk::Map::Card objects) currently
+# Return the list of cards (Games::Risk::Card objects) currently
 # owned by $player.
 #
 sub cards {
@@ -251,7 +251,7 @@ The following methods are available for C<Games::Risk::Player> objects:
 
 =item my @cards = $player->cards()
 
-Return the list of cards (C<Games::Risk::Map::Card> objects) currently
+Return the list of cards (C<Games::Risk::Card> objects) currently
 owned by C<$player>.
 
 

@@ -7,7 +7,7 @@
 #
 #
 
-package Games::Risk::Map::Card;
+package Games::Risk::Card;
 
 use 5.010;
 use strict;
@@ -44,13 +44,13 @@ __END__
 
 =head1 NAME
 
-Games::Risk::Map::Card - map card
+Games::Risk::Card - map card
 
 
 
 =head1 SYNOPSIS
 
-    my $card = Games::Risk::Map::Card->new(\%params);
+    my $card = Games::Risk::Card->new(\%params);
 
 
 
@@ -67,7 +67,7 @@ This module implements a map card, with all its characteristics.
 
 =over 4
 
-=item * my $card = Games::Risk::Map::Card->new( \%params )
+=item * my $card = Games::Risk::Card->new( \%params )
 
 Create a new card. Mandatory param is C<type>, and there's an optional
 param C<country>.
@@ -79,7 +79,7 @@ param C<country>.
 =head2 Accessors
 
 The following accessors (acting as mutators, ie getters and setters) are
-available for C<Games::Risk::Map::Card> objects:
+available for C<Games::Risk::Card> objects:
 
 
 =over 4

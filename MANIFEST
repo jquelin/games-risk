@@ -5,6 +5,7 @@ lib/Games/Risk/AI.pm
 lib/Games/Risk/AI/Blitzkrieg.pm
 lib/Games/Risk/AI/Dumb.pm
 lib/Games/Risk/AI/Hegemon.pm
+lib/Games/Risk/Card.pm
 lib/Games/Risk/Continent.pm
 lib/Games/Risk/Controller.pm
 lib/Games/Risk/Country.pm
@@ -17,7 +18,6 @@ lib/Games/Risk/GUI/GameOver.pm
 lib/Games/Risk/GUI/MoveArmies.pm
 lib/Games/Risk/GUI/Startup.pm
 lib/Games/Risk/Map.pm
-lib/Games/Risk/Map/Card.pm
 lib/Games/Risk/Player.pm
 lib/Games/Risk/Resources.pm
 lib/Games/Risk/resources/images/card-artillery.png
