@@ -159,7 +159,7 @@ number of armies currently in the country.
 
 =item * continent()
 
-a C<Games::Risk::Map::Continent> object in which the country is located.
+a C<Games::Risk::Continent> object in which the country is located.
 
 
 =item * greyval()

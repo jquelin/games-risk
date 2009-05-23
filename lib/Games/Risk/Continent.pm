@@ -7,7 +7,7 @@
 #
 #
 
-package Games::Risk::Map::Continent;
+package Games::Risk::Continent;
 
 use 5.010;
 use strict;
@@ -80,13 +80,13 @@ __END__
 
 =head1 NAME
 
-Games::Risk::Map::Continent - map continent
+Games::Risk::Continent - continent object
 
 
 
 =head1 SYNOPSIS
 
-    my $id = Games::Risk::Map::Continent->new(\%params);
+    my $id = Games::Risk::Continent->new(\%params);
 
 
 
@@ -103,7 +103,7 @@ This module implements a map continent, with all its characteristics.
 
 =over 4
 
-=item * my $player = Games::Risk::Map::Continent->new( \%params )
+=item * my $player = Games::Risk::Continent->new( \%params )
 
 Create a new continent. Mandatory params are C<id>, C<name> and C<bonus>
 (see below in C<Accessors> for a quick definition).
@@ -115,7 +115,7 @@ Create a new continent. Mandatory params are C<id>, C<name> and C<bonus>
 =head2 Accessors
 
 The following accessors (acting as mutators, ie getters and setters) are
-available for C<Games::Risk::Map::Continent> objects:
+available for C<Games::Risk::Continent> objects:
 
 
 =over 4

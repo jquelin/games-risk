@@ -36,7 +36,7 @@ BEGIN { use_ok( 'Games::Risk::GUI::GameOver'   ); }
 BEGIN { use_ok( 'Games::Risk::GUI::MoveArmies' ); }
 BEGIN { use_ok( 'Games::Risk::GUI::Startup'    ); }
 BEGIN { use_ok( 'Games::Risk::Map'             ); }
-BEGIN { use_ok( 'Games::Risk::Map::Continent'  ); }
+BEGIN { use_ok( 'Games::Risk::Continent'  ); }
 BEGIN { use_ok( 'Games::Risk::Map::Country'    ); }
 BEGIN { use_ok( 'Games::Risk::Player'          ); }
 BEGIN { use_ok( 'Games::Risk::Resources'       ); }

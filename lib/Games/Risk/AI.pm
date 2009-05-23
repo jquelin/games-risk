@@ -388,7 +388,7 @@ C<$nb> armies from $dst to C<$src>.
 
 Return a list of C<[ $country, $nb ]> tuples (a C<Games::Risk::Map::Country>
 and an integer) defining where to place C<$nb> armies. If C<$continent> (a
-C<Games::Risk::Map::Continent>) is defined, all the returned C<$countries>
+C<Games::Risk::Continent>) is defined, all the returned C<$countries>
 should be within this continent.
 
 
