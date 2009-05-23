@@ -27,7 +27,7 @@ __PACKAGE__->mk_accessors( qw{ id bonus name _countries } );
 #
 # $continent->add_country( $country );
 #
-# Store C<$country> (a C<Games::Risk::Map::Country> object) as a country
+# Store C<$country> (a C<Games::Risk::Country> object) as a country
 # located within the continent.
 #
 sub add_country {
@@ -144,7 +144,7 @@ continent name.
 
 =item * $continent->add_country( $country )
 
-Store C<$country> (a C<Games::Risk::Map::Country> object) as a country
+Store C<$country> (a C<Games::Risk::Country> object) as a country
 located within the C<$continent>.
 
 

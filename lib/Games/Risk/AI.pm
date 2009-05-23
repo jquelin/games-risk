@@ -380,13 +380,13 @@ Check if ai can trade some C<@cards> for armies.
 =item * my @moves = $ai->move_armies()
 
 Return a list of C<[ $src, $dst, $nb ]> tuples (two
-C<Games::Risk::Map::Country> and an integer), each defining a move of
+C<Games::Risk::Country> and an integer), each defining a move of
 C<$nb> armies from $dst to C<$src>.
 
 
 =item * my @where = $ai->place_armies($nb, [$continent])
 
-Return a list of C<[ $country, $nb ]> tuples (a C<Games::Risk::Map::Country>
+Return a list of C<[ $country, $nb ]> tuples (a C<Games::Risk::Country>
 and an integer) defining where to place C<$nb> armies. If C<$continent> (a
 C<Games::Risk::Continent>) is defined, all the returned C<$countries>
 should be within this continent.

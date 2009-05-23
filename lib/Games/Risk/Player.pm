@@ -107,7 +107,7 @@ sub card_del {
 #
 # my @countries = $player->countries;
 #
-# Return the list of countries (Games::Risk::Map::Country objects)
+# Return the list of countries (Games::Risk::Country objects)
 # currently owned by $player.
 #
 sub countries {
@@ -267,7 +267,7 @@ Remove C<$card> from the set of cards owned by C<player>.
 
 =item * my @countries = $player->countries()
 
-Return the list of countries (C<Games::Risk::Map::Country> objects)
+Return the list of countries (C<Games::Risk::Country> objects)
 currently owned by C<$player>.
 
 
