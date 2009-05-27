@@ -485,7 +485,7 @@ sub _onpub_player_add {
     $h->{labels}{players}{ $player->name } = $label;
 
     # associate tooltip
-    my $tooltip = $player->name // '';
+    my $tooltip = $player->name // ''; # FIXME: padre syntax hilight gone wrong /
     given ($player->type) {
         when ('human') {
             $tooltip .= ' (human)';
@@ -1085,7 +1085,7 @@ sub _ongui_canvas_move_armies_from {
     return unless defined $country;
     my $id = $country->id;
     return if $country->owner->name ne $curplayer->name; # country owner
-    return if $country->armies - ($h->{fake_armies_out}{$id}//0) == 1;
+    return if $country->armies - ($h->{fake_armies_out}{$id}//0) == 1; # FIXME: padre syntax hilight gone wrong /
 
     # record move source
     $h->{src} = $country;
@@ -1127,7 +1127,7 @@ sub _ongui_canvas_move_armies_target {
 
     # request user how many armies to move
     my $src = $h->{src};
-    my $max = $src->armies - 1 - ($h->{fake_armies_out}{ $src->id }//0);
+    my $max = $src->armies - 1 - ($h->{fake_armies_out}{ $src->id }//0); # FIXME: padre syntax hilight gone wrong /
     K->post('move-armies', 'ask_move_armies', $h->{src}, $country, $max);
 }
 
@@ -1150,7 +1150,7 @@ sub _ongui_canvas_place_armies {
 
     # checks...
     return if $country->owner->name ne $curplayer->name; # country owner
-    return if $diff + ($h->{fake_armies_in}{$id}//0) < 0;   # negative count (free army move! :-) )
+    return if $diff + ($h->{fake_armies_in}{$id}//0) < 0;   # negative count (free army move! :-) ) # FIXME: padre syntax hilight gone wrong /
 
     # update armies count
     my $name = $country->continent->name;
