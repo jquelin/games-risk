@@ -13,7 +13,6 @@ use 5.010;
 use strict;
 use warnings;
 
-use Games::Risk;
 use Games::Risk::GUI::Constants;
 use Games::Risk::Resources qw{ image };
 use POE;

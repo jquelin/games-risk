@@ -14,7 +14,6 @@ use strict;
 use warnings;
 
 use Carp;
-use Games::Risk;
 use List::Util qw{ shuffle };
 use POE;
 use Readonly;
