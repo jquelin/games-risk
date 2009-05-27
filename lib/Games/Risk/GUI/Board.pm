@@ -980,6 +980,20 @@ sub _ongui_canvas_configure {
     my ($h, $args) = @_[HEAP, ARG1];
     my ($c, $neww, $newh) = @$args;
 
+    use Image::Imlib2;
+    my $orig = Image::Imlib2->load($h->{map}->background); 
+    my $new  = $orig->create_scaled_image( $neww, $newh );
+    $new->image_set_format('jpeg');
+    my $tmpfile = 'foo.jpg';
+    $new->save($tmpfile);
+    my $img = $c->Photo( -file => $tmpfile );
+    unlink $tmpfile;
+    $c->delete('background');
+    $c->createImage(0, 0, -anchor=>'nw', -image=>$img, -tags=>['background']);
+    $c->lower('background', 'all');
+
+=pod
+
     # create a new image resized to fit new dims
     my $orig = Image::Resize->new($h->{map}->background);
     my $gd   = $orig->resize($neww, $newh, 0);
@@ -989,6 +1003,8 @@ sub _ongui_canvas_configure {
     $c->delete('background');
     $c->createImage(0, 0, -anchor=>'nw', -image=>$img, -tags=>['background']);
     $c->lower('background', 'all');
+
+=cut
 
     # update zoom factors. note that we don't want to resize greyscale
     # image since a) it takes time, which is unneeded since this image
