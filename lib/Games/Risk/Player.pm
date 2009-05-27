@@ -19,7 +19,7 @@ use List::Util qw{ sum };
 use POE;
 use Readonly;
 use UNIVERSAL::require;
-use aliased 'POE::Kernel' => 'K';
+use constant K => $poe_kernel;
 
 
 use base qw{ Class::Accessor::Fast };
@@ -293,13 +293,6 @@ with the number of owned territories, as well as the number of armies.
 
 
 =back
-
-
-=begin quiet_pod_coverage
-
-=item * K
-
-=end quiet_pod_coverage
 
 
 

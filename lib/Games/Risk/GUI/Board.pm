@@ -31,7 +31,7 @@ use Tk::Balloon;
 use Tk::JPEG;
 use Tk::PNG;
 
-use aliased 'POE::Kernel' => 'K';
+use constant K => $poe_kernel;
 
 Readonly my $WAIT_CLEAN_AI    => 1.000;
 Readonly my $WAIT_CLEAN_HUMAN => 0.250;
@@ -1294,13 +1294,6 @@ the GUI. It features a map and various controls to drive the action.
 
 =head2 my $id = Games::Risk::GUI::Board->spawn( )
 
-
-
-=begin quiet_pod_coverage
-
-=item * K
-
-=end quiet_pod_coverage
 
 
 

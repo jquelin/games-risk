@@ -20,7 +20,7 @@ use POE;
 use Readonly;
 use Tk::Pane;
 
-use aliased 'POE::Kernel' => 'K';
+use constant K => $poe_kernel;
 
 Readonly my $WIDTH  => 95;
 Readonly my $HEIGHT => 145;
@@ -438,14 +438,6 @@ parameter is mandatory.
 
 
 =back
-
-
-
-=begin quiet_pod_coverage
-
-=item * K
-
-=end quiet_pod_coverage
 
 
 

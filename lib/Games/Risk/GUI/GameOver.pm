@@ -18,7 +18,7 @@ use POE;
 use Tk;
 use Tk::Font;
 
-use aliased 'POE::Kernel' => 'K';
+use constant K => $poe_kernel;
 
 
 #--
@@ -170,12 +170,6 @@ The player that won the game. This parameter is mandatory.
 
 =back
 
-
-=begin quiet_pod_coverage
-
-=item * K
-
-=end quiet_pod_coverage
 
 
 

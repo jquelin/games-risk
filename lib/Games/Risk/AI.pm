@@ -19,7 +19,7 @@ use List::Util qw{ shuffle };
 use POE;
 use Readonly;
 
-use aliased 'POE::Kernel' => 'K';
+use constant K => $poe_kernel;
 
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ game player } );
@@ -396,13 +396,6 @@ should be within this continent.
 
 Note that some of those methods may be inherited from the base class, when it
 provide sane defaults.
-
-
-=begin quiet_pod_coverage
-
-=item * K
-
-=end quiet_pod_coverage
 
 
 

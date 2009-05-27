@@ -17,7 +17,7 @@ use Games::Risk::Controller;
 use Games::Risk::GUI;
 use List::Util qw{ shuffle };
 use POE;
-use aliased 'POE::Kernel' => 'K';
+use constant K => $poe_kernel;
 
 # Public variables of the module.
 our $VERSION = '2.1.1';
@@ -366,12 +366,6 @@ Send C<$event> (with C<@params>) to one C<$player>.
 
 =back
 
-
-=begin quiet_pod_coverage
-
-=item * K
-
-=end quiet_pod_coverage
 
 
 

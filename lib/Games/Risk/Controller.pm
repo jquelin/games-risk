@@ -19,7 +19,7 @@ use Games::Risk::Resources qw{ map_path };
 use List::Util      qw{ min shuffle };
 use POE;
 use Readonly;
-use aliased 'POE::Kernel' => 'K';
+use constant K => $poe_kernel;
 
 
 Readonly my $ATTACK_WAIT_AI    => 1.250; # FIXME: hardcoded
@@ -765,12 +765,6 @@ game. It will return the poe id of the session newly created.
 You can tune the session by passing some arguments as a hash reference.
 Currently, no params can be tuned.
 
-
-=begin quiet_pod_coverage
-
-=item * K
-
-=end quiet_pod_coverage
 
 
 

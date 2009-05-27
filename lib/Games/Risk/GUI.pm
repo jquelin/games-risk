@@ -17,7 +17,7 @@ use Games::Risk::GUI::Board;
 use Games::Risk::GUI::Startup;
 use POE;
 
-use aliased 'POE::Kernel' => 'K';
+use constant K => $poe_kernel;
 
 #--
 # CLASS METHODS
@@ -140,13 +140,6 @@ The human C<$player> that will control the GUI.
 
 =back
 
-
-
-=begin quiet_pod_coverage
-
-=head2 * K
-
-=end quiet_pod_coverage
 
 
 =head1 EVENTS RECEIVED

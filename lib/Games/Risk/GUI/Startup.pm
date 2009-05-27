@@ -24,7 +24,7 @@ use Tk::Balloon;
 use Tk::BrowseEntry;
 use Tk::Font;
 
-use aliased 'POE::Kernel' => 'K';
+use constant K => $poe_kernel;
 
 Readonly my $WAIT_CLEAN_AI    => 1.000;
 Readonly my $WAIT_CLEAN_HUMAN => 0.250;
@@ -518,14 +518,6 @@ of the GUI. It allows to design the new game to be played.
 
 
 =head2 my $id = Games::Risk::GUI::Startup->spawn( )
-
-
-
-=begin quiet_pod_coverage
-
-=item * K
-
-=end quiet_pod_coverage
 
 
 
