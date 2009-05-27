@@ -24,6 +24,7 @@ WriteMakefile(
         'aliased'                => 0,
         'Class::Accessor::Fast'  => 0,
         'File::Basename'         => 0,
+        'File::Temp'             => 0,
         'Getopt::Euclid'         => 0,
         'Image::Imlib2'          => 0,
         'Image::Size'            => 0,
