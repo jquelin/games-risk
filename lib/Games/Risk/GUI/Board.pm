@@ -21,7 +21,6 @@ use Games::Risk::GUI::GameOver;
 use Games::Risk::GUI::MoveArmies;
 use Games::Risk::Resources qw{ image };
 use Image::Imlib2;
-use Image::Resize;
 use Image::Size;
 use List::Util     qw{ min };
 use MIME::Base64;

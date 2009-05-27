@@ -25,7 +25,7 @@ WriteMakefile(
         'Class::Accessor::Fast'  => 0,
         'File::Basename'         => 0,
         'Getopt::Euclid'         => 0,
-        'Image::Resize'          => 0,
+        'Image::Imlib2'          => 0,
         'Image::Size'            => 0,
         'List::MoreUtils'        => 0,
         'List::Util'             => 0,
