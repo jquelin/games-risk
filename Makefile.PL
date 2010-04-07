@@ -33,6 +33,7 @@ WriteMakefile(
         'MIME::Base64'           => 0,
         'Module::Util'           => 0,
         'POE'                    => 0,
+        'POE::Loop::Tk'          => 0,
         'Readonly'               => 0,
         'Tk'                     => 0,
         'Tk::Balloon'            => 0,
