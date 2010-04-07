@@ -19,6 +19,10 @@ High-level changelog
 Low-level changelog
 ===================
 
+2.1.2 Wed Apr  7 13:22:04 2010
+ - fix rt#56311 - poe::loop::tk is not part of poe anymore
+ - using image::imlib2 instead of image::resize for better speed
+
 2.1.1 Tue Oct 28 17:37:28 CET 2008
  - make sure that we have a working display before testing. this should
    quiet all fail reports
