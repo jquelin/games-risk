@@ -6,7 +6,7 @@ package Games::Risk::GUI::Continents;
 
 use Games::Risk::GUI::Constants;
 use Games::Risk::Resources qw{ image };
-use POE;
+use POE                    qw{ Loop::Tk };
 
 use constant K => $poe_kernel;
 

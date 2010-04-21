@@ -7,10 +7,11 @@ package Games::Risk::Resources;
 use File::Basename qw{ basename fileparse };
 use File::Spec::Functions;
 use Module::Util   qw{ find_installed };
+use POE qw{ Loop::Tk };
 use Tk;
 use Tk::JPEG;
 use Tk::PNG;
-use POE;
+
 
 use base qw{ Exporter };
 our @EXPORT_OK = qw{ image map_path maps };

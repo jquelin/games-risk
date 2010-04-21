@@ -5,7 +5,7 @@ use warnings;
 package Games::Risk::GUI::GameOver;
 
 use Games::Risk::GUI::Constants;
-use POE;
+use POE qw{ Loop::Tk };
 use Tk;
 use Tk::Font;
 

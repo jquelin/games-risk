@@ -7,7 +7,7 @@ package Games::Risk::Player;
 use Carp;
 use Games::Risk::AI;
 use List::Util qw{ sum };
-use POE;
+use POE qw{ Loop::Tk };
 use Readonly;
 use UNIVERSAL::require;
 use constant K => $poe_kernel;

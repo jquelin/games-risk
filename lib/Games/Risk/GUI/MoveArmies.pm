@@ -6,7 +6,7 @@ package Games::Risk::GUI::MoveArmies;
 
 use Games::Risk::GUI::Constants;
 use List::Util qw{ max };
-use POE;
+use POE        qw{ Loop::Tk };
 use Tk;
 use Tk::Font;
 

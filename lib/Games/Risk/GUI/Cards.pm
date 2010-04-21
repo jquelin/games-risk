@@ -7,7 +7,7 @@ package Games::Risk::GUI::Cards;
 use Games::Risk::GUI::Constants;
 use Games::Risk::Resources qw{ image };
 use List::MoreUtils qw{ any firstidx };
-use POE;
+use POE             qw{ Loop::Tk };
 use Readonly;
 use Tk::Pane;
 

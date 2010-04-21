@@ -8,7 +8,7 @@ use Games::Risk::GUI::Constants;
 use Games::Risk::Resources qw{ image maps };
 use List::Util     qw{ shuffle };
 use List::MoreUtils qw{ any };
-use POE;
+use POE             qw{ Loop::Tk };
 use Readonly;
 use Tk;
 use Tk::Balloon;

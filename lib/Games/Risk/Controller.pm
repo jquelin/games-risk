@@ -8,7 +8,7 @@ use Games::Risk::Map;
 use Games::Risk::Player;
 use Games::Risk::Resources qw{ map_path };
 use List::Util      qw{ min shuffle };
-use POE;
+use POE             qw{ Loop::Tk };
 use Readonly;
 use constant K => $poe_kernel;
 

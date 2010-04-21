@@ -6,7 +6,7 @@ package Games::Risk::AI;
 
 use Carp;
 use List::Util qw{ shuffle };
-use POE;
+use POE        qw{ Loop::Tk };
 use Readonly;
 
 use constant K => $poe_kernel;

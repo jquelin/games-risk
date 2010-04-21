@@ -6,7 +6,7 @@ package Games::Risk::GUI;
 
 use Games::Risk::GUI::Board;
 use Games::Risk::GUI::Startup;
-use POE;
+use POE qw{ Loop::Tk };
 
 use constant K => $poe_kernel;
 

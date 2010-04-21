@@ -7,7 +7,7 @@ package Games::Risk;
 use Games::Risk::Controller;
 use Games::Risk::GUI;
 use List::Util qw{ shuffle };
-use POE;
+use POE        qw{ Loop::Tk };
 use constant K => $poe_kernel;
 
 # Public variables of the module.
