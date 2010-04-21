@@ -12,8 +12,6 @@ use List::Util qw{ shuffle };
 use POE        qw{ Loop::Tk };
 use constant K => $poe_kernel;
 
-# Public variables of the module.
-our $VERSION = '2.1.2';
 
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{
