@@ -5,9 +5,9 @@ use warnings;
 package Games::Risk::Resources;
 # ABSTRACT: utility module to load bundled resources
 
-use File::Basename qw{ basename fileparse };
+use File::Basename qw{ basename };
+use File::ShareDir qw{ dist_dir };
 use File::Spec::Functions;
-use Module::Util   qw{ find_installed };
 use POE qw{ Loop::Tk };
 use Tk;
 use Tk::JPEG;
@@ -72,18 +72,6 @@ sub _find_maps {
 
 
 #
-# my $path = _find_resources_path();
-#
-# return the absolute path where all resources will be placed.
-#
-sub _find_resources_path {
-    my $path = find_installed(__PACKAGE__);
-    my (undef, $dirname, undef) = fileparse($path);
-    return catfile($dirname, 'resources');
-}
-
-
-#
 # _load_images( $dirname );
 #
 # load images from $dirname/images/*.png
@@ -124,7 +112,7 @@ sub _load_tk_icons {
 # INITIALIZATION
 
 BEGIN {
-    my $dirname = _find_resources_path();
+    my $dirname = dist_dir('Games-Risk');
     _load_tk_icons($dirname);
     _load_images($dirname);
     _find_maps($dirname);
