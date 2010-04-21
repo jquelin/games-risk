@@ -51,7 +51,8 @@ sub map_path {
 # return the names of all the maps bundled with GR.
 #
 sub maps {
-    return sort keys %maps;
+    my @maps = sort keys %maps;
+    return @maps;
 }
 
 
