@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::GUI::Board;
+# ABSTRACT: board gui component
 
 use File::Temp;
 use Games::Risk::GUI::Cards;
@@ -1259,12 +1260,6 @@ sub _ongui_window_close {
 1;
 
 __END__
-
-
-=head1 NAME
-
-Games::Risk::GUI::Board - board gui component
-
 
 
 =head1 SYNOPSIS

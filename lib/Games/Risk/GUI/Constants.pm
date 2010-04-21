@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::GUI::Constants;
+# ABSTRACT: tk constants
 
 use base qw{ Exporter };
 
@@ -39,11 +40,6 @@ our @ENOFF   = ( -state => 'disabled' );
 1;
 
 __END__
-
-
-=head1 NAME
-
-Games::Risk::GUI::Constants - tk constants
 
 
 

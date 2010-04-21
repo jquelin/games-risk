@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::GUI::GameOver;
+# ABSTRACT: window used when game is over
 
 use Games::Risk::GUI::Constants;
 use POE qw{ Loop::Tk };
@@ -116,12 +117,6 @@ sub _onpriv_but_close {
 1;
 
 __END__
-
-
-=head1 NAME
-
-Games::Risk::GUI::GameOver - window used when game is over
-
 
 
 =head1 SYNOPSYS

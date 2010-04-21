@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::Resources;
+# ABSTRACT: utility module to load bundled resources
 
 use File::Basename qw{ basename fileparse };
 use File::Spec::Functions;
@@ -132,13 +133,6 @@ BEGIN {
 1;
 
 __END__
-
-
-
-=head1 NAME
-
-Games::Risk::Resources - utility module to load bundled resources
-
 
 
 =head1 SYNOPSIS

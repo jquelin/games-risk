@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::Map;
+# ABSTRACT: map being played
 
 use File::Basename qw{ fileparse };
 use List::Util      qw{ shuffle };
@@ -290,12 +291,6 @@ sub _parse_file_section_files {
 1;
 
 __END__
-
-
-
-=head1 NAME
-
-Games::Risk::Map - map being played
 
 
 

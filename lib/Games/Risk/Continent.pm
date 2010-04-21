@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::Continent;
+# ABSTRACT: continent object
 
 use List::MoreUtils qw{ all };
 
@@ -66,12 +67,6 @@ sub is_owned {
 1;
 
 __END__
-
-
-
-=head1 NAME
-
-Games::Risk::Continent - continent object
 
 
 

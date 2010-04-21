@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::GUI::Continents;
+# ABSTRACT: continents listing
 
 use Games::Risk::GUI::Constants;
 use Games::Risk::Resources qw{ image };
@@ -118,12 +119,6 @@ sub _start {
 1;
 
 __END__
-
-
-=head1 NAME
-
-Games::Risk::GUI::Continents - continents listing
-
 
 
 =head1 SYNOPSYS

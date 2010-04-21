@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::GUI::Startup;
+# ABSTRACT: startup window
 
 use Games::Risk::GUI::Constants;
 use Games::Risk::Resources qw{ image maps };
@@ -484,11 +485,6 @@ sub _ongui_but_start {
 1;
 
 __END__
-
-
-=head1 NAME
-
-Games::Risk::GUI::Startup - startup window
 
 
 

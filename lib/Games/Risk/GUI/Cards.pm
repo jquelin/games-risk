@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::GUI::Cards;
+# ABSTRACT: cards listing
 
 use Games::Risk::GUI::Constants;
 use Games::Risk::Resources qw{ image };
@@ -389,11 +390,6 @@ sub _onpriv_slide_wheel {
 1;
 
 __END__
-
-
-=head1 NAME
-
-Games::Risk::GUI::Cards - cards listing
 
 
 

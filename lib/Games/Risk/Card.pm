@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::Card;
+# ABSTRACT: map card
 
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ country type } );
@@ -30,13 +31,6 @@ sub destroy {
 1;
 
 __END__
-
-
-
-=head1 NAME
-
-Games::Risk::Card - map card
-
 
 
 =head1 SYNOPSIS

@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::AI::Blitzkrieg;
+# ABSTRACT: easy ai that does blitzkrieg attacks
 
 use List::Util qw{ shuffle };
 
@@ -140,11 +141,6 @@ sub _description {
 
 __END__
 
-
-
-=head1 NAME
-
-Games::Risk::AI::Blitzkrieg - easy ai that does blitzkrieg attacks
 
 
 

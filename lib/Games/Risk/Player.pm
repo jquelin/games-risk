@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::Player;
+# ABSTRACT: risk player
 
 use Carp;
 use Games::Risk::AI;
@@ -166,11 +167,6 @@ sub greatness {
 
 __END__
 
-
-
-=head1 NAME
-
-Games::Risk::Player - risk player
 
 
 

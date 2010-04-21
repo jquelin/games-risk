@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::GUI;
+# ABSTRACT: gui multiplexer poe session
 
 use Games::Risk::GUI::Board;
 use Games::Risk::GUI::Startup;
@@ -76,13 +77,6 @@ sub _onpriv_start {
 1;
 
 __END__
-
-
-
-=head1 NAME
-
-Games::Risk::GUI - gui multiplexer poe session
-
 
 
 =head1 SYNOPSIS

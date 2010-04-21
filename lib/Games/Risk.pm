@@ -3,6 +3,8 @@ use strict;
 use warnings;
 
 package Games::Risk;
+# ABSTRACT: classical 'risk' board game
+
 
 use Games::Risk::Controller;
 use Games::Risk::GUI;
@@ -225,13 +227,6 @@ sub send_to_one {
 1;
 
 __END__
-
-
-
-=head1 NAME
-
-Games::Risk - classical 'risk' board game
-
 
 
 =head1 SYNOPSIS

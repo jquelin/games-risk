@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::Country;
+# ABSTRACT: map country
 
 use List::MoreUtils qw{ any };
 
@@ -96,13 +97,6 @@ sub neighbours {
 1;
 
 __END__
-
-
-
-=head1 NAME
-
-Games::Risk::Country - map country
-
 
 
 =head1 SYNOPSIS

@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::AI::Hegemon;
+# ABSTRACT: ai that tries to conquer the world
 
 use List::MoreUtils qw{ all };
 
@@ -526,13 +527,6 @@ sub _short_path_to_continent {
 1;
 
 __END__
-
-
-
-=head1 NAME
-
-Games::Risk::AI::Hegemon - ai that tries to conquer the world
-
 
 
 =head1 SYNOPSIS

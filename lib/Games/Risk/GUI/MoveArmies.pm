@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::GUI::MoveArmies;
+# ABSTRACT: window to move armies
 
 use Games::Risk::GUI::Constants;
 use List::Util qw{ max };
@@ -226,12 +227,6 @@ sub _onpriv_slide_wheel {
 1;
 
 __END__
-
-
-=head1 NAME
-
-Games::Risk::GUI::MoveArmies - window to move armies
-
 
 
 =head1 SYNOPSYS

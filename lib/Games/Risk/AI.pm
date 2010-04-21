@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::AI;
+# ABSTRACT: base class for all ais
 
 use Carp;
 use List::Util qw{ shuffle };
@@ -275,13 +276,6 @@ sub _onpriv_start {
 1;
 
 __END__
-
-
-
-=head1 NAME
-
-Games::Risk::AI - base class for all ais
-
 
 
 =head1 SYNOPSIS

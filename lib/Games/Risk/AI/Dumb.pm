@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::AI::Dumb;
+# ABSTRACT: dumb ai that does nothing
 
 use base qw{ Games::Risk::AI };
 
@@ -86,12 +87,6 @@ sub _description {
 1;
 
 __END__
-
-
-
-=head1 NAME
-
-Games::Risk::AI::Dumb - dumb ai that does nothing
 
 
 

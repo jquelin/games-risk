@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::Controller;
+# ABSTRACT: controller poe session for risk
 
 use Games::Risk::Map;
 use Games::Risk::Player;
@@ -724,11 +725,6 @@ sub _onpriv_start {
 
 1;
 __END__
-
-
-=head1 NAME
-
-Games::Risk::Controller - controller poe session for risk
 
 
 
