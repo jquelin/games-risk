@@ -183,7 +183,7 @@ sub attack {
 # $dst.
 #
 sub attack_move {
-    my ($self, $src, $dst, $min) = @_;
+    my ($self, $src) = @_;
 
     my $nbsrc = $src->armies;
     my $max   = $nbsrc - 1;
@@ -219,7 +219,7 @@ sub difficulty { return 'hard' }
 #
 sub move_armies {
     my ($self) = @_;
-    my $me = $self->player;
+    #my $me = $self->player;
 
     my @where;
     # move all armies from countries enclosed within other countries
@@ -247,7 +247,7 @@ sub move_armies {
 # heuristics, maximizing the chances of the ai to win.
 #
 sub place_armies {
-    my ($self, $nb, $continent) = @_;
+    my ($self, $nb) = @_;
 
     # FIXME: restrict to continent if strict placing
     #my @countries = defined $continent

@@ -37,7 +37,7 @@ Readonly my $START_ARMIES      => 5;
 # Currently, no params can be tuned.
 #
 sub spawn {
-    my ($type, $game) = @_;
+    my (undef, $game) = @_;
 
     my $session = POE::Session->create(
         heap          => $game,
@@ -90,7 +90,7 @@ sub spawn {
 # fired when player has finished moved armies at the end of the turn.
 #
 sub _onpub_armies_moved {
-    my $h = $_[HEAP];
+    #my $h = $_[HEAP];
 
     # FIXME: check player is curplayer
     K->delay_set( '_armies_moved' => $WAIT );
@@ -602,7 +602,7 @@ sub _onpriv_place_armies {
     $h->send_to_one($player, 'place_armies', $nb);
 
     # continent bonus
-    my $bonus = 0;
+    #my $bonus = 0;
     foreach my $c( $h->map->continents ) {
         next unless $c->is_owned($player);
 

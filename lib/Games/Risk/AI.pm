@@ -53,7 +53,7 @@ sub new {
 # session will also react to the ai's player name (poe alias).
 #
 sub spawn {
-    my ($type, $ai) = @_;
+    my (undef, $ai) = @_;
 
     my $session = POE::Session->create(
         heap          => $ai,

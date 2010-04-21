@@ -28,7 +28,7 @@ Readonly my $HEIGHT => 145;
 # embedded pod for an explanation of the supported options.
 #
 sub spawn {
-    my ($class, $args) = @_;
+    my (undef, $args) = @_;
 
     my $session = POE::Session->create(
         args          => [ $args ],
@@ -136,7 +136,7 @@ sub _onpub_change_button_state {
 # kill current session. the toplevel window has already been destroyed.
 #
 sub _onpub_shutdown {
-    my $h = $_[HEAP];
+    #my $h = $_[HEAP];
     K->alias_remove('cards');
 }
 
@@ -314,7 +314,7 @@ sub _ongui_but_exchange {
 #
 sub _ongui_card_clicked {
     my ($h, $args) = @_[HEAP, ARG1];
-    my ($canvas, $card) = @$args;
+    my ($canvas, undef) = @$args;
 
     # get the lists
     my @cards    = @{ $h->{cards} };

@@ -17,7 +17,7 @@ use constant K => $poe_kernel;
 # -- public methods
 
 sub spawn {
-    my ($type, $args) = @_;
+    my (undef, $args) = @_;
 
     my $session = POE::Session->create(
         args          => [ $args ],

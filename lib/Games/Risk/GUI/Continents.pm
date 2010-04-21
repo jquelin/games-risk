@@ -22,7 +22,7 @@ use constant K => $poe_kernel;
 # refer to the embedded pod for an explanation of the supported options.
 #
 sub spawn {
-    my ($class, $args) = @_;
+    my (undef, $args) = @_;
 
     my $session = POE::Session->create(
         args          => [ $args ],
@@ -50,7 +50,7 @@ sub spawn {
 # kill current session. the toplevel window has already been destroyed.
 #
 sub shutdown {
-    my $h = $_[HEAP];
+    #my $h = $_[HEAP];
     K->alias_remove('continents');
 }
 
@@ -98,7 +98,6 @@ sub _start {
         }
         $map->continents;
     my $row = 0;
-    my @opts = qw{ -anchor w };
     foreach my $c ( @continents ) {
         $top->Label(-text=>$c->name
         )->grid(-row=>$row,-column=>0,-sticky=>'w');

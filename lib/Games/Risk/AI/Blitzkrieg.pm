@@ -28,7 +28,7 @@ sub attack {
     my $player = $self->player;
 
     # find first possible attack
-    my ($src, $dst);
+    #my ($src, $dst);
     COUNTRY:
     foreach my $country ( shuffle $player->countries )  {
         # don't attack unless there's somehow a chance to win
@@ -56,7 +56,7 @@ sub attack {
 # $dst.
 #
 sub attack_move {
-    my ($self, $src, $dst, $min) = @_;
+    my ($self, $src) = @_;
     return $src->armies - 1;
 }
 
@@ -88,7 +88,7 @@ sub difficulty { return 'easy' }
 # which will be its attack base during attack phase.
 #
 sub place_armies {
-    my ($self, $nb, $continent) = @_;
+    my ($self, $nb) = @_;
     my $player = $self->player;
 
     # FIXME: restrict to continent if strict placing

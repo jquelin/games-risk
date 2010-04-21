@@ -181,7 +181,7 @@ sub load_file {
 # FIXME: the following are UGLY, UGLY, UGLY!
 
 sub _parse_file_section_ {
-    my ($self, $line) = @_;
+    my ($self) = @_;
     return 'wtf?';
 }
 

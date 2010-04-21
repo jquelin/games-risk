@@ -39,7 +39,7 @@ Readonly my $WAIT_CLEAN_HUMAN => 0.250;
 # to the embedded pod for an explanation of the supported options.
 #
 sub spawn {
-    my ($type, $args) = @_;
+    my (undef, $args) = @_;
 
     my $session = POE::Session->create(
         args          => [ $args ],
@@ -138,7 +138,7 @@ sub _onpub_attack {
 # Give the result of $dst attack from $src: @attack and @defence dices
 #
 sub _onpub_attack_info {
-    my ($h, $src, $dst, $attack, $defence, $loss_src, $loss_dst) = @_[HEAP, ARG0..$#_];
+    my ($h, $src, $dst, $attack, $defence) = @_[HEAP, ARG0..$#_];
 
     # update status msg
     $h->{status} = 'Attacking ' . $dst->name . ' from ' . $src->name;
@@ -169,7 +169,7 @@ sub _onpub_attack_info {
         -width => 4,
     );
     my $srcid = $src->id;
-    my $dstid = $dst->id;
+    #my $dstid = $dst->id;
     $c->raise('attack', 'all');
     $c->raise("country$srcid", 'attack');
     $c->idletasks;

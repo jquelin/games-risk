@@ -33,7 +33,7 @@ sub new {
     # only one game at a time
     return $singleton if defined $singleton;
 
-    my ($pkg, $args) = @_;
+    my $pkg = shift;
 
     # create object
     $singleton = {};

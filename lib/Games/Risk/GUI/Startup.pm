@@ -64,7 +64,7 @@ Readonly my @NAMES => (
 # to the embedded pod for an explanation of the supported options.
 #
 sub spawn {
-    my ($type, $args) = @_;
+    my (undef, $args) = @_;
 
     my $session = POE::Session->create(
         args          => [ $args ],
@@ -195,8 +195,6 @@ sub _onpriv_check_nb_players {
 # last choices (saved in a config file somewhere).
 #
 sub _onpriv_load_defaults {
-    my ($h, $s) = @_[HEAP, SESSION];
-
     # FIXME: hardcoded
     my @names  = ($ENV{USER}, shuffle @NAMES );
     my @types  = ('Human', ('Computer, easy')x1, ('Computer, hard')x2);
@@ -229,7 +227,7 @@ sub _onpriv_new_player {
     my $f = $fpl->Frame(-bg=>$color)->pack(@LEFT, @FILLX);
     $players->[$num]{line}  = $fpl;
     $players->[$num]{frame} = $f;
-    my $e = $f->Entry(
+    $f->Entry(
         -textvariable => \$players->[$num]{name},
         -validate     => 'all',
         -vcmd         => sub { $s->postback('_check_errors')->(); 1; },
@@ -299,7 +297,7 @@ sub _onpriv_start {
 
     #-- title
     my $font = $top->Font(-size=>16);
-    my $title = $top->Label(
+    $top->Label(
         -bg   => 'black',
         -fg   => 'white',
         -font => $font,
@@ -316,7 +314,7 @@ sub _onpriv_start {
     $h->{map} = 'risk';
     my $fmap = $top->Frame->pack(@TOP, @XFILL2, @PAD20);
     $fmap->Label(-text=>'Map', -anchor=>'w')->pack(@TOP, @FILLX);
-    my $be = $fmap->BrowseEntry(
+    $fmap->BrowseEntry(
         -variable           => \$h->{map},
         -listheight         => scalar(@choices)+1,
         -choices            => \@choices,
@@ -401,7 +399,7 @@ sub _ongui_but_color {
 # called when button to delete player number $num has been clicked.
 #
 sub _ongui_but_delete {
-    my ($h, $s, $args) = @_[HEAP, SESSION, ARG0];
+    my ($h, $args) = @_[HEAP, ARG0];
 
     # remove player
     my ($num) = @$args;
