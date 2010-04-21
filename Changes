@@ -1,23 +1,13 @@
 Revision history for Games::Risk.
 
-High-level changelog
-====================
+{{$NEXT}}
 
-2.1.x    continents bonus window
-2.0.x    possibility to choose map
-1.1.x    startup window to customize game, do-or-die mode
-1.0.x    game over detection, code cleaning, gui enhancements
-0.6.x    cards support, gui enhancements
-0.5.x    new ais, gui enhancements
-0.4.x    move armies, gui enhancements
-0.3.x    attack, bonus, gui enhancements
-0.2.x    turn reinforcements, gui enhancements
-0.1.x    gui enhancements, internal cleanups, some ai work, initial armies placement
-0.0.x    initial work, basic gui display
+3.101110  2010-04-21 13:38:05 Europe/Paris
+ - moved to a 3.yydddn versioning scheme
+ - migrated to dist-zilla (transparent for end-users)
+ - using file::sharedir
 
-
-Low-level changelog
-===================
+**
 
 2.1.2 Wed Apr  7 13:22:04 2010
  - fix rt#56311 - poe::loop::tk is not part of poe anymore
