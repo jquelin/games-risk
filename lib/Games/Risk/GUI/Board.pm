@@ -5,14 +5,13 @@ use warnings;
 package Games::Risk::GUI::Board;
 # ABSTRACT: board gui component
 
-use File::Temp;
 use Games::Risk::GUI::Cards;
 use Games::Risk::GUI::Constants;
 use Games::Risk::GUI::Continents;
 use Games::Risk::GUI::GameOver;
 use Games::Risk::GUI::MoveArmies;
 use Games::Risk::Resources qw{ image };
-use Image::Imlib2;
+use Image::Magick;
 use Image::Size;
 use List::Util     qw{ min };
 use MIME::Base64;
@@ -974,14 +973,12 @@ sub _ongui_canvas_configure {
     my ($c, $neww, $newh) = @$args;
 
     # create a new image resized to fit new dims
-    my $orig   = Image::Imlib2->load( $h->{map}->background );
-    my $scaled = $orig->create_scaled_image( $neww, $newh );
-    $scaled->image_set_format('jpeg');
-    my $tmpfile = File::Temp->new( UNLINK => 1, SUFFIX => '.jpg' )->filename;
-    $scaled->save($tmpfile);
+    my $magick = Image::Magick->new;
+    $magick->Read( $h->{map}->background );
+    $magick->Scale(width=>$neww, height=>$newh);
 
     # install this new image inplace of previous background
-    my $img = $c->Photo( -file => $tmpfile );
+    my $img = $c->Photo( -data => encode_base64( $magick->ImageToBlob ) );
     $c->delete('background');
     $c->createImage(0, 0, -anchor=>'nw', -image=>$img, -tags=>['background']);
     $c->lower('background', 'all');
