@@ -220,20 +220,3 @@ Add C<$c> to the list of C<$country>'s neighbours. This is not reciprocical.
 
 L<Games::Risk>.
 
-
-
-=head1 AUTHOR
-
-Jerome Quelin, C<< <jquelin at cpan.org> >>
-
-
-
-=head1 COPYRIGHT & LICENSE
-
-Copyright (c) 2008 Jerome Quelin, all rights reserved.
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU GPLv3+.
-
-=cut
-
