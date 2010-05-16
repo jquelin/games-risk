@@ -162,7 +162,8 @@ sub players_active {
 #
 sub players {
     my ($self) = @_;
-    return @{ $self->_players // [] };
+    my $players = $self->_players // []; #//padre
+    return @$players;
 }
 
 

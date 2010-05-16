@@ -90,7 +90,8 @@ sub neighbour_add {
 #
 sub neighbours {
     my ($self) = @_;
-    return @{ $self->_neighbours // [] };
+    my $neighbours = $self->_neighbours // []; #//padre
+    return @$neighbours;
 }
 
 
