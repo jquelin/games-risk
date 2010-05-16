@@ -78,8 +78,8 @@ sub _onpub_attack_move {
     # move window & enforce geometry
     $top->update;               # force redraw
     my ($x,$y) = $top->parent->geometry =~ /\+(\d+)\+(\d+)$/;
-    $x += max $src->x, $dst->x; $x += 50;
-    $y += max $src->y, $dst->y; $y += 50;
+    $x += max $src->coordx, $dst->coordx; $x += 50;
+    $y += max $src->coordy, $dst->coordy; $y += 50;
     $top->geometry("+$x+$y");
     $h->{toplevel}->deiconify;
     $h->{toplevel}->raise;
@@ -119,8 +119,8 @@ sub _onpub_ask_move_armies {
     # move window & enforce geometry
     $top->update;               # force redraw
     my ($x,$y) = $top->parent->geometry =~ /\+(\d+)\+(\d+)$/;
-    $x += max $src->x, $dst->x; $x += 50;
-    $y += max $src->y, $dst->y; $y += 50;
+    $x += max $src->coordx, $dst->coordx; $x += 50;
+    $y += max $src->coordy, $dst->coordy; $y += 50;
     $top->geometry("+$x+$y");
     $h->{toplevel}->deiconify;
     $h->{toplevel}->raise;

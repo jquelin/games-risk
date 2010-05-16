@@ -8,7 +8,7 @@ package Games::Risk::Country;
 use List::MoreUtils qw{ any };
 
 use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ armies continent greyval name owner x y
+__PACKAGE__->mk_accessors( qw{ armies continent greyval name owner coordx coordy
     _neighbours } );
 
 
@@ -168,12 +168,12 @@ country name.
 a C<Games::Risk::Player> object currently owning the country.
 
 
-=item * x()
+=item * coordx()
 
 the x location of the country capital.
 
 
-=item * y()
+=item * coordy()
 
 the y location of the country capital.
 

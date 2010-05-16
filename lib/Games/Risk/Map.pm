@@ -227,8 +227,8 @@ sub _parse_file_section_countries {
         greyval   => $greyval,
         name      => $name,
         continent => $continent,
-        x         => $x,
-        y         => $y
+        coordx    => $x,
+        coordy    => $y
     });
     $self->_countries->{ $greyval } = $country;
 
