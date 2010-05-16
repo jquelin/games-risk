@@ -5,11 +5,11 @@ use warnings;
 package Games::Risk::GUI::MoveArmies;
 # ABSTRACT: window to move armies
 
-use Games::Risk::GUI::Constants;
 use List::Util qw{ max };
 use POE        qw{ Loop::Tk };
 use Tk;
 use Tk::Font;
+use Tk::Sugar;
 
 use constant K => $poe_kernel;
 
@@ -166,21 +166,21 @@ sub _onpriv_start {
         -bg   => 'black',
         -fg   => 'white',
         -font => $font,
-    )->pack(@TOP,@PAD20,@XFILL2);
-    my $lab = $top->Label->pack(@TOP,@XFILL2);
-    my $fs  = $top->Frame->pack(@TOP,@XFILL2);
-    $fs->Label(-text=>'Armies to move')->pack(@LEFT);
+    )->pack(top,pad20,xfill2);
+    my $lab = $top->Label->pack(top,xfill2);
+    my $fs  = $top->Frame->pack(top,xfill2);
+    $fs->Label(-text=>'Armies to move')->pack(left);
     $h->{armies} = 0;  # nb of armies to move
     my $sld = $fs->Scale(
         -orient    => 'horizontal',
         -width     => 5, # height since we're horizontal
         -showvalue => 1,
         -variable  => \$h->{armies},
-    )->pack(@LEFT,@XFILL2);
+    )->pack(left,xfill2);
     my $but = $top->Button(
         -text    => 'Move armies',
         -command => $s->postback('_but_move'),
-    )->pack(@TOP);
+    )->pack(top);
     $h->{lab_title} = $title;
     $h->{lab_info}  = $lab;
     $h->{but_move}  = $but;

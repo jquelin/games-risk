@@ -5,12 +5,6 @@ use warnings;
 package Games::Risk::GUI::Board;
 # ABSTRACT: board gui component
 
-use Games::Risk::GUI::Cards;
-use Games::Risk::GUI::Constants;
-use Games::Risk::GUI::Continents;
-use Games::Risk::GUI::GameOver;
-use Games::Risk::GUI::MoveArmies;
-use Games::Risk::Resources qw{ image };
 use Image::Magick;
 use Image::Size;
 use List::Util     qw{ min };
@@ -21,6 +15,13 @@ use Tk;
 use Tk::Balloon;
 use Tk::JPEG;
 use Tk::PNG;
+use Tk::Sugar;
+
+use Games::Risk::GUI::Cards;
+use Games::Risk::GUI::Continents;
+use Games::Risk::GUI::GameOver;
+use Games::Risk::GUI::MoveArmies;
+use Games::Risk::Resources qw{ image };
 
 use constant K => $poe_kernel;
 
@@ -108,21 +109,21 @@ sub _onpub_attack {
     my $c = $h->{canvas};
     $c->CanvasBind( '<1>', $s->postback('_canvas_attack_from') );
     $c->CanvasBind( '<3>', $s->postback('_canvas_attack_cancel') );
-    $h->{labels}{attack}->configure(@ENON);
-    $h->{buttons}{attack_done}->configure(@ENON);
+    $h->{labels}{attack}->configure(enabled);
+    $h->{buttons}{attack_done}->configure(enabled);
     $h->{toplevel}->bind('<Key-Return>', $s->postback('_but_attack_done'));
 
     if ( defined($h->{src}) && defined($h->{dst})
         && $h->{src}->owner ne $h->{dst}->owner
         && $h->{src}->armies > 1 ) {
-        $h->{buttons}{attack_redo}->configure(@ENON);
+        $h->{buttons}{attack_redo}->configure(enabled);
         $h->{toplevel}->bind('<Key-space>', $s->postback('_but_attack_redo'));
 
         # auto-reattack?
         K->yield('_but_attack_redo') if $h->{auto_reattack} && $h->{src}->armies >= 4;
 
     } else {
-        $h->{buttons}{attack_redo}->configure(@ENOFF);
+        $h->{buttons}{attack_redo}->configure(disabled);
         $h->{toplevel}->bind('<Key-space>', undef);
     }
 
@@ -202,9 +203,9 @@ sub _onpub_attack_move {
     $h->{toplevel}->bind('<Key-Return>', undef); # done attack
     $c->CanvasBind('<1>', undef);
     $c->CanvasBind('<3>', undef);
-    $h->{labels}{attack}->configure(@ENOFF);
-    $h->{buttons}{attack_redo}->configure(@ENOFF);
-    $h->{buttons}{attack_done}->configure(@ENOFF);
+    $h->{labels}{attack}->configure(disabled);
+    $h->{buttons}{attack_redo}->configure(disabled);
+    $h->{buttons}{attack_done}->configure(disabled);
 
 }
 
@@ -274,9 +275,9 @@ sub _onpub_game_over {
     $h->{toplevel}->bind('<Key-Return>', undef); # done attack
     $c->CanvasBind('<1>', undef);
     $c->CanvasBind('<3>', undef);
-    $h->{labels}{attack}->configure(@ENOFF);
-    $h->{buttons}{attack_redo}->configure(@ENOFF);
-    $h->{buttons}{attack_done}->configure(@ENOFF);
+    $h->{labels}{attack}->configure(disabled);
+    $h->{buttons}{attack_redo}->configure(disabled);
+    $h->{buttons}{attack_done}->configure(disabled);
 
     # announce the winner
     Games::Risk::GUI::GameOver->spawn({
@@ -345,8 +346,8 @@ sub _onpub_move_armies {
     my $c = $h->{canvas};
     $c->CanvasBind( '<1>', $s->postback('_canvas_move_armies_from') );
     $c->CanvasBind( '<3>', $s->postback('_canvas_move_armies_cancel') );
-    $h->{labels}{move_armies}->configure(@ENON);
-    $h->{buttons}{move_armies_done}->configure(@ENON);
+    $h->{labels}{move_armies}->configure(enabled);
+    $h->{buttons}{move_armies_done}->configure(enabled);
     $h->{status} = 'Moving armies from...';
     $h->{toplevel}->bind('<Key-Return>', $s->postback('_but_move_armies_done'));
 }
@@ -376,7 +377,7 @@ sub _onpub_move_armies_move {
     my $c = $h->{canvas};
     $c->CanvasBind( '<1>', $s->postback('_canvas_move_armies_from') );
     $c->CanvasBind( '<3>', $s->postback('_canvas_move_armies_cancel') );
-    $h->{buttons}{move_armies_done}->configure(@ENON);
+    $h->{buttons}{move_armies_done}->configure(enabled);
     $h->{toplevel}->bind('<Key-Return>', $s->postback('_but_move_armies_done'));
     $h->{status} = 'Moving armies from...';
 }
@@ -401,7 +402,7 @@ sub _onpub_place_armies {
     $c->CanvasBind( '<3>', $s->postback('_canvas_place_armies', -1) );
     $c->CanvasBind( '<4>', $s->postback('_canvas_place_armies',  1) );
     $c->CanvasBind( '<5>', $s->postback('_canvas_place_armies', -1) );
-    $h->{labels}{place_armies}->configure(@ENON);
+    $h->{labels}{place_armies}->configure(enabled);
 
     # update status msg
     my $count = 0;
@@ -473,7 +474,7 @@ sub _onpub_player_add {
     my $label = $f->Label(
         -bg    => $player->color,
         -image => image('empty16'),
-    )->pack(@LEFT);
+    )->pack(left);
     $h->{labels}{players}{ $player->name } = $label;
 
     # associate tooltip
@@ -592,41 +593,41 @@ sub _onpriv_start {
 
 
     #-- main frames
-    my $fleft  = $top->Frame->pack(@LEFT,  @XFILL2);
-    my $fright = $top->Frame->pack(@RIGHT, @FILL2);
+    my $fleft  = $top->Frame->pack(left,  xfill2);
+    my $fright = $top->Frame->pack(right, fill2);
 
 
     #-- frame for game state
-    my $fgs = $fleft->Frame->pack(@TOP, @FILLX);
-    $fgs->Label(-text=>'Game state: ')->pack(@LEFT);
-    my $labp = $fgs->Label(-text=>'place armies', @ENOFF)->pack(@LEFT, @XFILL2);
+    my $fgs = $fleft->Frame->pack(top, fillx);
+    $fgs->Label(-text=>'Game state: ')->pack(left);
+    my $labp = $fgs->Label(-text=>'place armies', disabled)->pack(left, xfill2);
     my $but_predo = $fgs->Button(
         -command => $s->postback('_but_place_armies_redo'),
         -image   => image('actreload16'),
-        @ENOFF,
-    )->pack(@LEFT);
+        disabled,
+    )->pack(left);
     my $but_pdone = $fgs->Button(
         -command => $s->postback('_but_place_armies_done'),
         -image   => image('navforward16'),
-        @ENOFF,
-    )->pack(@LEFT);
-    my $laba = $fgs->Label(-text=>'attack', @ENOFF)->pack(@LEFT, @XFILL2);
+        disabled,
+    )->pack(left);
+    my $laba = $fgs->Label(-text=>'attack', disabled)->pack(left, xfill2);
     my $but_aredo = $fgs->Button(
         -command => $s->postback('_but_attack_redo'),
         -image   => image('actredo16'),
-        @ENOFF,
-    )->pack(@LEFT);
+        disabled,
+    )->pack(left);
     my $but_adone = $fgs->Button(
         -command => $s->postback('_but_attack_done'),
         -image   => image('navforward16'),
-        @ENOFF,
-    )->pack(@LEFT);
-    my $labm = $fgs->Label(-text=>'move armies', @ENOFF)->pack(@LEFT, @XFILL2);
+        disabled,
+    )->pack(left);
+    my $labm = $fgs->Label(-text=>'move armies', disabled)->pack(left, xfill2);
     my $but_mdone = $fgs->Button(
         -command => $s->postback('_but_move_armies_done'),
         -image   => image('playstop16'),
-        @ENOFF,
-    )->pack(@LEFT);
+        disabled,
+    )->pack(left);
     $h->{labels}{place_armies} = $labp;
     $h->{labels}{attack}       = $laba;
     $h->{labels}{move_armies}  = $labm;
@@ -643,7 +644,7 @@ sub _onpriv_start {
 
 
     #-- canvas
-    my $c = $fleft->Canvas->pack(@TOP,@XFILL2);
+    my $c = $fleft->Canvas->pack(top,xfill2);
     $h->{canvas} = $c;
     $c->CanvasBind( '<Motion>', [$s->postback('_canvas_motion'), Ev('x'), Ev('y')] );
     # removing class bindings
@@ -660,11 +661,11 @@ sub _onpriv_start {
     #-- bottom frame
     # the status bar
     $h->{status} = '';
-    my $fbot = $fleft->Frame->pack(@BOTTOM, @FILLX);
+    my $fbot = $fleft->Frame->pack(bottom, fillx);
     $fbot->Label(
         -anchor       =>'w',
         -textvariable => \$h->{status},
-    )->pack(@LEFT,@XFILLX, @PAD1);
+    )->pack(left,xfillx, pad1);
 
     # label to display country pointed by mouse
     $h->{country}       = undef;
@@ -672,35 +673,35 @@ sub _onpriv_start {
     $fbot->Label(
         -anchor       => 'e',
         -textvariable => \$h->{country_label},
-    )->pack(@RIGHT, @XFILLX, @PAD1);
+    )->pack(right, xfillx, pad1);
 
 
      #-- players frame
-    my $fpl = $fright->Frame->pack(@TOP);
-    $fpl->Label(-text=>'Players')->pack(@TOP);
-    my $fplist = $fpl->Frame->pack(@TOP);
+    my $fpl = $fright->Frame->pack(top);
+    $fpl->Label(-text=>'Players')->pack(top);
+    my $fplist = $fpl->Frame->pack(top);
     $h->{frames}{players} = $fplist;
 
 
     #-- dices frame
-    my $fdice = $fright->Frame->pack(@TOP,@FILLX, -pady=>10);
-    $fdice->Label(-text=>'Dice arena')->pack(@TOP,@FILLX);
-    my $fd1 = $fdice->Frame->pack(@TOP,@FILL2);
-    my $a1 = $fd1->Label(-image=>image('dice-0'))->pack(@LEFT);
-    my $a2 = $fd1->Label(-image=>image('dice-0'))->pack(@LEFT);
-    my $a3 = $fd1->Label(-image=>image('dice-0'))->pack(@LEFT);
-    my $fd3 = $fdice->Frame->pack(@TOP,@FILL2);
+    my $fdice = $fright->Frame->pack(top,fillx,pady(10));
+    $fdice->Label(-text=>'Dice arena')->pack(top,fillx);
+    my $fd1 = $fdice->Frame->pack(top,fill2);
+    my $a1 = $fd1->Label(-image=>image('dice-0'))->pack(left);
+    my $a2 = $fd1->Label(-image=>image('dice-0'))->pack(left);
+    my $a3 = $fd1->Label(-image=>image('dice-0'))->pack(left);
+    my $fd3 = $fdice->Frame->pack(top,fill2);
     my $r1 = $fd3->Label(
         -image => image('empty16'),
         -width => 38,
-    )->pack(@LEFT);
+    )->pack(left);
     my $r2 = $fd3->Label(
         -image => image('empty16'),
         -width => 38,
-    )->pack(@LEFT);
-    my $fd2 = $fdice->Frame->pack(@TOP,@FILL2);
-    my $d1 = $fd2->Label(-image=>image('dice-0'))->pack(@LEFT);
-    my $d2 = $fd2->Label(-image=>image('dice-0'))->pack(@LEFT);
+    )->pack(left);
+    my $fd2 = $fdice->Frame->pack(top,fill2);
+    my $d1 = $fd2->Label(-image=>image('dice-0'))->pack(left);
+    my $d2 = $fd2->Label(-image=>image('dice-0'))->pack(left);
     $h->{labels}{attack_1}  = $a1;
     $h->{labels}{attack_2}  = $a2;
     $h->{labels}{attack_3}  = $a3;
@@ -715,7 +716,7 @@ sub _onpriv_start {
         -text     => 'Auto-reattack',
         -variable => \$h->{auto_reattack},
         -anchor   => 'w',
-    )->pack(@TOP,@FILLX);
+    )->pack(top,fillx);
     $h->{balloon}->attach($cb_reattack, -msg=>'Automatically re-do last attack if attacker still has more than 3 armies');
 
     #-- trap close events
@@ -751,9 +752,9 @@ sub _ongui_but_attack_done {
     $h->{toplevel}->bind('<Key-Return>', undef); # done attack
     $c->CanvasBind('<1>', undef);
     $c->CanvasBind('<3>', undef);
-    $h->{labels}{attack}->configure(@ENOFF);
-    $h->{buttons}{attack_redo}->configure(@ENOFF);
-    $h->{buttons}{attack_done}->configure(@ENOFF);
+    $h->{labels}{attack}->configure(disabled);
+    $h->{buttons}{attack_redo}->configure(disabled);
+    $h->{buttons}{attack_done}->configure(disabled);
 
     # signal controller
     K->post('risk', 'attack_end');
@@ -787,8 +788,8 @@ sub _ongui_but_move_armies_done {
     $h->{toplevel}->bind('<Key-Return>', undef);
     $c->CanvasBind( '<1>', undef );
     $c->CanvasBind( '<3>', undef );
-    $h->{labels}{move_armies}->configure(@ENOFF);
-    $h->{buttons}{move_armies_done}->configure(@ENOFF);
+    $h->{labels}{move_armies}->configure(disabled);
+    $h->{buttons}{move_armies_done}->configure(disabled);
     $h->{status} = '';
 
     # signal controller
@@ -828,9 +829,9 @@ sub _ongui_but_place_armies_done {
     $c->CanvasBind('<3>', undef);
     $c->CanvasBind('<4>', undef);
     $c->CanvasBind('<5>', undef);
-    $h->{labels}{place_armies}->configure(@ENOFF);
-    $h->{buttons}{place_armies_redo}->configure(@ENOFF);
-    $h->{buttons}{place_armies_done}->configure(@ENOFF);
+    $h->{labels}{place_armies}->configure(disabled);
+    $h->{buttons}{place_armies_redo}->configure(disabled);
+    $h->{buttons}{place_armies_done}->configure(disabled);
     $h->{toplevel}->bind('<Key-Escape>', undef); # redo armies placement
     $h->{toplevel}->bind('<Key-Return>', undef); # done armies placement
 
@@ -862,7 +863,7 @@ sub _ongui_but_place_armies_redo {
     }
 
     # forbid button next phase to be clicked
-    $h->{buttons}{place_armies_done}->configure(@ENOFF);
+    $h->{buttons}{place_armies_done}->configure(disabled);
     # allow adding armies
     $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_place_armies', 1) );
     $h->{canvas}->CanvasBind( '<4>', $s->postback('_canvas_place_armies', 1) );
@@ -954,7 +955,7 @@ sub _ongui_canvas_attack_target {
     # update gui to reflect new state
     $h->{canvas}->CanvasBind('<1>', undef);
     $h->{canvas}->CanvasBind('<3>', undef);
-    $h->{buttons}{attack_done}->configure(@ENOFF);
+    $h->{buttons}{attack_done}->configure(disabled);
     $h->{toplevel}->bind('<Key-Return>', undef);
 
     # signal controller
@@ -1099,7 +1100,7 @@ sub _ongui_canvas_move_armies_target {
     # update gui to reflect new state
     $h->{canvas}->CanvasBind('<1>', undef);
     $h->{canvas}->CanvasBind('<3>', undef);
-    $h->{buttons}{move_armies_done}->configure(@ENOFF);
+    $h->{buttons}{move_armies_done}->configure(disabled);
     $h->{toplevel}->bind('<Key-Return>', undef);
 
     # request user how many armies to move
@@ -1144,7 +1145,7 @@ sub _ongui_canvas_place_armies {
     K->yield( 'chnum', $country );
 
     # allow redo button
-    $h->{buttons}{place_armies_redo}->configure(@ENON);
+    $h->{buttons}{place_armies_redo}->configure(enabled);
     $h->{toplevel}->bind('<Key-Escape>', $s->postback('_but_place_armies_redo'));
 
     # check if we're done
@@ -1153,7 +1154,7 @@ sub _ongui_canvas_place_armies {
     $h->{status} = "$nb armies left to place";
     if ( $nb == 0 ) {
         # allow button next phase to be clicked
-        $h->{buttons}{place_armies_done}->configure(@ENON);
+        $h->{buttons}{place_armies_done}->configure(enabled);
         $h->{toplevel}->bind('<Key-Return>', $s->postback('_but_place_armies_done'));
         # forbid adding armies
         $h->{canvas}->CanvasBind('<1>', undef);
@@ -1161,7 +1162,7 @@ sub _ongui_canvas_place_armies {
 
     } else {
         # forbid button next phase to be clicked
-        $h->{buttons}{place_armies_done}->configure(@ENOFF);
+        $h->{buttons}{place_armies_done}->configure(disabled);
         # allow adding armies
         $h->{canvas}->CanvasBind( '<1>', $s->postback('_canvas_place_armies', 1) );
         $h->{canvas}->CanvasBind( '<4>', $s->postback('_canvas_place_armies', 1) );

@@ -5,8 +5,6 @@ use warnings;
 package Games::Risk::GUI::Startup;
 # ABSTRACT: startup window
 
-use Games::Risk::GUI::Constants;
-use Games::Risk::Resources qw{ image maps };
 use List::Util     qw{ shuffle };
 use List::MoreUtils qw{ any };
 use POE             qw{ Loop::Tk };
@@ -15,6 +13,9 @@ use Tk;
 use Tk::Balloon;
 use Tk::BrowseEntry;
 use Tk::Font;
+use Tk::Sugar;
+
+use Games::Risk::Resources qw{ image maps };
 
 use constant K => $poe_kernel;
 
@@ -126,7 +127,7 @@ sub _onpriv_check_errors {
         $h->{error} = undef;
 
         # allow start to be clicked
-        $h->{button}{start}->configure(@ENON);
+        $h->{button}{start}->configure(enabled);
         $top->bind('<Key-Return>', $s->postback('_but_start'));
     }
 
@@ -162,10 +163,10 @@ sub _onpriv_check_errors {
         $h->{error} = $h->{frame}{players}->Label(
             -bg => 'red',
             -text => $errstr,
-        )->pack(@TOP, @FILLX);
+        )->pack(top, fillx);
 
         # prevent start to be clicked
-        $h->{button}{start}->configure(@ENOFF);
+        $h->{button}{start}->configure(disabled);
         $top->bind('<Key-Return>', undef);
     }
 }
@@ -183,7 +184,7 @@ sub _onpriv_check_nb_players {
     my @players = grep { defined $_ } @$players;
 
     # check whether we can add another player
-    my @config = ( scalar(@players) >= 10 ) ? @ENOFF : @ENON;
+    my @config = ( scalar(@players) >= 10 ) ? (disabled) : (enabled);
     $h->{button}{add_player}->configure(@config);
 }
 
@@ -223,8 +224,8 @@ sub _onpriv_new_player {
     $players->[$num]{type}  = $type;
     $players->[$num]{color} = $color;
     my $fpl = $h->{frame}{players}->Frame
-        ->pack(@TOP, @FILLX, -before=>$h->{button}{add_player});
-    my $f = $fpl->Frame(-bg=>$color)->pack(@LEFT, @FILLX);
+        ->pack(top, fillx, -before=>$h->{button}{add_player});
+    my $f = $fpl->Frame(-bg=>$color)->pack(left, fillx);
     $players->[$num]{line}  = $fpl;
     $players->[$num]{frame} = $f;
     $f->Entry(
@@ -232,7 +233,7 @@ sub _onpriv_new_player {
         -validate     => 'all',
         -vcmd         => sub { $s->postback('_check_errors')->(); 1; },
         #-highlightbackground => $color,
-    )->pack(@LEFT,@XFILLX);
+    )->pack(left,xfillx);
     my $be = $f->BrowseEntry(
         -variable           => \$players->[$num]{type},
         -background         => $color,
@@ -241,7 +242,7 @@ sub _onpriv_new_player {
         -state              => 'readonly',
         -disabledforeground => 'black',
         -browsecmd          => $s->postback('_check_errors'),
-    )->pack(@LEFT);
+    )->pack(left);
     my $bc = $f->Button(
         -bg               => $color,
         -fg               => 'white',
@@ -249,8 +250,8 @@ sub _onpriv_new_player {
         -activeforeground => 'white',
         -image            => image('paintbrush'),
         -command          => $s->postback('_but_color', $num),
-    )->pack(@LEFT);
-    my $ld = $fpl->Label(-image=>image('fileclose16'))->pack(@LEFT);
+    )->pack(left);
+    my $ld = $fpl->Label(-image=>image('fileclose16'))->pack(left);
     $ld->bind('<1>', $s->postback('_but_delete', $num));
     $players->[$num]{be_type}   = $be;
     $players->[$num]{but_color} = $bc;
@@ -302,7 +303,7 @@ sub _onpriv_start {
         -fg   => 'white',
         -font => $font,
         -text => 'New game',
-    )->pack(@TOP,@PAD20,@FILLX);
+    )->pack(top,pad20,fillx);
 
     #-- various resources
 
@@ -312,28 +313,28 @@ sub _onpriv_start {
     #-- map selection
     my @choices = maps();
     $h->{map} = 'risk';
-    my $fmap = $top->Frame->pack(@TOP, @XFILL2, @PAD20);
-    $fmap->Label(-text=>'Map', -anchor=>'w')->pack(@TOP, @FILLX);
+    my $fmap = $top->Frame->pack(top, xfill2, pad20);
+    $fmap->Label(-text=>'Map', -anchor=>'w')->pack(top, fillx);
     $fmap->BrowseEntry(
         -variable           => \$h->{map},
         -listheight         => scalar(@choices)+1,
         -choices            => \@choices,
         -state              => 'readonly',
         -disabledforeground => 'black',
-    )->pack(@TOP);
+    )->pack(top );
 
     #-- frame for players
-    my $fpl = $top->Frame->pack(@TOP, @XFILL2, @PAD20);
-    $fpl->Label(-text=>'Players', -anchor=>'w')->pack(@TOP, @FILLX);
+    my $fpl = $top->Frame->pack(top, xfill2, pad20);
+    $fpl->Label(-text=>'Players', -anchor=>'w')->pack(top, fillx);
     $h->{button}{add_player} = $fpl->Button(
         -text    => 'New player...',
         -command => $s->postback('_but_new_player'),
-    )->pack(@TOP,@FILLX);
+    )->pack(top,fillx);
     $h->{frame}{players} = $fpl;
     K->yield('_load_defaults');
 
     #-- bottom frame
-    my $fbot = $top->Frame->pack(@BOTTOM, @FILLX, @PAD20);
+    my $fbot = $top->Frame->pack(bottom, fillx, pad20);
     my $b_start = $h->{button}{start} = $fbot->Button(
         -text => 'Start game',
         -command => $s->postback('_but_start'),
@@ -343,8 +344,8 @@ sub _onpriv_start {
         -command => $s->postback('_but_quit'),
     );
     # pack after creation, to have clean focus order
-    $b_quit->pack(@RIGHT,@PAD1);
-    $b_start->pack(@RIGHT,@PAD1);
+    $b_quit->pack(right,pad1);
+    $b_start->pack(right,pad1);
 
     # window binding
     $top->bind('<Key-Return>', $s->postback('_but_start'));

@@ -5,10 +5,10 @@ use warnings;
 package Games::Risk::GUI::GameOver;
 # ABSTRACT: window used when game is over
 
-use Games::Risk::GUI::Constants;
 use POE qw{ Loop::Tk };
 use Tk;
 use Tk::Font;
+use Tk::Sugar;
 
 use constant K => $poe_kernel;
 
@@ -67,17 +67,17 @@ sub _onpriv_start {
         -fg   => 'white',
         -font => $font,
         -text => "$name won!",
-    )->pack(@TOP,@PAD20);
+    )->pack(top,pad20);
     $top->Label(
         -text => $winner->type eq 'human'
             ? 'Congratulations, you won! Maybe the artificial '
             . 'intelligences were not that hard?'
             : 'Unfortunately, you lost... Try harder next time!'
-    )->pack(@TOP,@PAD20);
+    )->pack(top,pad20);
     $top->Button(
         -text    => 'Close',
         -command => $s->postback('_but_close'),
-    )->pack(@TOP);
+    )->pack(top);
 
 
     #-- move window & enforce geometry

@@ -5,12 +5,13 @@ use warnings;
 package Games::Risk::GUI::Cards;
 # ABSTRACT: cards listing
 
-use Games::Risk::GUI::Constants;
-use Games::Risk::Resources qw{ image };
 use List::MoreUtils qw{ any firstidx };
 use POE             qw{ Loop::Tk };
 use Readonly;
+use Tk::Sugar;
 use Tk::Pane;
+
+use Games::Risk::Resources qw{ image };
 
 use constant K => $poe_kernel;
 
@@ -126,7 +127,7 @@ sub _onpub_change_button_state {
         }
     }
 
-    $h->{button}->configure( $select ? @ENON : @ENOFF );
+    $h->{button}->configure( $select ? (enabled) : (disabled) );
 }
 
 
@@ -253,21 +254,21 @@ sub _onpriv_start {
 
     #- top label
     $h->{label} = $top->Label(
-        -text => 'Select 3 cards')->pack(@TOP,@FILLX);
+        -text => 'Select 3 cards')->pack(top,fillx);
 
     #- cards frame
     $h->{frame} = $top->Scrolled('Frame',
         -scrollbars => 'e',
         -width      => ($WIDTH+5)*3,
         -height     => ($HEIGHT+5)*2,
-    )->pack(@TOP, @XFILL2);
+    )->pack(top, xfill2);
 
     #- bottom button
     $h->{button} = $top->Button(
         -text    => 'Exchange cards',
         -command => $s->postback('_but_exchange'),
-        @ENOFF,
-    )->pack(@TOP, @FILL2);
+        disabled,
+    )->pack(top, fill2);
 
     #- force window geometry
     $top->update;    # force redraw

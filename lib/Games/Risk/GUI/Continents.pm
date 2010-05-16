@@ -5,9 +5,10 @@ use warnings;
 package Games::Risk::GUI::Continents;
 # ABSTRACT: continents listing
 
-use Games::Risk::GUI::Constants;
-use Games::Risk::Resources qw{ image };
 use POE                    qw{ Loop::Tk };
+use Tk::Sugar;
+
+use Games::Risk::Resources qw{ image };
 
 use constant K => $poe_kernel;
 
