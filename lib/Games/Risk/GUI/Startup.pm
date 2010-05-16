@@ -15,6 +15,7 @@ use Tk::BrowseEntry;
 use Tk::Font;
 use Tk::Sugar;
 
+use Games::Risk::I18N      qw{ T };
 use Games::Risk::Resources qw{ image maps };
 
 use constant K => $poe_kernel;
@@ -302,7 +303,7 @@ sub _onpriv_start {
         -bg   => 'black',
         -fg   => 'white',
         -font => $font,
-        -text => 'New game',
+        -text => T('New game'),
     )->pack(top,pad20,fillx);
 
     #-- various resources
