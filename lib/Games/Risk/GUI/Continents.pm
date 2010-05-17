@@ -8,6 +8,7 @@ package Games::Risk::GUI::Continents;
 use POE                    qw{ Loop::Tk };
 use Tk::Sugar;
 
+use Games::Risk::I18N      qw{ T };
 use Games::Risk::Resources qw{ image };
 
 use constant K => $poe_kernel;
@@ -65,7 +66,7 @@ sub visibility_toggle {
     my ($h) = $_[HEAP];
 
     my $top = $h->{toplevel};
-    my $method = $top->state eq 'normal' ? 'withdraw' : 'deiconify';
+    my $method = ($top->state eq 'normal') ? 'withdraw' : 'deiconify'; # parens needed for xgettext
     $top->$method;
 }
 
@@ -87,7 +88,7 @@ sub _start {
     my $top = $opts->{parent}->Toplevel;
     $top->withdraw;           # window is hidden first
     $h->{toplevel} = $top;
-    $top->title('Continents');
+    $top->title( T('Continents') );
     $top->iconimage( image('icon-continents') );
 
     #- populate continents list
