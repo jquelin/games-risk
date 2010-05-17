@@ -5,12 +5,15 @@ use warnings;
 package Games::Risk::Controller;
 # ABSTRACT: controller poe session for risk
 
-use Games::Risk::Map;
-use Games::Risk::Player;
-use Games::Risk::Resources qw{ map_path };
 use List::Util      qw{ min shuffle };
 use POE             qw{ Loop::Tk };
 use Readonly;
+
+use Games::Risk::I18N      qw{ T };
+use Games::Risk::Map;
+use Games::Risk::Player;
+use Games::Risk::Resources qw{ map_path };
+
 use constant K => $poe_kernel;
 
 
@@ -528,25 +531,30 @@ sub _onpriv_create_players {
 
         my $player;
         given ($type) {
-            when ('Human') {
+            when ( $type eq T('Human') ) {         # FIXME 20100517 JQ: mix string & code
                 # human player
                 $player = Games::Risk::Player->new({
-                        name  => $name,
-                        color => $color,
-                        type  => 'human',
+                    name  => $name,
+                    color => $color,
+                    type  => 'human',
                 });
             }
-            when (/^Computer, (\w+)$/) {
+            when ( $type eq T('Computer, easy') ) { # FIXME 20100517 JQ: mix string & code
                 # artificial intelligence
-                my %class = (
-                    'easy' => 'Games::Risk::AI::Blitzkrieg',
-                    'hard' => 'Games::Risk::AI::Hegemon',
-                );
                 $player = Games::Risk::Player->new({
-                        name     => $name,
-                        color    => $color,
-                        type     => 'ai',
-                        ai_class => $class{$1},
+                    name     => $name,
+                    color    => $color,
+                    type     => 'ai',
+                    ai_class => 'Games::Risk::AI::Blitzkrieg',
+                });
+            }
+            when ( $type eq T('Computer, hard') ) { # FIXME 20100517 JQ: mix string & code
+                # artificial intelligence
+                $player = Games::Risk::Player->new({
+                    name     => $name,
+                    color    => $color,
+                    type     => 'ai',
+                    ai_class => 'Games::Risk::AI::Hegemon',
                 });
             }
             default {

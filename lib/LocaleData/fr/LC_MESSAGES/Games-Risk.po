@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Games-Risk\n"
 "Report-Msgid-Bugs-To: bug-games-risk@rt.cpan.org\n"
-"POT-Creation-Date: 2010-05-16 19:53+0200\n"
-"PO-Revision-Date: 2010-05-16 19:59+0100\n"
+"POT-Creation-Date: 2010-05-17 17:15+0200\n"
+"PO-Revision-Date: 2010-05-17 17:16+0100\n"
 "Last-Translator: Jérôme Quelin <jquelin@gmail.com>\n"
 "Language-Team: Jérôme Quelin <jquelin@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,103 @@ msgstr ""
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
+#: lib/Games/Risk/Controller.pm:535
+#: lib/Games/Risk/GUI/Startup.pm:150
+#: lib/Games/Risk/GUI/Startup.pm:202
+#: lib/Games/Risk/GUI/Startup.pm:221
+msgid "Human"
+msgstr "Humain"
+
+#: lib/Games/Risk/Controller.pm:544
+#: lib/Games/Risk/GUI/Startup.pm:202
+#: lib/Games/Risk/GUI/Startup.pm:221
+msgid "Computer, easy"
+msgstr "Ordinateur, facile"
+
+#: lib/Games/Risk/Controller.pm:554
+#: lib/Games/Risk/GUI/Startup.pm:202
+#: lib/Games/Risk/GUI/Startup.pm:221
+#: lib/Games/Risk/GUI/Startup.pm:443
+msgid "Computer, hard"
+msgstr "Ordinateur, difficile"
+
+#: lib/Games/Risk/GUI/Startup.pm:45
+msgid "Napoleon Bonaparte"
+msgstr "Napoléon Bonaparte"
+
+#: lib/Games/Risk/GUI/Startup.pm:46
+msgid "Staline"
+msgstr "Staline"
+
+#: lib/Games/Risk/GUI/Startup.pm:47
+msgid "Alexander the Great"
+msgstr "Alexandre le Grand"
+
+#: lib/Games/Risk/GUI/Startup.pm:48
+msgid "Julius Caesar"
+msgstr "Jules César"
+
+#: lib/Games/Risk/GUI/Startup.pm:49
+msgid "Attila"
+msgstr "Attila"
+
+#: lib/Games/Risk/GUI/Startup.pm:50
+msgid "Genghis Kahn"
+msgstr "Genghis Kahn"
+
+#: lib/Games/Risk/GUI/Startup.pm:51
+msgid "Charlemagne"
+msgstr "Charlemagne"
+
+#: lib/Games/Risk/GUI/Startup.pm:52
+msgid "Saladin"
+msgstr "Saladin"
+
+#: lib/Games/Risk/GUI/Startup.pm:53
+msgid "Otto von Bismarck"
+msgstr "Otto von Bismarck"
+
+#: lib/Games/Risk/GUI/Startup.pm:54
+msgid "Ramses II"
+msgstr "Ramses II"
+
+#: lib/Games/Risk/GUI/Startup.pm:139
+msgid "Two players cannot have the same color."
+msgstr "La même couleur ne peut pas être utilisée par deux joueurs."
+
+#: lib/Games/Risk/GUI/Startup.pm:146
+msgid "Two players cannot have the same name."
+msgstr "Le même nom ne peut pas être utilisé par deux joueurs."
+
+#: lib/Games/Risk/GUI/Startup.pm:151
+msgid "Cannot have more than one human player."
+msgstr "Partie avec plus d'un joueur humain non supportée."
+
+#: lib/Games/Risk/GUI/Startup.pm:152
+msgid "Game without any human player not (yet) supported."
+msgstr "Partie sans joueur humain non (encore) supportée."
+
+#: lib/Games/Risk/GUI/Startup.pm:155
+msgid "A player cannot have an empty name."
+msgstr "Tout joueur doit avoir un nom."
+
+#: lib/Games/Risk/GUI/Startup.pm:159
+msgid "Game should have at least 2 players."
+msgstr "Il doit y avoir au moins 2 joueurs."
+
 #: lib/Games/Risk/GUI/Startup.pm:306
 msgid "New game"
 msgstr "Nouvelle partie"
+
+#: lib/Games/Risk/GUI/Startup.pm:331
+msgid "New player..."
+msgstr "Joueur supplémentaire..."
+
+#: lib/Games/Risk/GUI/Startup.pm:340
+msgid "Start game"
+msgstr "Nouvelle partie"
+
+#: lib/Games/Risk/GUI/Startup.pm:344
+msgid "Quit"
+msgstr "Quitter"
 

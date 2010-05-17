@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Games-Risk\n"
 "Report-Msgid-Bugs-To: bug-games-risk@rt.cpan.org\n"
-"POT-Creation-Date: 2010-05-16 19:53+0200\n"
+"POT-Creation-Date: 2010-05-17 17:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,97 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: lib/Games/Risk/Controller.pm:535 lib/Games/Risk/GUI/Startup.pm:150
+#: lib/Games/Risk/GUI/Startup.pm:202 lib/Games/Risk/GUI/Startup.pm:221
+msgid "Human"
+msgstr ""
+
+#: lib/Games/Risk/Controller.pm:544 lib/Games/Risk/GUI/Startup.pm:202
+#: lib/Games/Risk/GUI/Startup.pm:221
+msgid "Computer, easy"
+msgstr ""
+
+#: lib/Games/Risk/Controller.pm:554 lib/Games/Risk/GUI/Startup.pm:202
+#: lib/Games/Risk/GUI/Startup.pm:221 lib/Games/Risk/GUI/Startup.pm:443
+msgid "Computer, hard"
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:45
+msgid "Napoleon Bonaparte"
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:46
+msgid "Staline"
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:47
+msgid "Alexander the Great"
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:48
+msgid "Julius Caesar"
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:49
+msgid "Attila"
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:50
+msgid "Genghis Kahn"
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:51
+msgid "Charlemagne"
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:52
+msgid "Saladin"
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:53
+msgid "Otto von Bismarck"
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:54
+msgid "Ramses II"
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:139
+msgid "Two players cannot have the same color."
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:146
+msgid "Two players cannot have the same name."
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:151
+msgid "Cannot have more than one human player."
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:152
+msgid "Game without any human player not (yet) supported."
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:155
+msgid "A player cannot have an empty name."
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:159
+msgid "Game should have at least 2 players."
+msgstr ""
+
 #: lib/Games/Risk/GUI/Startup.pm:306
 msgid "New game"
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:331
+msgid "New player..."
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:340
+msgid "Start game"
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:344
+msgid "Quit"
 msgstr ""

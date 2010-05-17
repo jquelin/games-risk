@@ -42,16 +42,16 @@ Readonly my @COLORS => (
     #'#A3E3ED',  # blizzard blue
 );
 Readonly my @NAMES => (
-    'Napoleon Bonaparte',   # france,   1769  - 1821
-    'Staline',              # russia,   1878  - 1953
-    'Alexander the Great',  # greece,   356BC - 323BC
-    'Julius Caesar',        # rome,     100BC - 44BC
-    'Attila',               # hun,      406   - 453
-    'Genghis Kahn',         # mongolia, 1162  - 1227
-    'Charlemagne',          # france,   747   - 814
-    'Saladin',              # iraq,     1137  - 1193
-    'Otto von Bismarck',    # germany,  1815  - 1898
-    'Ramses II',            # egypt,    1303BC - 1213BC
+    T('Napoleon Bonaparte'),   # france,   1769  - 1821
+    T('Staline'),              # russia,   1878  - 1953
+    T('Alexander the Great'),  # greece,   356BC - 323BC
+    T('Julius Caesar'),        # rome,     100BC - 44BC
+    T('Attila'),               # hun,      406   - 453
+    T('Genghis Kahn'),         # mongolia, 1162  - 1227
+    T('Charlemagne'),          # france,   747   - 814
+    T('Saladin'),              # iraq,     1137  - 1193
+    T('Otto von Bismarck'),    # germany,  1815  - 1898
+    T('Ramses II'),            # egypt,    1303BC - 1213BC
 );
 
 
@@ -136,27 +136,27 @@ sub _onpriv_check_errors {
     my %colors;
     @colors{ map { $_->{color} } @players } = (0) x @players;
     $colors{ $_->{color} }++ for @players;
-    $errstr = 'Two players cannot have the same color.'
+    $errstr = T('Two players cannot have the same color.')
         if any { $colors{$_} > 1 } keys %colors;
 
     # 2 players cannot have the same name
     my %names;
     @names{ map { $_->{name} } @players } = (0) x @players;
     $names{ $_->{name} }++ for @players;
-    $errstr = 'Two players cannot have the same name.'
+    $errstr = T('Two players cannot have the same name.')
         if any { $names{$_} > 1 } keys %names;
 
     # human players
-    my $nbhuman = grep { $_->{type} eq 'Human' } @players;
-    $errstr = 'Cannot have more than one human player.'            if $nbhuman > 1;
-    $errstr = 'Game without any human player not (yet) supported.' if $nbhuman < 1;
+    my $nbhuman = grep { $_->{type} eq T('Human') } @players;
+    $errstr = T('Cannot have more than one human player.')            if $nbhuman > 1;
+    $errstr = T('Game without any human player not (yet) supported.') if $nbhuman < 1;
 
     # all players should have a name
-    $errstr = 'A player cannot have an empty name.'
+    $errstr = T('A player cannot have an empty name.')
         if any { $_->{name} eq '' } @players;
 
     # there should be at least 2 players
-    $errstr = 'Game should have at least 2 players.' if scalar @players < 2;
+    $errstr = T('Game should have at least 2 players.') if scalar @players < 2;
 
     # check if there are some errors
     if ( $errstr ) {
@@ -199,7 +199,7 @@ sub _onpriv_check_nb_players {
 sub _onpriv_load_defaults {
     # FIXME: hardcoded
     my @names  = ($ENV{USER}, shuffle @NAMES );
-    my @types  = ('Human', ('Computer, easy')x1, ('Computer, hard')x2);
+    my @types  = (T('Human'), (T('Computer, easy'))x1, (T('Computer, hard'))x2);
     my @colors = @COLORS;
     foreach my $i ( 0..$#types ) {
         K->yield('_new_player', $names[$i], $types[$i], $colors[$i]);
@@ -218,7 +218,7 @@ sub _onpriv_new_player {
     my ($name, $type, $color) = @args;
     my $players = $h->{players};
     my $num = scalar @$players;
-    my @choices = ( 'Human', 'Computer, easy', 'Computer, hard' );
+    my @choices = ( T('Human'), T('Computer, easy'), T('Computer, hard') );
 
     # the frame
     $players->[$num]{name}  = $name;
@@ -328,7 +328,7 @@ sub _onpriv_start {
     my $fpl = $top->Frame->pack(top, xfill2, pad20);
     $fpl->Label(-text=>'Players', -anchor=>'w')->pack(top, fillx);
     $h->{button}{add_player} = $fpl->Button(
-        -text    => 'New player...',
+        -text    => T('New player...'),
         -command => $s->postback('_but_new_player'),
     )->pack(top,fillx);
     $h->{frame}{players} = $fpl;
@@ -337,11 +337,11 @@ sub _onpriv_start {
     #-- bottom frame
     my $fbot = $top->Frame->pack(bottom, fillx, pad20);
     my $b_start = $h->{button}{start} = $fbot->Button(
-        -text => 'Start game',
+        -text => T('Start game'),
         -command => $s->postback('_but_start'),
     );
     my $b_quit = $fbot->Button(
-        -text => 'Quit',
+        -text => T('Quit'),
         -command => $s->postback('_but_quit'),
     );
     # pack after creation, to have clean focus order
@@ -440,7 +440,7 @@ sub _ongui_but_new_player {
     my $color = ( shuffle keys %colors )[0];
 
     # default type
-    my $type = 'Computer, hard';
+    my $type = T('Computer, hard');
 
     # create new player
     K->yield('_new_player', $name, $type, $color);
