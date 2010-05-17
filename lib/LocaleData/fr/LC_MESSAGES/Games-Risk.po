@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Games-Risk\n"
 "Report-Msgid-Bugs-To: bug-games-risk@rt.cpan.org\n"
-"POT-Creation-Date: 2010-05-17 18:44+0200\n"
-"PO-Revision-Date: 2010-05-17 18:44+0100\n"
+"POT-Creation-Date: 2010-05-17 19:24+0200\n"
+"PO-Revision-Date: 2010-05-17 19:24+0100\n"
 "Last-Translator: Jérôme Quelin <jquelin@gmail.com>\n"
 "Language-Team: Jérôme Quelin <jquelin@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -100,6 +100,139 @@ msgstr ""
 #: lib/Games/Risk/GUI/GameOver.pm:79
 msgid "Close"
 msgstr "Fermer"
+
+#: lib/Games/Risk/GUI/Board.pm:132
+#: lib/Games/Risk/GUI/Board.pm:924
+msgid "Attacking from ..."
+msgstr "Attaquer à partir de ..."
+
+#: lib/Games/Risk/GUI/Board.pm:352
+#: lib/Games/Risk/GUI/Board.pm:383
+msgid "Moving armies from..."
+msgstr "Déplacer des armées depuis ..."
+
+#: lib/Games/Risk/GUI/Board.pm:411
+#: lib/Games/Risk/GUI/Board.pm:443
+#: lib/Games/Risk/GUI/Board.pm:882
+#: lib/Games/Risk/GUI/Board.pm:1156
+#: lib/Games/Risk/GUI/Board.pm:1197
+#, perl-format
+msgid "%s armies left to place"
+msgstr "%s armées restantes"
+
+#: lib/Games/Risk/GUI/Board.pm:485
+msgid "human"
+msgstr "humain"
+
+#: lib/Games/Risk/GUI/Board.pm:492
+#, perl-format
+msgid "computer - %s"
+msgstr "Ordinateur - %s"
+
+#: lib/Games/Risk/GUI/Board.pm:512
+#, perl-format
+msgid "Player %s has lost"
+msgstr "Le joueur %s a perdu"
+
+#: lib/Games/Risk/GUI/Board.pm:552
+msgid "~Game"
+msgstr "~Jeu"
+
+#: lib/Games/Risk/GUI/Board.pm:554
+msgid "~Close"
+msgstr "~Fermer"
+
+#: lib/Games/Risk/GUI/Board.pm:564
+msgid "~Quit"
+msgstr "~Quitter"
+
+#: lib/Games/Risk/GUI/Board.pm:573
+msgid "~View"
+msgstr "~Vue"
+
+#: lib/Games/Risk/GUI/Board.pm:575
+msgid "~Cards"
+msgstr "~Cartes"
+
+#: lib/Games/Risk/GUI/Board.pm:583
+msgid "C~ontinents"
+msgstr "C~ontinents"
+
+#: lib/Games/Risk/GUI/Board.pm:603
+msgid "Game state: "
+msgstr "Etape du jeu :"
+
+#: lib/Games/Risk/GUI/Board.pm:604
+msgid "place armies"
+msgstr "placer des armées"
+
+#: lib/Games/Risk/GUI/Board.pm:615
+msgid "attack"
+msgstr "attaquer"
+
+#: lib/Games/Risk/GUI/Board.pm:626
+msgid "move armies"
+msgstr "déplacer des armées"
+
+#: lib/Games/Risk/GUI/Board.pm:640
+msgid "undo all"
+msgstr "recommencer"
+
+#: lib/Games/Risk/GUI/Board.pm:641
+msgid "ready for attack"
+msgstr "prêt à attaquer"
+
+#: lib/Games/Risk/GUI/Board.pm:642
+msgid "attack again"
+msgstr "ré-attaquer"
+
+#: lib/Games/Risk/GUI/Board.pm:643
+msgid "consolidate"
+msgstr "consolider"
+
+#: lib/Games/Risk/GUI/Board.pm:644
+msgid "turn finished"
+msgstr "tour terminé"
+
+#: lib/Games/Risk/GUI/Board.pm:682
+msgid "Players"
+msgstr "Joueurs"
+
+#: lib/Games/Risk/GUI/Board.pm:689
+msgid "Dice arena"
+msgstr "Piste de dés"
+
+#: lib/Games/Risk/GUI/Board.pm:717
+msgid "Auto-reattack"
+msgstr "Ré-attaque automatique"
+
+#: lib/Games/Risk/GUI/Board.pm:721
+msgid "Automatically re-do last attack if attacker still has more than 3 armies"
+msgstr "Automatiquement ré-attaquer si l'attaquant a plus de 3 armées"
+
+#: lib/Games/Risk/GUI/Board.pm:906
+#, perl-format
+msgid "Attacking ... from %s"
+msgstr "Attaquer ... depuis %s"
+
+#: lib/Games/Risk/GUI/Board.pm:951
+#, perl-format
+msgid "Attacking %s from %s"
+msgstr "Attaquer %s depuis %s"
+
+#: lib/Games/Risk/GUI/Board.pm:1046
+msgid "Moving armies from ..."
+msgstr "Déplacer des armées depuis ..."
+
+#: lib/Games/Risk/GUI/Board.pm:1074
+#, perl-format
+msgid "Moving armies from %s to ..."
+msgstr "Déplacer des armées de %s vers ..."
+
+#: lib/Games/Risk/GUI/Board.pm:1097
+#, perl-format
+msgid "Moving armies from %s to %s"
+msgstr "Déplacer des armées de %s vers %s"
 
 #: lib/Games/Risk/GUI/Continents.pm:91
 msgid "Continents"
