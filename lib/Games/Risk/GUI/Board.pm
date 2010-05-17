@@ -1010,7 +1010,7 @@ sub _ongui_canvas_motion {
     my (undef, $x,$y) = @$args; # first param is canvas
 
     # correct with zoom factor
-    my ($zoomx, $zoomy) = @{ $h->{zoom} };
+    my ($zoomx, $zoomy) = @{ $h->{zoom} // [1,1] };
     $x /= $zoomx;
     $y /= $zoomy;
 
@@ -1019,6 +1019,7 @@ sub _ongui_canvas_motion {
     # green and blue will be the same.
     my $grey = 0;
     eval { ($grey) = $h->{greyscale}->get($x,$y) };
+    return unless defined $h->{map};
     my $country    = $h->{map}->country_get($grey);
 
     # update country and country label
