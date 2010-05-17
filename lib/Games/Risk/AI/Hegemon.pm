@@ -7,6 +7,8 @@ package Games::Risk::AI::Hegemon;
 
 use List::MoreUtils qw{ all };
 
+use Games::Risk::I18N qw{ T };
+
 use base qw{ Games::Risk::AI };
 
 #--
@@ -206,7 +208,7 @@ sub attack_move {
 #
 # Return a difficulty level for the ai.
 #
-sub difficulty { return 'hard' }
+sub difficulty { return T('hard') }
 
 
 #
@@ -449,14 +451,14 @@ sub _country_to_free_continent {
 # Return a brief description of the ai and the way it operates.
 #
 sub _description {
-    return q{
+    return T(q{
 
         This artificial intelligence is optimized to conquer the world.
         It checks what countries are most valuable for it, optimizes
         attacks and moves for continent bonus and blocking other
         players.
 
-    };
+    });
 }
 
 

@@ -7,6 +7,8 @@ package Games::Risk::AI::Blitzkrieg;
 
 use List::Util qw{ shuffle };
 
+use Games::Risk::I18N qw{ T };
+
 use base qw{ Games::Risk::AI };
 
 #--
@@ -66,7 +68,7 @@ sub attack_move {
 #
 # Return a difficulty level for the ai.
 #
-sub difficulty { return 'easy' }
+sub difficulty { return T('easy') }
 
 
 #
@@ -127,13 +129,13 @@ sub place_armies {
 # Return a brief description of the ai and the way it operates.
 #
 sub _description {
-    return q{
+    return T(q{
 
         This artificial intelligence follows a blitzkrieg strategy. It
         will piles up new armies in one country, and then follow a
         random path from this attack base.
 
-    };
+    });
 }
 
 

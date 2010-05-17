@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Games-Risk\n"
 "Report-Msgid-Bugs-To: bug-games-risk@rt.cpan.org\n"
-"POT-Creation-Date: 2010-05-17 19:24+0200\n"
-"PO-Revision-Date: 2010-05-17 19:24+0100\n"
+"POT-Creation-Date: 2010-05-17 19:53+0200\n"
+"PO-Revision-Date: 2010-05-17 19:54+0100\n"
 "Last-Translator: Jérôme Quelin <jquelin@gmail.com>\n"
 "Language-Team: Jérôme Quelin <jquelin@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -105,6 +105,12 @@ msgstr "Fermer"
 #: lib/Games/Risk/GUI/Board.pm:924
 msgid "Attacking from ..."
 msgstr "Attaquer à partir de ..."
+
+#: lib/Games/Risk/GUI/Board.pm:145
+#: lib/Games/Risk/GUI/Board.pm:951
+#, perl-format
+msgid "Attacking %s from %s"
+msgstr "Attaquer %s depuis %s"
 
 #: lib/Games/Risk/GUI/Board.pm:352
 #: lib/Games/Risk/GUI/Board.pm:383
@@ -215,11 +221,6 @@ msgstr "Automatiquement ré-attaquer si l'attaquant a plus de 3 armées"
 msgid "Attacking ... from %s"
 msgstr "Attaquer ... depuis %s"
 
-#: lib/Games/Risk/GUI/Board.pm:951
-#, perl-format
-msgid "Attacking %s from %s"
-msgstr "Attaquer %s depuis %s"
-
 #: lib/Games/Risk/GUI/Board.pm:1046
 msgid "Moving armies from ..."
 msgstr "Déplacer des armées depuis ..."
@@ -317,4 +318,70 @@ msgstr "Nouvelle partie"
 #: lib/Games/Risk/GUI/Startup.pm:344
 msgid "Quit"
 msgstr "Quitter"
+
+#: lib/Games/Risk/AI/Blitzkrieg.pm:71
+msgid "easy"
+msgstr "facile"
+
+#: lib/Games/Risk/AI/Blitzkrieg.pm:132
+msgid ""
+"\n"
+"\n"
+"        This artificial intelligence follows a blitzkrieg strategy. It\n"
+"        will piles up new armies in one country, and then follow a\n"
+"        random path from this attack base.\n"
+"\n"
+"    "
+msgstr ""
+"\n"
+"\n"
+"        Cette intelligence artificielle suit une stratégie de blitzkrieg.\n"
+"        Elle empile ses renforts dans un pays, et lance une attaque\n"
+"        continue à partir de ce point de départ, tant qu'elle le peut.\n"
+"\n"
+"    "
+
+#: lib/Games/Risk/AI/Hegemon.pm:211
+msgid "hard"
+msgstr "difficile"
+
+#: lib/Games/Risk/AI/Hegemon.pm:454
+msgid ""
+"\n"
+"\n"
+"        This artificial intelligence is optimized to conquer the world.\n"
+"        It checks what countries are most valuable for it, optimizes\n"
+"        attacks and moves for continent bonus and blocking other\n"
+"        players.\n"
+"\n"
+"    "
+msgstr ""
+"\n"
+"\n"
+"        Cette intelligence artificielle est conçue pour conquérir le\n"
+"        monde. Elle optimise attaques et déplacements pour obtenir\n"
+"        et préserver les bonus de continent, ainsi que bloquer les\n"
+"        autres joueurs.\n"
+"\n"
+"    "
+
+#: lib/Games/Risk/AI/Dumb.pm:35
+msgid "very easy"
+msgstr "très facile"
+
+#: lib/Games/Risk/AI/Dumb.pm:81
+msgid ""
+"\n"
+"\n"
+"        This artificial intelligence does nothing: it just piles up new armies\n"
+"        randomly, and never ever attacks nor move armies.\n"
+"\n"
+"    "
+msgstr ""
+"\n"
+"\n"
+"        Cette intelligence artificielle ne fait rien: elle empile simplement les\n"
+"        renforts de manière aléatoire, et n'attaque ni ne bouge jamais d'armées.\n"
+"\n"
+"    "
 

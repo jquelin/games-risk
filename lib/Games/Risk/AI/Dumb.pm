@@ -5,6 +5,8 @@ use warnings;
 package Games::Risk::AI::Dumb;
 # ABSTRACT: dumb ai that does nothing
 
+use Games::Risk::I18N qw{ T };
+
 use base qw{ Games::Risk::AI };
 
 #--
@@ -30,7 +32,7 @@ sub attack {
 #
 # Return a difficulty level for the ai.
 #
-sub difficulty { return 'very easy' }
+sub difficulty { return T('very easy') }
 
 
 #
@@ -76,12 +78,12 @@ sub place_armies {
 # Return a brief description of the ai and the way it operates.
 #
 sub _description {
-    return q{
+    return T(q{
 
         This artificial intelligence does nothing: it just piles up new armies
         randomly, and never ever attacks nor move armies.
 
-    };
+    });
 }
 
 1;
