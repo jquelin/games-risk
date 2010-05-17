@@ -11,6 +11,8 @@ use Tk;
 use Tk::Font;
 use Tk::Sugar;
 
+use Games::Risk::I18N qw{ T };
+
 use constant K => $poe_kernel;
 
 
@@ -66,9 +68,9 @@ sub _onpub_attack_move {
 
     # update gui
     my $top = $h->{toplevel};
-    $top->title('Country invasion');
-    $h->{lab_title}->configure(-text => 'A country has been conquered!');
-    my $title = sprintf 'You have conquered %s while attacking from %s.',
+    $top->title( T('Country invasion') );
+    $h->{lab_title}->configure(-text => T('A country has been conquered!') );
+    my $title = sprintf T('You have conquered %s while attacking from %s.'),
         $dst->name, $src->name;
     my $max = $src->armies - 1; # 1 army should guard $src
     $h->{scale}->configure(-from=>$min,-to=>$max);
@@ -108,9 +110,9 @@ sub _onpub_ask_move_armies {
 
     # update gui
     my $top = $h->{toplevel};
-    $top->title('Moving armies');
-    $h->{lab_title}->configure(-text => 'Consolidate your positions');
-    my $title = sprintf 'Moving armies from %s to %s.',
+    $top->title( T('Moving armies') );
+    $h->{lab_title}->configure(-text => T('Consolidate your positions') );
+    my $title = sprintf T('Moving armies from %s to %s.'),
         $src->name, $dst->name;
     $h->{scale}->configure(-from=>0,-to=>$max);
     $h->{lab_info}->configure(-text=>$title);
@@ -169,16 +171,16 @@ sub _onpriv_start {
     )->pack(top,pad20,xfill2);
     my $lab = $top->Label->pack(top,xfill2);
     my $fs  = $top->Frame->pack(top,xfill2);
-    $fs->Label(-text=>'Armies to move')->pack(left);
+    $fs->Label( -text => T('Armies to move') )->pack(left, S);
     $h->{armies} = 0;  # nb of armies to move
     my $sld = $fs->Scale(
         -orient    => 'horizontal',
         -width     => 5, # height since we're horizontal
         -showvalue => 1,
         -variable  => \$h->{armies},
-    )->pack(left,xfill2);
+    )->pack(left,xfill2,S);
     my $but = $top->Button(
-        -text    => 'Move armies',
+        -text    => T('Move armies'),
         -command => $s->postback('_but_move'),
     )->pack(top);
     $h->{lab_title} = $title;

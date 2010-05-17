@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Games-Risk\n"
 "Report-Msgid-Bugs-To: bug-games-risk@rt.cpan.org\n"
-"POT-Creation-Date: 2010-05-17 17:39+0200\n"
+"POT-Creation-Date: 2010-05-17 18:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,19 +16,53 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/Games/Risk/Controller.pm:535 lib/Games/Risk/GUI/Startup.pm:150
+#: lib/Games/Risk/Controller.pm:534 lib/Games/Risk/GUI/Startup.pm:150
 #: lib/Games/Risk/GUI/Startup.pm:202 lib/Games/Risk/GUI/Startup.pm:221
 msgid "Human"
 msgstr ""
 
-#: lib/Games/Risk/Controller.pm:544 lib/Games/Risk/GUI/Startup.pm:202
+#: lib/Games/Risk/Controller.pm:542 lib/Games/Risk/GUI/Startup.pm:202
 #: lib/Games/Risk/GUI/Startup.pm:221
 msgid "Computer, easy"
 msgstr ""
 
-#: lib/Games/Risk/Controller.pm:554 lib/Games/Risk/GUI/Startup.pm:202
+#: lib/Games/Risk/Controller.pm:551 lib/Games/Risk/GUI/Startup.pm:202
 #: lib/Games/Risk/GUI/Startup.pm:221 lib/Games/Risk/GUI/Startup.pm:443
 msgid "Computer, hard"
+msgstr ""
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:71
+msgid "Country invasion"
+msgstr ""
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:72
+msgid "A country has been conquered!"
+msgstr ""
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:73
+#, perl-format
+msgid "You have conquered %s while attacking from %s."
+msgstr ""
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:113
+msgid "Moving armies"
+msgstr ""
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:114
+msgid "Consolidate your positions"
+msgstr ""
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:115
+#, perl-format
+msgid "Moving armies from %s to %s."
+msgstr ""
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:174
+msgid "Armies to move"
+msgstr ""
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:183
+msgid "Move armies"
 msgstr ""
 
 #: lib/Games/Risk/GUI/Startup.pm:45

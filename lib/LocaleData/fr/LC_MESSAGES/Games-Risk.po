@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Games-Risk\n"
 "Report-Msgid-Bugs-To: bug-games-risk@rt.cpan.org\n"
-"POT-Creation-Date: 2010-05-17 17:15+0200\n"
-"PO-Revision-Date: 2010-05-17 17:16+0100\n"
+"POT-Creation-Date: 2010-05-17 17:58+0200\n"
+"PO-Revision-Date: 2010-05-17 18:14+0100\n"
 "Last-Translator: Jérôme Quelin <jquelin@gmail.com>\n"
 "Language-Team: Jérôme Quelin <jquelin@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -18,25 +18,59 @@ msgstr ""
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: lib/Games/Risk/Controller.pm:535
+#: lib/Games/Risk/Controller.pm:534
 #: lib/Games/Risk/GUI/Startup.pm:150
 #: lib/Games/Risk/GUI/Startup.pm:202
 #: lib/Games/Risk/GUI/Startup.pm:221
 msgid "Human"
 msgstr "Humain"
 
-#: lib/Games/Risk/Controller.pm:544
+#: lib/Games/Risk/Controller.pm:542
 #: lib/Games/Risk/GUI/Startup.pm:202
 #: lib/Games/Risk/GUI/Startup.pm:221
 msgid "Computer, easy"
 msgstr "Ordinateur, facile"
 
-#: lib/Games/Risk/Controller.pm:554
+#: lib/Games/Risk/Controller.pm:551
 #: lib/Games/Risk/GUI/Startup.pm:202
 #: lib/Games/Risk/GUI/Startup.pm:221
 #: lib/Games/Risk/GUI/Startup.pm:443
 msgid "Computer, hard"
 msgstr "Ordinateur, difficile"
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:71
+msgid "Country invasion"
+msgstr "Invasion de pays"
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:72
+msgid "A country has been conquered!"
+msgstr "Un pays a été conquis !"
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:73
+#, perl-format
+msgid "You have conquered %s while attacking from %s."
+msgstr "Vous avez conquis %s en attaquant de %s."
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:113
+msgid "Moving armies"
+msgstr "Déplacer des armées"
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:114
+msgid "Consolidate your positions"
+msgstr "Consolidez vos positions"
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:115
+#, perl-format
+msgid "Moving armies from %s to %s."
+msgstr "Déplacer des armées de %s vers %s."
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:174
+msgid "Armies to move"
+msgstr "Armées à déplacer"
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:183
+msgid "Move armies"
+msgstr "Déplacer des armées"
 
 #: lib/Games/Risk/GUI/Startup.pm:45
 msgid "Napoleon Bonaparte"
