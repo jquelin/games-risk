@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Games-Risk\n"
 "Report-Msgid-Bugs-To: bug-games-risk@rt.cpan.org\n"
-"POT-Creation-Date: 2010-05-17 18:13+0200\n"
+"POT-Creation-Date: 2010-05-17 18:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,6 +63,31 @@ msgstr ""
 
 #: lib/Games/Risk/GUI/MoveArmies.pm:183
 msgid "Move armies"
+msgstr ""
+
+#: lib/Games/Risk/GUI/GameOver.pm:62
+msgid "Game over"
+msgstr ""
+
+#: lib/Games/Risk/GUI/GameOver.pm:71
+#, perl-format
+msgid "%s won!"
+msgstr ""
+
+#: lib/Games/Risk/GUI/GameOver.pm:75
+msgid ""
+"Congratulations, you won!\n"
+"Maybe the artificial intelligences were not that hard?"
+msgstr ""
+
+#: lib/Games/Risk/GUI/GameOver.pm:76
+msgid ""
+"Unfortunately, you lost...\n"
+"Try harder next time!"
+msgstr ""
+
+#: lib/Games/Risk/GUI/GameOver.pm:79
+msgid "Close"
 msgstr ""
 
 #: lib/Games/Risk/GUI/Startup.pm:45

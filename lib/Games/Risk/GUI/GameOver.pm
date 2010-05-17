@@ -10,6 +10,8 @@ use Tk;
 use Tk::Font;
 use Tk::Sugar;
 
+use Games::Risk::I18N qw{ T };
+
 use constant K => $poe_kernel;
 
 
@@ -57,7 +59,7 @@ sub _onpriv_start {
 
     #-- create gui
 
-    my $top  = $opts->{parent}->Toplevel(-title=>'Game over');
+    my $top  = $opts->{parent}->Toplevel(-title=>T('Game over'));
     $h->{toplevel} = $top;
     $top->withdraw;
 
@@ -66,16 +68,15 @@ sub _onpriv_start {
         -bg   => $winner->color,
         -fg   => 'white',
         -font => $font,
-        -text => "$name won!",
+        -text => sprintf( T("%s won!"), $name ),
     )->pack(top,pad20);
     $top->Label(
-        -text => $winner->type eq 'human'
-            ? 'Congratulations, you won! Maybe the artificial '
-            . 'intelligences were not that hard?'
-            : 'Unfortunately, you lost... Try harder next time!'
+        -text => ($winner->type eq 'human') ? # the ? should stay here for xgettext to understand it
+              T("Congratulations, you won!\nMaybe the artificial intelligences were not that hard?")
+            : T("Unfortunately, you lost...\nTry harder next time!")
     )->pack(top,pad20);
     $top->Button(
-        -text    => 'Close',
+        -text    => T('Close'),
         -command => $s->postback('_but_close'),
     )->pack(top);
 
