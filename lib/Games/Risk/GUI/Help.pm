@@ -96,13 +96,13 @@ Each player has territories marked with her color. In the mark there is a number
 number of armies in that territory.
 When it is your turn the first step is to distribute new armies. In the status bar at the bottom you can
 see the additional armies you can deply. Each click on the territory you own will add one army to that
-territory. The number of armies you can add in each turn is determined by the number of territories you
-own and the continents you control when your turn arrives. In Addition you can get further armies by 
-exchanging card for armies.
+territory (right-click to remove an army, mouse wheel works also). The number of armies you can add indicating
+each turn is determined by the number of territories you own and the continents you control when your turn
+arrives. In Addition you can get further armies by exchanging cards for armies.
 
 During this time you can click on the "undo all" button to start the distribution again.
 
-Once you distributed all the armies you have to click on the "ready for attack" arrow.
+Once you distributed all the armies you have to click on the "ready for attack" arrow (or press enter).
 Then select one of your territories to attack from and select one of the neigbouring enemy
 territories to attack to. Throwing the die and calculating the results will be done automatically.
 
