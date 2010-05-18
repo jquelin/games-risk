@@ -1,0 +1,28 @@
+
+
+It is great to see you would want to improve Game::Risk.
+Here is what you need:
+
+* Dist::Zilla
+* Dist::Zilla::PluginBundle::JQUELIN
+
+
+Code layout:
+
+Each window has its own module in 
+
+    lib/Games/Risk/GUI/
+
+
+Translation files are in 
+
+    lib/LocaleData/<language code>/LC_MESSAGES/Games-Risk.po
+
+So for example the French translation is in
+
+    lib/LocaleData/fr/LC_MESSAGES/Games-Risk.po
+
+The file holding the strings is here:
+
+    lib/LocaleData/Games-Risk-messages.pot
+
