@@ -9,14 +9,17 @@ use File::Basename qw{ basename };
 use File::ShareDir qw{ dist_dir };
 use File::Spec::Functions;
 use POE qw{ Loop::Tk };
+use Path::Class;
 use Tk;
 use Tk::JPEG;
 use Tk::PNG;
 
 
 use base qw{ Exporter };
-our @EXPORT_OK = qw{ image map_path maps };
+our @EXPORT_OK = qw{ image map_path maps $SHAREDIR };
 my (%images, %maps);
+
+our $SHAREDIR = dir( dist_dir( 'Games-Risk' ) );
 
 
 #--
