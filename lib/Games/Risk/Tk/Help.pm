@@ -49,7 +49,7 @@ __END__
 
 =head1 DESCRIPTION
 
-C<GR::GUI::Help> implements a Tk window used to show the manual of the
+C<GR::Tk::Help> implements a Tk window used to show the manual of the
 game. The manual itself is in a pod file in the share directory.
 
 
