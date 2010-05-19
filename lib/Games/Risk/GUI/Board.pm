@@ -555,7 +555,7 @@ sub _onpriv_start {
         -label       => T('~Close'),
         -accelerator => 'Ctrl+W',
         -command     => $s->postback('_window_close'),
-        -image       => image('fileclose16'),
+        -image       => $top->Photo(-file=>$SHAREDIR->file('icons', '16', 'close.png')),
         -compound    => 'left',
     );
     $top->bind('<Control-w>', $s->postback('_window_close'));
