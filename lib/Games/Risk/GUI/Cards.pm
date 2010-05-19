@@ -11,6 +11,7 @@ use Readonly;
 use Tk::Sugar;
 use Tk::Pane;
 
+use Games::Risk::I18N      qw{ T };
 use Games::Risk::Resources qw{ image $SHAREDIR };
 
 use constant K => $poe_kernel;
@@ -249,7 +250,7 @@ sub _onpriv_start {
     my $top = $opts->{parent}->Toplevel;
     $top->withdraw;           # window is hidden first
     $h->{toplevel} = $top;
-    $top->title('Cards');
+    $top->title( T('Cards') );
     my $icon = $SHAREDIR->file('icons', '32', 'cards.png');
     my $mask = $SHAREDIR->file('icons', '32', 'cards-mask.xbm');
     $top->iconimage( $top->Photo(-file=>$icon) );
@@ -257,7 +258,7 @@ sub _onpriv_start {
 
     #- top label
     $h->{label} = $top->Label(
-        -text => 'Select 3 cards')->pack(top,fillx);
+        -text => T('Select 3 cards'))->pack(top,fillx);
 
     #- cards frame
     $h->{frame} = $top->Scrolled('Frame',
@@ -268,7 +269,7 @@ sub _onpriv_start {
 
     #- bottom button
     $h->{button} = $top->Button(
-        -text    => 'Exchange cards',
+        -text    => T('Exchange cards'),
         -command => $s->postback('_but_exchange'),
         disabled,
     )->pack(top, fill2);
