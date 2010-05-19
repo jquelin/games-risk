@@ -565,7 +565,7 @@ sub _onpriv_start {
         -label       => T('~Quit'),
         -accelerator => 'Ctrl+Q',
         -command     => $s->postback('_quit'),
-        -image       => image('actexit16'),
+        -image       => $top->Photo(-file=>$SHAREDIR->file('icons', '16', 'exit.png')),
         -compound    => 'left',
     );
     $top->bind('<Control-q>', $s->postback('_quit'));
