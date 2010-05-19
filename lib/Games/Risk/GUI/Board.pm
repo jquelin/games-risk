@@ -601,12 +601,13 @@ sub _onpriv_start {
     );
     $help->command(
         -label       => T('~About'),
+        -image       => $top->Photo(-file=>$SHAREDIR->file('icons', '16', 'about.png')),
+        -compound    => 'left',
         -command     => sub {
             require Games::Risk::Tk::About;
             Games::Risk::Tk::About->new({parent=>$top});
         },
 #        -image       => image('icon-cards'),
-        -compound    => 'right',
     );
 
 

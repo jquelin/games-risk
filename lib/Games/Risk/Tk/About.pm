@@ -10,7 +10,8 @@ use Moose;
 use Path::Class;
 
 use Games::Risk;
-use Games::Risk::I18N qw{ T };
+use Games::Risk::I18N      qw{ T };
+use Games::Risk::Resources qw{ $SHAREDIR };
 
 with 'Tk::Role::Dialog';
 
@@ -18,7 +19,7 @@ with 'Tk::Role::Dialog';
 # -- initialization / finalization
 
 sub _build_title     { 'prisk - ' . T('about') }
-#sub _build_icon      { '/home/jquelin/prog/games-risk/share/images/card-artillery.png' }
+sub _build_icon      { $SHAREDIR->file('icons', '32', 'about.png')->stringify }
 sub _build_header    { "prisk $Games::Risk::VERSION" }
 sub _build_resizable { 0 }
 sub _build_cancel    { T('Close') }
