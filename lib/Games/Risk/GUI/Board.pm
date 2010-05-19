@@ -22,7 +22,7 @@ use Games::Risk::GUI::Continents;
 use Games::Risk::GUI::GameOver;
 use Games::Risk::GUI::MoveArmies;
 use Games::Risk::I18N      qw{ T };
-use Games::Risk::Resources qw{ image };
+use Games::Risk::Resources qw{ image $SHAREDIR };
 
 use constant K => $poe_kernel;
 
@@ -592,7 +592,8 @@ sub _onpriv_start {
     my $help = $menubar->cascade(-label => T('~Help'));
     $help->command(
         -label       => T('~Help'),
-        -compound    => 'right',
+        -image       => $top->Photo(-file=>$SHAREDIR->file('icons', '16', 'help.png')),
+        -compound    => 'left',
         -command     => sub {
             require Games::Risk::Tk::Help;
             Games::Risk::Tk::Help->new({parent=>$top});
