@@ -17,7 +17,6 @@ use Tk::JPEG;
 use Tk::PNG;
 use Tk::Sugar;
 
-use Games::Risk::GUI::About;
 use Games::Risk::GUI::Cards;
 use Games::Risk::GUI::Continents;
 use Games::Risk::GUI::GameOver;
@@ -601,7 +600,10 @@ sub _onpriv_start {
     );
     $help->command(
         -label       => T('~About'),
-        -command     => $s->postback('_show_about'),
+        -command     => sub {
+            require Games::Risk::Tk::About;
+            Games::Risk::Tk::About->new({parent=>$top});
+        },
 #        -image       => image('icon-cards'),
         -compound    => 'right',
     );
@@ -744,7 +746,6 @@ sub _onpriv_start {
     Games::Risk::GUI::Cards->spawn({parent=>$top});
     Games::Risk::GUI::Continents->spawn({parent=>$top});
     Games::Risk::GUI::MoveArmies->spawn({parent=>$top});
-    Games::Risk::GUI::About->spawn({parent=>$top});
 
     #-- say that we're done
     K->yield('load_map', $args->{map});
