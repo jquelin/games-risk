@@ -293,6 +293,7 @@ sub _onpriv_start {
 
     K->alias_set('startup');
     my $top = $h->{toplevel} = $args->{toplevel};
+    $top->title('prisk - ' . T('new game'));
     my $icon = $SHAREDIR->file('icons', '32', 'prisk.png');
     my $mask = $SHAREDIR->file('icons', '32', 'prisk-mask.xbm');
     $top->iconimage( $top->Photo(-file=>$icon) );
