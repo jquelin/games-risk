@@ -612,7 +612,6 @@ sub _onpriv_start {
             require Games::Risk::Tk::About;
             Games::Risk::Tk::About->new({parent=>$top});
         },
-#        -image       => image('icon-cards'),
     );
 
 
