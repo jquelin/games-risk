@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Games-Risk\n"
 "Report-Msgid-Bugs-To: bug-games-risk@rt.cpan.org\n"
-"POT-Creation-Date: 2010-05-19 15:06+0200\n"
-"PO-Revision-Date: 2010-05-19 15:53+0100\n"
+"POT-Creation-Date: 2010-05-19 18:02+0200\n"
+"PO-Revision-Date: 2010-05-19 18:02+0100\n"
 "Last-Translator: Jérôme Quelin <jquelin@gmail.com>\n"
 "Language-Team: Jérôme Quelin <jquelin@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -34,37 +34,37 @@ msgstr "Ordinateur, facile"
 #: lib/Games/Risk/Controller.pm:551
 #: lib/Games/Risk/GUI/Startup.pm:202
 #: lib/Games/Risk/GUI/Startup.pm:221
-#: lib/Games/Risk/GUI/Startup.pm:443
+#: lib/Games/Risk/GUI/Startup.pm:449
 msgid "Computer, hard"
 msgstr "Ordinateur, difficile"
 
-#: lib/Games/Risk/Tk/About.pm:20
+#: lib/Games/Risk/Tk/About.pm:21
 msgid "about"
 msgstr "à propos"
 
-#: lib/Games/Risk/Tk/About.pm:24
-#: lib/Games/Risk/Tk/Help.pm:25
+#: lib/Games/Risk/Tk/About.pm:25
+#: lib/Games/Risk/Tk/Help.pm:26
 #: lib/Games/Risk/GUI/GameOver.pm:79
 msgid "Close"
 msgstr "Fermer"
 
-#: lib/Games/Risk/Tk/About.pm:27
+#: lib/Games/Risk/Tk/About.pm:28
 msgid "Created by Jerome Quelin"
 msgstr "Créé par Jérôme Quelin"
 
-#: lib/Games/Risk/Tk/About.pm:28
+#: lib/Games/Risk/Tk/About.pm:29
 msgid "Copyright (c) 2008 Jerome Quelin, all rights reserved"
 msgstr "Copyright (c) 2008 Jérôme Quelin, tous droits réservés"
 
-#: lib/Games/Risk/Tk/About.pm:30
+#: lib/Games/Risk/Tk/About.pm:31
 msgid "prisk is free software; you can redistribute it and/or modify it under the terms of the GPLv3."
 msgstr "prisk est un logiciel libre ; vous pouvez le redistribuer et/ou le modifier selon les termes de la GLPv3."
 
-#: lib/Games/Risk/Tk/Help.pm:21
+#: lib/Games/Risk/Tk/Help.pm:22
 msgid "help"
 msgstr "aide"
 
-#: lib/Games/Risk/Tk/Help.pm:23
+#: lib/Games/Risk/Tk/Help.pm:24
 msgid "How to play?"
 msgstr "Comment jouer ?"
 
@@ -128,12 +128,12 @@ msgstr ""
 "Vous pouvez ré-essayer !"
 
 #: lib/Games/Risk/GUI/Board.pm:133
-#: lib/Games/Risk/GUI/Board.pm:943
+#: lib/Games/Risk/GUI/Board.pm:950
 msgid "Attacking from ..."
 msgstr "Attaquer à partir de ..."
 
 #: lib/Games/Risk/GUI/Board.pm:146
-#: lib/Games/Risk/GUI/Board.pm:970
+#: lib/Games/Risk/GUI/Board.pm:977
 #, perl-format
 msgid "Attacking %s from %s"
 msgstr "Attaquer %s depuis %s"
@@ -145,9 +145,9 @@ msgstr "Déplacer des armées depuis ..."
 
 #: lib/Games/Risk/GUI/Board.pm:412
 #: lib/Games/Risk/GUI/Board.pm:444
-#: lib/Games/Risk/GUI/Board.pm:901
-#: lib/Games/Risk/GUI/Board.pm:1175
-#: lib/Games/Risk/GUI/Board.pm:1216
+#: lib/Games/Risk/GUI/Board.pm:908
+#: lib/Games/Risk/GUI/Board.pm:1182
+#: lib/Games/Risk/GUI/Board.pm:1223
 #, perl-format
 msgid "%s armies left to place"
 msgstr "%s armées restantes"
@@ -166,106 +166,106 @@ msgstr "Ordinateur - %s"
 msgid "Player %s has lost"
 msgstr "Le joueur %s a perdu"
 
-#: lib/Games/Risk/GUI/Board.pm:553
+#: lib/Games/Risk/GUI/Board.pm:558
 msgid "~Game"
 msgstr "~Jeu"
 
-#: lib/Games/Risk/GUI/Board.pm:555
+#: lib/Games/Risk/GUI/Board.pm:560
 msgid "~Close"
 msgstr "~Fermer"
 
-#: lib/Games/Risk/GUI/Board.pm:565
+#: lib/Games/Risk/GUI/Board.pm:570
 msgid "~Quit"
 msgstr "~Quitter"
 
-#: lib/Games/Risk/GUI/Board.pm:574
+#: lib/Games/Risk/GUI/Board.pm:579
 msgid "~View"
 msgstr "~Vue"
 
-#: lib/Games/Risk/GUI/Board.pm:576
+#: lib/Games/Risk/GUI/Board.pm:581
 msgid "~Cards"
 msgstr "~Cartes"
 
-#: lib/Games/Risk/GUI/Board.pm:584
+#: lib/Games/Risk/GUI/Board.pm:589
 msgid "C~ontinents"
 msgstr "C~ontinents"
 
-#: lib/Games/Risk/GUI/Board.pm:592
-#: lib/Games/Risk/GUI/Board.pm:594
+#: lib/Games/Risk/GUI/Board.pm:597
+#: lib/Games/Risk/GUI/Board.pm:599
 msgid "~Help"
 msgstr "~Aide"
 
-#: lib/Games/Risk/GUI/Board.pm:602
+#: lib/Games/Risk/GUI/Board.pm:608
 msgid "~About"
 msgstr "A ~propos"
 
-#: lib/Games/Risk/GUI/Board.pm:622
+#: lib/Games/Risk/GUI/Board.pm:629
 msgid "Game state: "
 msgstr "Etape du jeu :"
 
-#: lib/Games/Risk/GUI/Board.pm:623
+#: lib/Games/Risk/GUI/Board.pm:630
 msgid "place armies"
 msgstr "placer des armées"
 
-#: lib/Games/Risk/GUI/Board.pm:634
+#: lib/Games/Risk/GUI/Board.pm:641
 msgid "attack"
 msgstr "attaquer"
 
-#: lib/Games/Risk/GUI/Board.pm:645
+#: lib/Games/Risk/GUI/Board.pm:652
 msgid "move armies"
 msgstr "déplacer des armées"
 
-#: lib/Games/Risk/GUI/Board.pm:659
+#: lib/Games/Risk/GUI/Board.pm:666
 msgid "undo all"
 msgstr "recommencer"
 
-#: lib/Games/Risk/GUI/Board.pm:660
+#: lib/Games/Risk/GUI/Board.pm:667
 msgid "ready for attack"
 msgstr "prêt à attaquer"
 
-#: lib/Games/Risk/GUI/Board.pm:661
+#: lib/Games/Risk/GUI/Board.pm:668
 msgid "attack again"
 msgstr "ré-attaquer"
 
-#: lib/Games/Risk/GUI/Board.pm:662
+#: lib/Games/Risk/GUI/Board.pm:669
 msgid "consolidate"
 msgstr "consolider"
 
-#: lib/Games/Risk/GUI/Board.pm:663
+#: lib/Games/Risk/GUI/Board.pm:670
 msgid "turn finished"
 msgstr "tour terminé"
 
-#: lib/Games/Risk/GUI/Board.pm:701
+#: lib/Games/Risk/GUI/Board.pm:708
 msgid "Players"
 msgstr "Joueurs"
 
-#: lib/Games/Risk/GUI/Board.pm:708
+#: lib/Games/Risk/GUI/Board.pm:715
 msgid "Dice arena"
 msgstr "Piste de dés"
 
-#: lib/Games/Risk/GUI/Board.pm:736
+#: lib/Games/Risk/GUI/Board.pm:743
 msgid "Auto-reattack"
 msgstr "Ré-attaque automatique"
 
-#: lib/Games/Risk/GUI/Board.pm:740
+#: lib/Games/Risk/GUI/Board.pm:747
 msgid "Automatically re-do last attack if attacker still has more than 3 armies"
 msgstr "Automatiquement ré-attaquer si l'attaquant a plus de 3 armées"
 
-#: lib/Games/Risk/GUI/Board.pm:925
+#: lib/Games/Risk/GUI/Board.pm:932
 #, perl-format
 msgid "Attacking ... from %s"
 msgstr "Attaquer ... depuis %s"
 
-#: lib/Games/Risk/GUI/Board.pm:1065
+#: lib/Games/Risk/GUI/Board.pm:1072
 msgid "Moving armies from ..."
 msgstr "Déplacer des armées depuis ..."
 
-#: lib/Games/Risk/GUI/Board.pm:1093
+#: lib/Games/Risk/GUI/Board.pm:1100
 #, perl-format
 msgid "Moving armies from %s to ..."
 msgstr "Déplacer des armées de %s vers ..."
 
-#: lib/Games/Risk/GUI/Board.pm:1116
+#: lib/Games/Risk/GUI/Board.pm:1123
 #, perl-format
 msgid "Moving armies from %s to %s"
 msgstr "Déplacer des armées de %s vers %s"
@@ -338,21 +338,37 @@ msgstr "Tout joueur doit avoir un nom."
 msgid "Game should have at least 2 players."
 msgstr "Il doit y avoir au moins 2 joueurs."
 
-#: lib/Games/Risk/GUI/Startup.pm:306
+#: lib/Games/Risk/GUI/Startup.pm:296
+msgid "new game"
+msgstr "nouvelle partie"
+
+#: lib/Games/Risk/GUI/Startup.pm:312
 msgid "New game"
 msgstr "Nouvelle partie"
 
-#: lib/Games/Risk/GUI/Startup.pm:331
+#: lib/Games/Risk/GUI/Startup.pm:337
 msgid "New player..."
 msgstr "Joueur supplémentaire..."
 
-#: lib/Games/Risk/GUI/Startup.pm:340
+#: lib/Games/Risk/GUI/Startup.pm:346
 msgid "Start game"
 msgstr "Nouvelle partie"
 
-#: lib/Games/Risk/GUI/Startup.pm:344
+#: lib/Games/Risk/GUI/Startup.pm:350
 msgid "Quit"
 msgstr "Quitter"
+
+#: lib/Games/Risk/GUI/Cards.pm:253
+msgid "Cards"
+msgstr "Cartes"
+
+#: lib/Games/Risk/GUI/Cards.pm:261
+msgid "Select 3 cards"
+msgstr "Choisir 3 cartes"
+
+#: lib/Games/Risk/GUI/Cards.pm:272
+msgid "Exchange cards"
+msgstr "Echanger les cartes sélectionnées"
 
 #: lib/Games/Risk/AI/Blitzkrieg.pm:71
 msgid "easy"
