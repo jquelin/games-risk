@@ -11,7 +11,7 @@ use Readonly;
 use Tk::Sugar;
 use Tk::Pane;
 
-use Games::Risk::Resources qw{ image };
+use Games::Risk::Resources qw{ image $SHAREDIR };
 
 use constant K => $poe_kernel;
 
@@ -250,7 +250,10 @@ sub _onpriv_start {
     $top->withdraw;           # window is hidden first
     $h->{toplevel} = $top;
     $top->title('Cards');
-    $top->iconimage( image('icon-cards') );
+    my $icon = $SHAREDIR->file('icons', '32', 'cards.png');
+    my $mask = $SHAREDIR->file('icons', '32', 'cards-mask.xbm');
+    $top->iconimage( $top->Photo(-file=>$icon) );
+    $top->iconmask( '@' . $mask );
 
     #- top label
     $h->{label} = $top->Label(

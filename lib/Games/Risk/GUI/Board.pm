@@ -576,7 +576,7 @@ sub _onpriv_start {
         -label       => T('~Cards'),
         -accelerator => 'F5',
         -command     => $s->postback('_show_cards'),
-        -image       => image('icon-cards'),
+        -image       => $top->Photo(-file=>$SHAREDIR->file('icons', '16', 'cards.png')),
         -compound    => 'left',
     );
     $top->bind('<F5>', $s->postback('_show_cards'));
