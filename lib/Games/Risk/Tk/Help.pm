@@ -18,9 +18,9 @@ with 'Tk::Role::Dialog';
 
 # -- initialization / finalization
 
-sub _build_title     { 'prisk - help' }
+sub _build_title     { 'prisk - ' . T('help') }
 #sub _build_icon      { '/home/jquelin/prog/games-risk/share/images/card-artillery.png' }
-sub _build_header    { 'How to play?' }
+sub _build_header    { T('How to play?') }
 sub _build_resizable { 1 }
 sub _build_cancel    { T('Close') }
 
