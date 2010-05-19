@@ -21,7 +21,6 @@ use Games::Risk::GUI::About;
 use Games::Risk::GUI::Cards;
 use Games::Risk::GUI::Continents;
 use Games::Risk::GUI::GameOver;
-use Games::Risk::GUI::Help;
 use Games::Risk::GUI::MoveArmies;
 use Games::Risk::I18N      qw{ T };
 use Games::Risk::Resources qw{ image };
@@ -71,7 +70,6 @@ sub spawn {
             _canvas_motion                 => \&_ongui_canvas_motion,
             _quit                          => \&_quit,
             _show_about                    => \&_show_about,
-            _show_help                     => \&_show_help,
             _show_cards                    => \&_show_cards,
             _show_continents               => \&_show_continents,
             _window_close                  => \&_ongui_window_close,
@@ -595,8 +593,11 @@ sub _onpriv_start {
     my $help = $menubar->cascade(-label => T('~Help'));
     $help->command(
         -label       => T('~Help'),
-        -command     => $s->postback('_show_help'),
         -compound    => 'right',
+        -command     => sub {
+            require Games::Risk::GUI::Help;
+            Games::Risk::GUI::Help->new({parent=>$top});
+        },
     );
     $help->command(
         -label       => T('~About'),
@@ -744,7 +745,6 @@ sub _onpriv_start {
     Games::Risk::GUI::Continents->spawn({parent=>$top});
     Games::Risk::GUI::MoveArmies->spawn({parent=>$top});
     Games::Risk::GUI::About->spawn({parent=>$top});
-    Games::Risk::GUI::Help->spawn({parent=>$top});
 
     #-- say that we're done
     K->yield('load_map', $args->{map});
@@ -1248,15 +1248,6 @@ sub _show_cards {
 #
 sub _show_continents {
     K->post('continents', 'visibility_toggle');
-}
-
-#
-# _show_help()
-#
-# request Help/Help window to be shown/hidden.
-#
-sub _show_help {
-    K->post('help', 'visibility_toggle');
 }
 
 #
