@@ -68,9 +68,9 @@ sub spawn {
             _canvas_place_armies_initial   => \&_ongui_canvas_place_armies_initial,
             _canvas_motion                 => \&_ongui_canvas_motion,
             _quit                          => \&_quit,
-            _show_about                    => \&_show_about,
             _show_cards                    => \&_show_cards,
             _show_continents               => \&_show_continents,
+            _show_help                     => \&_show_help,
             _window_close                  => \&_ongui_window_close,
             # public events
             attack                         => \&_onpub_attack,
@@ -597,13 +597,12 @@ sub _onpriv_start {
     my $help = $menubar->cascade(-label => T('~Help'));
     $help->command(
         -label       => T('~Help'),
+        -accelerator => 'F1',
         -image       => $top->Photo(-file=>$SHAREDIR->file('icons', '16', 'help.png')),
         -compound    => 'left',
-        -command     => sub {
-            require Games::Risk::Tk::Help;
-            Games::Risk::Tk::Help->new({parent=>$top});
-        },
+        -command     => $s->postback('_show_help'),
     );
+    $top->bind('<F1>', $s->postback('_show_help'));
     $help->command(
         -label       => T('~About'),
         -image       => $top->Photo(-file=>$SHAREDIR->file('icons', '16', 'about.png')),
@@ -1262,9 +1261,12 @@ sub _show_continents {
 #
 # request Help/About window to be shown/hidden.
 #
-sub _show_about {
-    K->post('about', 'visibility_toggle');
+sub _show_help {
+    my $h = $_[HEAP];
+    require Games::Risk::Tk::Help;
+    Games::Risk::Tk::Help->new({parent=>$h->{toplevel}});
 }
+
 
 #
 # event: _window_close()
