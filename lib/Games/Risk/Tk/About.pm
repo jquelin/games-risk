@@ -19,7 +19,7 @@ with 'Tk::Role::Dialog';
 
 sub _build_title     { 'prisk - ' . T('about') }
 #sub _build_icon      { '/home/jquelin/prog/games-risk/share/images/card-artillery.png' }
-sub _build_header    { T("prisk $Games::Risk::VERSION") }
+sub _build_header    { "prisk $Games::Risk::VERSION" }
 sub _build_resizable { 0 }
 sub _build_cancel    { T('Close') }
 
