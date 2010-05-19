@@ -2,6 +2,13 @@ Revision history for Games::Risk.
 
 {{$NEXT}}
 
+3.101390  2010-05-19 18:26:03 Europe/Paris
+ - official prisk icon
+ - new about window
+ - new help window
+ - prettier cards & continents dialog icon
+ - forgot some strings for i18n
+
 3.101370  2010-05-17 20:00:05 Europe/Paris
  - crash fix in some cases while loading new game
  - i18n framework in place
