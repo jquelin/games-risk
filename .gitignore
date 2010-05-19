@@ -16,6 +16,9 @@
 # avoid compiled gettext files
 *.mo
 
+# stuff that won't get distributed
+misc
+
 # avoid archives of this distribution
 Games-Risk-*
 
