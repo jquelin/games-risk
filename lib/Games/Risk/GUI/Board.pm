@@ -595,8 +595,8 @@ sub _onpriv_start {
         -label       => T('~Help'),
         -compound    => 'right',
         -command     => sub {
-            require Games::Risk::GUI::Help;
-            Games::Risk::GUI::Help->new({parent=>$top});
+            require Games::Risk::Tk::Help;
+            Games::Risk::Tk::Help->new({parent=>$top});
         },
     );
     $help->command(

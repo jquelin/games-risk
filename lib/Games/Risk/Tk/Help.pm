@@ -2,8 +2,8 @@ use 5.010;
 use strict;
 use warnings;
 
-package Games::Risk::GUI::Help;
-# ABSTRACT: help box
+package Games::Risk::Tk::Help;
+# ABSTRACT: prisk manual window
 
 use File::ShareDir qw{ dist_dir };
 use Moose;
@@ -60,7 +60,7 @@ parameter is mandatory.
 
 =method new
 
-    Games::Risk::GUI::Help->new( %opts );
+    Games::Risk::Tk::Help->new( %opts );
 
 Create a window showing some basic help about the game. See the
 attributes for available options.
