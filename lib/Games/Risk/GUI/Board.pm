@@ -584,7 +584,7 @@ sub _onpriv_start {
         -label       => T('C~ontinents'),
         -accelerator => 'F6',
         -command     => $s->postback('_show_continents'),
-        -image       => image('icon-continents'),
+        -image       => $top->Photo(-file=>$SHAREDIR->file('icons', '16', 'continents.png')),
         -compound    => 'left',
     );
     $top->bind('<F6>', $s->postback('_show_continents'));

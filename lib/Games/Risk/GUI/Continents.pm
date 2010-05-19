@@ -9,7 +9,7 @@ use POE                    qw{ Loop::Tk };
 use Tk::Sugar;
 
 use Games::Risk::I18N      qw{ T };
-use Games::Risk::Resources qw{ image };
+use Games::Risk::Resources qw{ image $SHAREDIR };
 
 use constant K => $poe_kernel;
 
@@ -89,7 +89,10 @@ sub _start {
     $top->withdraw;           # window is hidden first
     $h->{toplevel} = $top;
     $top->title( T('Continents') );
-    $top->iconimage( image('icon-continents') );
+    my $icon = $SHAREDIR->file('icons', '32', 'continents.png');
+    my $mask = $SHAREDIR->file('icons', '32', 'continents-mask.xbm');
+    $top->iconimage( $top->Photo(-file=>$icon) );
+    $top->iconmask( '@' . $mask );
 
     #- populate continents list
     my $map = Games::Risk->new->map;
