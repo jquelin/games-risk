@@ -16,7 +16,7 @@ use Tk::Font;
 use Tk::Sugar;
 
 use Games::Risk::I18N      qw{ T };
-use Games::Risk::Resources qw{ image maps };
+use Games::Risk::Resources qw{ image maps $SHAREDIR };
 
 use constant K => $poe_kernel;
 
@@ -293,6 +293,11 @@ sub _onpriv_start {
 
     K->alias_set('startup');
     my $top = $h->{toplevel} = $args->{toplevel};
+    my $icon = $SHAREDIR->file('icons', '32', 'prisk.png');
+    my $mask = $SHAREDIR->file('icons', '32', 'prisk-mask.xbm');
+    $top->iconimage( $top->Photo(-file=>$icon) );
+    $top->iconmask( '@' . $mask );
+
 
     #-- initializations
     $h->{players} = [];
