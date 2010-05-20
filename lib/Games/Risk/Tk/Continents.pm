@@ -128,6 +128,7 @@ __PACKAGE__->meta->make_immutable;
 1;
 __END__
 
+=for Pod::Coverage      START STOP
 
 =head1 SYNOPSYS
 
