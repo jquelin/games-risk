@@ -16,28 +16,19 @@ use Tk::Sugar;
 use Games::Risk::I18N      qw{ T };
 use Games::Risk::Resources qw{ image $SHAREDIR };
 
+with 'Tk::Role::Dialog';
+
+
 Readonly my $K => $poe_kernel;
-
-
-# -- attributes
-
-=attr parent
-
-A L<Tk> window that will be the parent of the toplevel window created.
-This parameter is mandatory.
-
-=cut
-
-has parent    => ( ro, required, weak_ref, isa=>'Tk::Widget' );
-has _toplevel => ( rw, lazy_build, isa=>'Tk::Toplevel' );
 
 
 # -- initialization / finalization
 
-sub _build__toplevel {
-    my $self = shift;
-    return $self->parent->Toplevel;
-}
+sub _build_title     { 'prisk - ' . T('continents') }
+sub _build_icon      { $SHAREDIR->file('icons', '32','continents.png')->stringify }
+sub _build_header    { T('Continents information') }
+sub _build_resizable { 1 }
+sub _build_ok        { T('Close') }
 
 
 #
@@ -45,40 +36,10 @@ sub _build__toplevel {
 #
 sub START {
     my ($self, $s) = @_[OBJECT, SESSION];
-
     $K->alias_set('continents');
 
-    #-- create gui
-
-    my $top = $self->_toplevel;
-    $top->withdraw;           # window is hidden first
-    $top->title( T('Continents') );
-    my $icon = $SHAREDIR->file('icons', '32', 'continents.png');
-    my $mask = $SHAREDIR->file('icons', '32', 'continents-mask.xbm');
-    $top->iconimage( $top->Photo(-file=>$icon) );
-    $top->iconmask( '@' . $mask );
-
-    #- populate continents list
-    my $map = Games::Risk->new->map;
-    my @continents =
-        sort {
-             $b->bonus <=> $a->bonus ||
-             $a->name  cmp $b->name
-        }
-        $map->continents;
-    my $row = 0;
-    foreach my $c ( @continents ) {
-        $top->Label(-text=>$c->name
-        )->grid(-row=>$row,-column=>0,-sticky=>'w');
-        $top->Label(-text=>$c->bonus)->grid(-row=>$row,-column=>1);
-        $row++;
-    }
-
-    #- force window geometry
-    $top->update;    # force redraw
-    $top->resizable(0,0);
-
     #-- trap some events
+    my $top = $self->_toplevel;
     $top->protocol( WM_DELETE_WINDOW => $s->postback('visibility_toggle'));
     $top->bind('<F6>', $s->postback('visibility_toggle'));
 }
@@ -123,6 +84,45 @@ event visibility_toggle => sub {
     $top->$method;
 };
 
+
+# -- private methods
+
+#
+# $self->_valid;
+#
+# called by tk:role:dialog to build the inner dialog.
+#
+sub _build_gui {
+    my ($self, $f) = @_;
+
+    #- populate continents list
+    my $map = Games::Risk->new->map;
+    my @continents =
+        sort {
+             $b->bonus <=> $a->bonus ||
+             $a->name  cmp $b->name
+        }
+        $map->continents;
+    my $row = 0;
+    foreach my $c ( @continents ) {
+        $f->Label(-text=>$c->name
+        )->grid(-row=>$row,-column=>0,-sticky=>'w');
+        $f->Label(-text=>$c->bonus)->grid(-row=>$row,-column=>1);
+        $row++;
+    }
+}
+
+
+#
+# $self->_valid;
+#
+# called by tk:role:dialog when user click the ok button.
+#
+sub _valid {
+    my $self = shift;
+    $self->yield( 'visibility_toggle' );
+}
+
 no Moose;
 __PACKAGE__->meta->make_immutable;
 1;
@@ -143,3 +143,9 @@ list the continents of the map and their associated bonus.
 The methods are in fact the events accepted by the session.
 
 
+=attr parent
+
+A L<Tk> window that will be the parent of the toplevel window created.
+This parameter is mandatory.
+
+=cut
