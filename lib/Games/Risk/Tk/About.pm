@@ -5,7 +5,6 @@ use warnings;
 package Games::Risk::Tk::About;
 # ABSTRACT: prisk about information
 
-use File::ShareDir qw{ dist_dir };
 use Moose;
 use Path::Class;
 

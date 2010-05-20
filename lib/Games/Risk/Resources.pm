@@ -8,8 +8,10 @@ package Games::Risk::Resources;
 use File::Basename qw{ basename };
 use File::ShareDir qw{ dist_dir };
 use File::Spec::Functions;
+use FindBin qw{ $Bin };
 use POE qw{ Loop::Tk };
 use Path::Class;
+use Readonly;
 use Tk;
 use Tk::JPEG;
 use Tk::PNG;
@@ -19,7 +21,7 @@ use base qw{ Exporter };
 our @EXPORT_OK = qw{ image map_path maps $SHAREDIR };
 my (%images, %maps);
 
-our $SHAREDIR = dir( dist_dir( 'Games-Risk' ) );
+Readonly our $SHAREDIR => _find_sharedir();
 
 
 #--
@@ -71,6 +73,12 @@ sub _find_maps {
 
     my $glob = catfile($dirname, 'maps', '*.map');
     %maps = map { ( basename($_,qw{.map}) => $_ ) } glob $glob;
+}
+
+sub _find_sharedir {
+    my $root = dir($Bin)->parent;
+    return $root->subdir('share') if -f $root->file('dist.ini');
+    return dir( dist_dir( 'Games-Risk' ) );
 }
 
 
