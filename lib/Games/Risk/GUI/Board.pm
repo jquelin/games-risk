@@ -750,7 +750,7 @@ sub _onpriv_start {
 
     #-- other window
     Games::Risk::GUI::Cards->spawn({parent=>$top});
-    Games::Risk::Tk::Continents->spawn({parent=>$top});
+    Games::Risk::Tk::Continents->new({parent=>$top});
     Games::Risk::GUI::MoveArmies->spawn({parent=>$top});
 
     #-- say that we're done

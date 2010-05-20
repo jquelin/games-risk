@@ -5,7 +5,11 @@ use warnings;
 package Games::Risk::Tk::Continents;
 # ABSTRACT: continents information
 
+use Moose;
+use MooseX::Has::Sugar;
 use POE                    qw{ Loop::Tk };
+use MooseX::POE;
+use Tk;
 use Tk::Sugar;
 
 use Games::Risk::I18N      qw{ T };
@@ -13,81 +17,34 @@ use Games::Risk::Resources qw{ image $SHAREDIR };
 
 use constant K => $poe_kernel;
 
+# -- attributes
 
-#--
-# Constructor
+has parent    => ( ro, required, weak_ref, isa=>'Tk::Widget' );
+has _toplevel => ( rw, lazy_build, isa=>'Tk::Toplevel' );
 
-#
-# my $id = Games::Risk::Tk::Continents->spawn( \%params );
-#
-# create a new window to list continents and their associated bonus.
-# refer to the embedded pod for an explanation of the supported options.
-#
-sub spawn {
-    my (undef, $args) = @_;
 
-    my $session = POE::Session->create(
-        args          => [ $args ],
-        inline_states => {
-            # private events - session mgmt
-            _start               => \&_start,
-            _stop                => sub { warn "gui-continents shutdown\n" },
-            # public events
-            shutdown             => \&shutdown,
-            visibility_toggle    => \&visibility_toggle,
-        },
-    );
-    return $session->ID;
+
+# -- initialization / finalization
+
+sub _build__toplevel {
+    my $self = shift;
+    return $self->parent->Toplevel;
 }
-
-
-#--
-# EVENT HANDLERS
-
-# -- public events
-
-#
-# event: shutdown()
-#
-# kill current session. the toplevel window has already been destroyed.
-#
-sub shutdown {
-    #my $h = $_[HEAP];
-    K->alias_remove('continents');
-}
-
-
-#
-# visibility_toggle();
-#
-# Request window to be hidden / shown depending on its previous state.
-#
-sub visibility_toggle {
-    my ($h) = $_[HEAP];
-
-    my $top = $h->{toplevel};
-    my $method = ($top->state eq 'normal') ? 'withdraw' : 'deiconify'; # parens needed for xgettext
-    $top->$method;
-}
-
-
-# -- private events
 
 #
 # event: _start( \%opts );
 #
-# session initialization. \%params is received from spawn();
+# session initialization.
 #
-sub _start {
-    my ($h, $s, $opts) = @_[HEAP, SESSION, ARG0];
+sub START {
+    my ($self, $s) = @_[OBJECT, SESSION];
 
     K->alias_set('continents');
 
     #-- create gui
 
-    my $top = $opts->{parent}->Toplevel;
+    my $top = $self->_toplevel;
     $top->withdraw;           # window is hidden first
-    $h->{toplevel} = $top;
     $top->title( T('Continents') );
     my $icon = $SHAREDIR->file('icons', '32', 'continents.png');
     my $mask = $SHAREDIR->file('icons', '32', 'continents-mask.xbm');
@@ -118,6 +75,42 @@ sub _start {
     $top->protocol( WM_DELETE_WINDOW => $s->postback('visibility_toggle'));
     $top->bind('<F6>', $s->postback('visibility_toggle'));
 }
+
+
+
+sub STOP {
+    warn "gui-continents shutdown\n";
+}
+
+
+
+# -- public events
+
+#
+# event: shutdown()
+#
+# kill current session. the toplevel window has already been destroyed.
+#
+event shutdown => sub {
+    K->alias_remove('continents');
+};
+
+
+#
+# visibility_toggle();
+#
+# Request window to be hidden / shown depending on its previous state.
+#
+event visibility_toggle => sub {
+    my $self = shift;
+
+    my $top = $self->_toplevel;
+    my $method = ($top->state eq 'normal') ? 'withdraw' : 'deiconify'; # parens needed for xgettext
+    $top->$method;
+};
+
+
+# -- private events
 
 
 1;
