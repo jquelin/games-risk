@@ -17,11 +17,18 @@ use Games::Risk::Resources qw{ image $SHAREDIR };
 
 use constant K => $poe_kernel;
 
+
 # -- attributes
+
+=attr parent
+
+A L<Tk> window that will be the parent of the toplevel window created.
+This parameter is mandatory.
+
+=cut
 
 has parent    => ( ro, required, weak_ref, isa=>'Tk::Widget' );
 has _toplevel => ( rw, lazy_build, isa=>'Tk::Toplevel' );
-
 
 
 # -- initialization / finalization
@@ -31,8 +38,7 @@ sub _build__toplevel {
     return $self->parent->Toplevel;
 }
 
-#
-# event: _start( \%opts );
+
 #
 # session initialization.
 #
@@ -77,30 +83,37 @@ sub START {
 }
 
 
-
+#
+# session destruction.
+#
 sub STOP {
     warn "gui-continents shutdown\n";
 }
 
 
-
 # -- public events
 
-#
-# event: shutdown()
-#
-# kill current session. the toplevel window has already been destroyed.
-#
+=method shutdown
+
+    $K->post( gui-continents => 'shutdown' );
+
+Kill current session. The toplevel window has already been destroyed.
+
+=cut
+
 event shutdown => sub {
     K->alias_remove('continents');
 };
 
 
-#
-# visibility_toggle();
-#
-# Request window to be hidden / shown depending on its previous state.
-#
+=method visibility_toggle
+
+    $K->post( gui-continents => 'visibility_toggle' );
+
+Request window to be hidden / shown depending on its previous state.
+
+=cut
+
 event visibility_toggle => sub {
     my $self = shift;
 
@@ -110,18 +123,13 @@ event visibility_toggle => sub {
 };
 
 
-# -- private events
-
-
 1;
-
 __END__
 
 
 =head1 SYNOPSYS
 
-    my $id = Games::Risk::Tk::Continents->spawn(%opts);
-
+    Games::Risk::Tk::Continents->new(%opts);
 
 
 =head1 DESCRIPTION
@@ -129,53 +137,6 @@ __END__
 C<GR::Tk::Continents> implements a POE session, creating a Tk window to
 list the continents of the map and their associated bonus.
 
-
-
-=head1 CLASS METHODS
-
-
-=head2 my $id = Games::Risk::Tk::Continents->spawn( %opts );
-
-Create a window listing the continents, and return the associated POE
-session ID. One can pass the following options:
-
-=over 4
-
-=item parent => $mw
-
-A Tk window that will be the parent of the toplevel window created. This
-parameter is mandatory.
-
-
-=back
-
-
-
-=head1 PUBLIC EVENTS
-
-The newly created POE session accepts the following events:
-
-
-=over 4
-
-=item * shutdown()
-
-Kill current session. the toplevel window has already been destroyed.
-
-
-=item * visibility_toggle()
-
-Request window to be hidden / shown depending on its previous state.
-
-
-=back
-
-
-
-
-
-=head1 SEE ALSO
-
-L<Games::Risk>.
+The methods are in fact the events accepted by the session.
 
 
