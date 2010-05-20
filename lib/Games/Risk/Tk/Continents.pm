@@ -5,13 +5,16 @@ use warnings;
 package Games::Risk::Tk::Continents;
 # ABSTRACT: continents information
 
+use List::Util             qw{ max };
 use Moose;
 use MooseX::Has::Sugar;
+use MooseX::SemiAffordanceAccessor;
 use POE                    qw{ Loop::Tk };
 use MooseX::POE;
 use Readonly;
 use Tk;
 use Tk::Sugar;
+use Tk::TableMatrix;
 
 use Games::Risk::I18N      qw{ T };
 use Games::Risk::Resources qw{ image $SHAREDIR };
@@ -22,12 +25,26 @@ with 'Tk::Role::Dialog';
 Readonly my $K => $poe_kernel;
 
 
+# -- attributes
+
+has _continents => ( rw, isa=>'ArrayRef', auto_deref );
+has _values => (
+    ro,
+    traits     => ['Hash'],
+    isa        => 'HashRef[Str|Int]',
+    default    => sub { {} },
+    handles    => {
+        _set_value => 'set',   # $self->_set_value( "$row,$col", $value );
+    }
+);
+
+
 # -- initialization / finalization
 
 sub _build_title     { 'prisk - ' . T('continents') }
 sub _build_icon      { $SHAREDIR->file('icons', '32','continents.png')->stringify }
 sub _build_header    { T('Continents information') }
-sub _build_resizable { 1 }
+sub _build_resizable { 0 }
 sub _build_ok        { T('Close') }
 
 
@@ -54,6 +71,39 @@ sub STOP {
 
 
 # -- public events
+
+=method player_add
+
+    $K->post( gui-continents => player_add => $player );
+
+Add a new column in the table to display the new player.
+
+=cut
+
+event player_add => sub {
+    my ($self, $player) = @_[OBJECT, ARG0];
+    my $tm = $self->_w( 'tm' );
+
+    # add a new column. we must first enable the table since
+    # tk::tablematrix cannot insert a column when it is disabled.
+    my $col = $tm->index( 'end', 'col' );
+    $tm->configure( enabled );
+    $tm->insertCols($col, 1); $col++;
+    $tm->configure( disabled );
+    $tm->colWidth( $col, 5 );
+
+    # new player gets a tag with her color
+    $tm->tagConfigure( $player, -relief=>'raised', -bg=>$player->color );
+    $tm->tagCell( $player, "0,$col" );
+
+    # fill in the column with the player information
+    my $row = 0;
+    foreach my $c ( $self->_continents ) {
+        $row++;
+        $self->_set_value( "$row,$col", scalar ( grep { $_->owner eq $player } $c->countries ) );
+    }
+};
+
 
 =method shutdown
 
@@ -95,7 +145,7 @@ event visibility_toggle => sub {
 sub _build_gui {
     my ($self, $f) = @_;
 
-    #- populate continents list
+    # populate continents list
     my $map = Games::Risk->new->map;
     my @continents =
         sort {
@@ -103,13 +153,41 @@ sub _build_gui {
              $a->name  cmp $b->name
         }
         $map->continents;
+    $self->_set_continents( \@continents );
+
+    # create the table
+    my $tm = $f->TableMatrix(
+        -cols           => 3,
+        -colstretchmode => 'all',
+        -justify        => 'center',
+        -rows           => scalar(@continents) + 1,
+        -variable       => $self->_values,
+        -resizeborders  =>'none',
+        disabled,
+    )->pack(top, xfill2);
+    $self->_set_w( tm => $tm );
+    $tm->tagConfigure( 'left',   -bg => 'grey', W );
+    $tm->tagConfigure( 'title',  -bg => 'grey', -relief => 'raised' );
+    $tm->tagConfigure( 'static', -bg => 'grey' );
+
+    # populate static continent information
+    $self->_set_value( '0,0', T('continent') );
+    $self->_set_value( '0,1', T('bonus') );
+    $self->_set_value( '0,2', T('# countries') );
+    $tm->tagCell( 'title', "0,$_" ) for 0..2;
     my $row = 0;
     foreach my $c ( @continents ) {
-        $f->Label(-text=>$c->name
-        )->grid(-row=>$row,-column=>0,-sticky=>'w');
-        $f->Label(-text=>$c->bonus)->grid(-row=>$row,-column=>1);
         $row++;
+        $self->_set_value( "$row,0", $c->name );
+        $self->_set_value( "$row,1", $c->bonus );
+        $self->_set_value( "$row,2", scalar( $c->countries ) );
+        $tm->tagCell( 'left', "$row,0" );
+        $tm->tagCell( 'static', "$row,$_" ) for 1..2;
     }
+
+    # set 1st column width
+    my $max = max map { length $_->name } @continents;
+    $tm->colWidth( 0, $max );
 }
 
 
