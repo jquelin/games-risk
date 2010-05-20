@@ -2,8 +2,8 @@ use 5.010;
 use strict;
 use warnings;
 
-package Games::Risk::GUI::Continents;
-# ABSTRACT: continents listing
+package Games::Risk::Tk::Continents;
+# ABSTRACT: continents information
 
 use POE                    qw{ Loop::Tk };
 use Tk::Sugar;
@@ -18,7 +18,7 @@ use constant K => $poe_kernel;
 # Constructor
 
 #
-# my $id = Games::Risk::GUI::Continents->spawn( \%params );
+# my $id = Games::Risk::Tk::Continents->spawn( \%params );
 #
 # create a new window to list continents and their associated bonus.
 # refer to the embedded pod for an explanation of the supported options.
@@ -127,13 +127,13 @@ __END__
 
 =head1 SYNOPSYS
 
-    my $id = Games::Risk::GUI::Continents->spawn(%opts);
+    my $id = Games::Risk::Tk::Continents->spawn(%opts);
 
 
 
 =head1 DESCRIPTION
 
-C<GR::GUI::Continents> implements a POE session, creating a Tk window to
+C<GR::Tk::Continents> implements a POE session, creating a Tk window to
 list the continents of the map and their associated bonus.
 
 
@@ -141,7 +141,7 @@ list the continents of the map and their associated bonus.
 =head1 CLASS METHODS
 
 
-=head2 my $id = Games::Risk::GUI::Continents->spawn( %opts );
+=head2 my $id = Games::Risk::Tk::Continents->spawn( %opts );
 
 Create a window listing the continents, and return the associated POE
 session ID. One can pass the following options:
