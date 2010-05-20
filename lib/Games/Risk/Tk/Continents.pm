@@ -9,13 +9,14 @@ use Moose;
 use MooseX::Has::Sugar;
 use POE                    qw{ Loop::Tk };
 use MooseX::POE;
+use Readonly;
 use Tk;
 use Tk::Sugar;
 
 use Games::Risk::I18N      qw{ T };
 use Games::Risk::Resources qw{ image $SHAREDIR };
 
-use constant K => $poe_kernel;
+Readonly my $K => $poe_kernel;
 
 
 # -- attributes
@@ -45,7 +46,7 @@ sub _build__toplevel {
 sub START {
     my ($self, $s) = @_[OBJECT, SESSION];
 
-    K->alias_set('continents');
+    $K->alias_set('continents');
 
     #-- create gui
 
@@ -102,7 +103,7 @@ Kill current session. The toplevel window has already been destroyed.
 =cut
 
 event shutdown => sub {
-    K->alias_remove('continents');
+    $K->alias_remove('continents');
 };
 
 
