@@ -215,7 +215,7 @@ sub _onpub_attack_move {
 
     # update the gui
     $h->send_to_all('chnum', $src);
-    $h->send_to_all('chown', $dst);
+    $h->send_to_all('chown', $dst, $looser);
 
     # check if previous $dst owner has lost.
     if ( scalar($looser->countries) == 0 ) {
