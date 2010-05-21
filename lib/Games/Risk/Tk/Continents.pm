@@ -84,15 +84,26 @@ Update the country count of player for a given continent.
 event chown => sub {
     my ($self, $country, $looser) = @_[OBJECT, ARG0, ARG1];
     my $owner = $country->owner;
+
+    # continent information
     my $continent = $country->continent;
+    my $row = 1 + firstidx { $_ eq $continent } $self->_continents;
+
+    # mark table as enabled to update it
     my $tm = $self->_w('tm');
     $tm->configure(enabled);
+
     foreach my $player ( grep { defined } $owner, $looser ) {
-        my $row = 1 + firstidx { $_ eq $continent } $self->_continents;
         my $col = 3 + firstidx { $_ eq $player } Games::Risk->new->players;
         my $value = scalar ( grep { $_->owner eq $player } $continent->countries );
         $self->_set_value( "$row,$col", $value );
+
+        # mark continent as owned if needed
+        my $tag = ( $player eq $owner && $continent->is_owned($player) ) ? "own-$player" : '';
+        $tm->tagCell( $tag, "$row,$col" );
     }
+
+    # update finished, disable table once again
     $tm->configure(disabled);
 };
 
@@ -119,6 +130,7 @@ event player_add => sub {
 
     # new player gets a tag with her color
     $tm->tagConfigure( $player, -relief=>'raised', -bg=>$player->color );
+    $tm->tagConfigure( "own-$player", -bg=>$player->color );
     $tm->tagCell( $player, "0,$col" );
 
     # fill in the column with the player information
