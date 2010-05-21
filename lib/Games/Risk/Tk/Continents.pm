@@ -75,7 +75,7 @@ sub STOP {
 
 =method chown
 
-    $K->post( gui-continents => chown => $country, $looser);
+    $K->post( 'gui-continents' => chown => $country, $looser);
 
 Update the country count of player for a given continent.
 
@@ -99,7 +99,7 @@ event chown => sub {
 
 =method player_add
 
-    $K->post( gui-continents => player_add => $player );
+    $K->post( 'gui-continents' => player_add => $player );
 
 Add a new column in the table to display the new player.
 
@@ -129,7 +129,7 @@ event player_add => sub {
 
 =method shutdown
 
-    $K->post( gui-continents => 'shutdown' );
+    $K->post( 'gui-continents' => 'shutdown' );
 
 Kill current session. The toplevel window has already been destroyed.
 
@@ -142,7 +142,7 @@ event shutdown => sub {
 
 =method visibility_toggle
 
-    $K->post( gui-continents => 'visibility_toggle' );
+    $K->post( 'gui-continents' => 'visibility_toggle' );
 
 Request window to be hidden / shown depending on its previous state.
 
