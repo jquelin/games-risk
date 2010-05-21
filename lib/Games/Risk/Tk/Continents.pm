@@ -5,6 +5,7 @@ use warnings;
 package Games::Risk::Tk::Continents;
 # ABSTRACT: continents information
 
+use List::MoreUtils        qw{ firstidx };
 use List::Util             qw{ max };
 use Moose;
 use MooseX::Has::Sugar;
@@ -72,6 +73,30 @@ sub STOP {
 
 # -- public events
 
+=method chown
+
+    $K->post( gui-continents => chown => $country, $looser);
+
+Update the country count of player for a given continent.
+
+=cut
+
+event chown => sub {
+    my ($self, $country, $looser) = @_[OBJECT, ARG0, ARG1];
+    my $owner = $country->owner;
+    my $continent = $country->continent;
+    my $tm = $self->_w('tm');
+    $tm->configure(enabled);
+    foreach my $player ( grep { defined } $owner, $looser ) {
+        my $row = 1 + firstidx { $_ eq $continent } $self->_continents;
+        my $col = 3 + firstidx { $_ eq $player } Games::Risk->new->players;
+        my $value = scalar ( grep { $_->owner eq $player } $continent->countries );
+        $self->_set_value( "$row,$col", $value );
+    }
+    $tm->configure(disabled);
+};
+
+
 =method player_add
 
     $K->post( gui-continents => player_add => $player );
@@ -97,11 +122,8 @@ event player_add => sub {
     $tm->tagCell( $player, "0,$col" );
 
     # fill in the column with the player information
-    my $row = 0;
-    foreach my $c ( $self->_continents ) {
-        $row++;
-        $self->_set_value( "$row,$col", scalar ( grep { $_->owner eq $player } $c->countries ) );
-    }
+    my @continents = $self->_continents;
+    $self->_set_value( "$_,$col", 0 ) for 1 .. scalar @continents;
 };
 
 
