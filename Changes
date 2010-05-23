@@ -2,6 +2,11 @@ Revision history for Games::Risk.
 
 {{$NEXT}}
 
+3.101430  2010-05-23 17:14:37 Europe/Paris
+ - brand new continent window
+ - card icon more agnostic
+ - prisk can now be run directly from developer checkout
+
 3.101390  2010-05-19 18:26:03 Europe/Paris
  - official prisk icon
  - new about window
