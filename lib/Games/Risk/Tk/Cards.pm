@@ -5,326 +5,215 @@ use warnings;
 package Games::Risk::Tk::Cards;
 # ABSTRACT: cards listing
 
-use List::MoreUtils qw{ any firstidx };
-use POE             qw{ Loop::Tk };
+use List::MoreUtils  qw{ any firstidx };
+use Moose;
+use MooseX::Has::Sugar;
+use MooseX::POE;
+use MooseX::SemiAffordanceAccessor;
+use POE              qw{ Loop::Tk };
 use Readonly;
+use Tk::Role::Dialog 1.101480;
 use Tk::Sugar;
 use Tk::Pane;
 
 use Games::Risk::I18N      qw{ T };
-use Games::Risk::Resources qw{ image $SHAREDIR };
+use Games::Risk::Resources qw{ $SHAREDIR };
 
-use constant K => $poe_kernel;
+with 'Tk::Role::Dialog';
 
+Readonly my $K => $poe_kernel;
 Readonly my $WIDTH  => 95;
 Readonly my $HEIGHT => 145;
 
 
-#--
-# Constructor
+# -- attributes
 
-#
-# my $id = Games::Risk::Tk::Card->spawn( \%params );
-#
-# create a new window to list cards owned by the player. refer to the
-# embedded pod for an explanation of the supported options.
-#
-sub spawn {
-    my (undef, $args) = @_;
-
-    my $session = POE::Session->create(
-        args          => [ $args ],
-        inline_states => {
-            # private events - session mgmt
-            _start               => \&_onpriv_start,
-            _stop                => sub { warn "gui-cards shutdown\n" },
-            # private events
-            _change_button_state => \&_onpub_change_button_state,
-            _redraw_cards        => \&_onpriv_redraw_cards,
-            # gui events
-            _card_clicked        => \&_ongui_card_clicked,
-            _but_exchange        => \&_ongui_but_exchange,
-            # public events
-            attack               => \&_onpub_change_button_state,
-            card_add             => \&_onpub_card_add,
-            card_del             => \&_onpub_card_del,
-            place_armies         => \&_onpub_change_button_state,
-            shutdown             => \&_onpub_shutdown,
-            visibility_toggle    => \&visibility_toggle,
-        },
-    );
-    return $session->ID;
-}
+has _bonus => ( rw, isa=>'Int', default=>0 );
+has _cards => (
+    ro, auto_deref,
+    traits  => ['Array'],
+    isa     => 'ArrayRef',
+    default => sub { [] },
+    handles => {
+        _remove_card   => 'delete',  # $self->_remove_card( $idx );
+        _store_card    => 'push',    # $self->_store_card( $card );
+    },
+);
+has _selected => (
+    rw, auto_deref,
+    traits  => ['Array'],
+    isa     => 'ArrayRef',
+    default => sub { [] },
+    handles => {
+        _clear_selected => 'clear', # $self->_clear_selected;
+    },
+);
+has _state    => ( rw, isa=>'Str', default=>'' );
+has _canvases => ( rw, isa=>'ArrayRef', auto_deref, default => sub { [] } );
 
 
-#--
-# EVENT HANDLERS
+# -- initialization / finalization
 
-# -- public events
-
-#
-# event: card_add( $card );
-#
-# player just received a new $card, display it.
-#
-sub _onpub_card_add {
-    my ($h, $card) = @_[HEAP, ARG0];
-
-    my $cards = $h->{cards};
-    push @$cards, $card;
-
-    K->yield('_redraw_cards');
-}
+sub _build_hidden    { 0 }
+sub _build_title     { 'prisk - ' . T('cards') }
+sub _build_icon      { $SHAREDIR->file('icons', '32','cards.png') }
+sub _build_header    { T('Cards available') }
+sub _build_resizable { 0 }
+sub _build_ok        { T('Exchange') }
+sub _build_hide      { T('Close') }
 
 
 #
-# event: card_del( @cards );
+# session initialization.
 #
-# player just exchange some @cards, remove them.
-#
-sub _onpub_card_del {
-    my ($h, @del) = @_[HEAP, ARG0..$#_];
+sub START {
+    my ($self, $s) = @_[OBJECT, SESSION];
+    $K->alias_set('cards');
 
-    # nothing selected any more
-    $h->{selected} = [];
-    $h->{bonus}    = 0;
-    $h->{label}->configure(-text=>'Select 3 cards');
-
-    # remove the cards
-    my @cards = @{ $h->{cards} };
-    my %left; @left{ @cards } = ();
-    delete @left{ @del };
-    my @left = grep { exists $left{$_} } @cards;
-    $h->{cards} = \@left;
-
-    K->yield('_redraw_cards');
-    K->yield('_change_button_state');
-}
-
-
-#
-# event: attack()
-# event: place_armies()
-# event: _change_button_state()
-#
-# change button state depending on the game state and the cards
-# selected.
-#
-sub _onpub_change_button_state {
-    my ($h, $event) = @_[HEAP, STATE];
-
-    my $select;
-    given ($event) {
-        when ('attack') {
-            $h->{state} = 'attack';
-            $select     = 0;
-        }
-        when ('place_armies') {
-            $h->{state} = 'place_armies';
-            $select     = $h->{bonus};
-        }
-        default {
-            $select = $h->{state} eq 'place_armies' && $h->{bonus};
-        }
-    }
-
-    $h->{button}->configure( $select ? (enabled) : (disabled) );
-}
-
-
-#
-# event: shutdown()
-#
-# kill current session. the toplevel window has already been destroyed.
-#
-sub _onpub_shutdown {
-    #my $h = $_[HEAP];
-    K->alias_remove('cards');
-}
-
-
-#
-# visibility_toggle();
-#
-# Request window to be hidden / shown depending on its previous state.
-#
-sub visibility_toggle {
-    my ($h) = $_[HEAP];
-
-    my $top = $h->{toplevel};
-    my $method = $top->state eq 'normal' ? 'withdraw' : 'deiconify';
-    $top->$method;
-}
-
-
-# -- private events
-
-#
-# event: _redraw_cards()
-#
-# ask to discard current cards shown, and redraw them. used when
-# receiving a new card, or after exchanging some of them.
-#
-sub _onpriv_redraw_cards {
-    my ($h, $s) = @_[HEAP, SESSION];
-
-    # removing cards
-    my $canvases = $h->{canvases} // [];
-    $_->destroy for @$canvases;
-
-    # update gui
-    my @canvases;
-    my @selected = @{ $h->{selected} // [] };
-    my $cards = $h->{cards};
-    foreach my $i ( 0 .. $#$cards ) {
-        my $card = $cards->[$i];
-        my $country = $card->country;
-
-        #
-        my $is_selected = any { $_ == $i } @selected;
-
-        # the canvas containing country info
-        my $row = int( $i / 3 );
-        my $col = $i % 3;
-        my $c = $h->{frame}->Canvas(
-            -width  => $WIDTH,
-            -height => $HEIGHT,
-            -bg     => $is_selected ? 'black' : 'white',
-        )->grid(-row=>$row,-column=>$col);
-        $c->CanvasBind('<1>', [$s->postback('_card_clicked'), $card]);
-
-        # the info themselves
-        $c->createImage(1, 1, -anchor=>'nw', -image=>image('card-bg'), -tags=>['bg']);
-        if ( $card->type eq 'joker' ) {
-            # only the joker!
-            $c->createImage(
-                $WIDTH/2, $HEIGHT/2,
-                -image  => image('card-joker'),
-            );
-        } else {
-            # country name
-            $c->createText(
-                $WIDTH/2, 15,
-                -width  => 70,
-                -anchor => 'n',
-                -text   => $country->name,
-            );
-            # type of card
-            $c->createImage(
-                $WIDTH/2, $HEIGHT-10,
-                -anchor => 's',
-                -image  => image('card-' . $card->type),
-            );
-        }
-
-        # storing canvas
-        push @canvases, $c;
-    }
-
-    $h->{canvases} = \@canvases;
-
-    #$h->{frame}->configure(-width=>95*3,-height=>175*scalar(@hframes));
-
-    # move window & enforce geometry
-    #$top->update;               # force redraw
-    $h->{toplevel}->deiconify;
-
-    #$top->resizable(0,0);
-    #my ($maxw,$maxh) = $top->geometry =~ /^(\d+)x(\d+)/;
-    #$top->maxsize($maxw,$maxh); # bug in resizable: minsize in effet but not maxsize
-}
-
-
-#
-# event: _start( \%opts );
-#
-# session initialization. \%params is received from spawn();
-#
-sub _onpriv_start {
-    my ($h, $s, $opts) = @_[HEAP, SESSION, ARG0];
-
-    K->alias_set('cards');
-
-    #-- create gui
-
-    my $top = $opts->{parent}->Toplevel;
-    $top->withdraw;           # window is hidden first
-    $h->{toplevel} = $top;
-    $top->title( T('Cards') );
-    my $icon = $SHAREDIR->file('icons', '32', 'cards.png');
-    my $mask = $SHAREDIR->file('icons', '32', 'cards-mask.xbm');
-    $top->iconimage( $top->Photo(-file=>$icon) );
-    $top->iconmask( '@' . $mask );
-
-    #- top label
-    $h->{label} = $top->Label(
-        -text => T('Select 3 cards'))->pack(top,fillx);
-
-    #- cards frame
-    $h->{frame} = $top->Scrolled('Frame',
-        -scrollbars => 'e',
-        -width      => ($WIDTH+5)*3,
-        -height     => ($HEIGHT+5)*2,
-    )->pack(top, xfill2);
-
-    #- bottom button
-    $h->{button} = $top->Button(
-        -text    => T('Exchange cards'),
-        -command => $s->postback('_but_exchange'),
-        disabled,
-    )->pack(top, fill2);
-
-    #- force window geometry
-    $top->update;    # force redraw
-    $top->resizable(0,0);
-
-    #- window bindings.
-    #$top->bind('<4>', $s->postback('_slide_wheel',  1));
-    #$top->bind('<5>', $s->postback('_slide_wheel', -1));
-
-
-    # -- inits
-    $h->{cards} = [];
-
+    #--
+    $self->_w('ok')->configure(disabled);
 
     #-- trap some events
+    my $top = $self->_toplevel;
     $top->protocol( WM_DELETE_WINDOW => $s->postback('visibility_toggle'));
     $top->bind('<F5>', $s->postback('visibility_toggle'));
 }
 
 
-# -- gui events
-
 #
-# event: _but_exchange()
+# session destruction.
 #
-# click on the exchange button, to trade armies.
-#
-sub _ongui_but_exchange {
-    my $h = $_[HEAP];
-
-    # get the lists
-    my @cards    = @{ $h->{cards} };
-    my @selected = @{ $h->{selected} };
-
-    my @exchange = map { $cards[$_] } @selected;
-    K->post('risk', 'cards_exchange', @exchange);
+sub STOP {
+    warn "gui-cards shutdown\n";
 }
 
+
+# -- public events
+
+=method card_add
+
+    $K->post( cards => 'card_add', $card );
+
+Player just received a new C<$card>, display it.
+
+=cut
+
+event card_add => sub {
+    my ($self, $card) = @_[OBJECT, ARG0];
+    $self->_store_card( $card );
+    $K->yield('_redraw_cards');
+};
+
+
+=method card_del
+
+    $K->post( cards => 'card_del', @cards );
+
+Player just exchanged some C<@cards>, remove them.
+
+=cut
+
+event card_del => sub {
+    my ($self, @del) = @_[OBJECT, ARG0..$#_];
+
+    # nothing selected any more
+    $self->_clear_selected;
+    $self->_set_bonus(0);
+    $self->_w('label')->configure(-text=>T('Select 3 cards'));
+
+    # remove the cards
+    foreach my $c ( @del ) {
+        my $idx = firstidx { $_ eq $c } $self->_cards;
+        $self->_remove_card( $idx );
+    }
+
+    $K->yield('_redraw_cards');
+    $K->yield('_change_button_state');
+};
+
+
+=event attack
+
+    $K->post( cards => 'attack' );
+
+Prevent user to exchange armies.
+
+=event place_armies
+
+    $K->post( cards => 'place_armies' );
+
+Change exchange button state depending on the cards selected.
+
+=cut
+
+event attack               => \&_do_change_button_state;
+event place_armies         => \&_do_change_button_state;
+event _change_button_state => \&_do_change_button_state; # also internal event
+sub _do_change_button_state {
+    my ($self, $event) = @_[OBJECT, STATE];
+
+    my $select;
+    given ($event) {
+        when ('attack') {
+            $self->_set_state('attack');
+            $select = 0;
+        }
+        when ('place_armies') {
+            $self->_set_state('place_armies');
+            $select = $self->_bonus;
+        }
+        default {
+            $select = $self->_state eq 'place_armies' && $self->_bonus;
+        }
+    }
+    $self->_w('ok')->configure( $select ? (enabled) : (disabled) );
+}
+
+
+=method shutdown
+
+    $K->post( 'gui-continents' => 'shutdown' );
+
+Kill current session. The toplevel window has already been destroyed.
+
+=cut
+
+event shutdown => sub {
+    $K->alias_remove('cards');
+};
+
+
+=method visibility_toggle
+
+    $K->post( 'gui-continents' => 'visibility_toggle' );
+
+Request window to be hidden / shown depending on its previous state.
+
+=cut
+
+event visibility_toggle => sub {
+    my $self = shift;
+    my $top = $self->_toplevel;
+    my $method = $top->state eq 'normal' ? 'withdraw' : 'deiconify';
+    $top->$method;
+};
+
+
+# -- private events
 
 #
 # event: _card_clicked()
 #
 # click on a card, changing its selected status.
 #
-sub _ongui_card_clicked {
-    my ($h, $args) = @_[HEAP, ARG1];
+event _card_clicked => sub {
+    my ($self, $args) = @_[OBJECT, ARG1];
     my ($canvas, undef) = @$args;
 
     # get the lists
-    my @cards    = @{ $h->{cards} };
-    my @canvases = @{ $h->{canvases} };
-    my @selected = @{ $h->{selected} // [] };
+    my @cards    = $self->_cards;
+    my @canvases = $self->_canvases;
+    my @selected = $self->_selected;
 
     # get index of clicked canvas, and its select status
     my $idx = firstidx { $_ eq $canvas } @canvases;
@@ -356,17 +245,17 @@ sub _ongui_card_clicked {
             when ( [ qw{ iii iij } ] ) { $bonus = 4; }
             default { $bonus = 0; }
         }
-        $h->{bonus} = $bonus;
+        $self->_set_bonus( $bonus );
 
         # update label
         local $" = ', ';
         my $text  = "@types = $bonus armies";
-        $h->{label}->configure(-text=>$text);
+        $self->_w('label')->configure(-text=>$text);
 
     } else {
         # update label
-        $h->{label}->configure(-text=>'Select 3 cards');
-        $h->{bonus} = 0;
+        $self->_w('label')->configure(-text=>T('Select 3 cards'));
+        $self->_set_bonus( 0 );
     }
 
     # FIXME: check validity of cards selected
@@ -374,27 +263,131 @@ sub _ongui_card_clicked {
     #$top->bind('<Key-space>',  $s->postback('_but_move'));
 
     # store new set of selected cards
-    $h->{selected} = \@selected;
+    $self->_set_selected( \@selected );
 
-    K->yield('_change_button_state');
+    $K->yield('_change_button_state');
+};
+
+
+#
+# event: _redraw_cards()
+#
+# ask to discard current cards shown, and redraw them. used when
+# receiving a new card, or after exchanging some of them.
+#
+event _redraw_cards => sub {
+    my ($self, $s) = @_[OBJECT, SESSION];
+
+    # removing cards
+    $_->destroy for $self->_canvases;
+
+    # update gui
+    my @canvases = ();
+    my @selected = $self->_selected;
+    my @cards    = $self->_cards;
+    foreach my $i ( 0 .. $#cards ) {
+        my $card = $cards[$i];
+        my $country = $card->country;
+
+        #
+        my $is_selected = any { $_ == $i } @selected;
+
+        # the canvas containing country info
+        my $row = int( $i / 3 );
+        my $col = $i % 3;
+        my $c = $self->_w('frame')->Canvas(
+            -width  => $WIDTH,
+            -height => $HEIGHT,
+            -bg     => $is_selected ? 'black' : 'white',
+        )->grid(-row=>$row,-column=>$col);
+        $c->CanvasBind('<1>', [$s->postback('_card_clicked'), $card]);
+
+        # the info themselves
+        my $img = $SHAREDIR->file('images', 'card-bg.png');
+        $c->createImage(1, 1, -anchor=>'nw', -image=>$c->Photo(-file=>$img), -tags=>['bg']);
+
+        if ( $card->type eq 'joker' ) {
+            # only the joker!
+            my $img = $SHAREDIR->file('images', 'card-joker.png');
+            $c->createImage(
+                $WIDTH/2, $HEIGHT/2,
+                -image  => $c->Photo( -file => $img ),
+            );
+        } else {
+            # country name
+            $c->createText(
+                $WIDTH/2, 15,
+                -width  => 70,
+                -anchor => 'n',
+                -text   => $country->name,
+            );
+            # type of card
+            my $img = $SHAREDIR->file( 'images', 'card-' . $card->type . '.png');
+            $c->createImage(
+                $WIDTH/2, $HEIGHT-10,
+                -anchor => 's',
+                -image  => $c->Photo( -file => $img ),
+            );
+        }
+
+        # storing canvas
+        push @canvases, $c;
+    }
+
+    $self->_set_canvases(\@canvases);
+    $self->_toplevel->deiconify;
+};
+
+
+# -- private methods
+
+#
+# $self->_build_gui;
+#
+# called by tk:role:dialog to build the inner dialog.
+#
+sub _build_gui {
+    my ($self, $s) = @_[OBJECT, SESSION];
+
+    my $top = $self->_toplevel;
+
+    #- top label
+    my $label = $top->Label( -text => T('Select 3 cards') )->pack(top,fillx);
+    $self->_set_w( label => $label );
+
+    #- cards frame
+    my $frame = $top->Scrolled('Frame',
+        -scrollbars => 'e',
+        -width      => ($WIDTH+5)*3,
+        -height     => ($HEIGHT+5)*2,
+    )->pack(top, xfill2);
+    $self->_set_w( frame => $frame );
+
+    #- force window geometry
+    $top->update;    # force redraw
 }
 
 
 #
-# event: _slide_wheel([$diff])
+# $self->_valid;
 #
-# mouse wheel on the slider, with an increment of $diff (can be negative
-# too).
+# called by tk:role:dialog when clicking on exchange button to
+# trade armies.
 #
-sub _onpriv_slide_wheel {
-    my ($h, $args) = @_[HEAP, ARG0];
-    $h->{armies} += $args->[0];
+sub _valid {
+    my $self = shift;
+    my @cards    = $self->_cards;
+    my @selected = $self->_selected;
+    $K->post( risk => 'cards_exchange', @cards[ @selected ] );
 }
 
 
+no Moose;
+__PACKAGE__->meta->make_immutable;
 1;
-
 __END__
+
+=for Pod::Coverage      START STOP
 
 =head1 SYNOPSYS
 

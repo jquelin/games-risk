@@ -749,7 +749,7 @@ sub _onpriv_start {
     $top->protocol( WM_DELETE_WINDOW => $s->postback('_window_close') );
 
     #-- other window
-    Games::Risk::Tk::Cards->spawn({parent=>$top});
+    Games::Risk::Tk::Cards->new({parent=>$top});
     Games::Risk::Tk::Continents->new({parent=>$top});
     Games::Risk::GUI::MoveArmies->spawn({parent=>$top});
 

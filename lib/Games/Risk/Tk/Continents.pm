@@ -173,7 +173,7 @@ event visibility_toggle => sub {
 # -- private methods
 
 #
-# $self->_valid;
+# $self->_build_gui;
 #
 # called by tk:role:dialog to build the inner dialog.
 #
