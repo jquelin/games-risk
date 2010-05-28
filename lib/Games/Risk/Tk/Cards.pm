@@ -2,7 +2,7 @@ use 5.010;
 use strict;
 use warnings;
 
-package Games::Risk::GUI::Cards;
+package Games::Risk::Tk::Cards;
 # ABSTRACT: cards listing
 
 use List::MoreUtils qw{ any firstidx };
@@ -24,7 +24,7 @@ Readonly my $HEIGHT => 145;
 # Constructor
 
 #
-# my $id = Games::Risk::GUI::Card->spawn( \%params );
+# my $id = Games::Risk::Tk::Card->spawn( \%params );
 #
 # create a new window to list cards owned by the player. refer to the
 # embedded pod for an explanation of the supported options.
@@ -396,18 +396,14 @@ sub _onpriv_slide_wheel {
 
 __END__
 
-
-
 =head1 SYNOPSYS
 
-    my $id = Games::Risk::GUI::Cards->spawn(%opts);
-    Poe::Kernel->post( $id, 'card', $card );
-
+    Games::Risk::Tk::Cards->new(%opts);
 
 
 =head1 DESCRIPTION
 
-C<GR::GUI::Cards> implements a POE session, creating a Tk window to
+C<GR::Tk::Cards> implements a POE session, creating a Tk window to
 list the cards the player got. It can be used to exchange cards with new
 armies during reinforcement.
 
@@ -416,7 +412,7 @@ armies during reinforcement.
 =head1 CLASS METHODS
 
 
-=head2 my $id = Games::Risk::GUI::Cards->spawn( %opts );
+=head2 my $id = Games::Risk::Tk::Cards->spawn( %opts );
 
 Create a window listing player cards, and return the associated POE
 session ID. One can pass the following options:

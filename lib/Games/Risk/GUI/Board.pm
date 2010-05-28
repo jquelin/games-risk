@@ -17,11 +17,11 @@ use Tk::JPEG;
 use Tk::PNG;
 use Tk::Sugar;
 
-use Games::Risk::GUI::Cards;
 use Games::Risk::GUI::GameOver;
 use Games::Risk::GUI::MoveArmies;
 use Games::Risk::I18N      qw{ T };
 use Games::Risk::Resources qw{ image $SHAREDIR };
+use Games::Risk::Tk::Cards;
 use Games::Risk::Tk::Continents;
 
 
@@ -749,7 +749,7 @@ sub _onpriv_start {
     $top->protocol( WM_DELETE_WINDOW => $s->postback('_window_close') );
 
     #-- other window
-    Games::Risk::GUI::Cards->spawn({parent=>$top});
+    Games::Risk::Tk::Cards->spawn({parent=>$top});
     Games::Risk::Tk::Continents->new({parent=>$top});
     Games::Risk::GUI::MoveArmies->spawn({parent=>$top});
 
