@@ -19,7 +19,7 @@ with 'Tk::Role::Dialog';
 # -- initialization / finalization
 
 sub _build_title     { 'prisk - ' . T('help') }
-sub _build_icon      { $SHAREDIR->file('icons', '32','help.png')->stringify }
+sub _build_icon      { $SHAREDIR->file('icons', '32','help.png') }
 sub _build_header    { T('How to play?') }
 sub _build_resizable { 1 }
 sub _build_cancel    { T('Close') }

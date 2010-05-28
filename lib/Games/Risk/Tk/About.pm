@@ -18,7 +18,7 @@ with 'Tk::Role::Dialog';
 # -- initialization / finalization
 
 sub _build_title     { 'prisk - ' . T('about') }
-sub _build_icon      { $SHAREDIR->file('icons', '32', 'about.png')->stringify }
+sub _build_icon      { $SHAREDIR->file('icons', '32', 'about.png') }
 sub _build_header    { "prisk $Games::Risk::VERSION" }
 sub _build_resizable { 0 }
 sub _build_cancel    { T('Close') }

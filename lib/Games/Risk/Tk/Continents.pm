@@ -42,11 +42,12 @@ has _values => (
 
 # -- initialization / finalization
 
+sub _build_hidden    { 1 }
 sub _build_title     { 'prisk - ' . T('continents') }
-sub _build_icon      { $SHAREDIR->file('icons', '32','continents.png')->stringify }
+sub _build_icon      { $SHAREDIR->file('icons', '32','continents.png') }
 sub _build_header    { T('Continents information') }
 sub _build_resizable { 0 }
-sub _build_ok        { T('Close') }
+sub _build_hide      { T('Close') }
 
 
 #
@@ -224,16 +225,6 @@ sub _build_gui {
     $tm->colWidth( 0, $max );
 }
 
-
-#
-# $self->_valid;
-#
-# called by tk:role:dialog when user click the ok button.
-#
-sub _valid {
-    my $self = shift;
-    $self->yield( 'visibility_toggle' );
-}
 
 no Moose;
 __PACKAGE__->meta->make_immutable;
