@@ -5,12 +5,13 @@ use warnings;
 package Games::Risk;
 # ABSTRACT: classical 'risk' board game
 
+use POE        qw{ Loop::Tk };
+use List::Util qw{ shuffle };
+
+use constant K => $poe_kernel;
 
 use Games::Risk::Controller;
 use Games::Risk::GUI;
-use List::Util qw{ shuffle };
-use POE        qw{ Loop::Tk };
-use constant K => $poe_kernel;
 
 
 use base qw{ Class::Accessor::Fast };

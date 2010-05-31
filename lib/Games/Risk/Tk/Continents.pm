@@ -5,13 +5,13 @@ use warnings;
 package Games::Risk::Tk::Continents;
 # ABSTRACT: continents information
 
+use POE                    qw{ Loop::Tk };
 use List::MoreUtils        qw{ firstidx };
 use List::Util             qw{ max };
 use Moose;
 use MooseX::Has::Sugar;
-use MooseX::SemiAffordanceAccessor;
-use POE                    qw{ Loop::Tk };
 use MooseX::POE;
+use MooseX::SemiAffordanceAccessor;
 use Readonly;
 use Tk;
 use Tk::Role::Dialog       1.101480;

@@ -5,8 +5,8 @@ use warnings;
 package Games::Risk::Controller;
 # ABSTRACT: controller poe session for risk
 
-use List::Util      qw{ min shuffle };
 use POE             qw{ Loop::Tk };
+use List::Util      qw{ min shuffle };
 use Readonly;
 
 use Games::Risk::I18N      qw{ T };

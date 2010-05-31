@@ -5,11 +5,11 @@ use warnings;
 package Games::Risk::Resources;
 # ABSTRACT: utility module to load bundled resources
 
+use POE            qw{ Loop::Tk };
 use File::Basename qw{ basename };
 use File::ShareDir qw{ dist_dir };
 use File::Spec::Functions;
 use FindBin        qw{ $Bin };
-use POE            qw{ Loop::Tk };
 use Path::Class;
 use Readonly;
 use Tk;

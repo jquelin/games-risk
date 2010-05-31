@@ -5,11 +5,11 @@ use warnings;
 package Games::Risk::GUI::Board;
 # ABSTRACT: board gui component
 
+use POE            qw{ Loop::Tk };
 use Image::Magick;
 use Image::Size;
 use List::Util     qw{ min };
 use MIME::Base64;
-use POE            qw{ Loop::Tk };
 use Readonly;
 use Tk;
 use Tk::Balloon;

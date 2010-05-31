@@ -5,9 +5,10 @@ use warnings;
 package Games::Risk::GUI;
 # ABSTRACT: gui multiplexer poe session
 
+use POE qw{ Loop::Tk };
+
 use Games::Risk::GUI::Board;
 use Games::Risk::GUI::Startup;
-use POE qw{ Loop::Tk };
 
 use constant K => $poe_kernel;
 

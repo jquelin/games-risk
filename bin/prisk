@@ -6,9 +6,10 @@ use warnings;
 use FindBin qw{ $Bin };
 use lib "$Bin/../lib";
 
-use Tk;             # should come before Games::Risk* and POE*
+use POE qw{ Loop::Tk };
+use Tk;
+
 use Games::Risk;
-use POE;
 
 Games::Risk->new;
 POE::Kernel->run;

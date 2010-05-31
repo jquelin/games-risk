@@ -5,12 +5,12 @@ use warnings;
 package Games::Risk::Tk::Cards;
 # ABSTRACT: cards listing
 
+use POE              qw{ Loop::Tk };
 use List::MoreUtils  qw{ any firstidx };
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::POE;
 use MooseX::SemiAffordanceAccessor;
-use POE              qw{ Loop::Tk };
 use Readonly;
 use Tk::Role::Dialog 1.101480;
 use Tk::Sugar;

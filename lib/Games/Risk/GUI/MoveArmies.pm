@@ -5,8 +5,8 @@ use warnings;
 package Games::Risk::GUI::MoveArmies;
 # ABSTRACT: window to move armies
 
-use List::Util qw{ max };
 use POE        qw{ Loop::Tk };
+use List::Util qw{ max };
 use Tk;
 use Tk::Font;
 use Tk::Sugar;

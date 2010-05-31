@@ -5,9 +5,9 @@ use warnings;
 package Games::Risk::GUI::Startup;
 # ABSTRACT: startup window
 
-use List::Util     qw{ shuffle };
-use List::MoreUtils qw{ any };
 use POE             qw{ Loop::Tk };
+use List::Util      qw{ shuffle };
+use List::MoreUtils qw{ any };
 use Readonly;
 use Tk;
 use Tk::Balloon;

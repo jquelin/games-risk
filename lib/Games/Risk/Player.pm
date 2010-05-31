@@ -5,10 +5,10 @@ use warnings;
 package Games::Risk::Player;
 # ABSTRACT: risk player
 
+use POE qw{ Loop::Tk };
 use Carp;
 use Games::Risk::AI;
 use List::Util qw{ sum };
-use POE qw{ Loop::Tk };
 use Readonly;
 use UNIVERSAL::require;
 use constant K => $poe_kernel;
