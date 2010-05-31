@@ -2,6 +2,9 @@ Revision history for Games::Risk.
 
 {{$NEXT}}
 
+3.101511  2010-05-31 19:07:02 Europe/Paris
+ - do not ship useless misc/ directory
+
 3.101510  2010-05-31 17:47:17 Europe/Paris
  - double-clicking a card highlights the country
  - cards window updated to match the new prisk style
