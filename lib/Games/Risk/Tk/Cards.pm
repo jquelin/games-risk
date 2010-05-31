@@ -132,13 +132,13 @@ event card_del => sub {
 };
 
 
-=event attack
+=method attack
 
     $K->post( cards => 'attack' );
 
 Prevent user to exchange armies.
 
-=event place_armies
+=method place_armies
 
     $K->post( cards => 'place_armies' );
 
