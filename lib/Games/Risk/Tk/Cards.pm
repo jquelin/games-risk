@@ -361,7 +361,7 @@ event _redraw_cards => sub {
 # called by tk:role:dialog to build the inner dialog.
 #
 sub _build_gui {
-    my ($self, $s) = @_[OBJECT, SESSION];
+    my $self = shift;
 
     my $top = $self->_toplevel;
 
