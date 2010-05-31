@@ -2,6 +2,10 @@ Revision history for Games::Risk.
 
 {{$NEXT}}
 
+3.101510  2010-05-31 17:47:17 Europe/Paris
+ - double-clicking a card highlights the country
+ - cards window updated to match the new prisk style
+
 3.101430  2010-05-23 17:14:37 Europe/Paris
  - brand new continent window
  - card icon more agnostic
