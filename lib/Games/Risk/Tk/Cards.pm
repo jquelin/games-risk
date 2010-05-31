@@ -54,7 +54,7 @@ has _canvases => ( rw, isa=>'ArrayRef', auto_deref, default => sub { [] } );
 
 # -- initialization / finalization
 
-sub _build_hidden    { 0 }
+sub _build_hidden    { 1 }
 sub _build_title     { 'prisk - ' . T('cards') }
 sub _build_icon      { $SHAREDIR->file('icons', '32','cards.png') }
 sub _build_header    { T('Cards available') }
