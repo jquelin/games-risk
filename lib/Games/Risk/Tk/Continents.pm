@@ -14,6 +14,7 @@ use POE                    qw{ Loop::Tk };
 use MooseX::POE;
 use Readonly;
 use Tk;
+use Tk::Role::Dialog       1.101480;
 use Tk::Sugar;
 use Tk::TableMatrix;
 

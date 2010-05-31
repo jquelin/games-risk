@@ -7,6 +7,7 @@ package Games::Risk::Tk::About;
 
 use Moose;
 use Path::Class;
+use Tk::Role::Dialog 1.101480;
 
 use Games::Risk;
 use Games::Risk::I18N      qw{ T };

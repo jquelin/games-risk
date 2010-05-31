@@ -8,6 +8,7 @@ package Games::Risk::Tk::Help;
 use Moose;
 use Path::Class;
 use Tk::Pod::Text;
+use Tk::Role::Dialog 1.101480;
 use Tk::Sugar;
 
 use Games::Risk::I18N      qw{ T };
