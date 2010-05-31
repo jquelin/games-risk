@@ -270,6 +270,19 @@ event _card_clicked => sub {
 
 
 #
+# event: _card_double_clicked()
+#
+# double-click on a card, highlighting it on the board.
+#
+event _card_double_clicked => sub {
+    my ($self, $args) = @_[OBJECT, ARG1];
+    my $card = $args->[1];
+    return if $card->type eq 'joker';   # joker is not a country, nothing to do
+    $K->post( gui => flash_country => $card->country );
+};
+
+
+#
 # event: _redraw_cards()
 #
 # ask to discard current cards shown, and redraw them. used when
@@ -301,6 +314,7 @@ event _redraw_cards => sub {
             -bg     => $is_selected ? 'black' : 'white',
         )->grid(-row=>$row,-column=>$col);
         $c->CanvasBind('<1>', [$s->postback('_card_clicked'), $card]);
+        $c->CanvasBind('<Double-1>', [$s->postback('_card_double_clicked'), $card]);
 
         # the info themselves
         my $img = $SHAREDIR->file('images', 'card-bg.png');

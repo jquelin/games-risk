@@ -29,6 +29,7 @@ use constant K => $poe_kernel;
 
 Readonly my $WAIT_CLEAN_AI    => 1.000;
 Readonly my $WAIT_CLEAN_HUMAN => 0.250;
+Readonly my $FLASHDELAY       => 0.150;
 
 
 #--
@@ -79,6 +80,7 @@ sub spawn {
             attack_move                    => \&_onpub_attack_move,
             chnum                          => \&_onpub_country_redraw,
             chown                          => \&_onpub_country_redraw,
+            flash_country                  => \&_onpub_flash_country,
             game_over                      => \&_onpub_game_over,
             load_map                       => \&_onpub_load_map,
             move_armies                    => \&_onpub_move_armies,
@@ -261,6 +263,64 @@ sub _onpub_country_redraw {
 
     $c->raise("country$id&&circle", 'all');
     $c->raise("country$id&&text",   'all');
+}
+
+
+#
+# event: flash_country( $country )
+#
+# request $country to be flashed on the map. this is done by
+# extracting the country from the greyscale image, and paint it in
+# white on the canvas.
+#
+# event: flash_country( $country , [ $state, $left ] )
+#
+# once the image is created, the event yields itself back after
+# $FLASHDELAY, and shows/hides the image depending on $state. when $left hits 0 (decremented each state change), the image is discarded.
+#
+sub _onpub_flash_country {
+    my ($h, $country, $on, $left) = @_[HEAP, ARG0 .. $#_];
+    my $c = $h->{canvas};
+
+    # first time that the country is flashed
+    if ( not defined $on ) {
+        # load greyscale image...
+        my $magick = Image::Magick->new;
+        $magick->Read( Games::Risk->new->map->greyscale );
+
+        # and paint everything that isn't the country in white
+        my $id = $country->id;
+        my $grey = "rgb($id,$id,$id)";
+        $magick->FloodfillPaint(fuzz=>0, fill=>'white', bordercolor=>$grey, invert=>1);
+        $magick->Negate;                        # turn white in black
+        $magick->Transparent( color=>'black' ); # mark black as transparent
+
+        # resize the image to fit canvas zoom
+        my ($zoomx, $zoomy) = @{ $h->{zoom} };
+        my $width  = $magick->Get('width');
+        my $height = $magick->Get('height');
+        $magick->Scale(width=>$width * $zoomx, height=>$height * $zoomy);
+
+        # remove all the uninteresting bits around the country itself
+        $magick->Trim;
+        my $coordx = $magick->Get('page.x');
+        my $coordy = $magick->Get('page.y');
+        $magick->Set(page=>'0x0+0+0');          # reset the page (resize image to trimmed zone)
+
+        # create the image and display it on the canvas
+        my $img = $c->Photo( -data => encode_base64( $magick->ImageToBlob ) );
+        $c->createImage($coordx, $coordy, -anchor=>'nw', -image=>$img, -tags=>["flash$country"]);
+
+        $on   = 1;
+        $left = 8;
+    }
+    my $method = $on ? 'raise' : 'lower';
+    $c->$method("flash$country", 'background' );
+    if ( $left ) {
+        K->delay( flash_country => $FLASHDELAY => $country, !$on, $left-1 );
+    } else {
+        $c->delete( "flash$country" );
+    }
 }
 
 
