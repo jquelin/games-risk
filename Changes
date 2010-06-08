@@ -2,6 +2,10 @@ Revision history for Games::Risk.
 
 {{$NEXT}}
 
+3.101590  2010-06-08 16:22:22 Europe/Paris
+ - fixing gr:tk:cards to work on win32 (weird ordering bug in poe/moose/win32)
+ - try to find win32 username
+
 3.101511  2010-05-31 19:07:02 Europe/Paris
  - do not ship useless misc/ directory
 
