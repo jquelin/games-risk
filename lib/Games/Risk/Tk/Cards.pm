@@ -70,9 +70,6 @@ sub START {
     my ($self, $s) = @_[OBJECT, SESSION];
     $K->alias_set('cards');
 
-    #--
-    $self->_w('ok')->configure(disabled);
-
     #-- trap some events
     my $top = $self->_toplevel;
     $top->protocol( WM_DELETE_WINDOW => $s->postback('visibility_toggle'));
@@ -379,6 +376,20 @@ sub _build_gui {
 
     #- force window geometry
     $top->update;    # force redraw
+}
+
+
+#
+# $self->_finish_gui;
+#
+# called by tk:role:dialog to finish the inner dialog building.
+# needed because win32 somehow mixes START with BUILD. very strange...
+#
+sub _finish_gui {
+    my $self = shift;
+
+    # prevent validation button to be clicked.
+    $self->_w('ok')->configure(disabled);
 }
 
 
