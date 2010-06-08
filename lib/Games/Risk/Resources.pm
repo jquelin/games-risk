@@ -122,12 +122,10 @@ sub _load_tk_icons {
 #--
 # INITIALIZATION
 
-BEGIN {
-    my $dirname = dist_dir('Games-Risk');
-    _load_tk_icons($dirname);
-    _load_images($dirname);
-    _find_maps($dirname);
-}
+# FIXME: all of this is ugly and should go away
+_load_tk_icons($SHAREDIR);
+_load_images($SHAREDIR);
+_find_maps($SHAREDIR);
 
 
 1;
