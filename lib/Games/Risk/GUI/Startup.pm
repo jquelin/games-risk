@@ -198,7 +198,8 @@ sub _onpriv_check_nb_players {
 #
 sub _onpriv_load_defaults {
     # FIXME: hardcoded
-    my @names  = ($ENV{USER}, shuffle @NAMES );
+    my $user   = $ENV{USER} // $ENV{USERNAME} //$ENV{LOGNAME}; # FIXME: use a module?
+    my @names  = ($user, shuffle @NAMES );
     my @types  = (T('Human'), (T('Computer, easy'))x1, (T('Computer, hard'))x2);
     my @colors = @COLORS;
     foreach my $i ( 0..$#types ) {
