@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+package prisk;
+# ABSTRACT: classical Risk game written in perl
+
 use strict;
 use warnings;
 
@@ -16,11 +19,6 @@ POE::Kernel->run;
 exit;
 
 __END__
-
-=head1 NAME
-
-prisk - classical Risk game written in perl
-
 
 =head1 DESCRIPTION
 
