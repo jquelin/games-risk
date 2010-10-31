@@ -1,0 +1,460 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR 'Jerome Quelin'
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Games-Risk\n"
+"Report-Msgid-Bugs-To: bug-games-risk@rt.cpan.org\n"
+"POT-Creation-Date: 2010-05-31 17:40+0200\n"
+"PO-Revision-Date: 2010-05-31 17:41+0100\n"
+"Last-Translator: Tobias Rosenberger <son@ich-habe-fertig.com>\n"
+"Language-Team: Jérôme Quelin <jquelin@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: lib/Games/Risk/Controller.pm:534
+#: lib/Games/Risk/GUI/Startup.pm:150
+#: lib/Games/Risk/GUI/Startup.pm:202
+#: lib/Games/Risk/GUI/Startup.pm:221
+msgid "Human"
+msgstr "Mensch"
+
+#: lib/Games/Risk/Controller.pm:542
+#: lib/Games/Risk/GUI/Startup.pm:202
+#: lib/Games/Risk/GUI/Startup.pm:221
+msgid "Computer, easy"
+msgstr "Computer, leicht"
+
+#: lib/Games/Risk/Controller.pm:551
+#: lib/Games/Risk/GUI/Startup.pm:202
+#: lib/Games/Risk/GUI/Startup.pm:221
+#: lib/Games/Risk/GUI/Startup.pm:449
+msgid "Computer, hard"
+msgstr "Computer, schwierig"
+
+#: lib/Games/Risk/Tk/About.pm:21
+msgid "about"
+msgstr "über"
+
+#: lib/Games/Risk/Tk/About.pm:25
+#: lib/Games/Risk/Tk/Help.pm:26
+#: lib/Games/Risk/Tk/Continents.pm:51
+#: lib/Games/Risk/Tk/Cards.pm:63
+#: lib/Games/Risk/GUI/GameOver.pm:79
+msgid "Close"
+msgstr "Schließen"
+
+#: lib/Games/Risk/Tk/About.pm:28
+msgid "Created by Jerome Quelin"
+msgstr "Erstellt von Jerome Quelin"
+
+#: lib/Games/Risk/Tk/About.pm:29
+msgid "Copyright (c) 2008 Jerome Quelin, all rights reserved"
+msgstr "Copyright (c) 2008 Jérôme Quelin, alle Rechte vorbehalten"
+
+#: lib/Games/Risk/Tk/About.pm:31
+msgid "prisk is free software; you can redistribute it and/or modify it under the terms of the GPLv3."
+msgstr "prisk ist freie Software; Sie dürfen es ändern und weiterverbreiten nach den Bestimmungen der GPLv3."
+
+#: lib/Games/Risk/Tk/Help.pm:22
+msgid "help"
+msgstr "Hilfe"
+
+#: lib/Games/Risk/Tk/Help.pm:24
+msgid "How to play?"
+msgstr "Wie funktioniert das Spiel?"
+
+#: lib/Games/Risk/Tk/Continents.pm:47
+msgid "continents"
+msgstr "Kontinente"
+
+#: lib/Games/Risk/Tk/Continents.pm:49
+msgid "Continents information"
+msgstr "Kontinent-Informtion"
+
+#: lib/Games/Risk/Tk/Continents.pm:210
+msgid "continent"
+msgstr "Kontinent"
+
+#: lib/Games/Risk/Tk/Continents.pm:211
+msgid "bonus"
+msgstr "Bonus"
+
+#: lib/Games/Risk/Tk/Continents.pm:212
+msgid "# countries"
+msgstr "Anzahl der Länder"
+
+#: lib/Games/Risk/Tk/Cards.pm:58
+msgid "cards"
+msgstr "Karten"
+
+#: lib/Games/Risk/Tk/Cards.pm:60
+msgid "Cards available"
+msgstr "Verfügbare Karten"
+
+#: lib/Games/Risk/Tk/Cards.pm:62
+msgid "Exchange"
+msgstr "Eintauschen"
+
+#: lib/Games/Risk/Tk/Cards.pm:122
+#: lib/Games/Risk/Tk/Cards.pm:369
+msgid "Select 3 cards"
+msgstr "Wählen Sie 3 Karten aus"
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:71
+msgid "Country invasion"
+msgstr "Invasion des Landes"
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:72
+msgid "A country has been conquered!"
+msgstr "Ein Land wurde erobert!"
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:73
+#, perl-format
+msgid "You have conquered %s while attacking from %s."
+msgstr "Sie haben %s bei Ihrem Angriff von %s aus erobert."
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:113
+msgid "Moving armies"
+msgstr "Armeen bewegen"
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:114
+msgid "Consolidate your positions"
+msgstr "Sichern Sie Ihre Positionen"
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:115
+#, perl-format
+msgid "Moving armies from %s to %s."
+msgstr "Armeen von %s nach %s bewegen."
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:174
+msgid "Armies to move"
+msgstr "Zu bewegende Armeen"
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:183
+msgid "Move armies"
+msgstr "Armeen bewegen"
+
+#: lib/Games/Risk/GUI/GameOver.pm:62
+msgid "Game over"
+msgstr "Game over"
+
+#: lib/Games/Risk/GUI/GameOver.pm:71
+#, perl-format
+msgid "%s won!"
+msgstr "%s hat gewonnen!"
+
+#: lib/Games/Risk/GUI/GameOver.pm:75
+msgid ""
+"Congratulations, you won!\n"
+"Maybe the artificial intelligences were not that hard?"
+msgstr ""
+"Glückwunsch, Sie haben gewonnen!\n"
+"Vielleicht war die künstliche Intelligenz nicht so schwierig?"
+
+#: lib/Games/Risk/GUI/GameOver.pm:76
+msgid ""
+"Unfortunately, you lost...\n"
+"Try harder next time!"
+msgstr ""
+"Unglücklicherweise haben Sie verloren\n"
+"Geben Sie sich das nächste Mal mehr Mühe!"
+
+#: lib/Games/Risk/GUI/Board.pm:136
+#: lib/Games/Risk/GUI/Board.pm:1009
+msgid "Attacking from ..."
+msgstr "Angreifen von ..."
+
+#: lib/Games/Risk/GUI/Board.pm:149
+#: lib/Games/Risk/GUI/Board.pm:1036
+#, perl-format
+msgid "Attacking %s from %s"
+msgstr "%s von %s aus angreifen"
+
+#: lib/Games/Risk/GUI/Board.pm:414
+#: lib/Games/Risk/GUI/Board.pm:445
+msgid "Moving armies from..."
+msgstr "Armeen bewegen von ..."
+
+#: lib/Games/Risk/GUI/Board.pm:473
+#: lib/Games/Risk/GUI/Board.pm:505
+#: lib/Games/Risk/GUI/Board.pm:967
+#: lib/Games/Risk/GUI/Board.pm:1241
+#: lib/Games/Risk/GUI/Board.pm:1282
+#, perl-format
+msgid "%s armies left to place"
+msgstr "%s zurückgelassene Armeen"
+
+#: lib/Games/Risk/GUI/Board.pm:547
+msgid "human"
+msgstr "menschlich"
+
+#: lib/Games/Risk/GUI/Board.pm:554
+#, perl-format
+msgid "computer - %s"
+msgstr "Computer - %s"
+
+#: lib/Games/Risk/GUI/Board.pm:574
+#, perl-format
+msgid "Player %s has lost"
+msgstr "Der Spieler %s hat verloren"
+
+#: lib/Games/Risk/GUI/Board.pm:619
+msgid "~Game"
+msgstr "~Spiel"
+
+#: lib/Games/Risk/GUI/Board.pm:621
+msgid "~Schließen"
+msgstr "~Fermer"
+
+#: lib/Games/Risk/GUI/Board.pm:631
+msgid "~Quit"
+msgstr "~Beenden"
+
+#: lib/Games/Risk/GUI/Board.pm:640
+msgid "~View"
+msgstr "~Ansicht"
+
+#: lib/Games/Risk/GUI/Board.pm:642
+msgid "~Cards"
+msgstr "~Karten"
+
+#: lib/Games/Risk/GUI/Board.pm:650
+msgid "C~ontinents"
+msgstr "K~ontinente"
+
+#: lib/Games/Risk/GUI/Board.pm:658
+#: lib/Games/Risk/GUI/Board.pm:660
+msgid "~Help"
+msgstr "~Hilfe"
+
+#: lib/Games/Risk/GUI/Board.pm:668
+msgid "~About"
+msgstr "~Über"
+
+#: lib/Games/Risk/GUI/Board.pm:688
+msgid "Game state: "
+msgstr "Spielstand:"
+
+#: lib/Games/Risk/GUI/Board.pm:689
+msgid "place armies"
+msgstr "Armeen setzen"
+
+#: lib/Games/Risk/GUI/Board.pm:700
+msgid "attack"
+msgstr "angreifen"
+
+#: lib/Games/Risk/GUI/Board.pm:711
+msgid "move armies"
+msgstr "Armeen bewegen"
+
+#: lib/Games/Risk/GUI/Board.pm:725
+msgid "undo all"
+msgstr "alles rückgängig machen"
+
+#: lib/Games/Risk/GUI/Board.pm:726
+msgid "ready for attack"
+msgstr "bereit zum Angriff"
+
+#: lib/Games/Risk/GUI/Board.pm:727
+msgid "attack again"
+msgstr "Angriff wiederholen"
+
+#: lib/Games/Risk/GUI/Board.pm:728
+msgid "consolidate"
+msgstr "konsolidieren"
+
+#: lib/Games/Risk/GUI/Board.pm:729
+msgid "turn finished"
+msgstr "Zug beendet"
+
+#: lib/Games/Risk/GUI/Board.pm:767
+msgid "Players"
+msgstr "Spieler"
+
+#: lib/Games/Risk/GUI/Board.pm:774
+msgid "Dice arena"
+msgstr "Würfelarena"
+
+#: lib/Games/Risk/GUI/Board.pm:802
+msgid "Auto-reattack"
+msgstr "Angriff automatisch wiederholen"
+
+#: lib/Games/Risk/GUI/Board.pm:806
+msgid "Automatically re-do last attack if attacker still has more than 3 armies"
+msgstr "Angriff automatisch wiederholen, wenn der Angreifer noch mehr als 3 Armeen hat"
+
+#: lib/Games/Risk/GUI/Board.pm:991
+#, perl-format
+msgid "Attacking ... from %s"
+msgstr "Angreifen ... von %s"
+
+#: lib/Games/Risk/GUI/Board.pm:1131
+msgid "Moving armies from ..."
+msgstr "Armeen bewegen ..."
+
+#: lib/Games/Risk/GUI/Board.pm:1159
+#, perl-format
+msgid "Moving armies from %s to ..."
+msgstr "Armeen von nach ... bewegen"
+
+#: lib/Games/Risk/GUI/Board.pm:1182
+#, perl-format
+msgid "Moving armies from %s to %s"
+msgstr "Armeen von %s nach %s bewegen"
+
+#: lib/Games/Risk/GUI/Startup.pm:45
+msgid "Napoleon Bonaparte"
+msgstr "Napoleon Bonaparte"
+
+#: lib/Games/Risk/GUI/Startup.pm:46
+msgid "Staline"
+msgstr "Stalin"
+
+#: lib/Games/Risk/GUI/Startup.pm:47
+msgid "Alexander the Great"
+msgstr "Alexander der Große"
+
+#: lib/Games/Risk/GUI/Startup.pm:48
+msgid "Julius Caesar"
+msgstr "Julius Cäsar"
+
+#: lib/Games/Risk/GUI/Startup.pm:49
+msgid "Attila"
+msgstr "Attila"
+
+#: lib/Games/Risk/GUI/Startup.pm:50
+msgid "Genghis Kahn"
+msgstr "Dschingis Khan"
+
+#: lib/Games/Risk/GUI/Startup.pm:51
+msgid "Charlemagne"
+msgstr "Karl der Große"
+
+#: lib/Games/Risk/GUI/Startup.pm:52
+msgid "Saladin"
+msgstr "Saladin"
+
+#: lib/Games/Risk/GUI/Startup.pm:53
+msgid "Otto von Bismarck"
+msgstr "Otto von Bismarck"
+
+#: lib/Games/Risk/GUI/Startup.pm:54
+msgid "Ramses II"
+msgstr "Ramses II."
+
+#: lib/Games/Risk/GUI/Startup.pm:139
+msgid "Two players cannot have the same color."
+msgstr "Zwei Spieler können nicht die gleiche Farbe haben."
+
+#: lib/Games/Risk/GUI/Startup.pm:146
+msgid "Two players cannot have the same name."
+msgstr "Zwei Spieler können nicht den selben Namen haben."
+
+#: lib/Games/Risk/GUI/Startup.pm:151
+msgid "Cannot have more than one human player."
+msgstr "Spiele mit mehreren menschlichen Spielern werden nicht unterstützt."
+
+#: lib/Games/Risk/GUI/Startup.pm:152
+msgid "Game without any human player not (yet) supported."
+msgstr "Spiele ohne menschliche Spieler werden (noch) nicht unterstützt."
+
+#: lib/Games/Risk/GUI/Startup.pm:155
+msgid "A player cannot have an empty name."
+msgstr "Jeder Spieler muss einen Namen haben."
+
+#: lib/Games/Risk/GUI/Startup.pm:159
+msgid "Game should have at least 2 players."
+msgstr "Es muss mindestens 2 Spieler geben."
+
+#: lib/Games/Risk/GUI/Startup.pm:296
+msgid "new game"
+msgstr "neues Spiel"
+
+#: lib/Games/Risk/GUI/Startup.pm:312
+msgid "New game"
+msgstr "Neues Spiel"
+
+#: lib/Games/Risk/GUI/Startup.pm:337
+msgid "New player..."
+msgstr "Neuer Spieler..."
+
+#: lib/Games/Risk/GUI/Startup.pm:346
+msgid "Start game"
+msgstr "Spiel starten"
+
+#: lib/Games/Risk/GUI/Startup.pm:350
+msgid "Quit"
+msgstr "Beenden"
+
+#: lib/Games/Risk/AI/Blitzkrieg.pm:71
+msgid "easy"
+msgstr "einfach"
+
+#: lib/Games/Risk/AI/Blitzkrieg.pm:132
+msgid ""
+"\n"
+"\n"
+"        This artificial intelligence follows a blitzkrieg strategy. It\n"
+"        will piles up new armies in one country, and then follow a\n"
+"        random path from this attack base.\n"
+"\n"
+"    "
+msgstr ""
+"\n"
+"\n"
+"        Diese künstliche Intelligenz verfolgt eine Blitzkriegstrategie.\n"
+"        Sie sammelt Armeen in einem Land und greift dann zufällig\n"
+"        von diesem Land aus an.\n"
+"\n"
+"    "
+
+#: lib/Games/Risk/AI/Hegemon.pm:211
+msgid "hard"
+msgstr "schwierig"
+
+#: lib/Games/Risk/AI/Hegemon.pm:454
+msgid ""
+"\n"
+"\n"
+"        This artificial intelligence is optimized to conquer the world.\n"
+"        It checks what countries are most valuable for it, optimizes\n"
+"        attacks and moves for continent bonus and blocking other\n"
+"        players.\n"
+"\n"
+"    "
+msgstr ""
+"\n"
+"\n"
+"        Diese künstliche Intelligenz ist auf die Eroberung der Welt\n"
+"        optimiert. Sie versucht, Kontinent-Boni zu bekommen\n"
+"        und andere Spieler zu blockieren.\n"
+"\n"
+"    "
+
+#: lib/Games/Risk/AI/Dumb.pm:35
+msgid "very easy"
+msgstr "sehr einfach"
+
+#: lib/Games/Risk/AI/Dumb.pm:81
+msgid ""
+"\n"
+"\n"
+"        This artificial intelligence does nothing: it just piles up new armies\n"
+"        randomly, and never ever attacks nor move armies.\n"
+"\n"
+"    "
+msgstr ""
+"\n"
+"\n"
+"        Diese künstliche Intelligenz tut nichts. Sie verteilt ihre Armeen zufällig,\n"
+"        bewegt sie nicht und greift nicht an.\n"
+"\n"
+"    "
+
