@@ -6,7 +6,7 @@ It is great to see you would want to improve Game::Risk.
 Here's what you need (among other prereqs):
     - Tk
     - POE
-    - Dist::ZillaDist
+    - Dist::Zilla
     - Dist::Zilla::PluginBundle::JQUELIN
 
 
@@ -28,22 +28,23 @@ by dist-zilla.
 
 ** Code layout:
 
-Each window has its own module in 
-
+Each window has its own module in:
     lib/Games/Risk/GUI/
 
 but it is moving slowly in lib/Games/Risk/Tk once they are sanitized.
 
 
-Translation files are in 
-
-    lib/LocaleData/<language code>/LC_MESSAGES/Games-Risk.po
-
-So for example the French translation is in
-
-    lib/LocaleData/fr/LC_MESSAGES/Games-Risk.po
+** I18n layout
 
 The file holding the strings is here:
+    share/locale/Games-Risk-messages.pot
 
-    lib/LocaleData/Games-Risk-messages.pot
+It can be updated at anytime by using:
+    $ dzil pot
+
+Translation files are in:
+    share/locale/<language code>/LC_MESSAGES/Games-Risk.po
+
+So for example the French translation is in:
+    share/locale/fr/LC_MESSAGES/Games-Risk.po
 
