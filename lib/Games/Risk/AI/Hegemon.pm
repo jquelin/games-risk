@@ -7,7 +7,7 @@ package Games::Risk::AI::Hegemon;
 
 use List::MoreUtils qw{ all };
 
-use Games::Risk::I18N qw{ T };
+use Games::Risk::I18n qw{ T };
 
 use base qw{ Games::Risk::AI };
 

@@ -7,7 +7,7 @@ package Games::Risk::AI::Blitzkrieg;
 
 use List::Util qw{ shuffle };
 
-use Games::Risk::I18N qw{ T };
+use Games::Risk::I18n qw{ T };
 
 use base qw{ Games::Risk::AI };
 

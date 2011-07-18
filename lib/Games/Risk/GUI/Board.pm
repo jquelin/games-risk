@@ -19,7 +19,7 @@ use Tk::Sugar;
 
 use Games::Risk::GUI::GameOver;
 use Games::Risk::GUI::MoveArmies;
-use Games::Risk::I18N      qw{ T };
+use Games::Risk::I18n      qw{ T };
 use Games::Risk::Resources qw{ image $SHAREDIR };
 use Games::Risk::Tk::Cards;
 use Games::Risk::Tk::Continents;

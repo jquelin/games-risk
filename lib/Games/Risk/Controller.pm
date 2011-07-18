@@ -9,7 +9,7 @@ use POE             qw{ Loop::Tk };
 use List::Util      qw{ min shuffle };
 use Readonly;
 
-use Games::Risk::I18N      qw{ T };
+use Games::Risk::I18n      qw{ T };
 use Games::Risk::Map;
 use Games::Risk::Player;
 use Games::Risk::Resources qw{ map_path };

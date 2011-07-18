@@ -5,7 +5,7 @@ use warnings;
 package Games::Risk::AI::Dumb;
 # ABSTRACT: dumb ai that does nothing
 
-use Games::Risk::I18N qw{ T };
+use Games::Risk::I18n qw{ T };
 
 use base qw{ Games::Risk::AI };
 

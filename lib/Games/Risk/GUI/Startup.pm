@@ -15,7 +15,7 @@ use Tk::BrowseEntry;
 use Tk::Font;
 use Tk::Sugar;
 
-use Games::Risk::I18N      qw{ T };
+use Games::Risk::I18n      qw{ T };
 use Games::Risk::Resources qw{ image maps $SHAREDIR };
 
 use constant K => $poe_kernel;
