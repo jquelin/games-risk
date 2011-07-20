@@ -5,10 +5,17 @@ use warnings;
 package Games::Risk;
 # ABSTRACT: classical 'risk' board game
 
+# although it's not strictly needed to load POE::Kernel manually (since
+# MooseX::POE will load it anyway), we're doing it here to make sure poe
+# will use tk event loop. this can also be done by loading module tk
+# before poe, for example if we load app::cpan2pkg::tk::main before
+# moosex::poe... but better be safe than sorry, and doing things
+# explicitly is always better.
+use POE::Kernel { loop => 'Tk' };
+
+use MooseX::Singleton;
 use POE        qw{ Loop::Tk };
 use List::Util qw{ shuffle };
-
-use constant K => $poe_kernel;
 
 use Games::Risk::Controller;
 use Games::Risk::GUI;
@@ -21,37 +28,27 @@ __PACKAGE__->mk_accessors( qw{
 } );
 
 
-#--
-# CONSTRUCTOR
+# -- public methods
 
-#
-# my $game = Games::Risk->new( \%params );
-#
-# Create a new Games::Risk. This class implements a singleton scheme.
-#
-my $singleton;
-sub new {
-    # only one game at a time
-    return $singleton if defined $singleton;
+=method run
 
-    my $pkg = shift;
+    Games::Risk->run;
 
-    # create object
-    $singleton = {};
-    bless $singleton, $pkg;
+Start the application, with an initial batch of C<@modules> to build.
 
-    # launch controller, and everything needed
-    Games::Risk::Controller->spawn($singleton);
+=cut
 
-    # launch gui
+sub run {
+    my $self = __PACKAGE__->instance;
+
+    # create the poe sessions
+    Games::Risk::Controller->spawn($self);
     Games::Risk::GUI->spawn;
+
+    # and let's start the fun!
+    POE::Kernel->run;
 }
 
-
-#--
-# METHODS
-
-# -- public methods
 
 #
 # $game->cards_reset;
@@ -218,9 +215,9 @@ sub send_to_all {
 sub send_to_one {
     my ($self, $player, @msg) = @_;
 
-    K->post( $player->name, @msg );
+    $poe_kernel->post( $player->name, @msg );
     return unless $player->type eq 'human';
-    K->post('gui', @msg );
+    $poe_kernel->post('gui', @msg );
 }
 
 

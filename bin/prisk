@@ -11,15 +11,16 @@ package prisk;
 $ENV{MOOSE_ERROR_STYLE} = "croak";
 
 use Find::Lib "../lib";
-use POE qw{ Loop::Tk };
-
 use Games::Risk;
 
-Games::Risk->new;
-POE::Kernel->run;
+Games::Risk->run;
 exit;
 
 __END__
+
+=head1 SYNOPSIS
+
+    $ prisk
 
 =head1 DESCRIPTION
 
