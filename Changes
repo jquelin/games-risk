@@ -2,6 +2,9 @@ Revision history for Games::Risk.
 
 {{$NEXT}}
 
+3.112010  2011-07-20 12:01:59 Europe/Paris
+ - moving i18n files in share/locale
+
 3.103040  2010-10-31 15:15:45 Europe/Paris
  - german translation available (tobias rosenberger)
 
