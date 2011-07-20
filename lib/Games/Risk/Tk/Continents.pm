@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::Tk::Continents;
+BEGIN {
+  $Games::Risk::Tk::Continents::VERSION = '3.112010';
+}
 # ABSTRACT: continents information
 
 use POE                    qw{ Loop::Tk };
@@ -75,13 +87,6 @@ sub STOP {
 
 # -- public events
 
-=method chown
-
-    $K->post( 'gui-continents' => chown => $country, $looser);
-
-Update the country count of player for a given continent.
-
-=cut
 
 event chown => sub {
     my ($self, $country, $looser) = @_[OBJECT, ARG0, ARG1];
@@ -110,13 +115,6 @@ event chown => sub {
 };
 
 
-=method player_add
-
-    $K->post( 'gui-continents' => player_add => $player );
-
-Add a new column in the table to display the new player.
-
-=cut
 
 event player_add => sub {
     my ($self, $player) = @_[OBJECT, ARG0];
@@ -141,26 +139,12 @@ event player_add => sub {
 };
 
 
-=method shutdown
-
-    $K->post( 'gui-continents' => 'shutdown' );
-
-Kill current session. The toplevel window has already been destroyed.
-
-=cut
 
 event shutdown => sub {
     $K->alias_remove('continents');
 };
 
 
-=method visibility_toggle
-
-    $K->post( 'gui-continents' => 'visibility_toggle' );
-
-Request window to be hidden / shown depending on its previous state.
-
-=cut
 
 event visibility_toggle => sub {
     my $self = shift;
@@ -230,14 +214,17 @@ sub _build_gui {
 no Moose;
 __PACKAGE__->meta->make_immutable;
 1;
-__END__
 
-=for Pod::Coverage      START STOP
 
-=head1 SYNOPSYS
+=pod
 
-    Games::Risk::Tk::Continents->new(%opts);
+=head1 NAME
 
+Games::Risk::Tk::Continents - continents information
+
+=head1 VERSION
+
+version 3.112010
 
 =head1 DESCRIPTION
 
@@ -246,10 +233,59 @@ list the continents of the map and their associated bonus.
 
 The methods are in fact the events accepted by the session.
 
+=head1 ATTRIBUTES
 
-=attr parent
+=head2 parent
 
 A L<Tk> window that will be the parent of the toplevel window created.
 This parameter is mandatory.
 
+=head1 METHODS
+
+=head2 chown
+
+    $K->post( 'gui-continents' => chown => $country, $looser);
+
+Update the country count of player for a given continent.
+
+=head2 player_add
+
+    $K->post( 'gui-continents' => player_add => $player );
+
+Add a new column in the table to display the new player.
+
+=head2 shutdown
+
+    $K->post( 'gui-continents' => 'shutdown' );
+
+Kill current session. The toplevel window has already been destroyed.
+
+=head2 visibility_toggle
+
+    $K->post( 'gui-continents' => 'visibility_toggle' );
+
+Request window to be hidden / shown depending on its previous state.
+
+=for Pod::Coverage START STOP
+
+=head1 SYNOPSYS
+
+    Games::Risk::Tk::Continents->new(%opts);
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
 =cut
+
+
+__END__
+

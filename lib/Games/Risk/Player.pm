@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::Player;
+BEGIN {
+  $Games::Risk::Player::VERSION = '3.112010';
+}
 # ABSTRACT: risk player
 
 use POE qw{ Loop::Tk };
@@ -165,43 +177,40 @@ sub greatness {
 
 1;
 
-__END__
 
 
+=pod
 
+=head1 NAME
+
+Games::Risk::Player - risk player
+
+=head1 VERSION
+
+version 3.112010
 
 =head1 SYNOPSIS
 
     my $id = Games::Risk::Player->new(\%params);
 
-
-
 =head1 DESCRIPTION
 
 This module implements a risk player, with all its characteristics.
-
-
 
 =head1 METHODS
 
 =head2 Constructor
 
-
 =over 4
 
 =item * my $player = Games::Risk::Player->new( \%params )
 
-
 =back
-
-
 
 =head2 Accessors
 
-
 The following accessors (acting as mutators, ie getters and setters) are
 available for C<Games::Risk::Player> objects:
-
 
 =over 4
 
@@ -209,30 +218,23 @@ available for C<Games::Risk::Player> objects:
 
 the class of the artificial intelligence, if player is an ai.
 
-
 =item * color
 
 player color to be used in the gui.
-
 
 =item * name
 
 player name.
 
-
 =item * type
 
 player type (human, ai, etc.)
 
-
 =back
-
-
 
 =head2 Object methods
 
 The following methods are available for C<Games::Risk::Player> objects:
-
 
 =over 4
 
@@ -241,49 +243,59 @@ The following methods are available for C<Games::Risk::Player> objects:
 Return the list of cards (C<Games::Risk::Card> objects) currently
 owned by C<$player>.
 
-
 =item * $player->card_add( $card )
 
 Add C<$card> to the set of cards owned by C<$player>.
 
-
 =item * $player->card_del( $card )
 
 Remove C<$card> from the set of cards owned by C<player>.
-
 
 =item * my @countries = $player->countries()
 
 Return the list of countries (C<Games::Risk::Country> objects)
 currently owned by C<$player>.
 
-
 =item * $player->country_add( $country )
 
 Add C<$country> to the set of countries owned by C<$player>.
-
 
 =item * $player->country_del( $country )
 
 Delete C<$country> from the set of countries owned by C<$player>.
 
-
 =item * $player->destroy()
 
 Break all circular references in C<$player>, to prevent memory leaks.
-
 
 =item * my $greatness = $player->greatness()
 
 Return an integer reflecting the greatness of C<$player>. It will raise
 with the number of owned territories, as well as the number of armies.
 
-
 =back
-
-
 
 =head1 SEE ALSO
 
 L<Games::Risk>.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
+=cut
+
+
+__END__
+
+
+
 

@@ -1,7 +1,5 @@
 Revision history for Games::Risk.
 
-{{$NEXT}}
-
 3.112010  2011-07-20 12:01:59 Europe/Paris
  - moving i18n files in share/locale
 

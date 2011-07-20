@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk;
+BEGIN {
+  $Games::Risk::VERSION = '3.112010';
+}
 # ABSTRACT: classical 'risk' board game
 
 use POE        qw{ Loop::Tk };
@@ -226,8 +238,17 @@ sub send_to_one {
 
 1;
 
-__END__
 
+
+=pod
+
+=head1 NAME
+
+Games::Risk - classical 'risk' board game
+
+=head1 VERSION
+
+version 3.112010
 
 =head1 SYNOPSIS
 
@@ -235,8 +256,6 @@ __END__
     Games::Risk->new;
     POE::Kernel->run;
     exit;
-
-
 
 =head1 DESCRIPTION
 
@@ -252,12 +271,9 @@ This distribution implements a graphical interface for this game.
 C<Games::Risk> itself tracks everything needed for a risk game. It is
 also used as a heap for C<Games::Risk::Controller> POE session.
 
-
-
 =head1 METHODS
 
 =head2 Constructor
-
 
 =over 4
 
@@ -266,15 +282,12 @@ also used as a heap for C<Games::Risk::Controller> POE session.
 Create a new risk game. No params needed. Note: this class implements a
 singleton scheme.
 
-
 =back
-
 
 =head2 Accessors
 
 The following accessors (acting as mutators, ie getters and setters) are
 available for C<Games::Risk> objects:
-
 
 =over 4
 
@@ -282,14 +295,11 @@ available for C<Games::Risk> objects:
 
 armies left to be placed.
 
-
 =item * map()
 
 the current C<Games::Risk::Map> object of the game.
 
-
 =back
-
 
 =head2 Public methods
 
@@ -299,39 +309,32 @@ the current C<Games::Risk::Map> object of the game.
 
 Put back all cards given to players to the deck.
 
-
 =item * $game->destroy;
 
 Break all circular references in C<$game>, to reclaim all objects
 referenced.
 
-
 =item * $game->player_lost( $player )
 
 Remove $player from the list of active players.
-
 
 =item * my $player = $game->player_next()
 
 Return the next player to play, or undef if the turn is over. Of course,
 players that have lost will never be returned.
 
-
 =item * my @players = $game->players()
 
 Return the C<Games::Risk::Player> objects of the current game. Note that
 some of those players may have already lost.
 
-
 =item * my @players = $game->players_active;
 
 Return the list of active players (Games::Risk::Player objects).
 
-
 =item * $game->players_reset( @players )
 
 Remove all players, and replace them by C<@players>.
-
 
 =item * $game->players_reset_turn()
 
@@ -339,21 +342,15 @@ Mark all players to be in "turn to do", effectively marking them as
 still in play. Typically called during initial army placing, or real
 game start.
 
-
 =item * $game->send_to_all($event, @params)
 
 Send C<$event> (with C<@params>) to all players.
-
 
 =item * $game->send_to_one($player, $event, @params)
 
 Send C<$event> (with C<@params>) to one C<$player>.
 
-
 =back
-
-
-
 
 =head1 TODO
 
@@ -399,13 +396,10 @@ in the future for C<Games::Risk>:
 
 =back
 
-
 However, the game is already totally playable by now: reinforcements,
 continent bonus, country cards, different artificial intelligences...
 Therefore, version 1.0.0 has been released with those basic
 requirements. Except new features soon!
-
-
 
 =head1 BUGS
 
@@ -415,8 +409,6 @@ L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Games-Risk>.  I will be
 notified, and then you'll automatically be notified of progress on your
 bug as I make changes.
 
-
-
 =head1 SEE ALSO
 
 You can find more information on the classical C<risk> game on wikipedia
@@ -424,7 +416,6 @@ at L<http://en.wikipedia.org/wiki/Risk_game>.
 
 You might also want to check jRisk, a java-based implementation of Risk,
 which inspired me quite a lot.
-
 
 You can also look for information on this module at:
 
@@ -434,20 +425,15 @@ You can also look for information on this module at:
 
 L<http://annocpan.org/dist/Games-Risk>
 
-
 =item * CPAN Ratings
 
 L<http://cpanratings.perl.org/d/Games-Risk>
-
 
 =item * Open bugs
 
 L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Games-Risk>
 
-
 =back
-
-
 
 =head1 ACKNOWLEDGEMENTS
 
@@ -459,13 +445,9 @@ Some ideas  & artwork taken from project C<jrisk>, available at
 L<http://risk.sourceforge.net/>. Others (ideas & artwork once again)
 taken from teg, available at L<http://teg.sourceforge.net/>
 
-
-
 =head1 AUTHOR
 
 Jerome Quelin, C<< <jquelin@cpan.org> >>
-
-
 
 =head1 COPYRIGHT & LICENSE
 
@@ -474,6 +456,22 @@ Copyright (c) 2008 Jerome Quelin, all rights reserved.
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU GPLv3+.
 
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
 
 =cut
+
+
+__END__
+
+
 

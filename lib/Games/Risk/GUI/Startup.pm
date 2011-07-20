@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::GUI::Startup;
+BEGIN {
+  $Games::Risk::GUI::Startup::VERSION = '3.112010';
+}
 # ABSTRACT: startup window
 
 use POE             qw{ Loop::Tk };
@@ -492,32 +504,51 @@ sub _ongui_but_start {
 
 1;
 
-__END__
 
 
+=pod
+
+=head1 NAME
+
+Games::Risk::GUI::Startup - startup window
+
+=head1 VERSION
+
+version 3.112010
 
 =head1 SYNOPSIS
 
     my $id = Games::Risk::GUI::Startup->spawn(\%params);
-
-
 
 =head1 DESCRIPTION
 
 This class implements a poe session responsible for the startup window
 of the GUI. It allows to design the new game to be played.
 
-
-
 =head1 METHODS
 
-
 =head2 my $id = Games::Risk::GUI::Startup->spawn( )
-
-
-
 
 =head1 SEE ALSO
 
 L<Games::Risk>.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
+=cut
+
+
+__END__
+
+
 

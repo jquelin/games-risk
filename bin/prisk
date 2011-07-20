@@ -1,10 +1,22 @@
 #!/usr/bin/perl
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 
 use 5.010;
 use strict;
 use warnings;
 
 package prisk;
+BEGIN {
+  $prisk::VERSION = '3.112010';
+}
 # ABSTRACT: classical Risk game written in perl
 
 # terse error messages
@@ -19,7 +31,17 @@ Games::Risk->new;
 POE::Kernel->run;
 exit;
 
-__END__
+
+
+=pod
+
+=head1 NAME
+
+prisk - classical Risk game written in perl
+
+=head1 VERSION
+
+version 3.112010
 
 =head1 DESCRIPTION
 
@@ -32,16 +54,13 @@ the logistics of long campaigns.
 
 This distribution implements a graphical interface for this game.
 
-
 =head1 SEE ALSO
 
 L<Games::Risk>.
 
-
 =head1 AUTHOR
 
 Jerome Quelin, C<< <jquelin at cpan.org> >>
-
 
 =head1 COPYRIGHT & LICENSE
 
@@ -49,4 +68,21 @@ Copyright (c) 2008 Jerome Quelin, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU GPLv3+.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
+=cut
+
+
+__END__
 

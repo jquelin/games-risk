@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::GUI::GameOver;
+BEGIN {
+  $Games::Risk::GUI::GameOver::VERSION = '3.112010';
+}
 # ABSTRACT: window used when game is over
 
 use POE qw{ Loop::Tk };
@@ -117,14 +129,17 @@ sub _onpriv_but_close {
 
 1;
 
-__END__
 
 
-=head1 SYNOPSYS
+=pod
 
-    my $id = Games::Risk::GUI::GameOver->spawn(%opts);
+=head1 NAME
 
+Games::Risk::GUI::GameOver - window used when game is over
 
+=head1 VERSION
+
+version 3.112010
 
 =head1 DESCRIPTION
 
@@ -132,10 +147,11 @@ C<GR::GUI::GameOver> implements a POE session, creating a Tk window to
 announce the winner of the game. The window and asession are only used
 once, then discarded.
 
+=head1 SYNOPSYS
 
+    my $id = Games::Risk::GUI::GameOver->spawn(%opts);
 
 =head1 CLASS METHODS
-
 
 =head2 my $id = Games::Risk::GUI::GameOver->spawn( %opts );
 
@@ -149,24 +165,35 @@ the following options:
 A Tk window that will be the parent of the toplevel window created. This
 parameter is mandatory.
 
-
 =item winner => $player
 
 The player that won the game. This parameter is mandatory.
 
-
 =back
-
-
-
 
 =head1 PUBLIC EVENTS
 
 The newly created POE session does not accept nor fires any events.
 
-
-
 =head1 SEE ALSO
 
 L<Games::Risk>.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
+=cut
+
+
+__END__
+
 

@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::Tk::Help;
+BEGIN {
+  $Games::Risk::Tk::Help::VERSION = '3.112010';
+}
 # ABSTRACT: prisk manual window
 
 use Moose;
@@ -45,24 +57,54 @@ sub _build_gui {
 no Moose;
 __PACKAGE__->meta->make_immutable;
 1;
-__END__
 
+
+=pod
+
+=head1 NAME
+
+Games::Risk::Tk::Help - prisk manual window
+
+=head1 VERSION
+
+version 3.112010
 
 =head1 DESCRIPTION
 
 C<GR::Tk::Help> implements a Tk window used to show the manual of the
 game. The manual itself is in a pod file in the share directory.
 
+=head1 ATTRIBUTES
 
-=attr parent
+=head2 parent
 
 A Tk window that will be the parent of the toplevel window created. This
 parameter is mandatory.
 
-=method new
+=head1 METHODS
+
+=head2 new
 
     Games::Risk::Tk::Help->new( %opts );
 
 Create a window showing some basic help about the game. See the
 attributes for available options.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
+=cut
+
+
+__END__
+
 

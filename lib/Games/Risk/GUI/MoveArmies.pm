@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::GUI::MoveArmies;
+BEGIN {
+  $Games::Risk::GUI::MoveArmies::VERSION = '3.112010';
+}
 # ABSTRACT: window to move armies
 
 use POE        qw{ Loop::Tk };
@@ -228,16 +240,17 @@ sub _onpriv_slide_wheel {
 
 1;
 
-__END__
 
 
-=head1 SYNOPSYS
+=pod
 
-    my $id = Games::Risk::GUI::MoveArmies->spawn(%opts);
-    Poe::Kernel->post( $id, 'attack_move', $src, $dst, $min );
-    Poe::Kernel->post( $id, 'move_armies', $src, $dst, $max );
+=head1 NAME
 
+Games::Risk::GUI::MoveArmies - window to move armies
 
+=head1 VERSION
+
+version 3.112010
 
 =head1 DESCRIPTION
 
@@ -245,10 +258,13 @@ C<GR::GUI::MoveArmies> implements a POE session, creating a Tk window to
 ask the number of armies to move between adjacent countries. Once used,
 the window is hidden to be reused later on.
 
+=head1 SYNOPSYS
 
+    my $id = Games::Risk::GUI::MoveArmies->spawn(%opts);
+    Poe::Kernel->post( $id, 'attack_move', $src, $dst, $min );
+    Poe::Kernel->post( $id, 'move_armies', $src, $dst, $max );
 
 =head1 CLASS METHODS
-
 
 =head2 my $id = Games::Risk::GUI::MoveArmies->spawn( %opts );
 
@@ -262,16 +278,11 @@ session ID. One can pass the following options:
 A Tk window that will be the parent of the toplevel window created. This
 parameter is mandatory.
 
-
 =back
-
-
-
 
 =head1 PUBLIC EVENTS
 
 The newly created POE session accepts the following events:
-
 
 =over 4
 
@@ -281,12 +292,27 @@ Show window and request how many armies to move from C<$src> to C<$dst>.
 This number should be at least C<$min>, matching the number of dices
 used for attack.
 
-
 =back
-
-
 
 =head1 SEE ALSO
 
 L<Games::Risk>.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
+=cut
+
+
+__END__
+
 

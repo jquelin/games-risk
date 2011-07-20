@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::GUI::Board;
+BEGIN {
+  $Games::Risk::GUI::Board::VERSION = '3.112010';
+}
 # ABSTRACT: board gui component
 
 use POE            qw{ Loop::Tk };
@@ -1356,34 +1368,34 @@ sub _ongui_window_close {
 
 1;
 
-__END__
 
+
+=pod
+
+=head1 NAME
+
+Games::Risk::GUI::Board - board gui component
+
+=head1 VERSION
+
+version 3.112010
 
 =head1 SYNOPSIS
 
     my $id = Games::Risk::GUI::Board->spawn(\%params);
-
-
 
 =head1 DESCRIPTION
 
 This class implements a poe session responsible for the board part of
 the GUI. It features a map and various controls to drive the action.
 
-
-
 =head1 METHODS
 
-
 =head2 my $id = Games::Risk::GUI::Board->spawn( )
-
-
-
 
 =head1 EVENTS
 
 =head2 Events received
-
 
 =over 4
 
@@ -1391,12 +1403,27 @@ the GUI. It features a map and various controls to drive the action.
 
 Force C<$country> to be redrawn: owner and number of armies.
 
-
 =back
-
-
 
 =head1 SEE ALSO
 
 L<Games::Risk>.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
+=cut
+
+
+__END__
+
 

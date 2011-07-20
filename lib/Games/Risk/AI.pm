@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::AI;
+BEGIN {
+  $Games::Risk::AI::VERSION = '3.112010';
+}
 # ABSTRACT: base class for all ais
 
 use POE        qw{ Loop::Tk };
@@ -275,14 +287,21 @@ sub _onpriv_start {
 
 1;
 
-__END__
 
+
+=pod
+
+=head1 NAME
+
+Games::Risk::AI - base class for all ais
+
+=head1 VERSION
+
+version 3.112010
 
 =head1 SYNOPSIS
 
     [don't use this class directly]
-
-
 
 =head1 DESCRIPTION
 
@@ -290,12 +309,9 @@ This module is the base class for all artificial intelligence. It implements
 also a POE session representing an AI player. This POE session will retain the
 C<Games::Risk::AI::*> object as heap.
 
-
-
 =head1 METHODS
 
 =head2 Constructor
-
 
 =over 4
 
@@ -305,16 +321,13 @@ Create a new AI of type C<$AItype>. Note that you should not instantiate a
 C<Games::Risk::AI> object directly: instantiate an AI subclass instead. All
 subclasses accept the following parameters:
 
-
 =over 4
 
 =item * player: the C<Game::Risk::Player> associated to the AI. (mandatory)
 
 =back
 
-
 Note that the AI will automatically get a name, and update the player object.
-
 
 =item * my $id = Games::Risk::AI->spawn( $ai )
 
@@ -322,14 +335,11 @@ This method will create a POE session responsible for the artificial
 intelligence C<$ai>. It will return the poe id of the session newly created.
 The session will also react to the ai's player name (poe alias).
 
-
 =back
-
 
 =head2 Object methods
 
 An AI object will typically implements the following methods:
-
 
 =over 4
 
@@ -339,34 +349,28 @@ Return the attack plan, which can be either C<attack> or C<attack_end> to stop
 this step of the ai's turn. If C<attack> is returned, then it should also
 supply C<$from> and C<$country> parameters to know the attack parameters.
 
-
 =item * my $nb = $ai->attack_move($src, $dst, $min)
 
 Return the number of armies to move from C<$src> to C<$dst> after a
 successful attack (minimum C<$nb> to match the number of attack dices).
 
-
 =item * my $str = $ai->description()
 
 Return a short description of the ai and how it works.
-
 
 =item * my $str = $ai->difficulty()
 
 Return a difficulty level for the ai.
 
-
 =item * my @cards = $ai->exchange_cards()
 
 Check if ai can trade some C<@cards> for armies.
-
 
 =item * my @moves = $ai->move_armies()
 
 Return a list of C<[ $src, $dst, $nb ]> tuples (two
 C<Games::Risk::Country> and an integer), each defining a move of
 C<$nb> armies from $dst to C<$src>.
-
 
 =item * my @where = $ai->place_armies($nb, [$continent])
 
@@ -375,15 +379,30 @@ and an integer) defining where to place C<$nb> armies. If C<$continent> (a
 C<Games::Risk::Continent>) is defined, all the returned C<$countries>
 should be within this continent.
 
-
 =back
 
 Note that some of those methods may be inherited from the base class, when it
 provide sane defaults.
 
-
-
 =head1 SEE ALSO
 
 L<Games::Risk>.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
+=cut
+
+
+__END__
+
 

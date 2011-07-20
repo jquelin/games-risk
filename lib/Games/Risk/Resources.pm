@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::Resources;
+BEGIN {
+  $Games::Risk::Resources::VERSION = '3.112010';
+}
 # ABSTRACT: utility module to load bundled resources
 
 use POE            qw{ Loop::Tk };
@@ -120,15 +132,22 @@ _find_maps($SHAREDIR);
 
 1;
 
-__END__
 
+
+=pod
+
+=head1 NAME
+
+Games::Risk::Resources - utility module to load bundled resources
+
+=head1 VERSION
+
+version 3.112010
 
 =head1 SYNOPSIS
 
     use Games::Risk::Resources qw{ image };
     my $image = get_image('actexit16');
-
-
 
 =head1 DESCRIPTION
 
@@ -139,20 +158,16 @@ mechanism, this package provides handy functions to do that.
 Moreover, by loading all the images at the same location, it will ensure
 that they are not loaded twice, cutting memory eating.
 
-
-
 =head1 SUBROUTINES
 
 C<Games::Risk::Resources> deals with various resources bundled within
 the distribution. It doesn't export anything by default, but the
 following subs are available for your import pleasure.
 
-
 =head2 Image resources
 
 The images used for the GUI are bundled and loaded as C<Tk::Photo> of
 C<$poe_main_window>.
-
 
 =over 4
 
@@ -160,15 +175,11 @@ C<$poe_main_window>.
 
 Return the Tk image called C<$name>. It can be directly used within Tk.
 
-
 =back
-
-
 
 =head2 Map resources
 
 Map resources are playable maps, to allow more playing fun.
-
 
 =over 4
 
@@ -176,17 +187,31 @@ Map resources are playable maps, to allow more playing fun.
 
 Return the absolute path of the map C<$name>.
 
-
 =item my @names = maps( )
 
 Return the names of all the maps bundled with C<Games::Risk>.
 
-
 =back
-
-
 
 =head1 SEE ALSO
 
 L<Games::Risk>.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
+=cut
+
+
+__END__
+
 

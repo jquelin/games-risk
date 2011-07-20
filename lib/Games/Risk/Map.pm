@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::Map;
+BEGIN {
+  $Games::Risk::Map::VERSION = '3.112010';
+}
 # ABSTRACT: map being played
 
 use File::Basename qw{ fileparse };
@@ -290,22 +302,26 @@ sub _parse_file_section_files {
 
 1;
 
-__END__
 
 
+=pod
+
+=head1 NAME
+
+Games::Risk::Map - map being played
+
+=head1 VERSION
+
+version 3.112010
 
 =head1 SYNOPSIS
 
     my $id = Games::Risk::Map->new(\%params);
 
-
-
 =head1 DESCRIPTION
 
 This module implements a map, pointing to the continents, the
 countries, etc. of the game currently in play.
-
-
 
 =head1 METHODS
 
@@ -315,16 +331,12 @@ countries, etc. of the game currently in play.
 
 =item * my $player = Games::Risk::Map->new( \%params )
 
-
 =back
-
 
 =head2 Accessors
 
-
 The following accessors (acting as mutators, ie getters and setters) are
 available for C<Games::Risk::Map> objects:
-
 
 =over 4
 
@@ -332,14 +344,11 @@ available for C<Games::Risk::Map> objects:
 
 the path to the background image for the board.
 
-
 =item * greyscale()
 
 the path to the greyscale bitmap for the board.
 
-
 =back
-
 
 =head2 Object methods
 
@@ -349,42 +358,33 @@ the path to the greyscale bitmap for the board.
 
 Break all circular references in C<$map>, to prevent memory leaks.
 
-
 =item * my $card = $map->card_get()
 
 Return the next card from the cards stack.
-
 
 =item * $map->card_return( $card )
 
 Push back a $card in the card stack.
 
-
 =item * my @continents = $map->continents()
 
 Return the list of all continents in the C<$map>.
-
 
 =item * my @owned = $map->continents_owned;
 
 Return a list with all continents that are owned by a single player.
 
-
 =item * my @countries = $map->countries()
 
 Return the list of all countries in the C<$map>.
-
 
 =item * my $country = $map->country_get($id)
 
 Return the country which id matches C<$id>.
 
-
 =item * $map->load_file( \%params )
 
 =back
-
-
 
 =begin quiet_pod_coverage
 
@@ -396,10 +396,26 @@ Return the country which id matches C<$id>.
 
 =end quiet_pod_coverage
 
-
-
 =head1 SEE ALSO
 
 L<Games::Risk>.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
+=cut
+
+
+__END__
+
 
 

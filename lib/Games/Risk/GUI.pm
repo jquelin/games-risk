@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::GUI;
+BEGIN {
+  $Games::Risk::GUI::VERSION = '3.112010';
+}
 # ABSTRACT: gui multiplexer poe session
 
 use POE qw{ Loop::Tk };
@@ -77,14 +89,21 @@ sub _onpriv_start {
 
 1;
 
-__END__
 
+
+=pod
+
+=head1 NAME
+
+Games::Risk::GUI - gui multiplexer poe session
+
+=head1 VERSION
+
+version 3.112010
 
 =head1 SYNOPSIS
 
     my $id = Games::Risk::GUI->spawn(\%params);
-
-
 
 =head1 DESCRIPTION
 
@@ -104,8 +123,6 @@ C<Games::Risk::GUI> session.
 This poe session will have various aliases: the player's name, the
 player object stringified, and finally the alias C<gui>.
 
-
-
 =head1 METHODS
 
 =head2 my $id = Games::Risk->spawn( \%params )
@@ -117,7 +134,6 @@ It will return the poe id of the session newly created.
 
 You can tune the session by passing some arguments as a hash reference:
 
-
 =over 4
 
 =item * player => $player
@@ -126,12 +142,27 @@ The human C<$player> that will control the GUI.
 
 =back
 
-
-
 =head1 EVENTS RECEIVED
-
-
 
 =head1 SEE ALSO
 
 L<Games::Risk>.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
+=cut
+
+
+__END__
+
+

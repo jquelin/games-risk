@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::Country;
+BEGIN {
+  $Games::Risk::Country::VERSION = '3.112010';
+}
 # ABSTRACT: map country
 
 use List::MoreUtils qw{ any };
@@ -97,25 +109,29 @@ sub neighbours {
 
 1;
 
-__END__
 
+
+=pod
+
+=head1 NAME
+
+Games::Risk::Country - map country
+
+=head1 VERSION
+
+version 3.112010
 
 =head1 SYNOPSIS
 
     my $country = Games::Risk::Country->new(\%params);
 
-
-
 =head1 DESCRIPTION
 
 This module implements a map country, with all its characteristics.
 
-
-
 =head1 METHODS
 
 =head2 Constructor
-
 
 =over 4
 
@@ -126,15 +142,12 @@ C<greyval>, C<x> and C<y> (see below in C<Accessors> section for a quick
 definition of those params). Other attributes are optional, but can be
 supplied anyway.
 
-
 =back
-
 
 =head2 Accessors
 
 The following accessors (acting as mutators, ie getters and setters) are
 available for C<Games::Risk::Country> objects:
-
 
 =over 4
 
@@ -142,45 +155,36 @@ available for C<Games::Risk::Country> objects:
 
 number of armies currently in the country.
 
-
 =item * continent()
 
 a C<Games::Risk::Continent> object in which the country is located.
-
 
 =item * greyval()
 
 an integer between 1 and 254 corresponding at the grey (all RGB values
 set to C<greyval()>) used to draw the country on the grey-scale map.
 
-
 =item * id()
 
 alias for C<greyval()>.
-
 
 =item * name()
 
 country name.
 
-
 =item * owner()
 
 a C<Games::Risk::Player> object currently owning the country.
-
 
 =item * coordx()
 
 the x location of the country capital.
 
-
 =item * coordy()
 
 the y location of the country capital.
 
-
 =back
-
 
 =head2 Methods
 
@@ -191,33 +195,44 @@ the y location of the country capital.
 Change the owner of the C<$country> to be C<$player>. This implies updating
 cross-reference for previous owner and new one.
 
-
 =item * $country->destroy()
 
 Remove all circular references of C<$country>, to prevent memory leaks.
-
 
 =item * my $bool = $country->is_neighbour( $c )
 
 Return true if $country is a neighbour of country C<$c>, false
 otherwise.
 
-
 =item * my @neighbours = $country->neighbours()
 
 Return the list of C<$country>'s neighbours.
-
 
 =item * $country->neighbour_add( $c )
 
 Add C<$c> to the list of C<$country>'s neighbours. This is not reciprocical.
 
-
 =back
-
-
 
 =head1 SEE ALSO
 
 L<Games::Risk>.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
+=cut
+
+
+__END__
+
 

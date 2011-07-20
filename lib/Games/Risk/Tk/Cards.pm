@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::Tk::Cards;
+BEGIN {
+  $Games::Risk::Tk::Cards::VERSION = '3.112010';
+}
 # ABSTRACT: cards listing
 
 use POE              qw{ Loop::Tk };
@@ -87,13 +99,6 @@ sub STOP {
 
 # -- public events
 
-=method card_add
-
-    $K->post( cards => 'card_add', $card );
-
-Player just received a new C<$card>, display it.
-
-=cut
 
 event card_add => sub {
     my ($self, $card) = @_[OBJECT, ARG0];
@@ -102,13 +107,6 @@ event card_add => sub {
 };
 
 
-=method card_del
-
-    $K->post( cards => 'card_del', @cards );
-
-Player just exchanged some C<@cards>, remove them.
-
-=cut
 
 event card_del => sub {
     my ($self, @del) = @_[OBJECT, ARG0..$#_];
@@ -129,19 +127,6 @@ event card_del => sub {
 };
 
 
-=method attack
-
-    $K->post( cards => 'attack' );
-
-Prevent user to exchange armies.
-
-=method place_armies
-
-    $K->post( cards => 'place_armies' );
-
-Change exchange button state depending on the cards selected.
-
-=cut
 
 event attack               => \&_do_change_button_state;
 event place_armies         => \&_do_change_button_state;
@@ -167,26 +152,12 @@ sub _do_change_button_state {
 }
 
 
-=method shutdown
-
-    $K->post( 'gui-continents' => 'shutdown' );
-
-Kill current session. The toplevel window has already been destroyed.
-
-=cut
 
 event shutdown => sub {
     $K->alias_remove('cards');
 };
 
 
-=method visibility_toggle
-
-    $K->post( 'gui-continents' => 'visibility_toggle' );
-
-Request window to be hidden / shown depending on its previous state.
-
-=cut
 
 event visibility_toggle => sub {
     my $self = shift;
@@ -410,14 +381,17 @@ sub _valid {
 no Moose;
 __PACKAGE__->meta->make_immutable;
 1;
-__END__
 
-=for Pod::Coverage      START STOP
 
-=head1 SYNOPSYS
+=pod
 
-    Games::Risk::Tk::Cards->new(%opts);
+=head1 NAME
 
+Games::Risk::Tk::Cards - cards listing
+
+=head1 VERSION
+
+version 3.112010
 
 =head1 DESCRIPTION
 
@@ -425,10 +399,51 @@ C<GR::Tk::Cards> implements a POE session, creating a Tk window to
 list the cards the player got. It can be used to exchange cards with new
 armies during reinforcement.
 
+=head1 METHODS
 
+=head2 card_add
+
+    $K->post( cards => 'card_add', $card );
+
+Player just received a new C<$card>, display it.
+
+=head2 card_del
+
+    $K->post( cards => 'card_del', @cards );
+
+Player just exchanged some C<@cards>, remove them.
+
+=head2 attack
+
+    $K->post( cards => 'attack' );
+
+Prevent user to exchange armies.
+
+=head2 place_armies
+
+    $K->post( cards => 'place_armies' );
+
+Change exchange button state depending on the cards selected.
+
+=head2 shutdown
+
+    $K->post( 'gui-continents' => 'shutdown' );
+
+Kill current session. The toplevel window has already been destroyed.
+
+=head2 visibility_toggle
+
+    $K->post( 'gui-continents' => 'visibility_toggle' );
+
+Request window to be hidden / shown depending on its previous state.
+
+=for Pod::Coverage START STOP
+
+=head1 SYNOPSYS
+
+    Games::Risk::Tk::Cards->new(%opts);
 
 =head1 CLASS METHODS
-
 
 =head2 my $id = Games::Risk::Tk::Cards->spawn( %opts );
 
@@ -442,15 +457,11 @@ session ID. One can pass the following options:
 A Tk window that will be the parent of the toplevel window created. This
 parameter is mandatory.
 
-
 =back
-
-
 
 =head1 PUBLIC EVENTS
 
 The newly created POE session accepts the following events:
-
 
 =over 4
 
@@ -458,21 +469,34 @@ The newly created POE session accepts the following events:
 
 Add C<$card> to the list of cards owned by the player to be shown.
 
-
 =item * card_del( $card )
 
 Remove C<$card> from the list of cards owned by the player to be shown.
-
 
 =item * visibility_toggle()
 
 Request window to be hidden / shown depending on its previous state.
 
-
 =back
-
-
 
 =head1 SEE ALSO
 
 L<Games::Risk>.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
+=cut
+
+
+__END__
+

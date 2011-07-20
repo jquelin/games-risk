@@ -1,8 +1,20 @@
+#
+# This file is part of Games-Risk
+#
+# This software is Copyright (c) 2008 by Jerome Quelin.
+#
+# This is free software, licensed under:
+#
+#   The GNU General Public License, Version 3, June 2007
+#
 use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::Controller;
+BEGIN {
+  $Games::Risk::Controller::VERSION = '3.112010';
+}
 # ABSTRACT: controller poe session for risk
 
 use POE             qw{ Loop::Tk };
@@ -732,23 +744,27 @@ sub _onpriv_start {
 
 
 1;
-__END__
 
 
+=pod
+
+=head1 NAME
+
+Games::Risk::Controller - controller poe session for risk
+
+=head1 VERSION
+
+version 3.112010
 
 =head1 SYNOPSIS
 
     use Games::Risk::Controller;
     Games::Risk::Controller->spawn;
 
-
-
 =head1 DESCRIPTION
 
 This module implements a poe session, responsible for the state tracking
 as well as rule enforcement of the game.
-
-
 
 =head1 PUBLIC METHODS
 
@@ -760,10 +776,26 @@ game. It will return the poe id of the session newly created.
 You can tune the session by passing some arguments as a hash reference.
 Currently, no params can be tuned.
 
-
-
-
 =head1 SEE ALSO
 
 L<Games::Risk>.
+
+=head1 AUTHOR
+
+Jerome Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 3, June 2007
+
+=cut
+
+
+__END__
+
+
 
