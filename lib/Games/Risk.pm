@@ -228,16 +228,6 @@ sub send_to_one {
 
 __END__
 
-
-=head1 SYNOPSIS
-
-    use Games::Risk;
-    Games::Risk->new;
-    POE::Kernel->run;
-    exit;
-
-
-
 =head1 DESCRIPTION
 
 Risk is a strategic turn-based board game. Players control armies, with
@@ -416,39 +406,6 @@ notified, and then you'll automatically be notified of progress on your
 bug as I make changes.
 
 
-
-=head1 SEE ALSO
-
-You can find more information on the classical C<risk> game on wikipedia
-at L<http://en.wikipedia.org/wiki/Risk_game>.
-
-You might also want to check jRisk, a java-based implementation of Risk,
-which inspired me quite a lot.
-
-
-You can also look for information on this module at:
-
-=over 4
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Games-Risk>
-
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Games-Risk>
-
-
-=item * Open bugs
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Games-Risk>
-
-
-=back
-
-
-
 =head1 ACKNOWLEDGEMENTS
 
 I definitely recommend you to buy a C<risk> board game and play with
@@ -460,20 +417,34 @@ L<http://risk.sourceforge.net/>. Others (ideas & artwork once again)
 taken from teg, available at L<http://teg.sourceforge.net/>
 
 
+=head1 SEE ALSO
 
-=head1 AUTHOR
+You can find more information on the classical C<risk> game on wikipedia
+at L<http://en.wikipedia.org/wiki/Risk_game>.
 
-Jerome Quelin, C<< <jquelin@cpan.org> >>
+You can find more information on this module at:
 
+=over 4
 
+=item * Search CPAN
 
-=head1 COPYRIGHT & LICENSE
+L<http://search.cpan.org/dist/Games-Risk>
 
-Copyright (c) 2008 Jerome Quelin, all rights reserved.
+=item * See open / report bugs
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU GPLv3+.
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Games-Risk>
 
+=item * Git repository
+
+L<http://github.com/jquelin/games-risk>
+
+=item * AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/dist/Games-Risk>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/d/Games-Risk>
 
 =cut
 
