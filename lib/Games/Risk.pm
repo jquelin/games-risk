@@ -43,7 +43,7 @@ sub run {
 
     # create the poe sessions
     Games::Risk::Controller->spawn($self);
-    Games::Risk::GUI->spawn;
+    Games::Risk::GUI->new;
 
     # and let's start the fun!
     POE::Kernel->run;
