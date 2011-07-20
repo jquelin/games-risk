@@ -19,7 +19,7 @@ use Tk::Sugar;
 use Tk::TableMatrix;
 
 use Games::Risk::I18n      qw{ T };
-use Games::Risk::Resources qw{ image $SHAREDIR };
+use Games::Risk::Resources qw{ $SHAREDIR };
 
 with 'Tk::Role::Dialog';
 

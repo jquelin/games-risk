@@ -18,7 +18,7 @@ use Tk::PNG;
 
 
 use base qw{ Exporter };
-our @EXPORT_OK = qw{ image map_path maps $SHAREDIR };
+our @EXPORT_OK = qw{ get_image map_path maps $SHAREDIR };
 my (%images, %maps);
 
 Readonly our $SHAREDIR => _find_sharedir();
@@ -30,11 +30,11 @@ Readonly our $SHAREDIR => _find_sharedir();
 # -- public subs
 
 #
-# my $img = image( $name );
+# my $img = get_image( $name );
 #
 # return the Tk image called $name.
 #
-sub image {
+sub get_image {
     return $images{ $_[0] };
 }
 
@@ -136,7 +136,7 @@ __END__
 =head1 SYNOPSIS
 
     use Games::Risk::Resources qw{ image };
-    my $image = image('actexit16');
+    my $image = get_image('actexit16');
 
 
 
@@ -166,7 +166,7 @@ C<$poe_main_window>.
 
 =over 4
 
-=item my $img = image( $name )
+=item my $img = get_image( $name )
 
 Return the Tk image called C<$name>. It can be directly used within Tk.
 
