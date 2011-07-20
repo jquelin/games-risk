@@ -20,9 +20,10 @@ use Tk::Sugar;
 use Games::Risk::GUI::GameOver;
 use Games::Risk::GUI::MoveArmies;
 use Games::Risk::I18n      qw{ T };
-use Games::Risk::Resources qw{ get_image $SHAREDIR };
+use Games::Risk::Resources qw{ get_image };
 use Games::Risk::Tk::Cards;
 use Games::Risk::Tk::Continents;
+use Games::Risk::Utils     qw{ $SHAREDIR };
 
 
 use constant K => $poe_kernel;

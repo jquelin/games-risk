@@ -7,21 +7,17 @@ package Games::Risk::Resources;
 
 use POE            qw{ Loop::Tk };
 use File::Basename qw{ basename };
-use File::ShareDir qw{ dist_dir };
 use File::Spec::Functions;
-use FindBin        qw{ $Bin };
-use Path::Class;
-use Readonly;
 use Tk;
 use Tk::JPEG;
 use Tk::PNG;
 
+use Games::Risk::Utils qw{ $SHAREDIR };
+
 
 use base qw{ Exporter };
-our @EXPORT_OK = qw{ get_image map_path maps $SHAREDIR };
+our @EXPORT_OK = qw{ get_image map_path maps };
 my (%images, %maps);
-
-Readonly our $SHAREDIR => _find_sharedir();
 
 
 #--
@@ -75,12 +71,6 @@ sub _find_maps {
     %maps = map { ( basename($_,qw{.map}) => $_ ) } glob $glob;
 }
 
-sub _find_sharedir {
-    my $root = dir($Bin)->parent;
-    return $root->subdir('share') if -f $root->file('dist.ini');
-    return dir( dist_dir( 'Games-Risk' ) );
-}
-
 
 #
 # _load_images( $dirname );
@@ -107,7 +97,7 @@ sub _load_images {
 sub _load_tk_icons {
     my ($dirname) = @_;
 
-    my $path = catfile($dirname, 'images', 'tk_icons');
+    my $path = $dirname->file( 'images', 'tk_icons');
     open my $fh, '<', $path or die "can't open '$path': $!";
     while (<$fh>) {
         chomp;

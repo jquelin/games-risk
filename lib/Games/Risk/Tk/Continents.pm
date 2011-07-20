@@ -18,8 +18,8 @@ use Tk::Role::Dialog       1.101480;
 use Tk::Sugar;
 use Tk::TableMatrix;
 
-use Games::Risk::I18n      qw{ T };
-use Games::Risk::Resources qw{ $SHAREDIR };
+use Games::Risk::I18n  qw{ T };
+use Games::Risk::Utils qw{ $SHAREDIR };
 
 with 'Tk::Role::Dialog';
 
