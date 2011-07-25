@@ -7,10 +7,13 @@ package Games::Risk::Utils;
 
 use Exporter::Lite;
 use File::ShareDir::PathClass;
+use Path::Class;
  
 our @EXPORT = qw{ $SHAREDIR };
 
-our $SHAREDIR = File::ShareDir::PathClass->dist_dir("Games-Risk");
+our $SHAREDIR = -e file("dist.ini") && -d dir("share")
+    ? dir ("share")
+    : File::ShareDir::PathClass->dist_dir("Games-Risk");
 
 
 1;
