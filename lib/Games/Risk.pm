@@ -19,6 +19,7 @@ use List::Util qw{ shuffle };
 
 use Games::Risk::Controller;
 use Games::Risk::GUI;
+use Games::Risk::Tk::Main;
 
 
 use base qw{ Class::Accessor::Fast };
@@ -44,6 +45,7 @@ sub run {
     # create the poe sessions
     Games::Risk::Controller->spawn($self);
     Games::Risk::GUI->new;
+    Games::Risk::Tk::Main->new;
 
     # and let's start the fun!
     POE::Kernel->run;
