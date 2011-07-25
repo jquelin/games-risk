@@ -247,7 +247,88 @@ sub START {
         }
     }
 
-    sub _build_canvas {}
+    #
+    # $main->_build_canvas;
+    #
+    # create the canvas, where the map will be drawn and the action
+    # take place.
+    #
+    sub _build_canvas {
+        my $self = shift;
+        my $s = $self->_session;
+
+        # FIXME: the following needs to be changed according to config /
+        # latest values
+        my $width  = 677;
+        my $height = 425;
+
+        # creating the canvas
+        my $c  = $mw->Canvas(-width=>$width,-height=>$height)->pack(top, xfill2);
+        $self->_set_w('canvas', $c);
+
+        # removing class bindings
+        foreach my $button ( qw{ 4 5 6 7 } ) {
+            $mw->bind('Tk::Canvas', "<Button-$button>",       undef);
+            $mw->bind('Tk::Canvas', "<Shift-Button-$button>", undef);
+        }
+        foreach my $key ( qw{ Down End Home Left Next Prior Right Up } ) {
+            $mw->bind('Tk::Canvas', "<Key-$key>", undef);
+            $mw->bind('Tk::Canvas', "<Control-Key-$key>", undef);
+        }
+
+        # initial actions
+        $self->_draw_init_screen;
+    }
+
+    #
+    # $main->_draw_init_screen;
+    #
+    # draw splash image on canvas + initial actions, to present user with a
+    # non-empty window by default.
+    #
+    sub _draw_init_screen {
+        my $self = shift;
+        my $c = $self->_w('canvas');
+        my $s = $self->_session;
+
+        my $width  = 677;
+        my $height = 425;
+
+        # create the initial welcome screen
+        my @tags = ( -tags => ['startup'] );
+        # first a background image...
+        $c->createImage (
+            $width/2, $height/2,
+            -anchor => 'center',
+            -image  => $mw->Photo( -file=>$SHAREDIR->file( "images", "splash.jpg") ),
+            @tags,
+        );
+        # ... then some basic actions
+#        my @buttons = (
+#            [ T('New game') ,  1, '_new'  ],
+#            [ T('Join game') , 0, '_join' ],
+#            [ T('Load game') , 0, '_load' ],
+#        );
+#        my $pad = 25;
+#        my $font = $mw->Font(-weight=>'bold');
+#        foreach my $i ( 0 .. $#buttons ) {
+#            my ($text, $active, $event) = @{ $buttons[$i] };
+#            # create the 'button' (really a clickable text)
+#            my $id = $c->createText(
+#                $width/2, $height/2 - (@buttons)/2*$pad + $i*$pad,
+#                $active ? enabled : disabled,
+#                -text         => $text,
+#                -fill         => '#dddddd',
+#                -activefill   => 'white',
+#                -disabledfill => '#999999',
+#                -font         => $font,
+#                @tags,
+#            );
+#            # now bind click on this text
+#            $c->bind( $id, '<1>', $s->postback($event) );
+#        }
+    }
+
 
 }
 
