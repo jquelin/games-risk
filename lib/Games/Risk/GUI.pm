@@ -10,7 +10,6 @@ use MooseX::POE;
 use Readonly;
 
 use Games::Risk::GUI::Board;
-use Games::Risk::GUI::Startup;
 
 Readonly my $K  => $poe_kernel;
 
@@ -21,9 +20,6 @@ sub START {
     # prettyfying tk app.
     # see http://www.perltk.org/index.php?option=com_content&task=view&id=43&Itemid=37
     $poe_main_window->optionAdd('*BorderWidth' => 1);
-
-    # create main window
-    Games::Risk::GUI::Startup->spawn({toplevel=>$poe_main_window});
 
     # register aliases
     $K->alias_set('gui');
@@ -41,7 +37,7 @@ sub STOP { warn "GUI shutdown\n"; }
 event _default => sub {
     my ($sender, $event, $args) = @_[SENDER, ARG0, ARG1];
     return if $sender eq $poe_kernel;
-    $K->post($_, $event, @$args) foreach qw{ board cards continents gameover move-armies };
+    $K->post($_, $event, @$args) foreach qw{ main cards continents gameover move-armies };
 };
 
 
