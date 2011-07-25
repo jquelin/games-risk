@@ -67,8 +67,40 @@ sub START {
 }
 
 
+# -- gui events
 
-{ # -- gui creation
+{
+    #
+    # event: _canvas_configure( undef, [$canvas, $w, $h] );
+    #
+    # Called when canvas is reconfigured. new width and height available
+    # with ($w, $h). note that reconfigure is also window motion.
+    #
+    event _canvas_configure => sub {
+        my ($self, $args) = @_[HEAP, ARG1];
+        my ($c, $neww, $newh) = @$args;
+
+        # delete existing images
+        $c->delete('startup');
+
+        # create the initial welcome screen
+        my @tags = ( -tags => ['startup'] );
+        # first a background image...
+        $c->createImage (
+            $neww/2, $newh/2,
+            -anchor => 'center',
+            -image  => $mw->Photo( -file=>$SHAREDIR->file( "images", "splash.jpg") ),
+            @tags,
+        );
+
+    };
+
+}
+
+
+# -- gui creation
+
+{
 
     #
     # $main->_build_gui;
@@ -277,60 +309,11 @@ sub START {
         }
 
         # initial actions
-        $self->_draw_init_screen;
+        $c->CanvasBind('<Configure>', [$s->postback('_canvas_configure'), Ev('w'), Ev('h')] );
     }
-
-    #
-    # $main->_draw_init_screen;
-    #
-    # draw splash image on canvas + initial actions, to present user with a
-    # non-empty window by default.
-    #
-    sub _draw_init_screen {
-        my $self = shift;
-        my $c = $self->_w('canvas');
-        my $s = $self->_session;
-
-        my $width  = 677;
-        my $height = 425;
-
-        # create the initial welcome screen
-        my @tags = ( -tags => ['startup'] );
-        # first a background image...
-        $c->createImage (
-            $width/2, $height/2,
-            -anchor => 'center',
-            -image  => $mw->Photo( -file=>$SHAREDIR->file( "images", "splash.jpg") ),
-            @tags,
-        );
-        # ... then some basic actions
-#        my @buttons = (
-#            [ T('New game') ,  1, '_new'  ],
-#            [ T('Join game') , 0, '_join' ],
-#            [ T('Load game') , 0, '_load' ],
-#        );
-#        my $pad = 25;
-#        my $font = $mw->Font(-weight=>'bold');
-#        foreach my $i ( 0 .. $#buttons ) {
-#            my ($text, $active, $event) = @{ $buttons[$i] };
-#            # create the 'button' (really a clickable text)
-#            my $id = $c->createText(
-#                $width/2, $height/2 - (@buttons)/2*$pad + $i*$pad,
-#                $active ? enabled : disabled,
-#                -text         => $text,
-#                -fill         => '#dddddd',
-#                -activefill   => 'white',
-#                -disabledfill => '#999999',
-#                -font         => $font,
-#                @tags,
-#            );
-#            # now bind click on this text
-#            $c->bind( $id, '<1>', $s->postback($event) );
-#        }
-    }
-
 
 }
+
 
 no Moose;
 __PACKAGE__->meta->make_immutable;
