@@ -47,11 +47,16 @@ has _actions => (
     },
 );
 
+has _auto_reattack => ( rw, isa=>'Bool', default=>0 ); # FIXME: from config
+
 # it's not usually a good idea to retain a reference on a poe session,
 # since poe is already taking care of the references for us. however, we
 # need the session to call ->postback() to set the various gui callbacks
 # that will be fired upon gui events.
 has _session => ( rw, weak_ref, isa=>'POE::Session' );
+
+# the string that will appear in the status bar
+has _status => ( rw, isa=>'String' );
 
 
 # -- initialization
@@ -90,7 +95,8 @@ action & statusbar.
 
         # add missing gui elements
         $self->_build_action_bar;
-#        $self->_build_status_bar;
+        $self->_build_player_bar;
+        $self->_build_status_bar;
         Games::Risk::Tk::Cards->new({parent=>$mw});
         Games::Risk::Tk::Continents->new({parent=>$mw});
         Games::Risk::GUI::MoveArmies->spawn({parent=>$mw});
@@ -243,6 +249,7 @@ action & statusbar.
         # center & show the window
         # FIXME: restore last position saved?
         $mw->Popup;
+        $mw->packPropagate(0); # prevent main window from being resized by other widgets
         $mw->minsize($mw->width, $mw->height);
     }
 
@@ -296,7 +303,6 @@ action & statusbar.
             $self->_set_w( $action => $widget );
         }
     }
-
 
     #
     # $main->_build_menubar;
@@ -395,6 +401,73 @@ action & statusbar.
     }
 
     #
+    # $main->_build_player_bar;
+    #
+    # create the player bar at the right of the window.
+    #
+    sub _build_player_bar {
+        my $self = shift;
+        my $s    = $self->_session;
+
+        my $fright = $mw->Frame->pack(right, fill2, -before=>$self->_w('canvas'));
+
+        #-- players frame
+        my $fpl = $fright->Frame->pack(top);
+        $fpl->Label(-text=>T('Players'))->pack(top);
+        my $fplist = $fpl->Frame->pack(top);
+        $self->_set_w( fplayers => $fplist );
+
+        #-- dices frame
+        my $dice0   = $mw->Photo(-file=>$SHAREDIR->file('images', 'dice-0.png') );
+        my $empty16 = $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'empty.png') );
+        my $fdice = $fright->Frame->pack(top,fillx,pady(10));
+        $fdice->Label(-text=>T('Dice arena'))->pack(top,fillx);
+        my $fd1 = $fdice->Frame->pack(top,fill2);
+        my $a1 = $fd1->Label(-image=>$dice0)->pack(left);
+        my $a2 = $fd1->Label(-image=>$dice0)->pack(left);
+        my $a3 = $fd1->Label(-image=>$dice0)->pack(left);
+        my $fr = $fdice->Frame->pack(top,fill2);
+        my $r1 = $fr->Label( -image=>$empty16, -width=>38)->pack(left);
+        my $r2 = $fr->Label( -image=>$empty16, -width=>38)->pack(left);
+        my $fd2 = $fdice->Frame->pack(top,fill2);
+        my $d1 = $fd2->Label(-image=>$dice0)->pack(left);
+        my $d2 = $fd2->Label(-image=>$dice0)->pack(left);
+        $self->_set_w( lab_attack_1  => $a1 );
+        $self->_set_w( lab_attack_2  => $a2 );
+        $self->_set_w( lab_attack_3  => $a3 );
+        $self->_set_w( lab_result_1  => $r1 );
+        $self->_set_w( lab_result_2  => $r2 );
+        $self->_set_w( lab_defence_1 => $d1 );
+        $self->_set_w( lab_defence_2 => $d2 );
+
+        #-- redo checkbox
+        my $cb_reattack = $fright->Checkbutton(
+            -text     => T('Auto-reattack'),
+            -anchor   => 'w',
+        )->pack(top,fillx);
+        $cb_reattack->select if $self->_auto_reattack;
+        $self->_w('tooltip')->attach($cb_reattack, -msg=>T('Automatically re-do last attack if attacker still has more than 3 armies'));
+    }
+
+    #
+    # $main->_build_status_bar;
+    #
+    # create the status bar at the bottom of the window.
+    #
+    sub _build_status_bar {
+        my $self = shift;
+
+        # the status bar
+        my $fbot   = $mw->Frame->pack(bottom, fillx, -before=>$self->_w('canvas'));
+        my $status = $fbot->Label( -anchor =>'w' )->pack(left,xfillx, pad1);
+        $self->_set_w( status => $status );
+
+        # label to display country pointed by mouse
+        my $clabel = $fbot->Label( -anchor => 'e' )->pack(right, xfillx, pad1);
+        $self->_set_w( country_label => $clabel );
+    }
+
+    #
     # $main->_build_toolbar;
     #
     # create the window toolbar (the one just below the menu).
@@ -446,8 +519,8 @@ action & statusbar.
 
         # FIXME: the following needs to be changed according to config /
         # latest values
-        my $width  = 800;
-        my $height = 550;
+        my $width  = 820;
+        my $height = 425;
 
         # creating the canvas
         my $c  = $mw->Canvas(-width=>$width,-height=>$height)->pack(top, xfill2);
