@@ -41,17 +41,6 @@ event _default => sub {
 };
 
 
-=event new_game
-
-=cut
-
-event new_game => sub {
-    my $args = $_[ARG0];
-    my $mw = $poe_main_window->Toplevel;
-    Games::Risk::GUI::Board->spawn( { toplevel=>$mw, %$args } );
-};
-
-
 1;
 
 __END__

@@ -87,8 +87,6 @@ sub spawn {
             _but_new_player      => \&_ongui_but_new_player,
             _but_quit            => \&_ongui_but_quit,
             _but_start           => \&_ongui_but_start,
-            # public events
-            new_game             => \&_onpub_new_game,
         },
     );
     return $session->ID;
@@ -97,14 +95,6 @@ sub spawn {
 
 #--
 # EVENT HANDLERS
-
-# -- public events
-
-sub _onpub_new_game {
-    my $h = $_[HEAP];
-    $h->{toplevel}->deiconify;
-}
-
 
 # -- private events
 
@@ -294,7 +284,11 @@ sub _onpriv_start {
     my ($h, $s, $args) = @_[HEAP, SESSION, ARG0];
 
     K->alias_set('startup');
-    my $top = $h->{toplevel} = $args->{toplevel};
+    my $top = $h->{toplevel} = $poe_main_window->Toplevel;
+
+    # hide window during its creation to avoid flickering
+    $top->withdraw;
+
     $top->title('prisk - ' . T('new game'));
     my $icon = $SHAREDIR->file('icons', '32', 'prisk.png');
     my $mask = $SHAREDIR->file('icons', '32', 'prisk-mask.xbm');
@@ -359,6 +353,10 @@ sub _onpriv_start {
     # window binding
     $top->bind('<Key-Return>', $s->postback('_but_start'));
     $top->bind('<Key-Escape>', $s->postback('_but_quit'));
+
+    $top->update;
+    $top->Popup;
+    $top->grab;
 }
 
 
@@ -459,13 +457,11 @@ sub _ongui_but_new_player {
 # event: _but_quit()
 #
 # called when button quit is clicked, ie user wants to cancel new game.
-# effectively kills the application.
 #
 sub _ongui_but_quit {
     my $h = $_[HEAP];
-    K->post('risk', 'quit');
     K->alias_remove('startup');
-    $h->{toplevel}->destroy; # this should be enough by itself
+    $h->{toplevel}->destroy;
 }
 
 
@@ -485,7 +481,7 @@ sub _ongui_but_start {
     my @players = grep { defined $_ } @$players;
 
     K->post('risk', 'new_game', { players => \@players, map => $h->{map} } );
-    $h->{toplevel}->withdraw;
+    $h->{toplevel}->destroy;
 }
 
 

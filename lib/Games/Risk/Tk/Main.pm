@@ -22,6 +22,7 @@ use Tk::PNG;
 use Tk::ROText;
 use Tk::Sugar;
 
+use Games::Risk::GUI::Startup;
 use Games::Risk::I18n  qw{ T };
 use Games::Risk::Utils qw{ $SHAREDIR };
 
@@ -70,6 +71,12 @@ sub START {
 # -- actions
 
 {
+    # event: _new_game()
+    # user requested a new game to be started.
+    event _new => sub {
+        Games::Risk::GUI::Startup->spawn;
+    };
+
     #
     # event: _quit()
     #
