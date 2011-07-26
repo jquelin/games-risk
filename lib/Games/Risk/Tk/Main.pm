@@ -6,6 +6,7 @@ package Games::Risk::Tk::Main;
 # ABSTRACT: main prisk window
 
 use Image::Size qw{ imgsize };
+use List::Util  qw{ min };
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::POE;
@@ -17,7 +18,6 @@ use Tk::Balloon;
 use Tk::Role::HasWidgets 1.112070; # _del_w
 use Tk::ToolBar;
 
-use List::Util qw{ first };
 use Tk::HList;
 use Tk::NoteBook;
 use Tk::PNG;
@@ -69,6 +69,9 @@ has _status => ( rw, isa=>'String' );
 # FIXME: from config
 has _auto_reattack => ( rw, isa=>'Bool', default=>0 );
 
+# fake armies used to draw armies before sending to controller
+has _fake_armies_in  => ( ro, isa=>'HashRef', default => sub{ {} } );
+has _fake_armies_out => ( ro, isa=>'HashRef', default => sub{ {} } );
 
 
 # -- initialization
@@ -89,6 +92,65 @@ sub START {
 # -- public events
 
 {
+
+=event chnum
+
+=event chown
+
+    chnum( $country )
+    chown( $country )
+
+Force C<$country> to be redrawn: owner and number of armies.
+
+=cut
+
+    event chnum => \&_do_country_redraw;
+    event chown => \&_do_country_redraw;
+    event _country_redraw => \&_do_country_redraw;
+    sub _do_country_redraw {
+        my ($self, $country) = @_[OBJECT, ARG0];
+        my $c = $self->_w('canvas');
+
+        my $id    = $country->id;
+        my $owner = $country->owner;
+        my $fakein  = $self->_fake_armies_in->{$id}  // 0;
+        my $fakeout = $self->_fake_armies_out->{$id} // 0;
+        my $armies  = ($country->armies // 0) + $fakein - $fakeout;
+
+        # change radius to reflect number of armies
+        my ($radius, $fill_color, $text) = defined $owner
+                ? (8, $owner->color, $armies)
+                : (6,       'white', '');
+        $radius += min(16,$armies-1)/2;
+
+        my $zoom = $self->_zoom;
+        my $x = $country->coordx * $zoom->coordx;
+        my $y = $country->coordy * $zoom->coordy;
+        my $x1 = $x - $radius; my $x2 = $x + $radius;
+        my $y1 = $y - $radius; my $y2 = $y + $radius;
+
+        # update canvas
+        $c->delete( "country$id" );
+        #  - circle
+        $c->createOval(
+            $x1, $y1, $x2, $y2,
+            -fill    => $fill_color,
+            -outline => 'black',
+            -tags    => [ "country$id", 'circle' ],
+        );
+
+        #  - text
+        $c->createText(
+            $x, $y+1,
+            -fill => 'white',
+            -tags => [ "country$id", 'text' ],
+            -text => $text,
+        );
+
+        $c->raise("country$id&&circle", 'all');
+        $c->raise("country$id&&text",   'all');
+    };
+
 
 =event new_game
 
