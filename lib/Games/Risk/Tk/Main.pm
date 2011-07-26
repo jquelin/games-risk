@@ -5,6 +5,7 @@ use warnings;
 package Games::Risk::Tk::Main;
 # ABSTRACT: main prisk window
 
+use Image::Size qw{ imgsize };
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::POE;
@@ -65,6 +66,52 @@ sub START {
     $K->alias_set('main');
     $self->_set_session($session);
     $self->_build_gui;
+}
+
+
+# -- public events
+
+{
+
+=event new_game
+
+    new_game()
+
+Received when the controller started a new game. Display the new map,
+action & statusbar.
+
+=cut
+
+    event new_game => sub {
+        my ($self, $args) = @_[OBJECT, ARG0];
+        my $map = $args->{map};
+        my $c = $self->_w('canvas');
+        my $s = $self->_session;
+
+        # add missing gui elements
+        $self->_build_action_bar;
+#        $self->_build_status_bar;
+        Games::Risk::Tk::Cards->new({parent=>$mw});
+        Games::Risk::Tk::Continents->new({parent=>$mw});
+        Games::Risk::GUI::MoveArmies->spawn({parent=>$mw});
+
+        # remove everything on the canvas
+        $c->delete('all');
+
+        # prevent some actions
+        $self->_action('new')->disable;
+        $self->_action('close')->enable;
+        $self->_action('show_cards')->enable;
+        $self->_action('show_continents')->enable;
+
+        # the background image
+        my $bgpath = $map->background;
+        my ($xmax, $ymax) = imgsize($bgpath);
+        my $bg = $mw->Photo(-file=>$bgpath);
+        $c->createImage(0, 0, -anchor=>'nw', -image=>$bg, -tags=>['background']);
+        $c->lower('background', 'all');
+    };
+
 }
 
 
@@ -167,7 +214,9 @@ sub START {
 
         # create the actions
         my @enabled  = qw{ new quit help about };
-        my @disabled = qw{ close show_cards show_continents };
+        my @disabled = qw{ close show_cards show_continents
+            place_armies_redo place_armies_done attack_redo attack_done
+            move_armies_done };
         foreach my $what ( @enabled, @disabled ) {
             my $action = Tk::Action->new(
                 window   => $mw,
@@ -196,6 +245,58 @@ sub START {
         $mw->Popup;
         $mw->minsize($mw->width, $mw->height);
     }
+
+    #
+    # $main->_build_action_bar;
+    #
+    # create the action bar at the top of the window, with the various
+    # action buttons that a player can press when it's her turn.
+    #
+    sub _build_action_bar {
+        my $self = shift;
+        my $session = $self->_session;
+
+        # create the toolbar
+        my $tbmain = $self->_w('toolbar');
+        my $tb = $mw->ToolBar(-movable => 0, -in=>$tbmain );
+        $self->_set_w('tbactions', $tb);
+
+        # the toolbar widgets
+        my @actions = (
+        [ T('Game state: ')                                          ],
+        [ T('place armies'),     'lab_step_place_armies'             ],
+        [ T('undo all'),         'place_armies_redo', 'actreload22'  ],
+        [ T('ready for attack'), 'place_armies_done', 'navforward22' ],
+        [ T('attack'),           'lab_step_attack'                   ],
+        [ T('attack again'),     'attack_redo',       'actredo22'    ],
+        [ T('consolidate'),      'attack_done',       'navforward22' ],
+        [ T('move armies'),      'lab_step_move_armies'              ],
+        [ T('turn finished'),    'move_armies_done',  'playstop22'   ],
+        );
+
+        # create the widgets
+        foreach my $item ( @actions ) {
+            my ($label, $action, $icon) = @$item;
+
+            if ( defined $icon ) {
+                # regular toolbar widgets
+                my $widget = $tb->Button(
+                    -image       => $icon,
+                    -tip         => $label,
+                    -command     => $session->postback( "_action_$action" ),
+                );
+                $self->_action($action)->add_widget($widget);
+                next;
+            }
+
+            # label
+            my $widget = $tb->Label( -text => $label );
+            next unless $action;
+            $widget->configure( disabled );
+            $self->_set_w( $action => $widget );
+        }
+    }
+
 
     #
     # $main->_build_menubar;
@@ -229,6 +330,16 @@ sub START {
         [ 'show_continents', $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'continents.png')), 'F6', T('C~ontinents') ],
         );
         $self->_build_menu('view', T('~View'), @mnu_view);
+
+        # menu actions
+        my @mnu_actions = (
+        [ 'place_armies_redo', 'actreload16',  'u', T('~Undo all') ],
+        [ 'place_armies_done', 'navforward16', 'a', T('~Attack') ],
+        [ 'attack_redo',       'actredo16',    'r', T('~Re-attack') ],
+        [ 'attack_done',       'navforward16', 'c', T('~Consolidate') ],
+        [ 'move_armies_done',  'playstop16',   'f', T('~Finish turn') ],
+        );
+        $self->_build_menu('actions', T('~Actions'), @mnu_actions);
 
         # menu help
         my @mnu_help = (
@@ -335,8 +446,8 @@ sub START {
 
         # FIXME: the following needs to be changed according to config /
         # latest values
-        my $width  = 677;
-        my $height = 425;
+        my $width  = 800;
+        my $height = 550;
 
         # creating the canvas
         my $c  = $mw->Canvas(-width=>$width,-height=>$height)->pack(top, xfill2);
