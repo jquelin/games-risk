@@ -67,6 +67,21 @@ sub START {
 }
 
 
+# -- actions
+
+{
+    #
+    # event: _quit()
+    #
+    # user requested to quit the application.
+    #
+    event _quit => sub {
+        $mw->destroy;
+    };
+
+
+}
+
 # -- gui events
 
 {
