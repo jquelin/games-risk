@@ -14,6 +14,7 @@ use Readonly;
 use Tk;
 use Tk::Action;
 use Tk::Balloon;
+use Tk::Role::HasWidgets 1.112070; # _del_w
 use Tk::ToolBar;
 
 use List::Util qw{ first };
@@ -131,6 +132,32 @@ action & statusbar.
         Games::Risk::Tk::About->new( {parent=>$mw} );
     };
 
+    # event: _close()
+    # request to close current game.
+    event _close => sub {
+        my $self = shift;
+
+        # warn controller that game is finished
+        $K->post('risk', 'shutdown');
+
+        # delete everything on canvas
+        $self->_w('canvas')->delete('all');
+
+        # delete ui widgets
+        $self->_del_w('player_bar')->destroy;
+        $self->_del_w('status_bar')->destroy;
+        my $tb = $self->_del_w('tbactions');
+        $tb->{CONTAINER}->packForget; # FIXME: breaking encapsulation
+        $tb->destroy;
+
+        # enable / disable actions
+        $self->_action('new')->enable;
+        my @disable = qw{ close show_cards show_continents
+            place_armies_redo place_armies_done attack_redo attack_done
+            move_armies_done };
+        $self->_action($_)->disable for @disable;
+    };
+
     # event: _new()
     # request for a new game to be started.
     event _new => sub {
@@ -167,18 +194,24 @@ action & statusbar.
         my ($self, $args) = @_[HEAP, ARG1];
         my ($c, $neww, $newh) = @$args;
 
-        # delete existing images
-        $c->delete('startup');
+        # check if we're at startup screen...
+        my $map = Games::Risk->new->map;
+        if ( defined $map ) {
+            # in a game
+        } else {
+            # delete existing images
+            $c->delete('startup');
 
-        # create the initial welcome screen
-        my @tags = ( -tags => ['startup'] );
-        # first a background image...
-        $c->createImage (
-            $neww/2, $newh/2,
-            -anchor => 'center',
-            -image  => $mw->Photo( -file=>$SHAREDIR->file( "images", "splash.jpg") ),
-            @tags,
-        );
+            # create the initial welcome screen
+            my @tags = ( -tags => ['startup'] );
+            # first a background image...
+            $c->createImage (
+                $neww/2, $newh/2,
+                -anchor => 'center',
+                -image  => $mw->Photo( -file=>$SHAREDIR->file( "images", "splash.jpg") ),
+                @tags,
+            );
+        }
 
     };
 
@@ -410,6 +443,7 @@ action & statusbar.
         my $s    = $self->_session;
 
         my $fright = $mw->Frame->pack(right, fill2, -before=>$self->_w('canvas'));
+        $self->_set_w( player_bar => $fright );
 
         #-- players frame
         my $fpl = $fright->Frame->pack(top);
@@ -459,6 +493,9 @@ action & statusbar.
 
         # the status bar
         my $fbot   = $mw->Frame->pack(bottom, fillx, -before=>$self->_w('canvas'));
+        $self->_set_w( status_bar => $fbot );
+
+        # label to display status
         my $status = $fbot->Label( -anchor =>'w' )->pack(left,xfillx, pad1);
         $self->_set_w( status => $status );
 
