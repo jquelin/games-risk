@@ -72,14 +72,14 @@ sub START {
 
 {
     # event: _about()
-    # request About window to be shown.
+    # request about window to be shown.
     event _about => sub {
         require Games::Risk::Tk::About;
         Games::Risk::Tk::About->new( {parent=>$mw} );
     };
 
-    # event: _new_game()
-    # user requested a new game to be started.
+    # event: _new()
+    # request for a new game to be started.
     event _new => sub {
         Games::Risk::GUI::Startup->spawn;
     };
@@ -92,11 +92,8 @@ sub START {
     };
 
 
-    #
     # event: _quit()
-    #
-    # user requested to quit the application.
-    #
+    # request to quit the application.
     event _quit => sub {
         $mw->destroy;
     };
@@ -374,5 +371,5 @@ __END__
 =head1 DESCRIPTION
 
 This class implements the whole L<Tk> graphical interface. It is a POE
-session driving events and updating the display as workers change
-status.
+session driving events, reacting to user interaction & updating the
+display as game changes status.
