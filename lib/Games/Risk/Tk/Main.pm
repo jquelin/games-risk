@@ -26,6 +26,7 @@ use Tk::Sugar;
 
 use Games::Risk::GUI::Startup;
 use Games::Risk::I18n  qw{ T };
+use Games::Risk::Point;
 use Games::Risk::Utils qw{ $SHAREDIR };
 
 with 'Tk::Role::HasWidgets';
@@ -58,6 +59,13 @@ has _session => ( rw, weak_ref, isa=>'POE::Session' );
 
 # the string that will appear in the status bar
 has _status => ( rw, isa=>'String' );
+
+# zoom information
+has _orig_bg_size => ( rw, isa=>'Games::Risk::Point' );
+has _zoom         => ( rw, isa=>'Games::Risk::Point' );
+
+# greyscale image
+has _greyscale => ( rw, isa=>'Tk::Photo' );
 
 
 # -- initialization
@@ -104,6 +112,7 @@ action & statusbar.
 
         # remove everything on the canvas
         $c->delete('all');
+        $c->CanvasBind('<Configure>', undef);
 
         # prevent some actions
         $self->_action('new')->disable;
@@ -111,12 +120,32 @@ action & statusbar.
         $self->_action('show_cards')->enable;
         $self->_action('show_continents')->enable;
 
-        # the background image
+        # create background image
         my $bgpath = $map->background;
-        my ($xmax, $ymax) = imgsize($bgpath);
+        my ($width, $height) = imgsize($bgpath);
+        # FIXME: adapt to current window width/height
         my $bg = $mw->Photo(-file=>$bgpath);
         $c->createImage(0, 0, -anchor=>'nw', -image=>$bg, -tags=>['background']);
         $c->lower('background', 'all');
+
+        # store zoom information
+        my $orig = Games::Risk::Point->new( { coordx=>$width, coordy=>$height } );
+        my $zoom = Games::Risk::Point->new( { coordx=>1, coordy=>1 } );
+        $self->_set_orig_bg_size( $orig );
+        $self->_set_zoom( $zoom );
+
+        # create capitals
+        $K->yield('_country_redraw', $_) foreach $map->countries;
+
+        # load greyscale image
+        $self->_set_greyscale( $c->Photo(-file=>$map->greyscale) );
+
+        # allow the canvas to update itself & reinstall callback.
+        $c->idletasks;
+        $c->CanvasBind('<Configure>', [$s->postback('_canvas_configure'), Ev('w'), Ev('h')] );
+
+        # store map and say we're done
+        $K->post( risk => 'map_loaded' );
     };
 
 }
