@@ -71,11 +71,26 @@ sub START {
 # -- actions
 
 {
+    # event: _about()
+    # request About window to be shown.
+    event _about => sub {
+        require Games::Risk::Tk::About;
+        Games::Risk::Tk::About->new( {parent=>$mw} );
+    };
+
     # event: _new_game()
     # user requested a new game to be started.
     event _new => sub {
         Games::Risk::GUI::Startup->spawn;
     };
+
+    # event: _help()
+    # request help window to be shown.
+    event _help => sub {
+        require Games::Risk::Tk::Help;
+        Games::Risk::Tk::Help->new( {parent=>$mw} );
+    };
+
 
     #
     # event: _quit()
@@ -154,7 +169,7 @@ sub START {
         #$mw->geometry($width . 'x' . $height);
 
         # create the actions
-        my @enabled  = qw{ new quit show_help show_about };
+        my @enabled  = qw{ new quit help about };
         my @disabled = qw{ close show_cards show_continents };
         foreach my $what ( @enabled, @disabled ) {
             my $action = Tk::Action->new(
@@ -220,8 +235,8 @@ sub START {
 
         # menu help
         my @mnu_help = (
-        [ 'show_help',  $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'help.png')), 'F1', T('~Help') ],
-        [ 'show_about', $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'about.png')),  '', T('About') ],
+        [ 'help',  $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'help.png')), 'F1', T('~Help') ],
+        [ 'about', $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'about.png')),  '', T('About') ],
         );
         $self->_build_menu('help', T('~Help'), @mnu_help);
     }
