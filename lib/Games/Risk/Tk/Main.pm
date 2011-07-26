@@ -141,6 +141,7 @@ sub START {
             );
             $self->_set_action($what, $action);
         }
+
         # allow some actions
         $self->_action($_)->enable  for @enabled;
         $self->_action($_)->disable for @disabled;
@@ -190,8 +191,8 @@ sub START {
 
         # menu view
         my @mnu_view = (
-        [ 'show_cards',      '', 'F5', T('~Cards') ],
-        [ 'show_continents', '', 'F6', T('C~ontinents') ],
+        [ 'show_cards',      $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'cards.png')), 'F5', T('~Cards') ],
+        [ 'show_continents', $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'continents.png')), 'F6', T('C~ontinents') ],
         );
         $self->_build_menu('view', T('~View'), @mnu_view);
     }
