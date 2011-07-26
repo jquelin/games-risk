@@ -132,7 +132,7 @@ sub START {
         #$mw->geometry($width . 'x' . $height);
 
         # create the actions
-        my @enabled  = qw{ new quit };
+        my @enabled  = qw{ new quit show_help show_about };
         my @disabled = qw{ close show_cards show_continents };
         foreach my $what ( @enabled, @disabled ) {
             my $action = Tk::Action->new(
@@ -195,6 +195,13 @@ sub START {
         [ 'show_continents', $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'continents.png')), 'F6', T('C~ontinents') ],
         );
         $self->_build_menu('view', T('~View'), @mnu_view);
+
+        # menu help
+        my @mnu_help = (
+        [ 'show_help',  $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'help.png')), 'F1', T('~Help') ],
+        [ 'show_about', $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'about.png')),  '', T('About') ],
+        );
+        $self->_build_menu('help', T('~Help'), @mnu_help);
     }
 
     #
@@ -233,10 +240,12 @@ sub START {
             # create the bindings. note: we also need to bind the lowercase
             # letter too!
             $action->add_widget($widget);
-            $accel =~ s/Ctrl\+/Control-/;
-            $action->add_binding("<$accel>");
-            $accel =~ s/Control-(\w)/"Control-" . lc($1)/e;
-            $action->add_binding("<$accel>");
+            if ( $accel ) {
+                $accel =~ s/Ctrl\+/Control-/;
+                $action->add_binding("<$accel>");
+                $accel =~ s/Control-(\w)/"Control-" . lc($1)/e;
+                $action->add_binding("<$accel>");
+            }
         }
     }
 
