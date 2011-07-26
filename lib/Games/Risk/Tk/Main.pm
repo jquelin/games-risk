@@ -49,16 +49,11 @@ has _actions => (
     },
 );
 
-has _auto_reattack => ( rw, isa=>'Bool', default=>0 ); # FIXME: from config
-
 # it's not usually a good idea to retain a reference on a poe session,
 # since poe is already taking care of the references for us. however, we
 # need the session to call ->postback() to set the various gui callbacks
 # that will be fired upon gui events.
 has _session => ( rw, weak_ref, isa=>'POE::Session' );
-
-# the string that will appear in the status bar
-has _status => ( rw, isa=>'String' );
 
 # zoom information
 has _orig_bg_size => ( rw, isa=>'Games::Risk::Point' );
@@ -66,6 +61,14 @@ has _zoom         => ( rw, isa=>'Games::Risk::Point' );
 
 # greyscale image
 has _greyscale => ( rw, isa=>'Tk::Photo' );
+
+# the string that will appear in the status bar
+has _status => ( rw, isa=>'String' );
+
+# whether to re-attack automatically (do-or-die mode)
+# FIXME: from config
+has _auto_reattack => ( rw, isa=>'Bool', default=>0 );
+
 
 
 # -- initialization
