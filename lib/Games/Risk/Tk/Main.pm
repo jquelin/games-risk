@@ -36,6 +36,7 @@ Readonly my $K  => $poe_kernel;
 Readonly my $mw => $poe_main_window; # already created by poe
 Readonly my $WAIT_CLEAN_AI    => 1.000;
 Readonly my $WAIT_CLEAN_HUMAN => 0.250;
+Readonly my $FLASHDELAY       => 0.150;
 
 
 # -- attributes
@@ -311,6 +312,66 @@ Force C<$country> to be redrawn: owner and number of armies.
 
         $c->raise("country$id&&circle", 'all');
         $c->raise("country$id&&text",   'all');
+    };
+
+
+=event flash_country
+
+    flash_country( $country , [ $state, $left ] )
+
+Request C<$country> to be flashed on the map. This is done by extracting
+the country from the greyscale image, and paint it in white on the
+canvas.
+
+Once the image is created, the event yields itself back after
+C<$FLASHDELAY>, and shows/hides the image depending on C<$state>. When
+C<$left> hits 0 (decremented each state change), the image is discarded.
+
+=cut
+
+    event flash_country => sub {
+        my ($self, $country, $on, $left) = @_[OBJECT, ARG0 .. $#_];
+        my $c = $self->_w('canvas');
+
+        # first time that the country is flashed
+        if ( not defined $on ) {
+            # load greyscale image...
+            my $magick = Image::Magick->new;
+            $magick->Read( Games::Risk->new->map->greyscale );
+
+            # and paint everything that isn't the country in white
+            my $id = $country->id;
+            my $grey = "rgb($id,$id,$id)";
+            $magick->FloodfillPaint(fuzz=>0, fill=>'white', bordercolor=>$grey, invert=>1);
+            $magick->Negate;                        # turn white in black
+            $magick->Transparent( color=>'black' ); # mark black as transparent
+
+            # resize the image to fit canvas zoom
+            my $zoom = $self->_zoom;
+            my $width  = $magick->Get('width');
+            my $height = $magick->Get('height');
+            $magick->Scale(width=>$width * $zoom->coordx, height=>$height * $zoom->coordy);
+
+            # remove all the uninteresting bits around the country itself
+            $magick->Trim;
+            my $coordx = $magick->Get('page.x');
+            my $coordy = $magick->Get('page.y');
+            $magick->Set(page=>'0x0+0+0');          # reset the page (resize image to trimmed zone)
+
+            # create the image and display it on the canvas
+            my $img = $c->Photo( -data => encode_base64( $magick->ImageToBlob ) );
+            $c->createImage($coordx, $coordy, -anchor=>'nw', -image=>$img, -tags=>["flash$country"]);
+
+            $on   = 1;
+            $left = 8;
+        }
+        my $method = $on ? 'raise' : 'lower';
+        $c->$method("flash$country", 'background' );
+        if ( $left ) {
+            $K->delay( flash_country => $FLASHDELAY => $country, !$on, $left-1 );
+        } else {
+            $c->delete( "flash$country" );
+        }
     };
 
 
