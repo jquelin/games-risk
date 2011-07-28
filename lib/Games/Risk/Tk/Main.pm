@@ -33,6 +33,8 @@ with 'Tk::Role::HasWidgets';
 
 Readonly my $K  => $poe_kernel;
 Readonly my $mw => $poe_main_window; # already created by poe
+Readonly my $WAIT_CLEAN_AI    => 1.000;
+Readonly my $WAIT_CLEAN_HUMAN => 0.250;
 
 
 # -- attributes
@@ -128,6 +130,67 @@ event _default => sub {
 };
 
 {
+
+=event attack_info
+
+    attack_info( $src, $dst, \@attack, \@defence )
+
+Give the result of C<$dst> attack from C<$src>: C<@attack> and
+C<@defence> dices.
+
+=cut
+
+    event attack_info => sub {
+        my ($self, $src, $dst, $attack, $defence) = @_[OBJECT, ARG0..$#_];
+
+        # update status msg
+        $self->_set_status( sprintf T('Attacking %s from %s'), $dst->name, $src->name );
+
+        # update attack dices
+        foreach my $i ( 1 .. 3 ) {
+            my $d = $attack->[$i-1] // 0;
+            my $img = $mw->Photo( -file => $SHAREDIR->file('images', "dice-$d.png") );
+            $self->_w("lab_attack_$i")->configure(-image=>$img);
+        }
+
+        # update defence dices
+        foreach my $i ( 1 .. 2 ) {
+            my $d = $defence->[$i-1] // 0;
+            my $img = $mw->Photo( -file => $SHAREDIR->file('images', "dice-$d.png") );
+            $self->_w("lab_defence_$i")->configure(-image=>$img);
+        }
+
+        # draw a line on the canvas
+        my $c = $self->_w('canvas');
+        state $i = 0;
+        my $zoomx = $self->_zoom->coordx; my $zoomy = $self->_zoom->coordy;
+        my $x1 = $src->coordx * $zoomx; my $y1 = $src->coordy * $zoomy;
+        my $x2 = $dst->coordx * $zoomx; my $y2 = $dst->coordy * $zoomy;
+        $c->createLine(
+            $x1, $y1, $x2, $y2,
+            -arrow => 'last',
+            -tags  => ['attack', "attack$i"],
+            -fill  => 'yellow', #$self->_curplayer->color,
+            -width => 4,
+        );
+        my $srcid = $src->id;
+        $c->raise('attack', 'all');
+        $c->raise("country$srcid", 'attack');
+        $c->idletasks;
+        my $wait = $self->_curplayer->type eq 'ai' ? $WAIT_CLEAN_AI : $WAIT_CLEAN_HUMAN;
+        $K->delay_set(_clean_attack => $wait, $i);
+        $i++;
+
+        # update result labels
+        my $nul = $mw->Photo( -file=> $SHAREDIR->file('icons', '16', 'empty.png') );
+        my $r1 = $attack->[0] <= $defence->[0] ? 'actcross16' : 'actcheck16';
+        my $r2 = scalar(@$attack) >= 2 && scalar(@$defence) == 2
+            ? $attack->[1] <= $defence->[1] ? 'actcross16' : 'actcross16'
+            : $nul;
+        $self->_w('lab_result_1')->configure( -image => $r1 );
+        $self->_w('lab_result_2')->configure( -image => $r2 );
+    };
+
 
 =event chnum
 
@@ -350,6 +413,17 @@ Create a label for C<$player>, with tooltip information.
 
 }
 
+# -- private events
+
+{
+    # event: _clean_attack( $i )
+    # remove line corresponding to attack $i from canvas.
+    event _clean_attack => sub {
+        my ($self, $i) = @_[OBJECT, ARG0];
+        $self->_w('canvas')->delete("attack$i");
+    }
+
+}
 
 # -- actions
 
