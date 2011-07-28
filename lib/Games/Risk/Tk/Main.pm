@@ -235,6 +235,25 @@ C<@defence> dices.
         $self->_w('lab_result_2')->configure( -image => $r2 );
     };
 
+=event attack_move
+
+    attack_move()
+
+Prevent user to re-attack till he moved the armies.
+
+=cut
+
+    event attack_move => sub {
+        my $self = shift;
+
+        my $c = $self->_w('canvas');
+        $c->CanvasBind('<1>', undef);
+        $c->CanvasBind('<3>', undef);
+        $self->_action('attack_redo')->disable;
+        $self->_action('attack_done')->disable;
+        $self->_w('lab_step_attack')->configure(disabled);
+    };
+
 
 =event chnum
 
