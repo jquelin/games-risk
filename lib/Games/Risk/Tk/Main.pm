@@ -5,8 +5,9 @@ use warnings;
 package Games::Risk::Tk::Main;
 # ABSTRACT: main prisk window
 
-use Image::Size qw{ imgsize };
-use List::Util  qw{ min };
+use Image::Size  qw{ imgsize };
+use List::Util   qw{ min };
+use MIME::Base64 qw{ encode_base64 };
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::POE;
@@ -544,13 +545,39 @@ Create a label for C<$player>, with tooltip information.
     # with ($w, $h). note that reconfigure is also window motion.
     #
     event _canvas_configure => sub {
-        my ($self, $args) = @_[HEAP, ARG1];
+        my ($self, $args) = @_[OBJECT, ARG1];
         my ($c, $neww, $newh) = @$args;
 
         # check if we're at startup screen...
         my $map = Games::Risk->new->map;
         if ( defined $map ) {
             # in a game
+            # create a new image resized to fit new dims
+            my $magick = Image::Magick->new;
+            $magick->Read( $self->_map->background );
+            $magick->Scale(width=>$neww, height=>$newh);
+
+            # install this new image inplace of previous background
+            my $img = $c->Photo( -data => encode_base64( $magick->ImageToBlob ) );
+            $c->delete('background');
+            $c->createImage(0, 0, -anchor=>'nw', -image=>$img, -tags=>['background']);
+            $c->lower('background', 'all');
+
+            # update zoom factors. note that we don't want to resize greyscale
+            # image since a) it takes time, which is unneeded since this image
+            # is not displayed and b) greyscale are quite close from country to
+            # country, and resizing will blur this to the point that it's no
+            # longer usable. therefore, just storing a zoom factor and using it
+            # will be enough for greyscale.
+            my $zoom = $self->_zoom;
+            my $orig = $self->_orig_bg_size;
+            $zoom->set_coordx( $neww / $orig->coordx );
+            $zoom->set_coordy( $newh / $orig->coordy );
+
+            # force country redraw, for them to be correctly placed on the new
+            # map.
+            $K->yield('_country_redraw', $_) foreach $self->_map->countries;
+
         } else {
             # delete existing images
             $c->delete('startup');
