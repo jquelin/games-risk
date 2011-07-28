@@ -288,12 +288,10 @@ action & statusbar.
         $self->_action('show_continents')->enable;
 
         # create background image
+        # no need to actually display it: it will be done when canvas
+        # will be reconfigured.
         my $bgpath = $map->background;
         my ($width, $height) = imgsize($bgpath);
-        # FIXME: adapt to current window width/height
-        my $bg = $mw->Photo(-file=>$bgpath);
-        $c->createImage(0, 0, -anchor=>'nw', -image=>$bg, -tags=>['background']);
-        $c->lower('background', 'all');
 
         # store zoom information
         my $orig = Games::Risk::Point->new( { coordx=>$width, coordy=>$height } );
