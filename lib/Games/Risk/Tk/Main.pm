@@ -105,8 +105,8 @@ has _armies_initial => (
 );
 
 # fake armies used to draw armies before sending to controller
-has _fake_armies_in  => ( ro, isa=>'HashRef', default => sub{ {} } );
-has _fake_armies_out => ( ro, isa=>'HashRef', default => sub{ {} } );
+has _fake_armies_in  => ( rw, isa=>'HashRef', default => sub{ {} } );
+has _fake_armies_out => ( rw, isa=>'HashRef', default => sub{ {} } );
 
 
 # -- initialization
@@ -511,6 +511,39 @@ Create a label for C<$player>, with tooltip information.
     event _help => sub {
         require Games::Risk::Tk::Help;
         Games::Risk::Tk::Help->new( {parent=>$mw} );
+    };
+
+    # event: _place_armies_redo();
+    # user wants to restart from scratch reinforcements placing.
+    event _place_armies_redo => sub {
+        my ($self, $s) = @_[OBJECT, SESSION];
+
+        my $fake_armies_in = $self->_fake_armies_in;
+        foreach my $id ( keys %$fake_armies_in ) {
+            next if $fake_armies_in->{$id} == 0;
+            delete $fake_armies_in->{$id};
+            my $country = $self->_map->country_get($id);
+            $K->yield('chnum', $country);
+        }
+
+        # forbid button next phase to be clicked
+        $self->_action('place_armies_done')->disable;
+        # allow adding armies
+        $self->_w('canvas')->CanvasBind( '<1>', $s->postback('_canvas_place_armies', 1) );
+        $self->_w('canvas')->CanvasBind( '<4>', $s->postback('_canvas_place_armies', 1) );
+
+        # reset initials
+        my $nb = 0;
+        my $armies_backup = $self->_armies_backup;
+        foreach my $k ( keys %$armies_backup ) {
+            my $v = $armies_backup->{$k};
+            $self->_armies->{$k} = $v; # restore initial value
+            $nb += $v;
+        }
+        $self->_set_fake_armies_in( {} );
+
+        # update status
+        $self->_set_status( sprintf T("%s armies left to place"), $nb );
     };
 
     # event: _show_cards()
