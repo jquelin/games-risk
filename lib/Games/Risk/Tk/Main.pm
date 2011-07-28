@@ -364,6 +364,18 @@ Create a label for C<$player>, with tooltip information.
         Games::Risk::Tk::Help->new( {parent=>$mw} );
     };
 
+    # event: _show_cards()
+    # request card window to be shown/hidden.
+    event _show_cards => sub {
+        $K->post('cards', 'visibility_toggle');
+    };
+
+    # event: _show_continents()
+    # request continents window to be shown/hidden.
+    event _show_continents => sub {
+        $K->post('continents', 'visibility_toggle');
+    };
+
 
     # event: _quit()
     # request to quit the application.
