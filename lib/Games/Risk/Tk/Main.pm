@@ -132,12 +132,6 @@ sub START {
 
 # -- public events
 
-event _default => sub {
-    my ($sender, $event) = @_[SENDER, ARG0];
-    return if $sender eq $poe_kernel;
-    say $event;
-};
-
 {
 
 =event attack
