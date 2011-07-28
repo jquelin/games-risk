@@ -71,6 +71,9 @@ has _status => (
     },
 );
 
+# the current player
+has _curplayer => ( rw, isa=>'Games::Risk::Player' );
+
 # whether to re-attack automatically (do-or-die mode)
 # FIXME: from config
 has _auto_reattack => ( rw, isa=>'Bool', default=>0 );
@@ -247,6 +250,27 @@ placed initially.
         my ($self, $nb) = @_[OBJECT, ARG0];
         $self->_set_status( sprintf T("%s armies left to place"), $nb );
         $self->_set_armies_initial( $nb );
+    };
+
+
+=event player_active
+
+    player_active( $player )
+
+Change player labels so that previous player is inactive, and new
+active one is C<$player>.
+
+=cut
+
+    event player_active => sub {
+        my ($self, $new) = @_[OBJECT, ARG0];
+
+        my $old = $self->_curplayer;
+        my $empty  = $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'empty.png') );
+        my $active = $mw->Photo(-file=>$SHAREDIR->file('images', 'player-active.png') );
+        $self->_w( "lab_player_".$old->name )->configure(-image=>$empty) if defined $old;
+        $self->_w( "lab_player_".$new->name )->configure(-image=>$active);
+        $self->_set_curplayer( $new );
     };
 
 
