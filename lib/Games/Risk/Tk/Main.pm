@@ -513,7 +513,43 @@ Create a label for C<$player>, with tooltip information.
         Games::Risk::Tk::Help->new( {parent=>$mw} );
     };
 
-    # event: _place_armies_redo();
+    # event: _place_armies_done()
+    # called when all armies are placed correctly.
+    event _place_armies_done => sub {
+        my $self = shift;
+
+        # check if we're done
+        my $nb = 0;
+        $nb += $_ for values %{ $self->_armies };
+        if ( $nb != 0 ) {
+            warn 'should not be there!';
+            return;
+        }
+
+        # update gui
+        $self->_set_status( '' );
+        my $c = $self->_w('canvas');
+        $c->CanvasBind('<1>', undef);
+        $c->CanvasBind('<3>', undef);
+        $c->CanvasBind('<4>', undef);
+        $c->CanvasBind('<5>', undef);
+        $self->_w('lab_step_place_armies')->configure(disabled);
+        $self->_action( 'place_armies_redo' )->disable;
+        $self->_action( 'place_armies_done' )->disable;
+
+        # request controller to update
+        my $fake_armies_in = $self->_fake_armies_in;
+        foreach my $id ( keys %$fake_armies_in ) {
+            next if $fake_armies_in->{$id} == 0; # don't send null reinforcements
+            my $country = $self->_map->country_get($id);
+            $K->post(risk => armies_placed => $country, $fake_armies_in->{$id});
+        }
+        $self->_set_armies        ( {} );
+        $self->_set_armies_backup ( {} );
+        $self->_set_fake_armies_in( {} );
+    };
+
+    # event: _place_armies_redo()
     # user wants to restart from scratch reinforcements placing.
     event _place_armies_redo => sub {
         my ($self, $s) = @_[OBJECT, SESSION];
