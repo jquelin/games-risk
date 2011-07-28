@@ -62,7 +62,7 @@ has _zoom         => ( rw, isa=>'Games::Risk::Point' );
 # greyscale image
 has _greyscale => ( rw, isa=>'Tk::Photo' );
 
-# the string that will appear in the status bar
+# the strings that will appear in the status bar
 has _status => (
     rw, isa=>'Str',
     trigger => sub {
@@ -70,9 +70,18 @@ has _status => (
         $self->_w('lab_status')->configure(-text=>$newtext);
     },
 );
+has _country_label => (
+    rw, isa=>'Str',
+    trigger => sub {
+        my ($self, $newtext) = @_;
+        $self->_w('country_label')->configure(-text=>$newtext);
+    },
+);
 
-# the current player
-has _curplayer => ( rw, isa=>'Games::Risk::Player' );
+# the current map, player & selected country
+has _curplayer => ( rw, isa=>'Games::Risk::Player',         clearer=>'_clear_curplayer' );
+has _country   => ( rw, isa=>'Maybe[Games::Risk::Country]', clearer=>'_clear_country' );
+has _map       => ( rw, isa=>'Games::Risk::Map',            clearer=>'_clear_map' );
 
 # whether to re-attack automatically (do-or-die mode)
 # FIXME: from config
@@ -228,6 +237,7 @@ action & statusbar.
         $c->CanvasBind('<Configure>', [$s->postback('_canvas_configure'), Ev('w'), Ev('h')] );
 
         # store map and say we're done
+        $self->_set_map( $map );
         $K->post( risk => 'map_loaded' );
     };
 
@@ -343,6 +353,11 @@ Create a label for C<$player>, with tooltip information.
         $tb->{CONTAINER}->packForget; # FIXME: breaking encapsulation
         $tb->destroy;
 
+        # unstore data
+        $self->_clear_country;
+        $self->_clear_curplayer;
+        $self->_clear_map;
+
         # enable / disable actions
         $self->_action('new')->enable;
         my @disable = qw{ close show_cards show_continents
@@ -382,8 +397,6 @@ Create a label for C<$player>, with tooltip information.
     event _quit => sub {
         $mw->destroy;
     };
-
-
 }
 
 # -- gui events
@@ -417,8 +430,41 @@ Create a label for C<$player>, with tooltip information.
                 @tags,
             );
         }
+    };
+
+
+    #
+    # event: _canvas_motion( undef, [$canvas, $x, $y] );
+    #
+    # Called when mouse is moving over the $canvas at coords ($x,$y).
+    #
+    event _canvas_motion => sub {
+        my ($self, $args) = @_[OBJECT, ARG1];
+
+        my (undef, $x,$y) = @$args; # first param is canvas
+
+        # correct with zoom factor
+        my $zoom = $self->_zoom;
+        $x /= defined($zoom) ? $zoom->coordx : 1;
+        $y /= defined($zoom) ? $zoom->coordy : 1;
+
+        # get greyscale pointed by mouse, this may die if moving too fast
+        # outside of the canvas. we just need the 'red' component, since
+        # green and blue will be the same.
+        my $grey = 0;
+        eval { ($grey) = $self->_greyscale->get($x,$y) };
+        return unless defined $self->_map;
+        my $country    = $self->_map->country_get($grey);
+
+        # update country and country label
+        $self->_set_country( $country ); # may be undef
+        $self->_set_country_label( defined $country
+            ? join(' - ', $country->continent->name, $country->name)
+            : '' );
+    };
 
     };
+
 
 }
 
@@ -780,6 +826,7 @@ Create a label for C<$player>, with tooltip information.
 
         # initial actions
         $c->CanvasBind('<Configure>', [$s->postback('_canvas_configure'), Ev('w'), Ev('h')] );
+        $c->CanvasBind( '<Motion>',   [$s->postback('_canvas_motion'),    Ev('x'), Ev('y')] );
     }
 
 }
