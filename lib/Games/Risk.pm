@@ -445,5 +445,7 @@ L<http://annocpan.org/dist/Games-Risk>
 
 L<http://cpanratings.perl.org/d/Games-Risk>
 
+=back
+
 =cut
 

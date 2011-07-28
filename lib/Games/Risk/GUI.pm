@@ -38,10 +38,13 @@ event _default => sub {
     $K->post($_, $event, @$args) foreach qw{ main cards continents gameover move-armies };
 };
 
-
+no Moose;
+__PACKAGE__->meta->make_immutable;
 1;
-
 __END__
+
+=for Pod::Coverage
+    START STOP
 
 =head1 DESCRIPTION
 
