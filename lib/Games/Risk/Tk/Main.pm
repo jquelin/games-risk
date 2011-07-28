@@ -1143,9 +1143,12 @@ Create a label for C<$player>, with tooltip information.
         $self->_set_w( lab_defence_2 => $d2 );
 
         #-- redo checkbox
+        my $reattack_value;
         my $cb_reattack = $fright->Checkbutton(
             -text     => T('Auto-reattack'),
             -anchor   => 'w',
+            -variable => \$reattack_value,
+            -command  => sub { $self->_set_auto_reattack( !!$reattack_value ); },
         )->pack(top,fillx);
         $cb_reattack->select if $self->_auto_reattack;
         $self->_w('tooltip')->attach($cb_reattack, -msg=>T('Automatically re-do last attack if attacker still has more than 3 armies'));
