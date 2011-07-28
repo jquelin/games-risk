@@ -90,6 +90,10 @@ has _map       => ( rw, isa=>'Games::Risk::Map',            clearer=>'_clear_map
 # FIXME: from config
 has _auto_reattack => ( rw, isa=>'Bool', default=>0 );
 
+# source and destination of player attack
+has _src => ( rw, isa=>'Games::Risk::Country', clearer=>'_clear_src', predicate=>'_has_src' );
+has _dst => ( rw, isa=>'Games::Risk::Country', clearer=>'_clear_dst', predicate=>'_has_dst' );
+
 # number of armies to be placed at beginning of game
 has _armies        => ( rw, isa=>'HashRef', default=>sub { {} } );
 has _armies_backup => ( rw, isa=>'HashRef', default=>sub { {} } );
@@ -133,6 +137,42 @@ event _default => sub {
 };
 
 {
+
+=event attack
+
+    attack()
+
+Request user to start attacking at will.
+
+=cut
+
+    event attack => sub {
+        my ($self, $s) = @_[OBJECT, SESSION];
+
+        # update the gui to reflect the new state.
+        my $c = $self->_w('canvas');
+        $c->CanvasBind( '<1>', $s->postback('_canvas_attack_from') );
+        $c->CanvasBind( '<3>', $s->postback('_canvas_attack_cancel') );
+        $self->_w('lab_step_attack')->configure(enabled);
+        $self->_action('attack_done')->enable;
+
+        if ( $self->_has_src && $self->_has_dst
+            && $self->_src->owner ne $self->_dst->owner
+            && $self->_src->armies > 1 ) {
+            $self->_action('attack_redo')->enable;
+
+            # auto-reattack?
+            # FIXME: configurable threshold?
+            $K->yield('_attack_redo') if $self->_auto_reattack && $self->_src->armies >= 4;
+
+        } else {
+            $self->_action('attack_redo')->disable;
+        }
+
+        # update status msg
+        $self->_set_status( T('Attacking from ...') );
+    };
+
 
 =event attack_info
 
@@ -605,12 +645,76 @@ Create a label for C<$player>, with tooltip information.
 # -- gui events
 
 {
-    #
-    # event: _canvas_configure( undef, [$canvas, $w, $h] );
-    #
+    # event: _canvas_attack_from()
+    # user wants to select a country to attack from.
+    event _canvas_attack_from => sub {
+        my ($self, $s) = @_[OBJECT, SESSION];
+
+        my $curplayer = $self->_curplayer;
+        my $country   = $self->_country;
+
+        # checks...
+        return unless defined $country;
+        return if $country->owner->name ne $curplayer->name; # country owner
+        return if $country->armies == 1;
+
+        # record attack source
+        $self->_set_src( $country );
+        $self->_w('canvas')->CanvasBind( '<1>', $s->postback('_canvas_attack_target') );
+
+        # update status msg
+        $self->_set_status( sprintf T('Attacking ... from %s'), $country->name );
+    };
+
+    # event: _canvas_attack_cancel()
+    # user wants to deselect a country to attack from.
+    event _canvas_attack_cancel => sub {
+        my ($self, $s) = @_[OBJECT, SESSION];
+
+        # cancel attack source
+        $self->_clear_src;
+        $self->_w('canvas')->CanvasBind( '<1>', $s->postback('_canvas_attack_from') );
+
+        # update status msg
+        $self->_set_status( sprintf T('Attacking from ...') );
+    };
+
+    # event: _canvas_attack_target()
+    # user wants to select target for her attack.
+    event _canvas_attack_target => sub {
+        my $self = shift;
+
+        my $curplayer = $self->_curplayer;
+        my $country   = $self->_country;
+
+        # checks...
+        return unless defined $country;
+        if ( $country->owner->name eq $curplayer->name ) {
+            # we own this country too, let's just change source of attack.
+            $K->yield('_canvas_attack_from');
+            return;
+        }
+        return unless $country->is_neighbour( $self->_src );
+
+        # update status msg
+        $self->_set_status( sprintf T('Attacking %s from %s'),
+            $country->name, $self->_src->name );
+
+        # store opponent
+        $self->_set_dst( $country );
+
+        # update gui to reflect new state
+        $self->_w('canvas')->CanvasBind('<1>', undef);
+        $self->_w('canvas')->CanvasBind('<3>', undef);
+        $self->_action('attack_done')->disable;
+
+        # signal controller
+        $K->post(risk => attack => $self->_src, $country);
+    };
+
+    # event: _canvas_configure( undef, [$canvas, $w, $h] )
     # Called when canvas is reconfigured. new width and height available
     # with ($w, $h). note that reconfigure is also window motion.
-    #
     event _canvas_configure => sub {
         my ($self, $args) = @_[OBJECT, ARG1];
         my ($c, $neww, $newh) = @$args;
@@ -661,12 +765,8 @@ Create a label for C<$player>, with tooltip information.
         }
     };
 
-
-    #
-    # event: _canvas_motion( undef, [$canvas, $x, $y] );
-    #
+    # event: _canvas_motion( undef, [$canvas, $x, $y] )
     # Called when mouse is moving over the $canvas at coords ($x,$y).
-    #
     event _canvas_motion => sub {
         my ($self, $args) = @_[OBJECT, ARG1];
 
@@ -692,14 +792,10 @@ Create a label for C<$player>, with tooltip information.
             : '' );
     };
 
-
-    #
-    # event: _canvas_place_armies( [ $diff ] );
-    #
+    # event: _canvas_place_armies( [ $diff ] )
     # Called when mouse click on the canvas during armies placement.
     # Update "fake armies" to place $diff (may be negative) army on the
     # current country.
-    #
     event _canvas_place_armies => sub {
         my ($self, $s, $args) = @_[OBJECT, SESSION, ARG0];
 
@@ -752,13 +848,9 @@ Create a label for C<$player>, with tooltip information.
         }
     };
 
-
-    #
-    # event: _canvas_place_armies_initial();
-    #
+    # event: _canvas_place_armies_initial()
     # Called when mouse click on the canvas during initial armies placement.
     # Will request controller to place one army on the current country.
-    #
     event _canvas_place_armies_initial => sub {
         my $self = shift;
 
@@ -781,8 +873,6 @@ Create a label for C<$player>, with tooltip information.
         # ask us to redraw the country.
         $K->post(risk => initial_armies_placed => $country, 1);
     };
-
-
 }
 
 
