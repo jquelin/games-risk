@@ -88,7 +88,16 @@ has _map       => ( rw, isa=>'Games::Risk::Map',            clearer=>'_clear_map
 has _auto_reattack => ( rw, isa=>'Bool', default=>0 );
 
 # number of armies to be placed at beginning of game
-has _armies_initial => ( rw, isa=>'Int' );
+has _armies_initial => (
+    rw,
+    isa     => 'Int',
+    traits  => ['Counter'],
+    default => 0,
+    handles => {
+        _armies_initial_dec => 'dec',
+    },
+
+);
 
 # fake armies used to draw armies before sending to controller
 has _fake_armies_in  => ( ro, isa=>'HashRef', default => sub{ {} } );
@@ -239,6 +248,23 @@ action & statusbar.
         # store map and say we're done
         $self->_set_map( $map );
         $K->post( risk => 'map_loaded' );
+    };
+
+
+=event place_armies_initial
+
+    place_armies_initial()
+
+Request user to place 1 armies on her countries. this is initial
+reinforcement, so there's no limit on where to put the army, and armies
+are put one by one.
+
+=cut
+
+    event place_armies_initial => sub {
+        my ($self, $s) = @_[OBJECT, SESSION];
+        my $c = $self->_w('canvas');
+        $c->CanvasBind( '<1>', $s->postback('_canvas_place_armies_initial') );
     };
 
 
@@ -463,6 +489,33 @@ Create a label for C<$player>, with tooltip information.
             : '' );
     };
 
+    #
+    # event: _canvas_place_armies_initial();
+    #
+    # Called when mouse click on the canvas during initial armies placement.
+    # Will request controller to place one army on the current country.
+    #
+    event _canvas_place_armies_initial => sub {
+        my $self = shift;
+
+        my $curplayer = $self->_curplayer;
+        my $country   = $self->_country;
+
+        # check country owner
+        return unless defined $country;
+        return if $country->owner->name ne $curplayer->name;
+
+        # change canvas bindings
+        $self->_w('canvas')->CanvasBind('<1>', undef);
+
+        # update gui
+        $self->_armies_initial_dec;
+        my $nb = $self->_armies_initial;
+        $self->_set_status( $nb ? sprintf( T("%s armies left to place"), $nb) : '' );
+
+        # tell controller that we've placed an army. controller will then
+        # ask us to redraw the country.
+        $K->post(risk => initial_armies_placed => $country, 1);
     };
 
 
