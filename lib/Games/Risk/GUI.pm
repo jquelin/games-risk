@@ -9,8 +9,6 @@ use POE qw{ Loop::Tk };
 use MooseX::POE;
 use Readonly;
 
-use Games::Risk::GUI::Board;
-
 Readonly my $K  => $poe_kernel;
 
 
