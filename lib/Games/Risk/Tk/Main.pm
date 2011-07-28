@@ -75,6 +75,9 @@ has _status => (
 # FIXME: from config
 has _auto_reattack => ( rw, isa=>'Bool', default=>0 );
 
+# number of armies to be placed at beginning of game
+has _armies_initial => ( rw, isa=>'Int' );
+
 # fake armies used to draw armies before sending to controller
 has _fake_armies_in  => ( ro, isa=>'HashRef', default => sub{ {} } );
 has _fake_armies_out => ( ro, isa=>'HashRef', default => sub{ {} } );
@@ -226,9 +229,30 @@ action & statusbar.
     };
 
 
+=event place_armies_initial_count
+
+    place_armies_initial_count( $nb )
+
+request user to place $nb armies on her countries. this is initial
+armies placement:
+    - no restriction on where
+    - armies get placed one by one
+
+this event just allows the gui to inform user how many armies will be
+placed initially.
+
+=cut
+
+    event place_armies_initial_count => sub {
+        my ($self, $nb) = @_[OBJECT, ARG0];
+        $self->_set_status( sprintf T("%s armies left to place"), $nb );
+        $self->_set_armies_initial( $nb );
+    };
+
+
 =event player_add
 
-    player_add($player)
+    player_add( $player )
 
 Create a label for C<$player>, with tooltip information.
 
