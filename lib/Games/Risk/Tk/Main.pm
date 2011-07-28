@@ -219,6 +219,45 @@ action & statusbar.
         $K->post( risk => 'map_loaded' );
     };
 
+
+=event player_add
+
+    player_add($player)
+
+Create a label for C<$player>, with tooltip information.
+
+=cut
+
+    event player_add => sub {
+        my ($self, $player) = @_[OBJECT, ARG0];
+
+        # create label
+        my $f = $self->_w('fplayers');
+        my $label = $f->Label(
+            -bg    => $player->color,
+            -image => $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'empty.png') ),
+        )->pack(left);
+        $self->_set_w( "lab_player_" . $player->name, $label );
+
+        # associate tooltip
+        my $tooltip = $player->name // '';
+        given ($player->type) {
+            when ('human') {
+                $tooltip .= ' (' . T('human') . ')';
+            }
+
+            when ('ai') {
+                my $ai = $player->ai;
+                my $difficulty  = $ai->difficulty;
+                my $description = $ai->description;
+                $tooltip .= ' (' . sprintf(T('computer - %s'), $difficulty). ")\n$description";
+            }
+
+            default { $tooltip = '?'; }
+        }
+        $self->_w('tooltip')->attach($label, -msg=>$tooltip);
+    };
+
 }
 
 
