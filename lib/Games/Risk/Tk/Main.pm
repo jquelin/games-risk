@@ -63,7 +63,13 @@ has _zoom         => ( rw, isa=>'Games::Risk::Point' );
 has _greyscale => ( rw, isa=>'Tk::Photo' );
 
 # the string that will appear in the status bar
-has _status => ( rw, isa=>'String' );
+has _status => (
+    rw, isa=>'Str',
+    trigger => sub {
+        my ($self, $newtext) = @_;
+        $self->_w('lab_status')->configure(-text=>$newtext);
+    },
+);
 
 # whether to re-attack automatically (do-or-die mode)
 # FIXME: from config
@@ -636,7 +642,7 @@ Create a label for C<$player>, with tooltip information.
 
         # label to display status
         my $status = $fbot->Label( -anchor =>'w' )->pack(left,xfillx, pad1);
-        $self->_set_w( status => $status );
+        $self->_set_w( lab_status => $status );
 
         # label to display country pointed by mouse
         my $clabel = $fbot->Label( -anchor => 'e' )->pack(right, xfillx, pad1);
