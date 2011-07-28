@@ -314,6 +314,33 @@ Force C<$country> to be redrawn: owner and number of armies.
     };
 
 
+=event game_over
+
+    game_over( $player )
+
+Sent when C<$player> has won the game.
+
+=cut
+
+    event game_over => sub {
+        my ($self, $winner) = @_[OBJECT, ARG0];
+
+        # update gui
+        my $c = $self->_w('canvas');
+        $c->CanvasBind('<1>', undef);
+        $c->CanvasBind('<3>', undef);
+        $self->_w('lab_step_attack')->configure(disabled);
+        $self->_action('attack_redo')->disable;
+        $self->_action('attack_done')->disable;
+
+        # announce the winner
+        Games::Risk::GUI::GameOver->spawn({
+            parent => $mw,
+            winner => $winner,
+        });
+    };
+
+
 =event move_armies
 
     move_armies()
@@ -562,6 +589,24 @@ Create a label for C<$player>, with tooltip information.
         $self->_w('tooltip')->attach($label, -msg=>$tooltip);
     };
 
+
+=event player_lost
+
+    player_lost($player)
+
+Mark C<$player> as lost.
+
+=cut
+
+    event player_lost => sub {
+        my ($self, $player) = @_[OBJECT, ARG0];
+
+        # update gui
+        my $name  = $player->name;
+        my $image = $mw->Photo( -file => $SHAREDIR->file( 'images', 'player-lost.png' ) );
+        $self->_w("lab_player_$name")->configure( -image => $image );
+        $self->_set_status( sprintf T("Player %s has lost"), $name );
+    };
 }
 
 # -- private events
@@ -640,6 +685,8 @@ Create a label for C<$player>, with tooltip information.
         $self->_clear_country;
         $self->_clear_curplayer;
         $self->_clear_map;
+        $self->_clear_src;
+        $self->_clear_dst;
 
         # enable / disable actions
         $self->_action('new')->enable;
