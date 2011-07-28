@@ -20,8 +20,8 @@ The coordinates of the point.
 
 =cut
 
-has coordx => ( rw, isa=>'Int', required );
-has coordy => ( rw, isa=>'Int', required );
+has coordx => ( rw, isa=>'Num', required );
+has coordy => ( rw, isa=>'Num', required );
 
 no Moose;
 __PACKAGE__->meta->make_immutable;
