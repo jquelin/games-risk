@@ -509,6 +509,16 @@ Create a label for C<$player>, with tooltip information.
         Games::Risk::Tk::About->new( {parent=>$mw} );
     };
 
+    # event: _attack_redo()
+    # attack again the same destination from the same source.
+    event _attack_redo => sub {
+        my $self = shift;
+        # signal controller
+        $self->_action('attack_redo')->disable;
+        $K->post(risk => attack => $self->_src, $self->_dst);
+    };
+
+
     # event: _close()
     # request to close current game.
     event _close => sub {
