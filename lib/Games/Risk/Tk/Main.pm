@@ -111,6 +111,7 @@ has _armies_initial => (
 # fake armies used to draw armies before sending to controller
 has _fake_armies_in  => ( rw, isa=>'HashRef', default => sub{ {} } );
 has _fake_armies_out => ( rw, isa=>'HashRef', default => sub{ {} } );
+has _move_armies     => ( rw, isa=>'ArrayRef', default => sub { [] }, auto_deref );
 
 
 # -- initialization
@@ -291,6 +292,63 @@ Force C<$country> to be redrawn: owner and number of armies.
 
         $c->raise("country$id&&circle", 'all');
         $c->raise("country$id&&text",   'all');
+    };
+
+
+=event move_armies
+
+    move_armies()
+
+Request user to move armies if she wants to.
+
+=cut
+
+    event move_armies => sub {
+        my ($self, $s) = @_[OBJECT, SESSION];
+
+        # initialiaze moves
+        $self->_set_move_armies( [] );
+        $self->_set_fake_armies_in ( {} );
+        $self->_set_fake_armies_out( {} );
+
+        # update the gui to reflect the new state.
+        my $c = $self->_w('canvas' );
+        $c->CanvasBind( '<1>', $s->postback('_canvas_move_armies_from') );
+        $c->CanvasBind( '<3>', $s->postback('_canvas_move_armies_cancel') );
+        $self->_w('lab_step_move_armies')->configure(enabled);
+        $self->_action('move_armies_done')->enable;
+        $self->_set_status( T('Moving armies from...') );
+    };
+
+=event move_armies_move
+
+    move_armies_move($src, $dst, $nb)
+
+Request gui to move C<$nb> armies from C<$src> to C<$dst>.
+
+=cut
+
+    event move_armies_move => sub {
+        my ($self, $s, $src, $dst, $nb) = @_[OBJECT, SESSION, ARG0..$#_];
+
+        my $srcid = $src->id;
+        my $dstid = $dst->id;
+
+        # update the countries
+        $self->_fake_armies_out->{$srcid} += $nb;
+        $self->_fake_armies_in->{$dstid}  += $nb;
+
+        # save move for later
+        push @{ $self->_move_armies }, [$src, $dst, $nb];
+
+        # update the gui
+        $K->yield('chnum', $src);
+        $K->yield('chnum', $dst);
+        my $c = $self->_w('canvas');
+        $c->CanvasBind( '<1>', $s->postback('_canvas_move_armies_from') );
+        $c->CanvasBind( '<3>', $s->postback('_canvas_move_armies_cancel') );
+        $self->_action('move_armies_done')->enable;
+        $self->_set_status( T('Moving armies from...') );
     };
 
 
@@ -509,6 +567,28 @@ Create a label for C<$player>, with tooltip information.
         Games::Risk::Tk::About->new( {parent=>$mw} );
     };
 
+    # event: _attack_done()
+    # Called when all planned attacks are finished.
+    event _attack_done => sub {
+        my $self = shift;
+
+        # reset src & dst
+        $self->_clear_src;
+        $self->_clear_dst;
+
+        # update gui
+        $self->_set_status('');
+        my $c = $self->_w('canvas');
+        $c->CanvasBind('<1>', undef);
+        $c->CanvasBind('<3>', undef);
+        $self->_action('attack_redo')->disable;
+        $self->_action('attack_done')->disable;
+        $self->_w('lab_step_attack')->configure(disabled);
+
+        # signal controller
+        $K->post(risk => 'attack_end');
+    };
+
     # event: _attack_redo()
     # attack again the same destination from the same source.
     event _attack_redo => sub {
@@ -549,6 +629,33 @@ Create a label for C<$player>, with tooltip information.
             move_armies_done };
         $self->_action($_)->disable for @disable;
     };
+
+    # event: _move_armies_done()
+    # moving armies at the end of the turn is finished.
+    event _move_armies_done => sub {
+        my $self = shift;
+
+        # update gui
+        my $c = $self->_w('canvas');
+        $c->CanvasBind( '<1>', undef );
+        $c->CanvasBind( '<3>', undef );
+        $self->_w('lab_step_move_armies')->configure(disabled);
+        $self->_action('move_armies_done')->disable;
+        $self->_set_status('');
+
+        # signal controller
+        foreach my $move ( $self->_move_armies ) {
+            my ($src, $dst, $nb) = @$move;
+            $K->post(risk => move_armies => $src, $dst, $nb);
+        }
+        $K->post(risk => 'armies_moved');
+
+        # reset internals
+        $self->_set_move_armies    ( [] );
+        $self->_set_fake_armies_in ( {} );
+        $self->_set_fake_armies_out( {} );
+    };
+
 
     # event: _new()
     # request for a new game to be started.
@@ -800,6 +907,75 @@ Create a label for C<$player>, with tooltip information.
         $self->_set_country_label( defined $country
             ? join(' - ', $country->continent->name, $country->name)
             : '' );
+    };
+
+    # event: _canvas_move_armies_cancel();
+    # user wants to deselect a country to move from.
+    event _canvas_move_armies_cancel => sub {
+        my ($self, $s) = @_[OBJECT, SESSION];
+
+        # cancel attack source
+        $self->_clear_src;
+
+        # update status msg
+        $self->_set_status( T('Moving armies from ...') );
+
+        # canvas click now selects the source
+        $self->_w('canvas')->CanvasBind( '<1>', $s->postback('_canvas_move_armies_from') );
+    };
+
+    # event: _canvas_move_armies_from();
+    # user selects country to move armies from.
+    event _canvas_move_armies_from => sub {
+        my ($self, $s) = @_[OBJECT, SESSION];
+
+        my $curplayer = $self->_curplayer;
+        my $country   = $self->_country;
+
+        # checks...
+        return unless defined $country;
+        my $id = $country->id;
+        return if $country->owner->name ne $curplayer->name; # country owner
+        return if $country->armies - ($self->_fake_armies_out->{$id}//0) == 1;
+
+        # record move source
+        $self->_set_src( $country );
+
+        # update status msg
+        $self->_set_status( sprintf T('Moving armies from %s to ...'), $country->name );
+
+        $self->_w('canvas')->CanvasBind( '<1>', $s->postback('_canvas_move_armies_target') );
+    };
+
+    # event: _canvas_move_armies_target();
+    # user wants to select target for her armies move.
+    event _canvas_move_armies_target => sub {
+        my $self = shift;
+
+        my $curplayer = $self->_curplayer;
+        my $country   = $self->_country;
+
+        # checks...
+        return unless defined $country;
+        return if $country->owner->name ne $curplayer->name;
+        return unless $country->is_neighbour( $self->_src );
+
+        # update status msg
+        $self->_set_status( sprintf T('Moving armies from %s to %s'),
+            $self->_src->name, $country->name );
+
+        # store destination
+        $self->_set_dst( $country );
+
+        # update gui to reflect new state
+        $self->_w('canvas')->CanvasBind('<1>', undef);
+        $self->_w('canvas')->CanvasBind('<3>', undef);
+        $self->_action('move_armies_done')->disable;
+
+        # request user how many armies to move
+        my $src = $self->_src;
+        my $max = $src->armies - 1 - ($self->_fake_armies_out->{ $src->id }//0);
+        $K->post('move-armies', 'ask_move_armies', $src, $country, $max);
     };
 
     # event: _canvas_place_armies( [ $diff ] )

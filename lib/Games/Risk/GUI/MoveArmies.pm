@@ -106,7 +106,7 @@ sub _onpub_ask_move_armies {
     $h->{src} = $src;
     $h->{dst} = $dst;
     $h->{reply}   = 'move_armies_move';
-    $h->{replyto} = 'board'; # FIXME: from?
+    $h->{replyto} = 'main'; # FIXME: from?
 
     # update gui
     my $top = $h->{toplevel};
