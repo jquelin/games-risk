@@ -90,6 +90,8 @@ has _map       => ( rw, isa=>'Games::Risk::Map',            clearer=>'_clear_map
 has _auto_reattack => ( rw, isa=>'Bool', default=>0 );
 
 # number of armies to be placed at beginning of game
+has _armies        => ( rw, isa=>'HashRef', default=>sub { {} } );
+has _armies_backup => ( rw, isa=>'HashRef', default=>sub { {} } );
 has _armies_initial => (
     rw,
     isa     => 'Int',
@@ -311,6 +313,39 @@ action & statusbar.
         # store map and say we're done
         $self->_set_map( $map );
         $K->post( risk => 'map_loaded' );
+    };
+
+
+=event place_armies
+
+    place_armies( $nb [, $continent] )
+
+Request user to place C<$nb> armies on her countries (maybe within
+C<$continent> if supplied).
+
+=cut
+
+    event place_armies => sub {
+        my ($self, $s, $nb, $continent) = @_[OBJECT, SESSION, ARG0, ARG1];
+
+        my $name = defined $continent ? $continent->name : 'free';
+        my $armies        = $self->_armies;
+        my $armies_backup = $self->_armies_backup;
+        $armies->{$name}        += $nb;
+        $armies_backup->{$name} += $nb;   # to allow reinforcements redo
+
+        # update the gui to reflect the new state.
+        my $c = $self->_w('canvas');
+        $c->CanvasBind( '<1>', $s->postback('_canvas_place_armies',  1) );
+        $c->CanvasBind( '<3>', $s->postback('_canvas_place_armies', -1) );
+        $c->CanvasBind( '<4>', $s->postback('_canvas_place_armies',  1) );
+        $c->CanvasBind( '<5>', $s->postback('_canvas_place_armies', -1) );
+        $self->_w('lab_step_place_armies')->configure( enabled );
+
+        # update status msg
+        my $count = 0;
+        $count += $_ for values %$armies;
+        $self->_set_status( sprintf T("%s armies left to place"), $count);
     };
 
 
@@ -562,6 +597,67 @@ Create a label for C<$player>, with tooltip information.
             ? join(' - ', $country->continent->name, $country->name)
             : '' );
     };
+
+
+    #
+    # event: _canvas_place_armies( [ $diff ] );
+    #
+    # Called when mouse click on the canvas during armies placement.
+    # Update "fake armies" to place $diff (may be negative) army on the
+    # current country.
+    #
+    event _canvas_place_armies => sub {
+        my ($self, $s, $args) = @_[OBJECT, SESSION, ARG0];
+
+        my $curplayer = $self->_curplayer;
+        my $country   = $self->_country;
+        return unless defined $country;
+        my $id        = $country->id;
+        my ($diff)    = @$args;
+
+        # checks...
+        return if $country->owner->name ne $curplayer->name; # country owner
+        return if $diff + ($self->_fake_armies_in->{$id}//0) < 0;   # negative count (free army move! :-) )
+
+        # update armies count
+        my $name   = $country->continent->name;
+        my $armies = $self->_armies;
+        if ( exists $armies->{$name} ) {
+            $armies->{$name} -= $diff;
+            # FIXME: check if possible, otherwise default to free
+        } else {
+            $armies->{free} -= $diff;
+            # FIXME: check if possible
+        }
+
+        # redraw country.
+        $self->_fake_armies_in->{ $country->id } += $diff;
+        $K->yield( 'chnum', $country );
+
+        # allow redo button
+        $self->_action('place_armies_redo')->enable;
+
+        # check if we're done
+        my $nb = 0;
+        my $c  = $self->_w('canvas');
+        $nb += $_ for values %$armies;
+        $self->_set_status( sprintf T("%s armies left to place"), $nb );
+        if ( $nb == 0 ) {
+            # allow button next phase to be clicked
+            $self->_action('place_armies_done')->enable;
+            # forbid adding armies
+            $c->CanvasBind('<1>', undef);
+            $c->CanvasBind('<4>', undef);
+
+        } else {
+            # forbid button next phase to be clicked
+            $self->_action('place_armies_done')->disable;
+            # allow adding armies
+            $c->CanvasBind( '<1>', $s->postback('_canvas_place_armies', 1) );
+            $c->CanvasBind( '<4>', $s->postback('_canvas_place_armies', 1) );
+        }
+    };
+
 
     #
     # event: _canvas_place_armies_initial();
