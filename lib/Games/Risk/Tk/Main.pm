@@ -5,6 +5,7 @@ use warnings;
 package Games::Risk::Tk::Main;
 # ABSTRACT: main prisk window
 
+use Image::Magick;
 use Image::Size  qw{ imgsize };
 use List::Util   qw{ min };
 use MIME::Base64 qw{ encode_base64 };
@@ -25,12 +26,17 @@ use Tk::PNG;
 use Tk::ROText;
 use Tk::Sugar;
 
+with 'Tk::Role::HasWidgets';
+
+use Games::Risk::GUI::GameOver;
+use Games::Risk::GUI::MoveArmies;
 use Games::Risk::GUI::Startup;
 use Games::Risk::I18n  qw{ T };
 use Games::Risk::Point;
+use Games::Risk::Tk::Cards;
+use Games::Risk::Tk::Continents;
 use Games::Risk::Utils qw{ $SHAREDIR };
 
-with 'Tk::Role::HasWidgets';
 
 Readonly my $K  => $poe_kernel;
 Readonly my $mw => $poe_main_window; # already created by poe
