@@ -5,6 +5,7 @@ use warnings;
 package Games::Risk::Tk::Main;
 # ABSTRACT: main prisk window
 
+use POE          qw{ Loop::Tk };
 use Image::Magick;
 use Image::Size  qw{ imgsize };
 use List::Util   qw{ min };
@@ -17,14 +18,11 @@ use Readonly;
 use Tk;
 use Tk::Action;
 use Tk::Balloon;
-use Tk::Role::HasWidgets 1.112070; # _del_w
-use Tk::ToolBar;
-
-use Tk::HList;
-use Tk::NoteBook;
+use Tk::JPEG;
 use Tk::PNG;
-use Tk::ROText;
+use Tk::Role::HasWidgets 1.112070; # _del_w
 use Tk::Sugar;
+use Tk::ToolBar;
 
 with 'Tk::Role::HasWidgets';
 
