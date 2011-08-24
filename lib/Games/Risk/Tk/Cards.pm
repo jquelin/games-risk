@@ -169,13 +169,16 @@ sub _do_change_button_state {
 
 =method shutdown
 
-    $K->post( 'gui-continents' => 'shutdown' );
+    $K->post( cards => 'shutdown', $destroy );
 
-Kill current session. The toplevel window has already been destroyed.
+Kill current session. If C<$destroy> is true, the toplevel window will
+also be destroyed.
 
 =cut
 
 event shutdown => sub {
+    my ($self, $destroy) = @_[OBJECT, ARG0];
+    $self->_toplevel->destroy if $destroy;
     $K->alias_remove('cards');
 };
 

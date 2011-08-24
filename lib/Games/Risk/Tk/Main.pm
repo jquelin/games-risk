@@ -755,6 +755,7 @@ Mark C<$player> as lost.
             place_armies_redo place_armies_done attack_redo attack_done
             move_armies_done };
         $self->_action($_)->disable for @disable;
+        $K->post( $_ => "shutdown", 1 ) for qw{ cards continents };
     };
 
     # event: _move_armies_done()
