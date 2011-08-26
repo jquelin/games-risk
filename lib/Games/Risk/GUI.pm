@@ -9,6 +9,8 @@ use POE qw{ Loop::Tk };
 use MooseX::POE;
 use Readonly;
 
+use Games::Risk::Utils qw{ debug };
+
 Readonly my $K  => $poe_kernel;
 
 
@@ -23,7 +25,7 @@ sub START {
     $K->alias_set('gui');
 }
 
-sub STOP { warn "GUI shutdown\n"; }
+sub STOP { debug( "GUI shutdown\n" ); }
 
 
 # -- public events

@@ -15,6 +15,7 @@ use constant K => $poe_kernel;
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ game player } );
 
+use Games::Risk::Utils qw{ debug };
 
 #--
 # CLASS METHODS
@@ -60,7 +61,7 @@ sub spawn {
         inline_states => {
             # private events - session management
             _start                => \&_onpriv_start,
-            _stop                 => sub { warn "AI shutdown\n" },
+            _stop                 => sub { debug( "AI shutdown\n" ) },
             # public events
             attack                => \&_onpub_attack,
             attack_move           => \&_onpub_attack_move,

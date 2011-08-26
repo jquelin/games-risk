@@ -33,7 +33,7 @@ use Games::Risk::I18n  qw{ T };
 use Games::Risk::Point;
 use Games::Risk::Tk::Cards;
 use Games::Risk::Tk::Continents;
-use Games::Risk::Utils qw{ $SHAREDIR };
+use Games::Risk::Utils qw{ $SHAREDIR debug };
 
 
 Readonly my $K  => $poe_kernel;
@@ -805,7 +805,7 @@ Mark C<$player> as lost.
         my $nb = 0;
         $nb += $_ for values %{ $self->_armies };
         if ( $nb != 0 ) {
-            warn 'should not be there!';
+            debug( 'should not be there!' );
             return;
         }
 

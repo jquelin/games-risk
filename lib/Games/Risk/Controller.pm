@@ -13,6 +13,7 @@ use Games::Risk::I18n      qw{ T };
 use Games::Risk::Map;
 use Games::Risk::Player;
 use Games::Risk::Resources qw{ map_path };
+use Games::Risk::Utils     qw{ debug };
 
 use constant K => $poe_kernel;
 
@@ -47,7 +48,7 @@ sub spawn {
         inline_states => {
             # private events - session management
             _start                  => \&_onpriv_start,
-            _stop                   => sub { warn "GR shutdown\n" },
+            _stop                   => sub { debug( "GR shutdown\n" ) },
             # private events - game states
             _gui_ready              => \&_onpriv_create_players,
             _players_created        => \&_onpriv_assign_countries,

@@ -17,7 +17,7 @@ use Tk::Sugar;
 
 use Games::Risk::I18n      qw{ T };
 use Games::Risk::Resources qw{ get_image maps };
-use Games::Risk::Utils     qw{ $SHAREDIR };
+use Games::Risk::Utils     qw{ $SHAREDIR debug };
 
 use constant K => $poe_kernel;
 
@@ -74,7 +74,7 @@ sub spawn {
         inline_states => {
             # private events - session
             _start               => \&_onpriv_start,
-            _stop                => sub { warn "gui-startup shutdown\n" },
+            _stop                => sub { debug( "gui-startup shutdown\n" ) },
             _check_errors        => \&_onpriv_check_errors,
             _check_nb_players    => \&_onpriv_check_nb_players,
             _load_defaults       => \&_onpriv_load_defaults,

@@ -10,7 +10,8 @@ use Tk;
 use Tk::Font;
 use Tk::Sugar;
 
-use Games::Risk::I18n qw{ T };
+use Games::Risk::I18n  qw{ T };
+use Games::Risk::Utils qw{ debug };
 
 use constant K => $poe_kernel;
 
@@ -31,7 +32,7 @@ sub spawn {
         args          => [ $args ],
         inline_states => {
             _start       => \&_onpriv_start,
-            _stop        => sub { warn "gui-gameover shutdown\n" },
+            _stop        => sub { debug( "gui-gameover shutdown\n" ) },
             # gui events
             _but_close   => \&_onpriv_but_close,
         },

@@ -19,7 +19,7 @@ use Tk::Sugar;
 use Tk::TableMatrix;
 
 use Games::Risk::I18n  qw{ T };
-use Games::Risk::Utils qw{ $SHAREDIR };
+use Games::Risk::Utils qw{ $SHAREDIR debug };
 
 with 'Tk::Role::Dialog';
 
@@ -69,7 +69,7 @@ sub START {
 # session destruction.
 #
 sub STOP {
-    warn "gui-continents shutdown\n";
+    debug( "gui-continents shutdown\n" );
 }
 
 

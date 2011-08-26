@@ -17,7 +17,7 @@ use Tk::Sugar;
 use Tk::Pane;
 
 use Games::Risk::I18n  qw{ T };
-use Games::Risk::Utils qw{ $SHAREDIR };
+use Games::Risk::Utils qw{ $SHAREDIR debug };
 
 with 'Tk::Role::Dialog';
 
@@ -81,7 +81,7 @@ sub START {
 # session destruction.
 #
 sub STOP {
-    warn "gui-cards shutdown\n";
+    debug( "gui-cards shutdown\n" );
 }
 
 
