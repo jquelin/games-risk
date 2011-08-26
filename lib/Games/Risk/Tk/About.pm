@@ -7,13 +7,12 @@ package Games::Risk::Tk::About;
 
 use Moose;
 use Path::Class;
-use Tk::Role::Dialog 1.101480;
 
 use Games::Risk;
 use Games::Risk::I18n  qw{ T };
 use Games::Risk::Utils qw{ $SHAREDIR };
 
-with 'Tk::Role::Dialog';
+with 'Tk::Role::Dialog' => { -version => 1.101480 };
 
 
 # -- initialization / finalization

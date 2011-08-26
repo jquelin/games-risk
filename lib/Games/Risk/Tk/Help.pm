@@ -8,13 +8,12 @@ package Games::Risk::Tk::Help;
 use Moose;
 use Path::Class;
 use Tk::Pod::Text;
-use Tk::Role::Dialog 1.101480;
 use Tk::Sugar;
 
 use Games::Risk::I18n  qw{ T };
 use Games::Risk::Utils qw{ $SHAREDIR };
 
-with 'Tk::Role::Dialog';
+with 'Tk::Role::Dialog' => { -version => 1.101480 };
 
 
 # -- initialization / finalization

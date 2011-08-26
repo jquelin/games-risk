@@ -12,14 +12,14 @@ use MooseX::Has::Sugar;
 use MooseX::POE;
 use MooseX::SemiAffordanceAccessor;
 use Readonly;
-use Tk::Role::Dialog 1.101480;
 use Tk::Sugar;
 use Tk::Pane;
 
+with 'Tk::Role::Dialog' => { -version => 1.112380 }; # _clear_w
+
+
 use Games::Risk::I18n  qw{ T };
 use Games::Risk::Utils qw{ $SHAREDIR debug };
-
-with 'Tk::Role::Dialog';
 
 Readonly my $K => $poe_kernel;
 Readonly my $WIDTH  => 95;
@@ -179,6 +179,7 @@ also be destroyed.
 event shutdown => sub {
     my ($self, $destroy) = @_[OBJECT, ARG0];
     $self->_toplevel->destroy if $destroy;
+    $self->_clear_w;
     $K->alias_remove('cards');
 };
 
