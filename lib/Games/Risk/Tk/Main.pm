@@ -1293,7 +1293,7 @@ Mark C<$player> as lost.
                 my $widget = $tb->Button(
                     -image       => $icon,
                     -tip         => $label,
-                    -command     => $session->postback( "_action_$action" ),
+                    -command     => $session->postback( "_$action" ),
                 );
                 $self->_action($action)->add_widget($widget);
                 next;
