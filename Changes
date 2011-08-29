@@ -2,6 +2,9 @@ Revision history for Games::Risk.
 
 {{$NEXT}}
 
+3.112410  2011-08-29 14:41:38 Europe/Paris
+ - revamped interface: board is the main window now
+
 3.112010  2011-07-20 12:01:59 Europe/Paris
  - moving i18n files in share/locale
 
