@@ -12,17 +12,20 @@ use strict;
 use warnings;
 
 package Games::Risk::Map;
-BEGIN {
-  $Games::Risk::Map::VERSION = '3.112010';
+{
+  $Games::Risk::Map::VERSION = '3.112410';
 }
 # ABSTRACT: map being played
 
-use File::Basename qw{ fileparse };
+use File::Basename  qw{ fileparse };
 use List::Util      qw{ shuffle };
 use List::MoreUtils qw{ uniq };
+
 use aliased 'Games::Risk::Card';
 use aliased 'Games::Risk::Continent';
 use aliased 'Games::Risk::Country';
+
+use Games::Risk::Utils qw{ debug };
 
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ background _cards greyscale _continents _countries _dirname } );
@@ -163,7 +166,7 @@ sub load_file {
             my $meth = "_parse_file_section_$section";
             my $rv = $self->$meth($line);
             if ( $rv ) {
-                warn "parse error [$section]:$. $rv \t- line was: '$line'\n";
+                debug( "parse error [$section]:$. $rv \t- line was: '$line'\n" );
                 # FIXME: error handling
             }
         }
@@ -175,7 +178,7 @@ sub load_file {
         next unless defined $id;
         my $country = $self->country_get($id);
         if ( not defined $country ) {
-            warn "cards parse error: country $id doesn't exist\n";
+            debug( "cards parse error: country $id doesn't exist\n" );
             next;
         }
         $card->country( $country );
@@ -312,7 +315,7 @@ Games::Risk::Map - map being played
 
 =head1 VERSION
 
-version 3.112010
+version 3.112410
 
 =head1 SYNOPSIS
 

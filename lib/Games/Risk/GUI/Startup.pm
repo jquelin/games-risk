@@ -12,8 +12,8 @@ use strict;
 use warnings;
 
 package Games::Risk::GUI::Startup;
-BEGIN {
-  $Games::Risk::GUI::Startup::VERSION = '3.112010';
+{
+  $Games::Risk::GUI::Startup::VERSION = '3.112410';
 }
 # ABSTRACT: startup window
 
@@ -29,7 +29,7 @@ use Tk::Sugar;
 
 use Games::Risk::I18n      qw{ T };
 use Games::Risk::Resources qw{ get_image maps };
-use Games::Risk::Utils     qw{ $SHAREDIR };
+use Games::Risk::Utils     qw{ $SHAREDIR debug };
 
 use constant K => $poe_kernel;
 
@@ -86,7 +86,7 @@ sub spawn {
         inline_states => {
             # private events - session
             _start               => \&_onpriv_start,
-            _stop                => sub { warn "gui-startup shutdown\n" },
+            _stop                => sub { debug( "gui-startup shutdown\n" ) },
             _check_errors        => \&_onpriv_check_errors,
             _check_nb_players    => \&_onpriv_check_nb_players,
             _load_defaults       => \&_onpriv_load_defaults,
@@ -99,8 +99,6 @@ sub spawn {
             _but_new_player      => \&_ongui_but_new_player,
             _but_quit            => \&_ongui_but_quit,
             _but_start           => \&_ongui_but_start,
-            # public events
-            new_game             => \&_onpub_new_game,
         },
     );
     return $session->ID;
@@ -109,14 +107,6 @@ sub spawn {
 
 #--
 # EVENT HANDLERS
-
-# -- public events
-
-sub _onpub_new_game {
-    my $h = $_[HEAP];
-    $h->{toplevel}->deiconify;
-}
-
 
 # -- private events
 
@@ -306,7 +296,11 @@ sub _onpriv_start {
     my ($h, $s, $args) = @_[HEAP, SESSION, ARG0];
 
     K->alias_set('startup');
-    my $top = $h->{toplevel} = $args->{toplevel};
+    my $top = $h->{toplevel} = $poe_main_window->Toplevel;
+
+    # hide window during its creation to avoid flickering
+    $top->withdraw;
+
     $top->title('prisk - ' . T('new game'));
     my $icon = $SHAREDIR->file('icons', '32', 'prisk.png');
     my $mask = $SHAREDIR->file('icons', '32', 'prisk-mask.xbm');
@@ -371,6 +365,10 @@ sub _onpriv_start {
     # window binding
     $top->bind('<Key-Return>', $s->postback('_but_start'));
     $top->bind('<Key-Escape>', $s->postback('_but_quit'));
+
+    $top->update;
+    $top->Popup;
+    $top->grab;
 }
 
 
@@ -471,13 +469,11 @@ sub _ongui_but_new_player {
 # event: _but_quit()
 #
 # called when button quit is clicked, ie user wants to cancel new game.
-# effectively kills the application.
 #
 sub _ongui_but_quit {
     my $h = $_[HEAP];
-    K->post('risk', 'quit');
     K->alias_remove('startup');
-    $h->{toplevel}->destroy; # this should be enough by itself
+    $h->{toplevel}->destroy;
 }
 
 
@@ -497,7 +493,7 @@ sub _ongui_but_start {
     my @players = grep { defined $_ } @$players;
 
     K->post('risk', 'new_game', { players => \@players, map => $h->{map} } );
-    $h->{toplevel}->withdraw;
+    $h->{toplevel}->destroy;
 }
 
 
@@ -514,7 +510,7 @@ Games::Risk::GUI::Startup - startup window
 
 =head1 VERSION
 
-version 3.112010
+version 3.112410
 
 =head1 SYNOPSIS
 

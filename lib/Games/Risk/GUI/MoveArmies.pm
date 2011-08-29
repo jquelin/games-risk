@@ -12,8 +12,8 @@ use strict;
 use warnings;
 
 package Games::Risk::GUI::MoveArmies;
-BEGIN {
-  $Games::Risk::GUI::MoveArmies::VERSION = '3.112010';
+{
+  $Games::Risk::GUI::MoveArmies::VERSION = '3.112410';
 }
 # ABSTRACT: window to move armies
 
@@ -23,7 +23,8 @@ use Tk;
 use Tk::Font;
 use Tk::Sugar;
 
-use Games::Risk::I18n qw{ T };
+use Games::Risk::I18n  qw{ T };
+use Games::Risk::Utils qw{ debug };
 
 use constant K => $poe_kernel;
 
@@ -44,7 +45,7 @@ sub spawn {
         args          => [ $args ],
         inline_states => {
             _start       => \&_onpriv_start,
-            _stop        => sub { warn "gui-movearmies shutdown\n" },
+            _stop        => sub { debug( "gui-movearmies shutdown\n" ) },
             # gui events
             _but_move        => \&_onpriv_but_move,
             _slide_wheel     => \&_onpriv_slide_wheel,
@@ -118,7 +119,7 @@ sub _onpub_ask_move_armies {
     $h->{src} = $src;
     $h->{dst} = $dst;
     $h->{reply}   = 'move_armies_move';
-    $h->{replyto} = 'board'; # FIXME: from?
+    $h->{replyto} = 'main'; # FIXME: from?
 
     # update gui
     my $top = $h->{toplevel};
@@ -250,7 +251,7 @@ Games::Risk::GUI::MoveArmies - window to move armies
 
 =head1 VERSION
 
-version 3.112010
+version 3.112410
 
 =head1 DESCRIPTION
 

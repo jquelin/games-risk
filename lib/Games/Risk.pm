@@ -12,18 +12,26 @@ use strict;
 use warnings;
 
 package Games::Risk;
-BEGIN {
-  $Games::Risk::VERSION = '3.112010';
+{
+  $Games::Risk::VERSION = '3.112410';
 }
 # ABSTRACT: classical 'risk' board game
 
+# although it's not strictly needed to load POE::Kernel manually (since
+# MooseX::POE will load it anyway), we're doing it here to make sure poe
+# will use tk event loop. this can also be done by loading module tk
+# before poe, for example if we load app::cpan2pkg::tk::main before
+# moosex::poe... but better be safe than sorry, and doing things
+# explicitly is always better.
+use POE::Kernel { loop => 'Tk' };
+
+use MooseX::Singleton;
 use POE        qw{ Loop::Tk };
 use List::Util qw{ shuffle };
 
-use constant K => $poe_kernel;
-
 use Games::Risk::Controller;
 use Games::Risk::GUI;
+use Games::Risk::Tk::Main;
 
 
 use base qw{ Class::Accessor::Fast };
@@ -33,37 +41,21 @@ __PACKAGE__->mk_accessors( qw{
 } );
 
 
-#--
-# CONSTRUCTOR
+# -- public methods
 
-#
-# my $game = Games::Risk->new( \%params );
-#
-# Create a new Games::Risk. This class implements a singleton scheme.
-#
-my $singleton;
-sub new {
-    # only one game at a time
-    return $singleton if defined $singleton;
 
-    my $pkg = shift;
+sub run {
+    my $self = __PACKAGE__->instance;
 
-    # create object
-    $singleton = {};
-    bless $singleton, $pkg;
+    # create the poe sessions
+    Games::Risk::Controller->spawn($self);
+    Games::Risk::GUI->new;
+    Games::Risk::Tk::Main->new;
 
-    # launch controller, and everything needed
-    Games::Risk::Controller->spawn($singleton);
-
-    # launch gui
-    Games::Risk::GUI->spawn;
+    # and let's start the fun!
+    POE::Kernel->run;
 }
 
-
-#--
-# METHODS
-
-# -- public methods
 
 #
 # $game->cards_reset;
@@ -230,9 +222,9 @@ sub send_to_all {
 sub send_to_one {
     my ($self, $player, @msg) = @_;
 
-    K->post( $player->name, @msg );
+    $poe_kernel->post( $player->name, @msg );
     return unless $player->type eq 'human';
-    K->post('gui', @msg );
+    $poe_kernel->post('gui', @msg );
 }
 
 
@@ -248,14 +240,7 @@ Games::Risk - classical 'risk' board game
 
 =head1 VERSION
 
-version 3.112010
-
-=head1 SYNOPSIS
-
-    use Games::Risk;
-    Games::Risk->new;
-    POE::Kernel->run;
-    exit;
+version 3.112410
 
 =head1 DESCRIPTION
 
@@ -270,6 +255,14 @@ This distribution implements a graphical interface for this game.
 
 C<Games::Risk> itself tracks everything needed for a risk game. It is
 also used as a heap for C<Games::Risk::Controller> POE session.
+
+=head1 METHODS
+
+=head2 run
+
+    Games::Risk->run;
+
+Start the application, with an initial batch of C<@modules> to build.
 
 =head1 METHODS
 
@@ -409,32 +402,6 @@ L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Games-Risk>.  I will be
 notified, and then you'll automatically be notified of progress on your
 bug as I make changes.
 
-=head1 SEE ALSO
-
-You can find more information on the classical C<risk> game on wikipedia
-at L<http://en.wikipedia.org/wiki/Risk_game>.
-
-You might also want to check jRisk, a java-based implementation of Risk,
-which inspired me quite a lot.
-
-You can also look for information on this module at:
-
-=over 4
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Games-Risk>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Games-Risk>
-
-=item * Open bugs
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Games-Risk>
-
-=back
-
 =head1 ACKNOWLEDGEMENTS
 
 I definitely recommend you to buy a C<risk> board game and play with
@@ -445,16 +412,36 @@ Some ideas  & artwork taken from project C<jrisk>, available at
 L<http://risk.sourceforge.net/>. Others (ideas & artwork once again)
 taken from teg, available at L<http://teg.sourceforge.net/>
 
-=head1 AUTHOR
+=head1 SEE ALSO
 
-Jerome Quelin, C<< <jquelin@cpan.org> >>
+You can find more information on the classical C<risk> game on wikipedia
+at L<http://en.wikipedia.org/wiki/Risk_game>.
 
-=head1 COPYRIGHT & LICENSE
+You can find more information on this module at:
 
-Copyright (c) 2008 Jerome Quelin, all rights reserved.
+=over 4
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU GPLv3+.
+=item * Search CPAN
+
+L<http://search.cpan.org/dist/Games-Risk>
+
+=item * See open / report bugs
+
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Games-Risk>
+
+=item * Git repository
+
+L<http://github.com/jquelin/games-risk>
+
+=item * AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/dist/Games-Risk>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/d/Games-Risk>
+
+=back
 
 =head1 AUTHOR
 
@@ -472,6 +459,5 @@ This is free software, licensed under:
 
 
 __END__
-
 
 

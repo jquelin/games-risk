@@ -12,8 +12,8 @@ use strict;
 use warnings;
 
 package Games::Risk::AI::Dumb;
-BEGIN {
-  $Games::Risk::AI::Dumb::VERSION = '3.112010';
+{
+  $Games::Risk::AI::Dumb::VERSION = '3.112410';
 }
 # ABSTRACT: dumb ai that does nothing
 
@@ -110,7 +110,7 @@ Games::Risk::AI::Dumb - dumb ai that does nothing
 
 =head1 VERSION
 
-version 3.112010
+version 3.112410
 
 =head1 SYNOPSIS
 

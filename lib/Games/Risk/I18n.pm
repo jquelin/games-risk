@@ -12,8 +12,8 @@ use strict;
 use warnings;
 
 package Games::Risk::I18n;
-BEGIN {
-  $Games::Risk::I18n::VERSION = '3.112010';
+{
+  $Games::Risk::I18n::VERSION = '3.112410';
 }
 # ABSTRACT: internationalization utilities for prisk
 
@@ -44,7 +44,7 @@ Games::Risk::I18n - internationalization utilities for prisk
 
 =head1 VERSION
 
-version 3.112010
+version 3.112410
 
 =head1 SYNOPSIS
 

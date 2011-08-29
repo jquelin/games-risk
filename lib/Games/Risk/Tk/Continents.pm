@@ -12,8 +12,8 @@ use strict;
 use warnings;
 
 package Games::Risk::Tk::Continents;
-BEGIN {
-  $Games::Risk::Tk::Continents::VERSION = '3.112010';
+{
+  $Games::Risk::Tk::Continents::VERSION = '3.112410';
 }
 # ABSTRACT: continents information
 
@@ -26,15 +26,14 @@ use MooseX::POE;
 use MooseX::SemiAffordanceAccessor;
 use Readonly;
 use Tk;
-use Tk::Role::Dialog       1.101480;
 use Tk::Sugar;
 use Tk::TableMatrix;
 
+with 'Tk::Role::Dialog' => { -version => 1.112380 }; # _clear_w
+
+
 use Games::Risk::I18n  qw{ T };
-use Games::Risk::Utils qw{ $SHAREDIR };
-
-with 'Tk::Role::Dialog';
-
+use Games::Risk::Utils qw{ $SHAREDIR debug };
 
 Readonly my $K => $poe_kernel;
 
@@ -81,7 +80,7 @@ sub START {
 # session destruction.
 #
 sub STOP {
-    warn "gui-continents shutdown\n";
+    debug( "gui-continents shutdown\n" );
 }
 
 
@@ -141,6 +140,9 @@ event player_add => sub {
 
 
 event shutdown => sub {
+    my ($self, $destroy) = @_[OBJECT, ARG0];
+    $self->_toplevel->destroy if $destroy;
+    $self->_clear_w;
     $K->alias_remove('continents');
 };
 
@@ -224,7 +226,7 @@ Games::Risk::Tk::Continents - continents information
 
 =head1 VERSION
 
-version 3.112010
+version 3.112410
 
 =head1 DESCRIPTION
 
@@ -256,9 +258,10 @@ Add a new column in the table to display the new player.
 
 =head2 shutdown
 
-    $K->post( 'gui-continents' => 'shutdown' );
+    $K->post( continents => 'shutdown', $destroy );
 
-Kill current session. The toplevel window has already been destroyed.
+Kill current session. If C<$destroy> is true, the toplevel window will
+also be destroyed.
 
 =head2 visibility_toggle
 

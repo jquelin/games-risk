@@ -14,8 +14,8 @@ use strict;
 use warnings;
 
 package prisk;
-BEGIN {
-  $prisk::VERSION = '3.112010';
+{
+  $prisk::VERSION = '3.112410';
 }
 # ABSTRACT: classical Risk game written in perl
 
@@ -23,12 +23,9 @@ BEGIN {
 $ENV{MOOSE_ERROR_STYLE} = "croak";
 
 use Find::Lib "../lib";
-use POE qw{ Loop::Tk };
-
 use Games::Risk;
 
-Games::Risk->new;
-POE::Kernel->run;
+Games::Risk->run;
 exit;
 
 
@@ -41,7 +38,11 @@ prisk - classical Risk game written in perl
 
 =head1 VERSION
 
-version 3.112010
+version 3.112410
+
+=head1 SYNOPSIS
+
+    $ prisk
 
 =head1 DESCRIPTION
 
@@ -53,21 +54,6 @@ ignores realistic limitations, such as the vast size of the world, and
 the logistics of long campaigns.
 
 This distribution implements a graphical interface for this game.
-
-=head1 SEE ALSO
-
-L<Games::Risk>.
-
-=head1 AUTHOR
-
-Jerome Quelin, C<< <jquelin at cpan.org> >>
-
-=head1 COPYRIGHT & LICENSE
-
-Copyright (c) 2008 Jerome Quelin, all rights reserved.
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU GPLv3+.
 
 =head1 AUTHOR
 

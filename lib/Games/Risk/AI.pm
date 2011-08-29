@@ -12,8 +12,8 @@ use strict;
 use warnings;
 
 package Games::Risk::AI;
-BEGIN {
-  $Games::Risk::AI::VERSION = '3.112010';
+{
+  $Games::Risk::AI::VERSION = '3.112410';
 }
 # ABSTRACT: base class for all ais
 
@@ -27,6 +27,7 @@ use constant K => $poe_kernel;
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ game player } );
 
+use Games::Risk::Utils qw{ debug };
 
 #--
 # CLASS METHODS
@@ -72,7 +73,7 @@ sub spawn {
         inline_states => {
             # private events - session management
             _start                => \&_onpriv_start,
-            _stop                 => sub { warn "AI shutdown\n" },
+            _stop                 => sub { debug( "AI shutdown\n" ) },
             # public events
             attack                => \&_onpub_attack,
             attack_move           => \&_onpub_attack_move,
@@ -297,7 +298,7 @@ Games::Risk::AI - base class for all ais
 
 =head1 VERSION
 
-version 3.112010
+version 3.112410
 
 =head1 SYNOPSIS
 

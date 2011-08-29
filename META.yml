@@ -10,7 +10,7 @@ build_requires:
 configure_requires:
   Module::Build: 0.3601
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.200009, CPAN::Meta::Converter version 2.110930'
+generated_by: 'Dist::Zilla version 4.300000, CPAN::Meta::Converter version 2.112150'
 license: gpl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -19,73 +19,76 @@ name: Games-Risk
 provides:
   Games::Risk:
     file: lib/Games/Risk.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::AI:
     file: lib/Games/Risk/AI.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::AI::Blitzkrieg:
     file: lib/Games/Risk/AI/Blitzkrieg.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::AI::Dumb:
     file: lib/Games/Risk/AI/Dumb.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::AI::Hegemon:
     file: lib/Games/Risk/AI/Hegemon.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::Card:
     file: lib/Games/Risk/Card.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::Continent:
     file: lib/Games/Risk/Continent.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::Controller:
     file: lib/Games/Risk/Controller.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::Country:
     file: lib/Games/Risk/Country.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::GUI:
     file: lib/Games/Risk/GUI.pm
-    version: 3.112010
-  Games::Risk::GUI::Board:
-    file: lib/Games/Risk/GUI/Board.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::GUI::GameOver:
     file: lib/Games/Risk/GUI/GameOver.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::GUI::MoveArmies:
     file: lib/Games/Risk/GUI/MoveArmies.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::GUI::Startup:
     file: lib/Games/Risk/GUI/Startup.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::I18n:
     file: lib/Games/Risk/I18n.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::Map:
     file: lib/Games/Risk/Map.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::Player:
     file: lib/Games/Risk/Player.pm
-    version: 3.112010
+    version: 3.112410
+  Games::Risk::Point:
+    file: lib/Games/Risk/Point.pm
+    version: 3.112410
   Games::Risk::Resources:
     file: lib/Games/Risk/Resources.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::Tk::About:
     file: lib/Games/Risk/Tk/About.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::Tk::Cards:
     file: lib/Games/Risk/Tk/Cards.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::Tk::Continents:
     file: lib/Games/Risk/Tk/Continents.pm
-    version: 3.112010
+    version: 3.112410
   Games::Risk::Tk::Help:
     file: lib/Games/Risk/Tk/Help.pm
-    version: 3.112010
+    version: 3.112410
+  Games::Risk::Tk::Main:
+    file: lib/Games/Risk/Tk/Main.pm
+    version: 3.112410
   Games::Risk::Utils:
     file: lib/Games/Risk/Utils.pm
-    version: 3.112010
+    version: 3.112410
 requires:
   Carp: 0
   Class::Accessor::Fast: 0
@@ -96,6 +99,7 @@ requires:
   File::ShareDir::PathClass: 0
   File::Spec::Functions: 0
   Find::Lib: 0
+  FindBin: 0
   Image::Magick: 0
   Image::Size: 0
   List::MoreUtils: 0
@@ -106,11 +110,14 @@ requires:
   MooseX::Has::Sugar: 0
   MooseX::POE: 0
   MooseX::SemiAffordanceAccessor: 0
+  MooseX::Singleton: 0
   POE: 0
+  POE::Kernel: 0
   POE::Loop::Tk: 0
   Path::Class: 0
   Readonly: 0
   Tk: 0
+  Tk::Action: 0
   Tk::Balloon: 0
   Tk::BrowseEntry: 0
   Tk::Font: 0
@@ -118,18 +125,23 @@ requires:
   Tk::PNG: 0
   Tk::Pane: 0
   Tk::Pod::Text: 0
-  Tk::Role::Dialog: 1.101480
+  Tk::Role::Dialog: 1.11238
+  Tk::Role::HasWidgets: 1.112070
   Tk::Sugar: 0
   Tk::TableMatrix: 0
+  Tk::ToolBar: 0
   UNIVERSAL::require: 0
   aliased: 0
+  base: 0
   constant: 0
   perl: 5.010
+  strict: 0
+  warnings: 0
 resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Games-Risk
   homepage: http://search.cpan.org/dist/Games-Risk/
   repository: git://github.com/jquelin/games-risk.git
-version: 3.112010
+version: 3.112410
 x_Dist_Zilla:
   plugins:
     -
@@ -139,19 +151,19 @@ x_Dist_Zilla:
           phase: runtime
           type: requires
       name: Prereqs
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::AutoVersion
       name: '@JQUELIN/AutoVersion'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::GatherDir
       name: '@JQUELIN/GatherDir'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::CompileTests
       name: '@JQUELIN/CompileTests'
-      version: 1.110930
+      version: 1.112400
     -
       class: Dist::Zilla::Plugin::HasVersionTests
       name: '@JQUELIN/HasVersionTests'
@@ -167,11 +179,11 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::PodCoverageTests
       name: '@JQUELIN/PodCoverageTests'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::PodSyntaxTests
       name: '@JQUELIN/PodSyntaxTests'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::ReportVersions::Tiny
       name: '@JQUELIN/ReportVersions::Tiny'
@@ -179,31 +191,31 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::PruneCruft
       name: '@JQUELIN/PruneCruft'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::PruneFiles
       name: '@JQUELIN/PruneFiles'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::ManifestSkip
       name: '@JQUELIN/ManifestSkip'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::AutoPrereqs
       name: '@JQUELIN/AutoPrereqs'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::ExtraTests
       name: '@JQUELIN/ExtraTests'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::NextRelease
       name: '@JQUELIN/NextRelease'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::PkgVersion
       name: '@JQUELIN/PkgVersion'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::PodWeaver
       name: '@JQUELIN/PodWeaver'
@@ -211,15 +223,15 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Prepender
       name: '@JQUELIN/Prepender'
-      version: 1.103470
+      version: 1.112280
     -
       class: Dist::Zilla::Plugin::ExecDir
       name: '@JQUELIN/ExecDir'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::ShareDir
       name: '@JQUELIN/ShareDir'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::Bugtracker
       name: '@JQUELIN/Bugtracker'
@@ -239,31 +251,31 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::MetaConfig
       name: '@JQUELIN/MetaConfig'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::License
       name: '@JQUELIN/License'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::MetaYAML
       name: '@JQUELIN/MetaYAML'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::MetaJSON
       name: '@JQUELIN/MetaJSON'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::ModuleBuild
       name: '@JQUELIN/ModuleBuild'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::Readme
       name: '@JQUELIN/Readme'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::Manifest
       name: '@JQUELIN/Manifest'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::CheckChangeLog
       name: '@JQUELIN/CheckChangeLog'
@@ -271,57 +283,57 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Git::Check
       name: '@JQUELIN/Git::Check'
-      version: 1.111590
+      version: 1.112380
     -
       class: Dist::Zilla::Plugin::Git::Commit
       name: '@JQUELIN/Git::Commit'
-      version: 1.111590
+      version: 1.112380
     -
       class: Dist::Zilla::Plugin::Git::CommitBuild
       name: '@JQUELIN/Git::CommitBuild'
-      version: 1.111590
+      version: 1.112380
     -
       class: Dist::Zilla::Plugin::Git::Tag
       name: '@JQUELIN/TagMaster'
-      version: 1.111590
+      version: 1.112380
     -
       class: Dist::Zilla::Plugin::Git::Tag
       name: '@JQUELIN/TagRelease'
-      version: 1.111590
+      version: 1.112380
     -
       class: Dist::Zilla::Plugin::Git::Push
       name: '@JQUELIN/Git::Push'
-      version: 1.111590
+      version: 1.112380
     -
       class: Dist::Zilla::Plugin::UploadToCPAN
       name: '@JQUELIN/UploadToCPAN'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':InstallModules'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':IncModules'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':TestFiles'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':ExecFiles'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':ShareFiles'
-      version: 4.200009
+      version: 4.300000
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':MainModule'
-      version: 4.200009
+      version: 4.300000
   zilla:
     class: Dist::Zilla::Dist::Builder
     config:
       is_trial: 0
-    version: 4.200009
+    version: 4.300000

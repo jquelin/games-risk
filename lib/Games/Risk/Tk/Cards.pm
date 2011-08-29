@@ -12,8 +12,8 @@ use strict;
 use warnings;
 
 package Games::Risk::Tk::Cards;
-BEGIN {
-  $Games::Risk::Tk::Cards::VERSION = '3.112010';
+{
+  $Games::Risk::Tk::Cards::VERSION = '3.112410';
 }
 # ABSTRACT: cards listing
 
@@ -24,14 +24,14 @@ use MooseX::Has::Sugar;
 use MooseX::POE;
 use MooseX::SemiAffordanceAccessor;
 use Readonly;
-use Tk::Role::Dialog 1.101480;
 use Tk::Sugar;
 use Tk::Pane;
 
-use Games::Risk::I18n  qw{ T };
-use Games::Risk::Utils qw{ $SHAREDIR };
+with 'Tk::Role::Dialog' => { -version => 1.112380 }; # _clear_w
 
-with 'Tk::Role::Dialog';
+
+use Games::Risk::I18n  qw{ T };
+use Games::Risk::Utils qw{ $SHAREDIR debug };
 
 Readonly my $K => $poe_kernel;
 Readonly my $WIDTH  => 95;
@@ -93,7 +93,7 @@ sub START {
 # session destruction.
 #
 sub STOP {
-    warn "gui-cards shutdown\n";
+    debug( "gui-cards shutdown\n" );
 }
 
 
@@ -154,6 +154,9 @@ sub _do_change_button_state {
 
 
 event shutdown => sub {
+    my ($self, $destroy) = @_[OBJECT, ARG0];
+    $self->_toplevel->destroy if $destroy;
+    $self->_clear_w;
     $K->alias_remove('cards');
 };
 
@@ -391,7 +394,7 @@ Games::Risk::Tk::Cards - cards listing
 
 =head1 VERSION
 
-version 3.112010
+version 3.112410
 
 =head1 DESCRIPTION
 
@@ -427,9 +430,10 @@ Change exchange button state depending on the cards selected.
 
 =head2 shutdown
 
-    $K->post( 'gui-continents' => 'shutdown' );
+    $K->post( cards => 'shutdown', $destroy );
 
-Kill current session. The toplevel window has already been destroyed.
+Kill current session. If C<$destroy> is true, the toplevel window will
+also be destroyed.
 
 =head2 visibility_toggle
 
