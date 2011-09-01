@@ -17,6 +17,7 @@ use MooseX::Singleton;
 use POE        qw{ Loop::Tk };
 use List::Util qw{ shuffle };
 
+use Games::Risk::Config;
 use Games::Risk::Controller;
 use Games::Risk::GUI;
 use Games::Risk::Tk::Main;
@@ -49,6 +50,9 @@ sub run {
 
     # and let's start the fun!
     POE::Kernel->run;
+
+    # saving configuration
+    Games::Risk::Config->instance->save;
 }
 
 
