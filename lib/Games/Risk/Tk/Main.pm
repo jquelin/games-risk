@@ -228,7 +228,7 @@ C<@defence> dices.
         my $nul = $mw->Photo( -file=> $SHAREDIR->file('icons', '16', 'empty.png') );
         my $r1 = $attack->[0] <= $defence->[0] ? 'actcross16' : 'actcheck16';
         my $r2 = scalar(@$attack) >= 2 && scalar(@$defence) == 2
-            ? $attack->[1] <= $defence->[1] ? 'actcross16' : 'actcross16'
+            ? $attack->[1] <= $defence->[1] ? 'actcross16' : 'actcheck16'
             : $nul;
         $self->_w('lab_result_1')->configure( -image => $r1 );
         $self->_w('lab_result_2')->configure( -image => $r2 );

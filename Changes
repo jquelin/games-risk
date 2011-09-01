@@ -1,6 +1,7 @@
 Revision history for Games::Risk.
 
 {{$NEXT}}
+ - fix display bug in dice results
 
 3.112410  2011-08-29 14:41:38 Europe/Paris
  - revamped interface: board is the main window now
