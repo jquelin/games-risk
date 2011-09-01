@@ -736,14 +736,6 @@ sub _onpriv_start {
 __END__
 
 
-
-=head1 SYNOPSIS
-
-    use Games::Risk::Controller;
-    Games::Risk::Controller->spawn;
-
-
-
 =head1 DESCRIPTION
 
 This module implements a poe session, responsible for the state tracking
@@ -761,10 +753,4 @@ game. It will return the poe id of the session newly created.
 You can tune the session by passing some arguments as a hash reference.
 Currently, no params can be tuned.
 
-
-
-
-=head1 SEE ALSO
-
-L<Games::Risk>.
 
