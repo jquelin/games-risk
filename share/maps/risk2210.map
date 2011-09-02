@@ -25,7 +25,7 @@ US_Pacific 2 blue
 Asia_Pacific 1 yellow
 North_Atlantic 2 red
 South_Atlantic 1 green
-Indian 1 orange
+Indian 2 orange
 
 [countries]
 1 Northwestern_Oil_Emirate 1 47 19
@@ -70,11 +70,11 @@ Indian 1 orange
 40 New_Guinea 6 660 284
 41 Aboriginal_League 6 595 365
 42 Australian_Testing_Ground 6 650 352
-43 Sung_Tzu 7 652 228
-44 Neo_Tokyo 7 648 172
-45 Poseidon 8 31 88
-46 Hawaiian_Preserve 8 33 145
-47 New_Atlantis 8 49 198
+43 Sung_Tzu 8 652 228
+44 Neo_Tokyo 8 648 172
+45 Poseidon 7 31 88
+46 Hawaiian_Preserve 7 33 145
+47 New_Atlantis 7 49 198
 48 Western_Ireland 9 217 133
 49 New_York 9 163 159
 50 Nova_Brasilia 9 187 212
