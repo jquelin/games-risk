@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Tk::Main;
 {
-  $Games::Risk::Tk::Main::VERSION = '3.112410';
+  $Games::Risk::Tk::Main::VERSION = '3.112450';
 }
 # ABSTRACT: main prisk window
 
@@ -38,13 +38,13 @@ use Tk::ToolBar;
 
 with 'Tk::Role::HasWidgets';
 
-use Games::Risk::GUI::GameOver;
 use Games::Risk::GUI::MoveArmies;
 use Games::Risk::GUI::Startup;
 use Games::Risk::I18n  qw{ T };
 use Games::Risk::Point;
 use Games::Risk::Tk::Cards;
 use Games::Risk::Tk::Continents;
+use Games::Risk::Tk::GameOver;
 use Games::Risk::Utils qw{ $SHAREDIR debug };
 
 
@@ -225,7 +225,7 @@ sub START {
         my $nul = $mw->Photo( -file=> $SHAREDIR->file('icons', '16', 'empty.png') );
         my $r1 = $attack->[0] <= $defence->[0] ? 'actcross16' : 'actcheck16';
         my $r2 = scalar(@$attack) >= 2 && scalar(@$defence) == 2
-            ? $attack->[1] <= $defence->[1] ? 'actcross16' : 'actcross16'
+            ? $attack->[1] <= $defence->[1] ? 'actcross16' : 'actcheck16'
             : $nul;
         $self->_w('lab_result_1')->configure( -image => $r1 );
         $self->_w('lab_result_2')->configure( -image => $r2 );
@@ -353,10 +353,10 @@ sub START {
         $self->_action('attack_done')->disable;
 
         # announce the winner
-        Games::Risk::GUI::GameOver->spawn({
+        Games::Risk::Tk::GameOver->new(
             parent => $mw,
-            winner => $winner,
-        });
+            winner => $self->_curplayer,
+        );
     };
 
 
@@ -1453,7 +1453,7 @@ Games::Risk::Tk::Main - main prisk window
 
 =head1 VERSION
 
-version 3.112410
+version 3.112450
 
 =head1 DESCRIPTION
 

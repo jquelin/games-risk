@@ -13,14 +13,16 @@ use warnings;
 
 package Games::Risk::Utils;
 {
-  $Games::Risk::Utils::VERSION = '3.112410';
+  $Games::Risk::Utils::VERSION = '3.112450';
 }
 # ABSTRACT: various utilities for prisk
 
 use Exporter::Lite;
 use File::ShareDir::PathClass;
-use FindBin   qw{ $Bin };
+use FindBin         qw{ $Bin };
 use Path::Class;
+use Term::ANSIColor qw{ :constants };
+use Text::Padding;
  
 our @EXPORT_OK = qw{ $SHAREDIR debug };
 
@@ -31,10 +33,14 @@ our $SHAREDIR = -e file("dist.ini") && -d dir("share")
 
 
 my $debug = -d dir($Bin)->parent->subdir('.git');
+my $pad   = Text::Padding->new;
 sub debug {
     return unless $debug;
-    my ($package, $filename, $line) = caller;
-    warn "$package($line) @_";
+    my ($pkg, $filename, $line) = caller;
+    $pkg =~ s/^Games::Risk:://g;
+    # BLUE and YELLOW have a length of 5. RESET has a length of 4
+    my $prefix = $pad->right( BLUE . $pkg . YELLOW . ":$line" . RESET, 35);
+    warn "$prefix @_";
 }
 
 
@@ -49,7 +55,7 @@ Games::Risk::Utils - various utilities for prisk
 
 =head1 VERSION
 
-version 3.112410
+version 3.112450
 
 =head1 DESCRIPTION
 

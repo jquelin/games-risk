@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk;
 {
-  $Games::Risk::VERSION = '3.112410';
+  $Games::Risk::VERSION = '3.112450';
 }
 # ABSTRACT: classical 'risk' board game
 
@@ -29,6 +29,7 @@ use MooseX::Singleton;
 use POE        qw{ Loop::Tk };
 use List::Util qw{ shuffle };
 
+use Games::Risk::Config;
 use Games::Risk::Controller;
 use Games::Risk::GUI;
 use Games::Risk::Tk::Main;
@@ -54,6 +55,9 @@ sub run {
 
     # and let's start the fun!
     POE::Kernel->run;
+
+    # saving configuration
+    Games::Risk::Config->instance->save;
 }
 
 
@@ -240,7 +244,7 @@ Games::Risk - classical 'risk' board game
 
 =head1 VERSION
 
-version 3.112410
+version 3.112450
 
 =head1 DESCRIPTION
 

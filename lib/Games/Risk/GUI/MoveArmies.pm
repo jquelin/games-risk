@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::GUI::MoveArmies;
 {
-  $Games::Risk::GUI::MoveArmies::VERSION = '3.112410';
+  $Games::Risk::GUI::MoveArmies::VERSION = '3.112450';
 }
 # ABSTRACT: window to move armies
 
@@ -251,7 +251,7 @@ Games::Risk::GUI::MoveArmies - window to move armies
 
 =head1 VERSION
 
-version 3.112410
+version 3.112450
 
 =head1 DESCRIPTION
 

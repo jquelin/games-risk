@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Resources;
 {
-  $Games::Risk::Resources::VERSION = '3.112410';
+  $Games::Risk::Resources::VERSION = '3.112450';
 }
 # ABSTRACT: utility module to load bundled resources
 
@@ -142,7 +142,7 @@ Games::Risk::Resources - utility module to load bundled resources
 
 =head1 VERSION
 
-version 3.112410
+version 3.112450
 
 =head1 SYNOPSIS
 

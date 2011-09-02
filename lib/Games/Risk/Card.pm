@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Card;
 {
-  $Games::Risk::Card::VERSION = '3.112410';
+  $Games::Risk::Card::VERSION = '3.112450';
 }
 # ABSTRACT: map card
 
@@ -52,7 +52,7 @@ Games::Risk::Card - map card
 
 =head1 VERSION
 
-version 3.112410
+version 3.112450
 
 =head1 SYNOPSIS
 

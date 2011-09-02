@@ -15,11 +15,11 @@ lib/Games/Risk/AI/Blitzkrieg.pm
 lib/Games/Risk/AI/Dumb.pm
 lib/Games/Risk/AI/Hegemon.pm
 lib/Games/Risk/Card.pm
+lib/Games/Risk/Config.pm
 lib/Games/Risk/Continent.pm
 lib/Games/Risk/Controller.pm
 lib/Games/Risk/Country.pm
 lib/Games/Risk/GUI.pm
-lib/Games/Risk/GUI/GameOver.pm
 lib/Games/Risk/GUI/MoveArmies.pm
 lib/Games/Risk/GUI/Startup.pm
 lib/Games/Risk/I18n.pm
@@ -30,6 +30,7 @@ lib/Games/Risk/Resources.pm
 lib/Games/Risk/Tk/About.pm
 lib/Games/Risk/Tk/Cards.pm
 lib/Games/Risk/Tk/Continents.pm
+lib/Games/Risk/Tk/GameOver.pm
 lib/Games/Risk/Tk/Help.pm
 lib/Games/Risk/Tk/Main.pm
 lib/Games/Risk/Utils.pm
@@ -83,6 +84,10 @@ share/maps/godstorm_map.gif
 share/maps/godstorm_pic.jpg
 share/maps/risk.cards
 share/maps/risk.map
+share/maps/risk2210.cards
+share/maps/risk2210.map
+share/maps/risk2210_map.gif
+share/maps/risk2210_pic.jpg
 share/maps/risk_background.jpg
 share/maps/risk_map.gif
 share/maps/roman_empire.cards

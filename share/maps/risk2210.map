@@ -1,0 +1,142 @@
+; Yura Mamyrin
+; Risk3210 Map
+
+; Risk3210 World Game Map
+; Dimensions: 677 x 425 Pixels
+
+; Made by Matthias Kuehl
+
+name Risk 2210 Map
+
+[files]
+pic risk2210_pic.jpg
+map risk2210_map.gif
+crd risk2210.cards
+prv risk2210.jpg
+
+[continents]
+North-America 5 yellow
+South-America 2 red
+Europe 5 blue
+Africa 3 orange
+Asia 7 green
+Australia 2 magenta
+US_Pacific 2 blue
+Asia_Pacific 1 yellow
+North_Atlantic 2 red
+South_Atlantic 1 green
+Indian 1 orange
+
+[countries]
+1 Northwestern_Oil_Emirate 1 47 19
+2 Nunavut 1 105 23
+3 Exiled_States_of_America 1 222 23
+4 Alberta 1 85 57
+5 Canada 1 125 67
+6 Republique_du_Quebec 1 175 75
+7 Continental_Biospheres 1 80 100
+8 American_Republic 1 117 121
+9 Mexico 1 81 161
+10 Nuevo_Timoto 2 115 216
+11 Andean_Nations 2 94 257
+12 Amazon_Desert 2 145 265
+13 Argentina 2 90 325
+14 Iceland_GRC 3 268 47
+15 Jotenheim 3 328 28
+16 Ukrayina 3 412 70
+17 New_Avalon 3 272 84
+18 Warsaw_Republic 3 333 89
+19 Andorra 3 270 132
+20 Imperial_Balkania 3 340 116
+21 Saharan_Empire 4 280 211
+22 Egypt 4 350 180
+23 Zaire_Military_Zone 4 349 274
+24 Ministry_of_Djibouti 4 395 245
+25 Lesotho 4 357 347
+26 Madagascar 4 417 332
+27 Siberia 5 520 32
+28 Enclave_of_the_Bear 5 475 65
+29 Hong_Kong 5 555 145
+30 Afghanistan 5 466 117
+31 Middle_East 5 427 179
+32 United_Indiastan 5 511 189
+33 Angkhor_Wat 5 577 207
+34 Sakha 5 580 23
+35 Alden 5 570 70
+36 Khan_Industrial_State 5 577 107
+37 Japan 5 650 114
+38 Pevek 5 630 26
+39 Java_Cartel 6 605 270
+40 New_Guinea 6 660 284
+41 Aboriginal_League 6 595 365
+42 Australian_Testing_Ground 6 650 352
+43 Sung_Tzu 7 652 228
+44 Neo_Tokyo 7 648 172
+45 Poseidon 8 31 88
+46 Hawaiian_Preserve 8 33 145
+47 New_Atlantis 8 49 198
+48 Western_Ireland 9 217 133
+49 New_York 9 163 159
+50 Nova_Brasilia 9 187 212
+51 Neo_Paulo 10 206 307
+52 The_Ivory_Reef 10 269 293
+53 South_Ceylon 11 483 268
+54 Microcorp 11 473 327
+55 Akara 11 527 359
+
+[borders]
+1 2 4 38
+2 1 4 5 3
+3 2 6 14
+4 1 2 5 7
+5 2 4 6 7 8
+6 3 5 8
+7 4 5 8 9 45
+8 5 6 7 9 49
+9 7 8 10
+10 9 11 12 47
+11 10 12 13
+12 10 11 13 21 50 51
+13 11 12
+14 3 17 15
+15 16 18 14 17
+16 15 28 30 31 18 20
+17 14 18 19 15 48
+18 15 16 17 19 20
+19 17 18 20 21
+20 16 18 19 21 22 31
+21 12 19 20 22 23 24 52
+22 20 21 24 31
+23 21 24 25
+24 21 22 23 25 26
+25 23 24 26
+26 24 25 54
+27 28 29 34 35 36
+28 16 27 29 30
+29 27 28 30 32 33 36 44
+30 16 28 29 31 32
+31 16 22 30 32 20
+32 29 30 31 33 53
+33 29 32 39
+34 27 35 38
+35 27 34 36 38
+36 29 35 37 38 27
+37 36 38 44
+38 1 34 35 36 37
+39 33 41 40 43
+40 39 41 42
+41 39 40 42 55
+42 40 41
+43 39 44
+44 29 37 43 47
+45 7 46
+46 45 47
+47 10 44 46
+48 17 49
+49 8 48 50
+50 12 49
+51 12 52
+52 21 51
+53 32 54
+54 26 53 55
+55 41 54

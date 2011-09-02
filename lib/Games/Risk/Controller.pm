@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Controller;
 {
-  $Games::Risk::Controller::VERSION = '3.112410';
+  $Games::Risk::Controller::VERSION = '3.112450';
 }
 # ABSTRACT: controller poe session for risk
 
@@ -755,12 +755,7 @@ Games::Risk::Controller - controller poe session for risk
 
 =head1 VERSION
 
-version 3.112410
-
-=head1 SYNOPSIS
-
-    use Games::Risk::Controller;
-    Games::Risk::Controller->spawn;
+version 3.112450
 
 =head1 DESCRIPTION
 
@@ -776,10 +771,6 @@ game. It will return the poe id of the session newly created.
 
 You can tune the session by passing some arguments as a hash reference.
 Currently, no params can be tuned.
-
-=head1 SEE ALSO
-
-L<Games::Risk>.
 
 =head1 AUTHOR
 
@@ -797,6 +788,5 @@ This is free software, licensed under:
 
 
 __END__
-
 
 

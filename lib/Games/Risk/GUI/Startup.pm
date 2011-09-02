@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::GUI::Startup;
 {
-  $Games::Risk::GUI::Startup::VERSION = '3.112410';
+  $Games::Risk::GUI::Startup::VERSION = '3.112450';
 }
 # ABSTRACT: startup window
 
@@ -510,7 +510,7 @@ Games::Risk::GUI::Startup - startup window
 
 =head1 VERSION
 
-version 3.112410
+version 3.112450
 
 =head1 SYNOPSIS
 

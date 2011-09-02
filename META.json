@@ -32,6 +32,7 @@
             "Exporter" : 0,
             "Exporter::Lite" : 0,
             "File::Basename" : 0,
+            "File::HomeDir::PathClass" : 0,
             "File::ShareDir::PathClass" : 0,
             "File::Spec::Functions" : 0,
             "Find::Lib" : 0,
@@ -52,6 +53,8 @@
             "POE::Loop::Tk" : 0,
             "Path::Class" : 0,
             "Readonly" : 0,
+            "Term::ANSIColor" : 0,
+            "Text::Padding" : 0,
             "Tk" : 0,
             "Tk::Action" : 0,
             "Tk::Balloon" : 0,
@@ -67,6 +70,7 @@
             "Tk::TableMatrix" : 0,
             "Tk::ToolBar" : 0,
             "UNIVERSAL::require" : 0,
+            "YAML::Tiny" : 0,
             "aliased" : 0,
             "base" : 0,
             "constant" : 0,
@@ -86,99 +90,103 @@
    "provides" : {
       "Games::Risk" : {
          "file" : "lib/Games/Risk.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::AI" : {
          "file" : "lib/Games/Risk/AI.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::AI::Blitzkrieg" : {
          "file" : "lib/Games/Risk/AI/Blitzkrieg.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::AI::Dumb" : {
          "file" : "lib/Games/Risk/AI/Dumb.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::AI::Hegemon" : {
          "file" : "lib/Games/Risk/AI/Hegemon.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::Card" : {
          "file" : "lib/Games/Risk/Card.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
+      },
+      "Games::Risk::Config" : {
+         "file" : "lib/Games/Risk/Config.pm",
+         "version" : "3.112450"
       },
       "Games::Risk::Continent" : {
          "file" : "lib/Games/Risk/Continent.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::Controller" : {
          "file" : "lib/Games/Risk/Controller.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::Country" : {
          "file" : "lib/Games/Risk/Country.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::GUI" : {
          "file" : "lib/Games/Risk/GUI.pm",
-         "version" : "3.112410"
-      },
-      "Games::Risk::GUI::GameOver" : {
-         "file" : "lib/Games/Risk/GUI/GameOver.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::GUI::MoveArmies" : {
          "file" : "lib/Games/Risk/GUI/MoveArmies.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::GUI::Startup" : {
          "file" : "lib/Games/Risk/GUI/Startup.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::I18n" : {
          "file" : "lib/Games/Risk/I18n.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::Map" : {
          "file" : "lib/Games/Risk/Map.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::Player" : {
          "file" : "lib/Games/Risk/Player.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::Point" : {
          "file" : "lib/Games/Risk/Point.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::Resources" : {
          "file" : "lib/Games/Risk/Resources.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::Tk::About" : {
          "file" : "lib/Games/Risk/Tk/About.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::Tk::Cards" : {
          "file" : "lib/Games/Risk/Tk/Cards.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::Tk::Continents" : {
          "file" : "lib/Games/Risk/Tk/Continents.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
+      },
+      "Games::Risk::Tk::GameOver" : {
+         "file" : "lib/Games/Risk/Tk/GameOver.pm",
+         "version" : "3.112450"
       },
       "Games::Risk::Tk::Help" : {
          "file" : "lib/Games/Risk/Tk/Help.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::Tk::Main" : {
          "file" : "lib/Games/Risk/Tk/Main.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       },
       "Games::Risk::Utils" : {
          "file" : "lib/Games/Risk/Utils.pm",
-         "version" : "3.112410"
+         "version" : "3.112450"
       }
    },
    "release_status" : "stable",
@@ -194,20 +202,9 @@
          "web" : "http://github.com/jquelin/games-risk"
       }
    },
-   "version" : "3.112410",
+   "version" : "3.112450",
    "x_Dist_Zilla" : {
       "plugins" : [
-         {
-            "class" : "Dist::Zilla::Plugin::Prereqs",
-            "config" : {
-               "Dist::Zilla::Plugin::Prereqs" : {
-                  "phase" : "runtime",
-                  "type" : "requires"
-               }
-            },
-            "name" : "Prereqs",
-            "version" : "4.300000"
-         },
          {
             "class" : "Dist::Zilla::Plugin::AutoVersion",
             "name" : "@JQUELIN/AutoVersion",

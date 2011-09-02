@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Tk::Continents;
 {
-  $Games::Risk::Tk::Continents::VERSION = '3.112410';
+  $Games::Risk::Tk::Continents::VERSION = '3.112450';
 }
 # ABSTRACT: continents information
 
@@ -226,7 +226,7 @@ Games::Risk::Tk::Continents - continents information
 
 =head1 VERSION
 
-version 3.112410
+version 3.112450
 
 =head1 DESCRIPTION
 
