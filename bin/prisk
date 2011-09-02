@@ -11,9 +11,9 @@ package prisk;
 $ENV{MOOSE_ERROR_STYLE} = "croak";
 
 use Find::Lib "../lib";
-use Games::Risk;
 
-Games::Risk->run;
+use Games::Risk::App;
+Games::Risk::App->run;
 exit;
 
 __END__
@@ -21,6 +21,8 @@ __END__
 =head1 SYNOPSIS
 
     $ prisk
+    $ prisk help
+    $ prisk play
 
 =head1 DESCRIPTION
 
