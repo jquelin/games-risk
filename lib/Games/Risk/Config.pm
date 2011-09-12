@@ -12,7 +12,7 @@ use MooseX::Has::Sugar;
 use Readonly;
 use YAML::Tiny                qw{ DumpFile LoadFile };
 
-use Games::Risk::Utils        qw{ debug };
+use Games::Risk::Logger       qw{ debug };
 
 our @EXPORT_OK = qw{ $CONFIG };
 our $CONFIG    = __PACKAGE__->instance;

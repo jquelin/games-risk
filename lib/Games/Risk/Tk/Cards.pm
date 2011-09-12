@@ -18,8 +18,9 @@ use Tk::Pane;
 with 'Tk::Role::Dialog' => { -version => 1.112380 }; # _clear_w
 
 
-use Games::Risk::I18n  qw{ T };
-use Games::Risk::Utils qw{ $SHAREDIR debug };
+use Games::Risk::I18n   qw{ T };
+use Games::Risk::Logger qw{ debug };
+use Games::Risk::Utils  qw{ $SHAREDIR };
 
 Readonly my $K => $poe_kernel;
 Readonly my $WIDTH  => 95;

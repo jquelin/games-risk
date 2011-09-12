@@ -16,8 +16,9 @@ use Tk::Font;
 use Tk::Sugar;
 
 use Games::Risk::I18n      qw{ T };
+use Games::Risk::Logger    qw{ debug };
 use Games::Risk::Resources qw{ get_image maps };
-use Games::Risk::Utils     qw{ $SHAREDIR debug };
+use Games::Risk::Utils     qw{ $SHAREDIR };
 
 use constant K => $poe_kernel;
 

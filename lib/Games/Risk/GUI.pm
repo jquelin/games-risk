@@ -9,7 +9,7 @@ use POE qw{ Loop::Tk };
 use MooseX::POE;
 use Readonly;
 
-use Games::Risk::Utils qw{ debug };
+use Games::Risk::Logger qw{ debug };
 
 Readonly my $K  => $poe_kernel;
 

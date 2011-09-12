@@ -11,8 +11,8 @@ use Tk;
 use Tk::Font;
 use Tk::Sugar;
 
-use Games::Risk::I18n  qw{ T };
-use Games::Risk::Utils qw{ debug };
+use Games::Risk::I18n   qw{ T };
+use Games::Risk::Logger qw{ debug };
 
 use constant K => $poe_kernel;
 

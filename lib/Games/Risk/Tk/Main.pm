@@ -28,12 +28,13 @@ with 'Tk::Role::HasWidgets';
 
 use Games::Risk::GUI::MoveArmies;
 use Games::Risk::GUI::Startup;
-use Games::Risk::I18n  qw{ T };
+use Games::Risk::I18n   qw{ T };
+use Games::Risk::Logger qw{ debug };
 use Games::Risk::Point;
 use Games::Risk::Tk::Cards;
 use Games::Risk::Tk::Continents;
 use Games::Risk::Tk::GameOver;
-use Games::Risk::Utils qw{ $SHAREDIR debug };
+use Games::Risk::Utils  qw{ $SHAREDIR };
 
 
 Readonly my $K  => $poe_kernel;

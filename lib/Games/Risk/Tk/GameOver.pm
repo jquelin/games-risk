@@ -11,8 +11,8 @@ use Tk::Sugar;
 
 with 'Tk::Role::Dialog';
 
-use Games::Risk::I18n  qw{ T };
-use Games::Risk::Utils qw{ debug };
+use Games::Risk::I18n   qw{ T };
+use Games::Risk::Logger qw{ debug };
 
 has winner => ( ro, isa=>'Games::Risk::Player', required );
 

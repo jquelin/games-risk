@@ -8,12 +8,15 @@ package Games::Risk::Map;
 use File::Basename  qw{ fileparse };
 use List::Util      qw{ shuffle };
 use List::MoreUtils qw{ uniq };
+use Moose;
+use MooseX::Has::Sugar;
+use MooseX::SemiAffordanceAccessor;
 
 use aliased 'Games::Risk::Card';
 use aliased 'Games::Risk::Continent';
 use aliased 'Games::Risk::Country';
 
-use Games::Risk::Utils qw{ debug };
+use Games::Risk::Logger qw{ debug };
 
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ background _cards greyscale _continents _countries _dirname } );

@@ -15,7 +15,7 @@ use constant K => $poe_kernel;
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ game player } );
 
-use Games::Risk::Utils qw{ debug };
+use Games::Risk::Logger qw{ debug };
 
 #--
 # CLASS METHODS

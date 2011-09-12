@@ -10,10 +10,10 @@ use List::Util      qw{ min shuffle };
 use Readonly;
 
 use Games::Risk::I18n      qw{ T };
+use Games::Risk::Logger    qw{ debug };
 use Games::Risk::Map;
 use Games::Risk::Player;
 use Games::Risk::Resources qw{ map_path };
-use Games::Risk::Utils     qw{ debug };
 
 use constant K => $poe_kernel;
 
