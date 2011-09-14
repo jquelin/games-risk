@@ -338,11 +338,8 @@ sub _onpub_new_game {
     my ($h, $args) = @_[HEAP, ARG0];
 
     # load map
-    # FIXME: hardcoded
-    my $m = delete $args->{map};
-    my $path = map_path($m);
-    my $map = Games::Risk::Map->new;
-    $map->load_file($path);
+    my $modmap = delete $args->{map};
+    my $map = $modmap->new;
     $h->map($map);
 
     K->post('gui', 'new_game', { map => $map });
