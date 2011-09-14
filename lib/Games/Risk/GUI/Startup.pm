@@ -15,6 +15,7 @@ use Tk::BrowseEntry;
 use Tk::Font;
 use Tk::Sugar;
 
+use Games::Risk;
 use Games::Risk::I18n      qw{ T };
 use Games::Risk::Logger    qw{ debug };
 use Games::Risk::Resources qw{ get_image maps };
@@ -315,8 +316,8 @@ sub _onpriv_start {
     $h->{balloon} = $top->Balloon;
 
     #-- map selection
-    my @choices = maps();
-    $h->{map} = 'risk';
+    my @choices = map { $_->title } Games::Risk->maps;
+    $h->{map} = $choices[0]; # FIXME: config
     my $fmap = $top->Frame->pack(top, xfill2, pad20);
     $fmap->Label(-text=>'Map', -anchor=>'w')->pack(top, fillx);
     $fmap->BrowseEntry(
@@ -480,8 +481,10 @@ sub _ongui_but_start {
     # value.
     my $players = $h->{players};
     my @players = grep { defined $_ } @$players;
+    my ($modmap) = grep { $_->title eq $h->{map} } Games::Risk->maps;
+    debug( "map to be created: $modmap\n" );
 
-    K->post('risk', 'new_game', { players => \@players, map => $h->{map} } );
+    K->post('risk', 'new_game', { players => \@players, map => $modmap } );
     $h->{toplevel}->destroy;
 }
 
