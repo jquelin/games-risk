@@ -6,17 +6,18 @@ package Games::Pandemic::Map::Roman_empire;
 # ABSTRACT: Roman Empire Map
 
 use Moose;
-
-use Games::Pandemic::I18n      qw{ T };
-
+use Games::Pandemic::I18n qw{ T };
 extends 'Games::Pandemic::Map';
 
 
-# -- default builders
+# -- attribute builders
 
-sub _build_name        { T("Roman_empire") }
-sub _build_title       { T("Roman Empire Map") }
-sub _build_author      { "Adrien Schvalberg" }
+sub _build_name   { "roman_empire" }
+sub _build_title  { T("Roman Empire Map") }
+sub _build_author { "Adrien Schvalberg" }
+
+
+# -- raw map information
 
 sub _raw_continents {
 return (
@@ -136,7 +137,6 @@ return (
 ["joker", undef],
 );
 }
-
 
 sub _raw_missions {
 return (

@@ -12,9 +12,12 @@ extends 'Games::Pandemic::Map';
 
 # -- attribute builders
 
-sub _build_name        { "france" }
-sub _build_title       { T("France") }
-sub _build_author      { "Thierry Baldo" }
+sub _build_name   { "france" }
+sub _build_title  { T("France") }
+sub _build_author { "Thierry Baldo" }
+
+
+# -- raw map information
 
 sub _raw_continents {
 return (
@@ -44,9 +47,6 @@ return (
 [22, T("Limousin"), 1, "col22"],
 );
 }
-
-
-# -- raw map information
 
 sub _raw_countries {
 return (
@@ -221,7 +221,6 @@ return (
 ["joker", undef],
 );
 }
-
 
 sub _raw_missions {
 return (

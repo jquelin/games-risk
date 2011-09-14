@@ -53,7 +53,7 @@ sub execute {
     $sharedir->mkpath;
 
     # parse map file
-    my ($author, $name, $greyscale, $background, $cardfile, @continents, @countries);
+    my ($author, $title, $greyscale, $background, $cardfile, @continents, @countries);
     {{{
     debug( "parsing map file\n" );
     my @lines = $file->slurp;
@@ -83,8 +83,8 @@ sub execute {
                 when ( undef ) {
                     given ($line) {
                         when ( /^name\s+(.*)$/ ) {
-                            $name = $1;
-                            debug( " - map name: $name\n" );
+                            $title = $1;
+                            debug( " - map title $title\n" );
                         }
                         default {
                             debug( "parse error [head]:$noline\t- line was: '$line'\n" );
@@ -144,6 +144,8 @@ sub execute {
         }
     }
     }}}
+    my $name = lc $modname;
+    $title //= $modname;
     debug( " - found ". scalar(@continents). " continents\n" );
     debug( " - found ". scalar(@countries). " countries\n" );
 
@@ -202,6 +204,7 @@ sub execute {
     my $code = $template->slurp;
     $code =~ s/__MODULE_NAME__/$modname/g;
     $code =~ s/__MAP_NAME__/$name/g;
+    $code =~ s/__MAP_TITLE__/$title/g;
     $code =~ s/__MAP_AUTHOR__/$author/g;
     $code =~ s/__MAP_CONTINENTS__/$continents/g;
     $code =~ s/__MAP_COUNTRIES__/$countries/g;

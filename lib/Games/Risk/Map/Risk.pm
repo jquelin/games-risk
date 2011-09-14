@@ -6,17 +6,18 @@ package Games::Pandemic::Map::Risk;
 # ABSTRACT: Risk Board Map
 
 use Moose;
-
-use Games::Pandemic::I18n      qw{ T };
-
+use Games::Pandemic::I18n qw{ T };
 extends 'Games::Pandemic::Map';
 
 
-# -- default builders
+# -- attribute builders
 
-sub _build_name        { T("Risk") }
-sub _build_title       { T("Risk Board Map") }
-sub _build_author      { "Yura Mamyrin" }
+sub _build_name   { "risk" }
+sub _build_title  { T("Risk Board Map") }
+sub _build_author { "Yura Mamyrin" }
+
+
+# -- raw map information
 
 sub _raw_continents {
 return (
@@ -132,7 +133,6 @@ return (
 ["joker", undef],
 );
 }
-
 
 sub _raw_missions {
 return (

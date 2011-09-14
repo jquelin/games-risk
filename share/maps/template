@@ -3,20 +3,21 @@ use strict;
 use warnings;
 
 package Games::Pandemic::Map::__MODULE_NAME__;
-# ABSTRACT: __MAP_NAME__
+# ABSTRACT: __MAP_TITLE__
 
 use Moose;
-
-use Games::Pandemic::I18n      qw{ T };
-
+use Games::Pandemic::I18n qw{ T };
 extends 'Games::Pandemic::Map';
 
 
-# -- default builders
+# -- attribute builders
 
-sub _build_name        { T("__MODULE_NAME__") }
-sub _build_title       { T("__MAP_NAME__") }
-sub _build_author      { "__MAP_AUTHOR__" }
+sub _build_name   { "__MAP_NAME__" }
+sub _build_title  { T("__MAP_TITLE__") }
+sub _build_author { "__MAP_AUTHOR__" }
+
+
+# -- raw map information
 
 sub _raw_continents {
 return (
@@ -44,7 +45,6 @@ __MAP_CARDS__
 );
 }
 
-
 sub _raw_missions {
 return (
 # id player to destroy, nb coutnry to occupy + min armies, 3 x id of continents to occupy, description
@@ -65,4 +65,4 @@ __END__
 
 =head1 DESCRIPTION
 
-__MAP_NAME__ by __MAP_AUTHOR__.
+__MAP_TITLE__ by __MAP_AUTHOR__.

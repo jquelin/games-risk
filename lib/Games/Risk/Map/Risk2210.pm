@@ -6,17 +6,18 @@ package Games::Pandemic::Map::Risk2210;
 # ABSTRACT: Risk 2210 Map
 
 use Moose;
-
-use Games::Pandemic::I18n      qw{ T };
-
+use Games::Pandemic::I18n qw{ T };
 extends 'Games::Pandemic::Map';
 
 
-# -- default builders
+# -- attribute builders
 
-sub _build_name        { T("Risk2210") }
-sub _build_title       { T("Risk 2210 Map") }
-sub _build_author      { "Matthias Kuehl" }
+sub _build_name   { "risk2210" }
+sub _build_title  { T("Risk 2210 Map") }
+sub _build_author { "Matthias Kuehl" }
+
+
+# -- raw map information
 
 sub _raw_continents {
 return (
@@ -163,7 +164,6 @@ return (
 ["joker", undef],
 );
 }
-
 
 sub _raw_missions {
 return (

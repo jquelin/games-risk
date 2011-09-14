@@ -6,17 +6,18 @@ package Games::Pandemic::Map::Godstorm;
 # ABSTRACT: Risk GodStorm
 
 use Moose;
-
-use Games::Pandemic::I18n      qw{ T };
-
+use Games::Pandemic::I18n qw{ T };
 extends 'Games::Pandemic::Map';
 
 
-# -- default builders
+# -- attribute builders
 
-sub _build_name        { T("Godstorm") }
-sub _build_title       { T("Risk GodStorm") }
-sub _build_author      { "map: godstorm.map" }
+sub _build_name   { "godstorm" }
+sub _build_title  { T("Risk GodStorm") }
+sub _build_author { "map: godstorm.map" }
+
+
+# -- raw map information
 
 sub _raw_continents {
 return (
@@ -138,7 +139,6 @@ return (
 ["joker", undef],
 );
 }
-
 
 sub _raw_missions {
 return (
