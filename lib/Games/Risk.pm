@@ -13,6 +13,7 @@ package Games::Risk;
 # explicitly is always better.
 use POE::Kernel { loop => 'Tk' };
 
+use Module::Pluggable::Object;
 use MooseX::Singleton;
 use POE        qw{ Loop::Tk };
 use List::Util qw{ shuffle };
@@ -226,6 +227,22 @@ sub send_to_one {
     $poe_kernel->post('gui', @msg );
 }
 
+
+=method maps
+
+    my @modules = Games::Risk->maps;
+
+Return a list of module names under L<Games::Risk::Map> namespace.
+
+=cut
+
+sub maps {
+    my $finder = Module::Pluggable::Object->new(
+        require     => 1,
+        search_path => ["Games::Risk::Map"],
+    );
+    return $finder->plugins;
+}
 
 1;
 
