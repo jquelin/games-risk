@@ -117,7 +117,7 @@ sub _onpub_armies_placed {
     my $left = $h->armies - $nb;
     $h->armies($left);
 
-    $country->armies( $country->armies + $nb );
+    $country->set_armies( $country->armies + $nb );
     $h->send_to_all('chnum', $country);
 
     if ( $left == 0 ) {
@@ -172,8 +172,8 @@ sub _onpub_attack {
         if $nbdice_src >= 2 && $nbdice_dst == 2;
 
     # update countries
-    $src->armies( $src->armies - $losses[0] );
-    $dst->armies( $dst->armies - $losses[1] );
+    $src->set_armies( $src->armies - $losses[0] );
+    $dst->set_armies( $dst->armies - $losses[1] );
 
     # post damages
     # FIXME: only for human player?
@@ -210,9 +210,9 @@ sub _onpub_attack_move {
     my $looser = $dst->owner;
 
     # update the countries
-    $src->armies( $src->armies - $nb );
-    $dst->armies( $nb );
-    $dst->chown( $src->owner );
+    $src->set_armies( $src->armies - $nb );
+    $dst->set_armies( $nb );
+    $dst->set_owner( $src->owner );
 
     # update the gui
     $h->send_to_all('chnum', $src);
@@ -286,7 +286,7 @@ sub _onpub_cards_exchange {
         next if $card->type eq 'joker'; # joker do not bear a country
         my $country = $card->country;
         next unless $country->owner eq $player;
-        $country->armies($country->armies + 2);
+        $country->set_armies($country->armies + 2);
         $h->send_to_all('chnum', $country);
     }
 
@@ -312,7 +312,7 @@ sub _onpub_initial_armies_placed {
     # FIXME: check validity regarding total number
     # FIXME: check validity regarding continent
 
-    $country->armies( $country->armies + $nb );
+    $country->set_armies( $country->armies + $nb );
     $h->send_to_all('chnum', $country);
     K->delay_set( '_place_armies_initial' => $WAIT );
 }
@@ -366,8 +366,8 @@ sub _onpub_move_armies {
     $h->move_out->{ $src->id } += $nb;
     $h->move_in->{  $dst->id } += $nb;
 
-    $src->armies( $src->armies - $nb );
-    $dst->armies( $dst->armies + $nb );
+    $src->set_armies( $src->armies - $nb );
+    $dst->set_armies( $dst->armies + $nb );
 
     $h->send_to_all('chnum', $src);
     $h->send_to_all('chnum', $dst);
@@ -438,8 +438,8 @@ sub _onpriv_assign_countries {
         push @players, $player;
 
         # store new owner & place one army to start with
-        $country->chown($player);
-        $country->armies(1);
+        $country->set_owner($player);
+        $country->set_armies(1);
         $h->send_to_all('chown', $country);
     }
 
