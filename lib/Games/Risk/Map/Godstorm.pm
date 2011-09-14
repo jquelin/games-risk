@@ -2,12 +2,12 @@ use 5.010;
 use strict;
 use warnings;
 
-package Games::Pandemic::Map::Godstorm;
+package Games::Risk::Map::Godstorm;
 # ABSTRACT: Risk GodStorm
 
 use Moose;
-use Games::Pandemic::I18n qw{ T };
-extends 'Games::Pandemic::Map';
+use Games::Risk::I18n qw{ T };
+extends 'Games::Risk::Map';
 
 
 # -- attribute builders
