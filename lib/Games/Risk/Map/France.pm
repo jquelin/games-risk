@@ -10,11 +10,11 @@ use Games::Risk::I18n qw{ T };
 extends 'Games::Risk::Map';
 
 
-# -- attribute builders
+# -- map  builders
 
-sub _build_name   { "france" }
-sub _build_title  { T("France") }
-sub _build_author { "Thierry Baldo" }
+sub name   { "france" }
+sub title  { T("France") }
+sub author { "Thierry Baldo" }
 
 
 # -- raw map information

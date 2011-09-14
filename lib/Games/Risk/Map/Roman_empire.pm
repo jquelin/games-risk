@@ -10,11 +10,11 @@ use Games::Risk::I18n qw{ T };
 extends 'Games::Risk::Map';
 
 
-# -- attribute builders
+# -- map  builders
 
-sub _build_name   { "roman_empire" }
-sub _build_title  { T("Roman Empire Map") }
-sub _build_author { "Adrien Schvalberg" }
+sub name   { "roman_empire" }
+sub title  { T("Roman Empire Map") }
+sub author { "Adrien Schvalberg" }
 
 
 # -- raw map information
