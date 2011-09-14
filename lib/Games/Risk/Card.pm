@@ -5,79 +5,49 @@ use warnings;
 package Games::Risk::Card;
 # ABSTRACT: map card
 
-use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ country type } );
+use Moose;
+use MooseX::Has::Sugar;
+use MooseX::SemiAffordanceAccessor;
+
+use Games::Risk::Types;
 
 
-#--
-# METHODS
+# -- attributes
 
-# -- public methods
+=attr country
 
-#
-# $card->destroy;
-#
-# Remove all circular references of $card, to prevent memory leaks.
-#
-#sub DESTROY { say "destroy: $_[0]"; }
-sub destroy {
-    my ($self) = @_;
-    $self->country(undef);
+Country corresponding to the card (L<Map::Games::Risk::Country> object).
+
+=attr type
+
+Type of the card: C<artillery>, C<cavalry>, C<infantery> or C<joker>.
+
+=cut
+
+has type    => ( ro, isa=>'CardType', required );
+has country => ( ro, isa=>'Games::Risk::Country', weak_ref );
+
+
+# -- builders / finishers
+
+sub DEMOLISH {
+    my $self = shift;
+    my $type = $self->type;
+    my $country = $self->country;
+    my $name = $country ? $country->name : '';
+    debug( "~card: $type ($name)\n" );
 }
 
-
-
-
+__PACKAGE__->meta->make_immutable;
 1;
-
 __END__
 
-
-=head1 SYNOPSIS
-
-    my $card = Games::Risk::Card->new(\%params);
-
-
+=for Pod::Coverage
+    DEMOLISH
 
 =head1 DESCRIPTION
 
 This module implements a map card, with all its characteristics.
-
-
-
-=head1 METHODS
-
-=head2 Constructor
-
-
-=over 4
-
-=item * my $card = Games::Risk::Card->new( \%params )
-
-Create a new card. Mandatory param is C<type>, and there's an optional
-param C<country>.
-
-
-=back
-
-
-=head2 Accessors
-
-The following accessors (acting as mutators, ie getters and setters) are
-available for C<Games::Risk::Card> objects:
-
-
-=over 4
-
-=item * country()
-
-country corresponding to the card.
-
-
-=item * type()
-
-the type of the card: C<artillery>, C<cavalry>, C<infantery> or
-C<wildcard>
 
 
 =back
