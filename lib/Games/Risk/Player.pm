@@ -41,14 +41,26 @@ has type  => ( ro, isa=>"PlayerType", required );
 has name  => ( ro, isa=>"Str", required );
 has color => ( ro, isa=>"Str", required );
 
+
 =attr ai_class
 
-The class of the artificial intelligence, if player is an ai.
+The class of the artificial intelligence, if player is an AI.
+
+=attr ai
+
+The reference to the actual AI object, if player is an AI.
 
 =cut
 
 has ai_class  => ( ro, isa=>"Str" );
 has ai        => ( rw, isa=>"Games::Risk::AI", lazy_build );
+
+
+=attr cards
+
+The cards (a C<Games::Risk::Deck> object) currently owned by C<$player>.
+
+=cut
 
 has cards => ( ro, isa=>"Games::Risk::Deck", default=>sub{ Games::Risk::Deck->new } );
 
@@ -79,12 +91,16 @@ sub BUILD {
 
 # -- public methods
 
-#
-# my @countries = $player->countries;
-#
-# Return the list of countries (Games::Risk::Country objects)
-# currently owned by $player.
-#
+
+=method countries
+
+    my @countries = $player->countries;
+
+Return the list of countries (C<Games::Risk::Country> objects)
+currently owned by C<$player>.
+
+=cut
+
 sub countries {
     my ($self) = @_;
     my $map = Games::Risk->instance->map;
@@ -92,13 +108,15 @@ sub countries {
 }
 
 
+=method greatness
 
-#
-# my $greatness = $player->greatness;
-#
-# Return an integer reflecting the greatness of $player. It will raise
-# with the number of owned territories, as well as the number of armies.
-#
+    my $greatness = $player->greatness;
+
+Return an integer reflecting the greatness of C<$player>. It will raise
+with the number of owned territories, as well as the number of armies.
+
+=cut
+
 sub greatness {
     my ($self) = @_;
     my @countries = $self->countries;
@@ -108,54 +126,17 @@ sub greatness {
 }
 
 
-
 __PACKAGE__->meta->make_immutable;
 1;
 __END__
 
 =for Pod::Coverage
+    BUILD
     DEMOLISH
+    K
 
 
 =head1 DESCRIPTION
 
 This module implements a risk player, with all its characteristics.
-
-
-=back
-
-
-
-=head2 Object methods
-
-The following methods are available for C<Games::Risk::Player> objects:
-
-
-=over 4
-
-=item my @cards = $player->cards()
-
-Return the list of cards (C<Games::Risk::Card> objects) currently
-owned by C<$player>.
-
-
-=item * my @countries = $player->countries()
-
-Return the list of countries (C<Games::Risk::Country> objects)
-currently owned by C<$player>.
-
-
-=item * my $greatness = $player->greatness()
-
-Return an integer reflecting the greatness of C<$player>. It will raise
-with the number of owned territories, as well as the number of armies.
-
-
-=back
-
-
-
-=head1 SEE ALSO
-
-L<Games::Risk>.
 

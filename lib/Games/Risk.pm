@@ -381,7 +381,7 @@ in the future for C<Games::Risk>:
 
 =item * maps theming
 
-=item * i18n
+=item * i18n - DONE - 3.101370: gui, 3.112590: maps
 
 =item * better ais - DONE - 0.5.0: blitzkrieg ai, 0.5.1: hegemon ai
 

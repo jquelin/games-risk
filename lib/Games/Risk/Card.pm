@@ -46,28 +46,8 @@ __END__
 =for Pod::Coverage
     DEMOLISH
 
+
 =head1 DESCRIPTION
 
 This module implements a map card, with all its characteristics.
-
-
-=back
-
-
-=head2 Methods
-
-=over 4
-
-=item * $card->destroy()
-
-Remove all circular references of C<$card>, to prevent memory leaks.
-
-
-=back
-
-
-
-=head1 SEE ALSO
-
-L<Games::Risk>.
 
