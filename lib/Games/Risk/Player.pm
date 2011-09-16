@@ -6,16 +6,16 @@ package Games::Risk::Player;
 # ABSTRACT: risk player
 
 use POE qw{ Loop::Tk };
-use Carp;
-use Games::Risk::AI;
 use List::Util qw{ sum };
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::SemiAffordanceAccessor;
 use Readonly;
 use UNIVERSAL::require;
-use constant K => $poe_kernel;
 
+Readonly my $K => $poe_kernel;
+
+use Games::Risk::AI;
 use Games::Risk::Deck;
 use Games::Risk::Logger qw{ debug };
 use Games::Risk::Types;
@@ -75,7 +75,7 @@ sub BUILD {
     # update other object attributes
     given ( $self->type ) {
         when ('human') {
-            K->post('risk', 'player_created', $self);
+            $K->post('risk', 'player_created', $self);
         }
         when ('ai') {
             my $ai_class = $self->ai_class;
@@ -133,7 +133,6 @@ __END__
 =for Pod::Coverage
     BUILD
     DEMOLISH
-    K
 
 
 =head1 DESCRIPTION
