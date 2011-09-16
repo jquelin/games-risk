@@ -319,7 +319,7 @@ sub _onpriv_start {
     my @choices = map { $_->title } Games::Risk->maps;
     $h->{map} = $choices[0]; # FIXME: config
     my $fmap = $top->Frame->pack(top, xfill2, pad20);
-    $fmap->Label(-text=>'Map', -anchor=>'w')->pack(top, fillx);
+    $fmap->Label(-text=>T('Map'), -anchor=>'w')->pack(top, fillx);
     $fmap->BrowseEntry(
         -variable           => \$h->{map},
         -listheight         => scalar(@choices)+1,
@@ -330,7 +330,7 @@ sub _onpriv_start {
 
     #-- frame for players
     my $fpl = $top->Frame->pack(top, xfill2, pad20);
-    $fpl->Label(-text=>'Players', -anchor=>'w')->pack(top, fillx);
+    $fpl->Label(-text=>T('Players'), -anchor=>'w')->pack(top, fillx);
     $h->{button}{add_player} = $fpl->Button(
         -text    => T('New player...'),
         -command => $s->postback('_but_new_player'),

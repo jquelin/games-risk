@@ -1354,7 +1354,7 @@ Mark C<$player> as lost.
         # menu help
         my @mnu_help = (
         [ 'help',  $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'help.png')), 'F1', T('~Help') ],
-        [ 'about', $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'about.png')),  '', T('About') ],
+        [ 'about', $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'about.png')),  '', T('~About') ],
         );
         $self->_build_menu('help', T('~Help'), @mnu_help);
     }
