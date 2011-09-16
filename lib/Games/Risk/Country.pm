@@ -5,6 +5,7 @@ use warnings;
 package Games::Risk::Country;
 # ABSTRACT: map country
 
+use Hash::NoRef;
 use List::AllUtils qw{ any };
 use Moose;
 use MooseX::Aliases;
@@ -55,7 +56,6 @@ has coordx      => ( ro, isa=>'Int', required );
 has coordy      => ( ro, isa=>'Int', required );
 has connections => ( ro, isa=>'ArrayRef[Int]', required, auto_deref );
 
-
 =attr owner
 
 A C<Games::Risk::Player> object currently owning the country.
@@ -70,12 +70,13 @@ has armies => ( rw, isa=>'Int' );
 has owner  => ( rw, isa=>'Games::Risk::Player', weak_ref );
 
 
-# -- finalizer
 
-sub DEMOLISH {  debug( "~country " . $_[0]->name ."\n" ); }
+=method neighbours
 
+    my @neighbours = $country->neighbours;
 
-# -- public methods
+Return the list of C<$country>'s neighbours (L<Games::Risk::Country>
+objects).
 
 =method is_neighbour
 
@@ -86,28 +87,39 @@ otherwise.
 
 =cut
 
-sub is_neighbour {
-    my ($self, $c) = @_;
-    return any { $_ eq $c } $self->neighbours;
-}
+# a hash containing weak references (thanks Hash::NoRef) to prevent
+# circular references to lock memory
+has _neighbours => (
+    ro, lazy_build,
+    isa     =>'HashRef',
+    traits  => [ 'Hash' ],
+    handles => {
+        neighbours   => 'values',
+        is_neighbour => 'exists',
+    },
+);
 
 
-=method neighbours
 
-    my @neighbours = $country->neighbours;
+# -- builders & finalizer
 
-Return the list of C<$country>'s neighbours (L<Games::Risk::Country>
-objects).
+sub DEMOLISH { debug( "~country " . $_[0]->name ."\n" ); }
 
-=cut
-
-sub neighbours {
+sub _build__neighbours {
     my $self = shift;
     my $map  = $self->continent->map;
-    return
+
+    my %hash;
+    tie %hash , 'Hash::NoRef';
+
+    my @neighbours =
         map { $map->country_get($_) }
         $self->connections;
+    @hash{ @neighbours } = @neighbours;
+
+    return \%hash;
 }
+
 
 
 __PACKAGE__->meta->make_immutable;
