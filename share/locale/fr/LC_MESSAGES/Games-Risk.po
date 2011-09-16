@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Games-Risk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-16 14:56+0200\n"
-"PO-Revision-Date: 2011-09-16 15:26+0100\n"
+"POT-Creation-Date: 2011-09-16 16:28+0200\n"
+"PO-Revision-Date: 2011-09-16 16:29+0100\n"
 "Last-Translator: Jérôme Quelin <jquelin@gmail.com>\n"
 "Language-Team: Jérôme Quelin <jquelin@gmail.com>\n"
 "Language: \n"
@@ -19,20 +19,20 @@ msgstr ""
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: lib/Games/Risk/Controller.pm:530
+#: lib/Games/Risk/Controller.pm:528
 #: lib/Games/Risk/GUI/Startup.pm:143
 #: lib/Games/Risk/GUI/Startup.pm:196
 #: lib/Games/Risk/GUI/Startup.pm:215
 msgid "Human"
 msgstr "Humain"
 
-#: lib/Games/Risk/Controller.pm:538
+#: lib/Games/Risk/Controller.pm:536
 #: lib/Games/Risk/GUI/Startup.pm:196
 #: lib/Games/Risk/GUI/Startup.pm:215
 msgid "Computer, easy"
 msgstr "Ordinateur, facile"
 
-#: lib/Games/Risk/Controller.pm:547
+#: lib/Games/Risk/Controller.pm:545
 #: lib/Games/Risk/GUI/Startup.pm:196
 #: lib/Games/Risk/GUI/Startup.pm:215
 #: lib/Games/Risk/GUI/Startup.pm:451
@@ -72,24 +72,24 @@ msgstr ""
 "Malheureusement, vous avez perdu...\n"
 "Vous pouvez ré-essayer !"
 
-#: lib/Games/Risk/Tk/Main.pm:174
+#: lib/Games/Risk/Tk/Main.pm:168
 #: lib/Games/Risk/Tk/Main.pm:923
 msgid "Attacking from ..."
 msgstr "Attaquer à partir de ..."
 
-#: lib/Games/Risk/Tk/Main.pm:191
+#: lib/Games/Risk/Tk/Main.pm:185
 #: lib/Games/Risk/Tk/Main.pm:944
 #, perl-format
 msgid "Attacking %s from %s"
 msgstr "Attaquer %s depuis %s"
 
-#: lib/Games/Risk/Tk/Main.pm:426
-#: lib/Games/Risk/Tk/Main.pm:457
+#: lib/Games/Risk/Tk/Main.pm:421
+#: lib/Games/Risk/Tk/Main.pm:452
 msgid "Moving armies from..."
 msgstr "Déplacer des armées depuis ..."
 
-#: lib/Games/Risk/Tk/Main.pm:551
-#: lib/Games/Risk/Tk/Main.pm:588
+#: lib/Games/Risk/Tk/Main.pm:550
+#: lib/Games/Risk/Tk/Main.pm:587
 #: lib/Games/Risk/Tk/Main.pm:866
 #: lib/Games/Risk/Tk/Main.pm:1147
 #: lib/Games/Risk/Tk/Main.pm:1183
@@ -97,16 +97,16 @@ msgstr "Déplacer des armées depuis ..."
 msgid "%s armies left to place"
 msgstr "%s armées restantes"
 
-#: lib/Games/Risk/Tk/Main.pm:637
+#: lib/Games/Risk/Tk/Main.pm:636
 msgid "human"
 msgstr "humain"
 
-#: lib/Games/Risk/Tk/Main.pm:644
+#: lib/Games/Risk/Tk/Main.pm:643
 #, perl-format
 msgid "computer - %s"
 msgstr "Ordinateur - %s"
 
-#: lib/Games/Risk/Tk/Main.pm:668
+#: lib/Games/Risk/Tk/Main.pm:667
 #, perl-format
 msgid "Player %s has lost"
 msgstr "Le joueur %s a perdu"
@@ -221,13 +221,14 @@ msgstr "~Actions"
 #: lib/Games/Risk/Tk/Main.pm:1356
 #: lib/Games/Risk/Tk/Main.pm:1359
 msgid "~Help"
-msgstr "~Aide"
+msgstr "Aid~e"
 
 #: lib/Games/Risk/Tk/Main.pm:1357
-msgid "About"
-msgstr "A propos"
+msgid "~About"
+msgstr "~A propos"
 
 #: lib/Games/Risk/Tk/Main.pm:1421
+#: lib/Games/Risk/GUI/Startup.pm:333
 msgid "Players"
 msgstr "Joueurs"
 
@@ -1910,6 +1911,10 @@ msgstr "Il doit y avoir au moins 2 joueurs."
 #: lib/Games/Risk/GUI/Startup.pm:294
 msgid "new game"
 msgstr "nouvelle partie"
+
+#: lib/Games/Risk/GUI/Startup.pm:322
+msgid "Map"
+msgstr "Carte"
 
 #: lib/Games/Risk/GUI/Startup.pm:335
 msgid "New player..."

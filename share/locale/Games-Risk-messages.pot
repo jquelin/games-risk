@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Games-Risk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-16 14:56+0200\n"
+"POT-Creation-Date: 2011-09-16 16:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/Games/Risk/Controller.pm:530 lib/Games/Risk/GUI/Startup.pm:143
+#: lib/Games/Risk/Controller.pm:528 lib/Games/Risk/GUI/Startup.pm:143
 #: lib/Games/Risk/GUI/Startup.pm:196 lib/Games/Risk/GUI/Startup.pm:215
 msgid "Human"
 msgstr ""
 
-#: lib/Games/Risk/Controller.pm:538 lib/Games/Risk/GUI/Startup.pm:196
+#: lib/Games/Risk/Controller.pm:536 lib/Games/Risk/GUI/Startup.pm:196
 #: lib/Games/Risk/GUI/Startup.pm:215
 msgid "Computer, easy"
 msgstr ""
 
-#: lib/Games/Risk/Controller.pm:547 lib/Games/Risk/GUI/Startup.pm:196
+#: lib/Games/Risk/Controller.pm:545 lib/Games/Risk/GUI/Startup.pm:196
 #: lib/Games/Risk/GUI/Startup.pm:215 lib/Games/Risk/GUI/Startup.pm:451
 msgid "Computer, hard"
 msgstr ""
@@ -59,36 +59,36 @@ msgid ""
 "Try harder next time!"
 msgstr ""
 
-#: lib/Games/Risk/Tk/Main.pm:174 lib/Games/Risk/Tk/Main.pm:923
+#: lib/Games/Risk/Tk/Main.pm:168 lib/Games/Risk/Tk/Main.pm:923
 msgid "Attacking from ..."
 msgstr ""
 
-#: lib/Games/Risk/Tk/Main.pm:191 lib/Games/Risk/Tk/Main.pm:944
+#: lib/Games/Risk/Tk/Main.pm:185 lib/Games/Risk/Tk/Main.pm:944
 #, perl-format
 msgid "Attacking %s from %s"
 msgstr ""
 
-#: lib/Games/Risk/Tk/Main.pm:426 lib/Games/Risk/Tk/Main.pm:457
+#: lib/Games/Risk/Tk/Main.pm:421 lib/Games/Risk/Tk/Main.pm:452
 msgid "Moving armies from..."
 msgstr ""
 
-#: lib/Games/Risk/Tk/Main.pm:551 lib/Games/Risk/Tk/Main.pm:588
+#: lib/Games/Risk/Tk/Main.pm:550 lib/Games/Risk/Tk/Main.pm:587
 #: lib/Games/Risk/Tk/Main.pm:866 lib/Games/Risk/Tk/Main.pm:1147
 #: lib/Games/Risk/Tk/Main.pm:1183
 #, perl-format
 msgid "%s armies left to place"
 msgstr ""
 
-#: lib/Games/Risk/Tk/Main.pm:637
+#: lib/Games/Risk/Tk/Main.pm:636
 msgid "human"
 msgstr ""
 
-#: lib/Games/Risk/Tk/Main.pm:644
+#: lib/Games/Risk/Tk/Main.pm:643
 #, perl-format
 msgid "computer - %s"
 msgstr ""
 
-#: lib/Games/Risk/Tk/Main.pm:668
+#: lib/Games/Risk/Tk/Main.pm:667
 #, perl-format
 msgid "Player %s has lost"
 msgstr ""
@@ -205,10 +205,10 @@ msgid "~Help"
 msgstr ""
 
 #: lib/Games/Risk/Tk/Main.pm:1357
-msgid "About"
+msgid "~About"
 msgstr ""
 
-#: lib/Games/Risk/Tk/Main.pm:1421
+#: lib/Games/Risk/Tk/Main.pm:1421 lib/Games/Risk/GUI/Startup.pm:333
 msgid "Players"
 msgstr ""
 
@@ -1942,6 +1942,10 @@ msgstr ""
 
 #: lib/Games/Risk/GUI/Startup.pm:294
 msgid "new game"
+msgstr ""
+
+#: lib/Games/Risk/GUI/Startup.pm:322
+msgid "Map"
 msgstr ""
 
 #: lib/Games/Risk/GUI/Startup.pm:335
