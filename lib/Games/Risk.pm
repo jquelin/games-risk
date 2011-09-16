@@ -84,7 +84,6 @@ sub destroy {
     my ($self) = @_;
 
     # breaking players (& ais) references
-    $_->destroy for $self->players;
     $self->curplayer(undef);
     $self->_players([]);
     $self->_players_active([]);

@@ -103,7 +103,7 @@ sub exchange_cards {
     my ($self) = @_;
     my $me = $self->player;
 
-    my @cards = $me->cards;
+    my @cards = $me->cards->all;
     return if scalar(@cards) < 3;
 
     # dispatch cards on their type

@@ -225,11 +225,11 @@ sub _onpub_attack_move {
         $h->send_to_all('player_lost', $looser);
 
         # distribute cards from lost player to the one who crushed her
-        my @cards = $looser->cards;
+        my @cards = $looser->cards->all;
         my $player = $h->curplayer;
         foreach my $card ( @cards ) {
-            $looser->card_del($card);
-            $player->card_add($card);
+            $looser->cards->del($card);
+            $player->cards->add($card);
             $h->send_to_one($player, 'card_add', $card);
             $h->send_to_one($looser, 'card_del', $card);
         }
@@ -291,7 +291,7 @@ sub _onpub_cards_exchange {
     }
 
     # ... but some cards less.
-    $player->card_del($_) foreach @cards;
+    $player->cards->del($_) foreach @cards;
     $h->send_to_one($player, 'card_del', @cards);
 
     # finally, put back the cards on the deck
@@ -480,8 +480,8 @@ sub _onpriv_attack_done {
         # player's turn.
         if ( not $h->got_card ) {
             $h->got_card(1);
-            my $card = $h->map->card_get;
-            $player->card_add($card);
+            my $card = $h->map->cards->get;
+            $player->cards->add($card);
             $h->send_to_one($player, 'card_add', $card);
         }
 
