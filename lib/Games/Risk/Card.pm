@@ -9,6 +9,7 @@ use Moose;
 use MooseX::Has::Sugar;
 use MooseX::SemiAffordanceAccessor;
 
+use Games::Risk::Logger qw{ debug };
 use Games::Risk::Types;
 
 
@@ -25,7 +26,7 @@ Type of the card: C<artillery>, C<cavalry>, C<infantery> or C<joker>.
 =cut
 
 has type    => ( ro, isa=>'CardType', required );
-has country => ( ro, isa=>'Games::Risk::Country', weak_ref );
+has country => ( rw, isa=>'Games::Risk::Country', weak_ref );
 
 
 # -- builders / finishers
