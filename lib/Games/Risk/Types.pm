@@ -7,7 +7,8 @@ package Games::Risk::Types;
 
 use Moose::Util::TypeConstraints;
 
-enum CardType => qw{ artillery cavalery infantery joker };
+enum CardType   => qw{ artillery cavalry infantry joker };
+enum PlayerType => qw{ human ai };
 
 1;
 __END__
@@ -22,5 +23,7 @@ The exported types are:
 =over 4
 
 =item CardType - the type of the card.
+
+=item PlayerType - the type of the player.
 
 =back
