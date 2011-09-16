@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk;
 {
-  $Games::Risk::VERSION = '3.112450';
+  $Games::Risk::VERSION = '3.112590';
 }
 # ABSTRACT: classical 'risk' board game
 
@@ -25,6 +25,7 @@ package Games::Risk;
 # explicitly is always better.
 use POE::Kernel { loop => 'Tk' };
 
+use Module::Pluggable::Object;
 use MooseX::Singleton;
 use POE        qw{ Loop::Tk };
 use List::Util qw{ shuffle };
@@ -72,11 +73,10 @@ sub cards_reset {
 
     # return all distributed cards to the deck.
     foreach my $player ( $self->players ) {
-        my @cards = $player->cards;
-        $map->card_return($_) for @cards;
+        my @cards = $player->cards->all;
+        $map->cards->return($_) for @cards;
     }
 }
-
 
 #
 # $game->destroy;
@@ -88,7 +88,6 @@ sub destroy {
     my ($self) = @_;
 
     # breaking players (& ais) references
-    $_->destroy for $self->players;
     $self->curplayer(undef);
     $self->_players([]);
     $self->_players_active([]);
@@ -96,11 +95,11 @@ sub destroy {
     $self->_players_turn_todo([]);
 
     # breaking map (& countries & continents) references
-    $self->map->destroy;
     $self->map(undef);
     $self->src(undef);
     $self->dst(undef);
 }
+
 
 
 #
@@ -232,6 +231,15 @@ sub send_to_one {
 }
 
 
+
+sub maps {
+    my $finder = Module::Pluggable::Object->new(
+        require     => 1,
+        search_path => ["Games::Risk::Map"],
+    );
+    return $finder->plugins;
+}
+
 1;
 
 
@@ -244,7 +252,7 @@ Games::Risk - classical 'risk' board game
 
 =head1 VERSION
 
-version 3.112450
+version 3.112590
 
 =head1 DESCRIPTION
 
@@ -267,6 +275,12 @@ also used as a heap for C<Games::Risk::Controller> POE session.
     Games::Risk->run;
 
 Start the application, with an initial batch of C<@modules> to build.
+
+=head2 maps
+
+    my @modules = Games::Risk->maps;
+
+Return a list of module names under L<Games::Risk::Map> namespace.
 
 =head1 METHODS
 
@@ -367,7 +381,7 @@ in the future for C<Games::Risk>:
 
 =item * maps theming
 
-=item * i18n
+=item * i18n - DONE - 3.101370: gui, 3.112590: maps
 
 =item * better ais - DONE - 0.5.0: blitzkrieg ai, 0.5.1: hegemon ai
 

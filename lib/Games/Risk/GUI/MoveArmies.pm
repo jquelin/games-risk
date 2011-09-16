@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::GUI::MoveArmies;
 {
-  $Games::Risk::GUI::MoveArmies::VERSION = '3.112450';
+  $Games::Risk::GUI::MoveArmies::VERSION = '3.112590';
 }
 # ABSTRACT: window to move armies
 
@@ -23,8 +23,8 @@ use Tk;
 use Tk::Font;
 use Tk::Sugar;
 
-use Games::Risk::I18n  qw{ T };
-use Games::Risk::Utils qw{ debug };
+use Games::Risk::I18n   qw{ T };
+use Games::Risk::Logger qw{ debug };
 
 use constant K => $poe_kernel;
 
@@ -251,7 +251,7 @@ Games::Risk::GUI::MoveArmies - window to move armies
 
 =head1 VERSION
 
-version 3.112450
+version 3.112590
 
 =head1 DESCRIPTION
 

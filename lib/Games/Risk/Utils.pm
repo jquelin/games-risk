@@ -13,36 +13,19 @@ use warnings;
 
 package Games::Risk::Utils;
 {
-  $Games::Risk::Utils::VERSION = '3.112450';
+  $Games::Risk::Utils::VERSION = '3.112590';
 }
 # ABSTRACT: various utilities for prisk
 
 use Exporter::Lite;
 use File::ShareDir::PathClass;
-use FindBin         qw{ $Bin };
 use Path::Class;
-use Term::ANSIColor qw{ :constants };
-use Text::Padding;
  
 our @EXPORT_OK = qw{ $SHAREDIR debug };
 
 our $SHAREDIR = -e file("dist.ini") && -d dir("share")
     ? dir ("share")
     : File::ShareDir::PathClass->dist_dir("Games-Risk");
-
-
-
-my $debug = -d dir($Bin)->parent->subdir('.git');
-my $pad   = Text::Padding->new;
-sub debug {
-    return unless $debug;
-    my ($pkg, $filename, $line) = caller;
-    $pkg =~ s/^Games::Risk:://g;
-    # BLUE and YELLOW have a length of 5. RESET has a length of 4
-    my $prefix = $pad->right( BLUE . $pkg . YELLOW . ":$line" . RESET, 35);
-    warn "$prefix @_";
-}
-
 
 1;
 
@@ -55,19 +38,12 @@ Games::Risk::Utils - various utilities for prisk
 
 =head1 VERSION
 
-version 3.112450
+version 3.112590
 
 =head1 DESCRIPTION
 
 This module provides some helper variables and subs, to be used on
 various occasions throughout the code.
-
-=head1 METHODS
-
-=head2 debug( @stuff );
-
-Output C<@stuff> on stderr if we're in a local git checkout. Do nothing
-in regular builds.
 
 =head1 AUTHOR
 

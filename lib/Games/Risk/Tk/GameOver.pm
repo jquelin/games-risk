@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Tk::GameOver;
 {
-  $Games::Risk::Tk::GameOver::VERSION = '3.112450';
+  $Games::Risk::Tk::GameOver::VERSION = '3.112590';
 }
 # ABSTRACT: window used when game is over
 
@@ -23,8 +23,8 @@ use Tk::Sugar;
 
 with 'Tk::Role::Dialog';
 
-use Games::Risk::I18n  qw{ T };
-use Games::Risk::Utils qw{ debug };
+use Games::Risk::I18n   qw{ T };
+use Games::Risk::Logger qw{ debug };
 
 has winner => ( ro, isa=>'Games::Risk::Player', required );
 
@@ -74,7 +74,7 @@ Games::Risk::Tk::GameOver - window used when game is over
 
 =head1 VERSION
 
-version 3.112450
+version 3.112590
 
 =head1 DESCRIPTION
 

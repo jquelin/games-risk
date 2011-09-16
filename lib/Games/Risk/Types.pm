@@ -11,25 +11,16 @@ use 5.010;
 use strict;
 use warnings;
 
-package Games::Risk::Point;
+package Games::Risk::Types;
 {
-  $Games::Risk::Point::VERSION = '3.112590';
+  $Games::Risk::Types::VERSION = '3.112590';
 }
-# ABSTRACT: placeholder for a 2D point
+# ABSTRACT: various types used in the distribution
 
-use Moose;
-use MooseX::Has::Sugar;
-use MooseX::SemiAffordanceAccessor;
+use Moose::Util::TypeConstraints;
 
-
-# -- public attributes
-
-
-has coordx => ( rw, isa=>'Num', required );
-has coordy => ( rw, isa=>'Num', required );
-
-no Moose;
-__PACKAGE__->meta->make_immutable;
+enum CardType   => qw{ artillery cavalry infantry joker };
+enum PlayerType => qw{ human ai };
 
 1;
 
@@ -38,7 +29,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Games::Risk::Point - placeholder for a 2D point
+Games::Risk::Types - various types used in the distribution
 
 =head1 VERSION
 
@@ -46,15 +37,18 @@ version 3.112590
 
 =head1 DESCRIPTION
 
-This module implements a basic point, which is a 2D vector.
+This module defines and exports the types used by other modules of the
+distribution.
 
-=head1 ATTRIBUTES
+The exported types are:
 
-=head2 coordx
+=over 4
 
-=head2 coordy
+=item CardType - the type of the card.
 
-The coordinates of the point.
+=item PlayerType - the type of the player.
+
+=back
 
 =head1 AUTHOR
 

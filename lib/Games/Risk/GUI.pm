@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::GUI;
 {
-  $Games::Risk::GUI::VERSION = '3.112450';
+  $Games::Risk::GUI::VERSION = '3.112590';
 }
 # ABSTRACT: gui multiplexer poe session
 
@@ -21,7 +21,7 @@ use POE qw{ Loop::Tk };
 use MooseX::POE;
 use Readonly;
 
-use Games::Risk::Utils qw{ debug };
+use Games::Risk::Logger qw{ debug };
 
 Readonly my $K  => $poe_kernel;
 
@@ -65,7 +65,7 @@ Games::Risk::GUI - gui multiplexer poe session
 
 =head1 VERSION
 
-version 3.112450
+version 3.112590
 
 =head1 DESCRIPTION
 

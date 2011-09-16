@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Controller;
 {
-  $Games::Risk::Controller::VERSION = '3.112450';
+  $Games::Risk::Controller::VERSION = '3.112590';
 }
 # ABSTRACT: controller poe session for risk
 
@@ -22,10 +22,7 @@ use List::Util      qw{ min shuffle };
 use Readonly;
 
 use Games::Risk::I18n      qw{ T };
-use Games::Risk::Map;
-use Games::Risk::Player;
-use Games::Risk::Resources qw{ map_path };
-use Games::Risk::Utils     qw{ debug };
+use Games::Risk::Logger    qw{ debug };
 
 use constant K => $poe_kernel;
 
@@ -129,7 +126,7 @@ sub _onpub_armies_placed {
     my $left = $h->armies - $nb;
     $h->armies($left);
 
-    $country->armies( $country->armies + $nb );
+    $country->set_armies( $country->armies + $nb );
     $h->send_to_all('chnum', $country);
 
     if ( $left == 0 ) {
@@ -184,8 +181,8 @@ sub _onpub_attack {
         if $nbdice_src >= 2 && $nbdice_dst == 2;
 
     # update countries
-    $src->armies( $src->armies - $losses[0] );
-    $dst->armies( $dst->armies - $losses[1] );
+    $src->set_armies( $src->armies - $losses[0] );
+    $dst->set_armies( $dst->armies - $losses[1] );
 
     # post damages
     # FIXME: only for human player?
@@ -222,9 +219,9 @@ sub _onpub_attack_move {
     my $looser = $dst->owner;
 
     # update the countries
-    $src->armies( $src->armies - $nb );
-    $dst->armies( $nb );
-    $dst->chown( $src->owner );
+    $src->set_armies( $src->armies - $nb );
+    $dst->set_armies( $nb );
+    $dst->set_owner( $src->owner );
 
     # update the gui
     $h->send_to_all('chnum', $src);
@@ -237,11 +234,11 @@ sub _onpub_attack_move {
         $h->send_to_all('player_lost', $looser);
 
         # distribute cards from lost player to the one who crushed her
-        my @cards = $looser->cards;
+        my @cards = $looser->cards->all;
         my $player = $h->curplayer;
         foreach my $card ( @cards ) {
-            $looser->card_del($card);
-            $player->card_add($card);
+            $looser->cards->del($card);
+            $player->cards->add($card);
             $h->send_to_one($player, 'card_add', $card);
             $h->send_to_one($looser, 'card_del', $card);
         }
@@ -298,16 +295,16 @@ sub _onpub_cards_exchange {
         next if $card->type eq 'joker'; # joker do not bear a country
         my $country = $card->country;
         next unless $country->owner eq $player;
-        $country->armies($country->armies + 2);
+        $country->set_armies($country->armies + 2);
         $h->send_to_all('chnum', $country);
     }
 
     # ... but some cards less.
-    $player->card_del($_) foreach @cards;
+    $player->cards->del($_) foreach @cards;
     $h->send_to_one($player, 'card_del', @cards);
 
     # finally, put back the cards on the deck
-    $h->map->card_return($_) foreach @cards;
+    $h->map->cards->return($_) foreach @cards;
 }
 
 
@@ -324,7 +321,7 @@ sub _onpub_initial_armies_placed {
     # FIXME: check validity regarding total number
     # FIXME: check validity regarding continent
 
-    $country->armies( $country->armies + $nb );
+    $country->set_armies( $country->armies + $nb );
     $h->send_to_all('chnum', $country);
     K->delay_set( '_place_armies_initial' => $WAIT );
 }
@@ -350,11 +347,8 @@ sub _onpub_new_game {
     my ($h, $args) = @_[HEAP, ARG0];
 
     # load map
-    # FIXME: hardcoded
-    my $m = delete $args->{map};
-    my $path = map_path($m);
-    my $map = Games::Risk::Map->new;
-    $map->load_file($path);
+    my $modmap = delete $args->{map};
+    my $map = $modmap->new;
     $h->map($map);
 
     K->post('gui', 'new_game', { map => $map });
@@ -381,8 +375,8 @@ sub _onpub_move_armies {
     $h->move_out->{ $src->id } += $nb;
     $h->move_in->{  $dst->id } += $nb;
 
-    $src->armies( $src->armies - $nb );
-    $dst->armies( $dst->armies + $nb );
+    $src->set_armies( $src->armies - $nb );
+    $dst->set_armies( $dst->armies + $nb );
 
     $h->send_to_all('chnum', $src);
     $h->send_to_all('chnum', $dst);
@@ -427,8 +421,6 @@ sub _onpub_shutdown {
 
     # close all ais & windows
     $h->send_to_all('shutdown');
-
-    # remove all circular references
     $h->destroy;
 }
 
@@ -453,8 +445,8 @@ sub _onpriv_assign_countries {
         push @players, $player;
 
         # store new owner & place one army to start with
-        $country->chown($player);
-        $country->armies(1);
+        $country->set_owner($player);
+        $country->set_armies(1);
         $h->send_to_all('chown', $country);
     }
 
@@ -495,8 +487,8 @@ sub _onpriv_attack_done {
         # player's turn.
         if ( not $h->got_card ) {
             $h->got_card(1);
-            my $card = $h->map->card_get;
-            $player->card_add($card);
+            my $card = $h->map->cards->get;
+            $player->cards->add($card);
             $h->send_to_one($player, 'card_add', $card);
         }
 
@@ -532,6 +524,7 @@ sub _onpriv_cards_exchange {
 #
 sub _onpriv_create_players {
     my $h = $_[HEAP];
+    require Games::Risk::Player;
 
     # create players according to startup information.
     my $players = delete $h->startup_info->{players};
@@ -755,7 +748,7 @@ Games::Risk::Controller - controller poe session for risk
 
 =head1 VERSION
 
-version 3.112450
+version 3.112590
 
 =head1 DESCRIPTION
 

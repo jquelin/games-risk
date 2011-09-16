@@ -12,7 +12,7 @@ my $v = "\n";
 
 eval {                     # no excuses!
     # report our Perl details
-    my $want = '5.010';
+    my $want = '5.014';
     my $pv = ($^V || $]);
     $v .= "perl: $pv (wanted $want) on $^O from $^X\n\n";
 };
@@ -48,12 +48,15 @@ sub pmver {
     return sprintf('%-45s => %-10s%-15s%s', $module, $pmver, $wanted, "\n");
 }
 
+eval { $v .= pmver('App::Cmd::Setup','any version') };
 eval { $v .= pmver('Carp','any version') };
 eval { $v .= pmver('Class::Accessor::Fast','any version') };
+eval { $v .= pmver('Data::Dump','any version') };
 eval { $v .= pmver('Encode','any version') };
 eval { $v .= pmver('Exporter','any version') };
 eval { $v .= pmver('Exporter::Lite','any version') };
 eval { $v .= pmver('File::Basename','any version') };
+eval { $v .= pmver('File::Copy','any version') };
 eval { $v .= pmver('File::Find','any version') };
 eval { $v .= pmver('File::HomeDir::PathClass','any version') };
 eval { $v .= pmver('File::ShareDir::PathClass','any version') };
@@ -61,14 +64,19 @@ eval { $v .= pmver('File::Spec::Functions','any version') };
 eval { $v .= pmver('File::Temp','any version') };
 eval { $v .= pmver('Find::Lib','any version') };
 eval { $v .= pmver('FindBin','any version') };
+eval { $v .= pmver('Hash::NoRef','any version') };
 eval { $v .= pmver('Image::Magick','any version') };
 eval { $v .= pmver('Image::Size','any version') };
+eval { $v .= pmver('List::AllUtils','any version') };
 eval { $v .= pmver('List::MoreUtils','any version') };
 eval { $v .= pmver('List::Util','any version') };
 eval { $v .= pmver('Locale::TextDomain','any version') };
 eval { $v .= pmver('MIME::Base64','any version') };
 eval { $v .= pmver('Module::Build','0.3601') };
-eval { $v .= pmver('Moose','any version') };
+eval { $v .= pmver('Module::Pluggable::Object','any version') };
+eval { $v .= pmver('Moose','0.92') };
+eval { $v .= pmver('Moose::Util::TypeConstraints','any version') };
+eval { $v .= pmver('MooseX::Aliases','any version') };
 eval { $v .= pmver('MooseX::Has::Sugar','any version') };
 eval { $v .= pmver('MooseX::POE','any version') };
 eval { $v .= pmver('MooseX::SemiAffordanceAccessor','any version') };
@@ -76,7 +84,7 @@ eval { $v .= pmver('MooseX::Singleton','any version') };
 eval { $v .= pmver('POE','any version') };
 eval { $v .= pmver('POE::Kernel','any version') };
 eval { $v .= pmver('POE::Loop::Tk','any version') };
-eval { $v .= pmver('Path::Class','any version') };
+eval { $v .= pmver('Path::Class','0.22') };
 eval { $v .= pmver('Readonly','any version') };
 eval { $v .= pmver('Term::ANSIColor','any version') };
 eval { $v .= pmver('Test::More','0.88') };
@@ -97,10 +105,10 @@ eval { $v .= pmver('Tk::TableMatrix','any version') };
 eval { $v .= pmver('Tk::ToolBar','any version') };
 eval { $v .= pmver('UNIVERSAL::require','any version') };
 eval { $v .= pmver('YAML::Tiny','any version') };
-eval { $v .= pmver('aliased','any version') };
 eval { $v .= pmver('base','any version') };
 eval { $v .= pmver('constant','any version') };
 eval { $v .= pmver('strict','any version') };
+eval { $v .= pmver('utf8','any version') };
 eval { $v .= pmver('warnings','any version') };
 
 

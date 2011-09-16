@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Tk::Main;
 {
-  $Games::Risk::Tk::Main::VERSION = '3.112450';
+  $Games::Risk::Tk::Main::VERSION = '3.112590';
 }
 # ABSTRACT: main prisk window
 
@@ -38,14 +38,9 @@ use Tk::ToolBar;
 
 with 'Tk::Role::HasWidgets';
 
-use Games::Risk::GUI::MoveArmies;
-use Games::Risk::GUI::Startup;
-use Games::Risk::I18n  qw{ T };
-use Games::Risk::Point;
-use Games::Risk::Tk::Cards;
-use Games::Risk::Tk::Continents;
-use Games::Risk::Tk::GameOver;
-use Games::Risk::Utils qw{ $SHAREDIR debug };
+use Games::Risk::I18n   qw{ T };
+use Games::Risk::Logger qw{ debug };
+use Games::Risk::Utils  qw{ $SHAREDIR };
 
 
 Readonly my $K  => $poe_kernel;
@@ -353,6 +348,7 @@ sub START {
         $self->_action('attack_done')->disable;
 
         # announce the winner
+        require Games::Risk::Tk::GameOver;
         Games::Risk::Tk::GameOver->new(
             parent => $mw,
             winner => $self->_curplayer,
@@ -414,6 +410,9 @@ sub START {
         $self->_build_action_bar;
         $self->_build_player_bar;
         $self->_build_status_bar;
+        require Games::Risk::GUI::MoveArmies;
+        require Games::Risk::Tk::Cards;
+        require Games::Risk::Tk::Continents;
         Games::Risk::Tk::Cards->new({parent=>$mw});
         Games::Risk::Tk::Continents->new({parent=>$mw});
         Games::Risk::GUI::MoveArmies->spawn({parent=>$mw});
@@ -435,6 +434,7 @@ sub START {
         my ($width, $height) = imgsize($bgpath);
 
         # store zoom information
+        require Games::Risk::Point;
         my $orig = Games::Risk::Point->new( { coordx=>$width, coordy=>$height } );
         my $zoom = Games::Risk::Point->new( { coordx=>1, coordy=>1 } );
         $self->_set_orig_bg_size( $orig );
@@ -672,6 +672,7 @@ sub START {
     # event: _new()
     # request for a new game to be started.
     event _new => sub {
+        require Games::Risk::GUI::Startup;
         Games::Risk::GUI::Startup->spawn;
     };
 
@@ -854,7 +855,7 @@ sub START {
             # in a game
             # create a new image resized to fit new dims
             my $magick = Image::Magick->new;
-            $magick->Read( $self->_map->background );
+            $magick->Read( $map->background );
             $magick->Scale(width=>$neww, height=>$newh);
 
             # install this new image inplace of previous background
@@ -876,7 +877,7 @@ sub START {
 
             # force country redraw, for them to be correctly placed on the new
             # map.
-            $K->yield('_country_redraw', $_) foreach $self->_map->countries;
+            $K->yield('_country_redraw', $_) foreach $map->countries;
 
         } else {
             # delete existing images
@@ -1239,7 +1240,7 @@ sub START {
         # menu help
         my @mnu_help = (
         [ 'help',  $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'help.png')), 'F1', T('~Help') ],
-        [ 'about', $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'about.png')),  '', T('About') ],
+        [ 'about', $mw->Photo(-file=>$SHAREDIR->file('icons', '16', 'about.png')),  '', T('~About') ],
         );
         $self->_build_menu('help', T('~Help'), @mnu_help);
     }
@@ -1453,7 +1454,7 @@ Games::Risk::Tk::Main - main prisk window
 
 =head1 VERSION
 
-version 3.112450
+version 3.112590
 
 =head1 DESCRIPTION
 

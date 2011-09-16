@@ -11,25 +11,14 @@ use 5.010;
 use strict;
 use warnings;
 
-package Games::Risk::Point;
+package Games::Risk::App::Command;
 {
-  $Games::Risk::Point::VERSION = '3.112590';
+  $Games::Risk::App::Command::VERSION = '3.112590';
 }
-# ABSTRACT: placeholder for a 2D point
+# ABSTRACT: base class for prisk sub-commands
 
-use Moose;
-use MooseX::Has::Sugar;
-use MooseX::SemiAffordanceAccessor;
+use App::Cmd::Setup -command;
 
-
-# -- public attributes
-
-
-has coordx => ( rw, isa=>'Num', required );
-has coordy => ( rw, isa=>'Num', required );
-
-no Moose;
-__PACKAGE__->meta->make_immutable;
 
 1;
 
@@ -38,7 +27,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Games::Risk::Point - placeholder for a 2D point
+Games::Risk::App::Command - base class for prisk sub-commands
 
 =head1 VERSION
 
@@ -46,15 +35,12 @@ version 3.112590
 
 =head1 DESCRIPTION
 
-This module implements a basic point, which is a 2D vector.
+This module is the base class for all sub-commands. It doesn't do
+anything special currently but trusting methods for pod coverage.
 
-=head1 ATTRIBUTES
-
-=head2 coordx
-
-=head2 coordy
-
-The coordinates of the point.
+=for Pod::Coverage::TrustPod description
+    opt_spec
+    execute
 
 =head1 AUTHOR
 

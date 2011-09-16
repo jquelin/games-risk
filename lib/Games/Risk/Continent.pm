@@ -13,62 +13,37 @@ use warnings;
 
 package Games::Risk::Continent;
 {
-  $Games::Risk::Continent::VERSION = '3.112450';
+  $Games::Risk::Continent::VERSION = '3.112590';
 }
 # ABSTRACT: continent object
 
 use List::MoreUtils qw{ all };
+use Moose;
+use MooseX::Has::Sugar;
+use MooseX::SemiAffordanceAccessor;
 
-use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ id bonus name _countries } );
+use Games::Risk::Logger qw{ debug };
 
 
-#--
-# METHODS
+# -- attributes
+
+
+has id    => ( ro, isa=>'Int', required );
+has name  => ( ro, isa=>'Str', required );
+has bonus => ( ro, isa=>'Int', required );
+has color => ( ro, isa=>'Str', required );
+has map   => ( ro, isa=>'Games::Risk::Map', required, weak_ref );
+has countries => ( rw, auto_deref, isa=>'ArrayRef[Games::Risk::Country]' );
+
+
+# -- finalizer
+
+sub DEMOLISH { debug( "~continent " . $_[0]->name ."\n" ); }
+
 
 # -- public methods
 
-#
-# $continent->add_country( $country );
-#
-# Store C<$country> (a C<Games::Risk::Country> object) as a country
-# located within the continent.
-#
-sub add_country {
-    my ($self, $country) = @_;
-    my $countries = $self->_countries // [];
-    push @$countries, $country;
-    $self->_countries($countries);
-}
 
-#
-# my @countries = $continent->countries;
-#
-# Return the list of countries located in $continent.
-#
-sub countries {
-    my ($self) = @_;
-    return @{ $self->_countries // [] };
-}
-
-
-#
-# $continent->destroy;
-#
-# Remove all circular references of $continent, to prevent memory leaks.
-#
-#sub DESTROY { say "destroy: $_[0]"; }
-sub destroy {
-    my ($self) = @_;
-    $self->_countries([]);
-}
-
-
-#
-# my $p0wned = $continent->is_owned( $player );
-#
-# Return true if $player is the owner of all $continent's countries.
-#
 sub is_owned {
     my ($self, $player) = @_;
 
@@ -76,8 +51,8 @@ sub is_owned {
 }
 
 
+__PACKAGE__->meta->make_immutable;
 1;
-
 
 
 =pod
@@ -88,77 +63,50 @@ Games::Risk::Continent - continent object
 
 =head1 VERSION
 
-version 3.112450
-
-=head1 SYNOPSIS
-
-    my $id = Games::Risk::Continent->new(\%params);
+version 3.112590
 
 =head1 DESCRIPTION
 
 This module implements a map continent, with all its characteristics.
+The word continent is a bit loose, since for some maps it can be either
+a region, a suburb... or a planet! :-)
+
+=head1 ATTRIBUTES
+
+=head2 id
+
+Unique id assigned to the continent.
+
+=head2 bonus
+
+Number of bonus armies given when a player controls every country in the
+continent.
+
+=head2 name
+
+Continent name.
+
+=head2 color
+
+Color of the continent to flash it.
+
+=head2 map
+
+Reference to the parent map (weak ref to a L<Games::Risk::Map> object).
+
+=head2 countries
+
+The L<Games::Risk::Country> objects belonging to this continent.
 
 =head1 METHODS
 
-=head2 Constructor
+=head2 is_owned
 
-=over 4
-
-=item * my $player = Games::Risk::Continent->new( \%params )
-
-Create a new continent. Mandatory params are C<id>, C<name> and C<bonus>
-(see below in C<Accessors> for a quick definition).
-
-=back
-
-=head2 Accessors
-
-The following accessors (acting as mutators, ie getters and setters) are
-available for C<Games::Risk::Continent> objects:
-
-=over 4
-
-=item * bonus()
-
-number of bonus armies given when a player controls every country in the
-continent.
-
-=item * id()
-
-unique id assigned to the continent.
-
-=item * name()
-
-continent name.
-
-=back
-
-=head2 Public methods
-
-=over 4
-
-=item * $continent->add_country( $country )
-
-Store C<$country> (a C<Games::Risk::Country> object) as a country
-located within the C<$continent>.
-
-=item * $continent->destroy()
-
-Remove all circular references of C<$continent>, to prevent memory leaks.
-
-=item * my @countries = $continent->countries()
-
-Return the list of countries located in C<$continent>.
-
-=item * my $p0wned = $continent->is_owned( $player )
+    my $p0wned = $continent->is_owned( $player );
 
 Return true if C<$player> is the owner of all C<$continent>'s countries.
 
-=back
-
-=head1 SEE ALSO
-
-L<Games::Risk>.
+=for Pod::Coverage DEMOLISH
 
 =head1 AUTHOR
 
@@ -176,6 +124,4 @@ This is free software, licensed under:
 
 
 __END__
-
-
 

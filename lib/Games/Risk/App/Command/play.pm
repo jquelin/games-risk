@@ -11,25 +11,33 @@ use 5.010;
 use strict;
 use warnings;
 
-package Games::Risk::Point;
+package Games::Risk::App::Command::play;
 {
-  $Games::Risk::Point::VERSION = '3.112590';
+  $Games::Risk::App::Command::play::VERSION = '3.112590';
 }
-# ABSTRACT: placeholder for a 2D point
+# ABSTRACT: play a risk game
 
-use Moose;
-use MooseX::Has::Sugar;
-use MooseX::SemiAffordanceAccessor;
+use Games::Risk::App -command;
 
 
-# -- public attributes
+# -- public methods
 
+sub description { 'Play a Risk game.'; }
 
-has coordx => ( rw, isa=>'Num', required );
-has coordy => ( rw, isa=>'Num', required );
+sub opt_spec {
+    my $self = shift;
+    return (
+        [],
+    );
+}
 
-no Moose;
-__PACKAGE__->meta->make_immutable;
+sub execute {
+    my ($self, $opts, $args) = @_;
+
+    require Games::Risk;
+    Games::Risk->run;
+}
+
 
 1;
 
@@ -38,7 +46,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Games::Risk::Point - placeholder for a 2D point
+Games::Risk::App::Command::play - play a risk game
 
 =head1 VERSION
 
@@ -46,15 +54,8 @@ version 3.112590
 
 =head1 DESCRIPTION
 
-This module implements a basic point, which is a 2D vector.
-
-=head1 ATTRIBUTES
-
-=head2 coordx
-
-=head2 coordy
-
-The coordinates of the point.
+This command launch a prisk game. Most of the time, this is what you
+want to do.
 
 =head1 AUTHOR
 
@@ -72,4 +73,5 @@ This is free software, licensed under:
 
 
 __END__
+
 

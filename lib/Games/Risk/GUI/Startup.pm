@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::GUI::Startup;
 {
-  $Games::Risk::GUI::Startup::VERSION = '3.112450';
+  $Games::Risk::GUI::Startup::VERSION = '3.112590';
 }
 # ABSTRACT: startup window
 
@@ -27,9 +27,11 @@ use Tk::BrowseEntry;
 use Tk::Font;
 use Tk::Sugar;
 
+use Games::Risk;
 use Games::Risk::I18n      qw{ T };
-use Games::Risk::Resources qw{ get_image maps };
-use Games::Risk::Utils     qw{ $SHAREDIR debug };
+use Games::Risk::Logger    qw{ debug };
+use Games::Risk::Resources qw{ get_image };
+use Games::Risk::Utils     qw{ $SHAREDIR };
 
 use constant K => $poe_kernel;
 
@@ -326,10 +328,10 @@ sub _onpriv_start {
     $h->{balloon} = $top->Balloon;
 
     #-- map selection
-    my @choices = maps();
-    $h->{map} = 'risk';
+    my @choices = map { $_->title } Games::Risk->maps;
+    $h->{map} = $choices[0]; # FIXME: config
     my $fmap = $top->Frame->pack(top, xfill2, pad20);
-    $fmap->Label(-text=>'Map', -anchor=>'w')->pack(top, fillx);
+    $fmap->Label(-text=>T('Map'), -anchor=>'w')->pack(top, fillx);
     $fmap->BrowseEntry(
         -variable           => \$h->{map},
         -listheight         => scalar(@choices)+1,
@@ -340,7 +342,7 @@ sub _onpriv_start {
 
     #-- frame for players
     my $fpl = $top->Frame->pack(top, xfill2, pad20);
-    $fpl->Label(-text=>'Players', -anchor=>'w')->pack(top, fillx);
+    $fpl->Label(-text=>T('Players'), -anchor=>'w')->pack(top, fillx);
     $h->{button}{add_player} = $fpl->Button(
         -text    => T('New player...'),
         -command => $s->postback('_but_new_player'),
@@ -491,8 +493,10 @@ sub _ongui_but_start {
     # value.
     my $players = $h->{players};
     my @players = grep { defined $_ } @$players;
+    my ($modmap) = grep { $_->title eq $h->{map} } Games::Risk->maps;
+    debug( "map to be created: $modmap\n" );
 
-    K->post('risk', 'new_game', { players => \@players, map => $h->{map} } );
+    K->post('risk', 'new_game', { players => \@players, map => $modmap } );
     $h->{toplevel}->destroy;
 }
 
@@ -510,7 +514,7 @@ Games::Risk::GUI::Startup - startup window
 
 =head1 VERSION
 
-version 3.112450
+version 3.112590
 
 =head1 SYNOPSIS
 

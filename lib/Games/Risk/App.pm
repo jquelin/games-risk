@@ -11,25 +11,16 @@ use 5.010;
 use strict;
 use warnings;
 
-package Games::Risk::Point;
+package Games::Risk::App;
 {
-  $Games::Risk::Point::VERSION = '3.112590';
+  $Games::Risk::App::VERSION = '3.112590';
 }
-# ABSTRACT: placeholder for a 2D point
+# ABSTRACT: prisk's App::Cmd
 
-use Moose;
-use MooseX::Has::Sugar;
-use MooseX::SemiAffordanceAccessor;
+use App::Cmd::Setup -app;
 
-
-# -- public attributes
-
-
-has coordx => ( rw, isa=>'Num', required );
-has coordy => ( rw, isa=>'Num', required );
-
-no Moose;
-__PACKAGE__->meta->make_immutable;
+sub allow_any_unambiguous_abbrev { 1 }
+sub default_args                 { [ 'play' ] }
 
 1;
 
@@ -38,7 +29,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Games::Risk::Point - placeholder for a 2D point
+Games::Risk::App - prisk's App::Cmd
 
 =head1 VERSION
 
@@ -46,15 +37,15 @@ version 3.112590
 
 =head1 DESCRIPTION
 
-This module implements a basic point, which is a 2D vector.
+This is the main application, based on the excellent L<App::Cmd>.
+Nothing much to see here, see the various subcommands available for more
+information, or run one of the following:
 
-=head1 ATTRIBUTES
+    prisk commands
+    prisk help
 
-=head2 coordx
-
-=head2 coordy
-
-The coordinates of the point.
+Note that each subcommand can be abbreviated as long as the abbreviation
+is unambiguous.
 
 =head1 AUTHOR
 

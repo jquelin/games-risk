@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Config;
 {
-  $Games::Risk::Config::VERSION = '3.112450';
+  $Games::Risk::Config::VERSION = '3.112590';
 }
 # ABSTRACT: prisk configuration
 
@@ -24,7 +24,7 @@ use MooseX::Has::Sugar;
 use Readonly;
 use YAML::Tiny                qw{ DumpFile LoadFile };
 
-use Games::Risk::Utils        qw{ debug };
+use Games::Risk::Logger       qw{ debug };
 
 our @EXPORT_OK = qw{ $CONFIG };
 our $CONFIG    = __PACKAGE__->instance;
@@ -99,7 +99,7 @@ Games::Risk::Config - prisk configuration
 
 =head1 VERSION
 
-version 3.112450
+version 3.112590
 
 =head1 SYNOPSIS
 

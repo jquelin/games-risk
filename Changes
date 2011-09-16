@@ -1,5 +1,13 @@
 Revision history for Games::Risk.
 
+3.112590  2011-09-16 16:31:02 Europe/Paris
+ - fixed continent information in risk2210 map
+ - using own format for maps, allowing for map translation
+ - all maps translated in french
+ - deferred class loading to speed up startup
+ - moose-ified lots of internals
+ - cleaned lots of circular refs (using weak refs when needed)
+
 3.112450  2011-09-02 13:38:46 Europe/Paris
  - fix display bug in dice results
  - new map: risk 2210 ad

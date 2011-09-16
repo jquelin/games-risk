@@ -7,59 +7,259 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Games-Risk\n"
-"Report-Msgid-Bugs-To: bug-games-risk@rt.cpan.org\n"
-"POT-Creation-Date: 2010-05-31 17:40+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-09-16 16:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/Games/Risk/Controller.pm:534 lib/Games/Risk/GUI/Startup.pm:150
-#: lib/Games/Risk/GUI/Startup.pm:202 lib/Games/Risk/GUI/Startup.pm:221
+#: lib/Games/Risk/Controller.pm:528 lib/Games/Risk/GUI/Startup.pm:143
+#: lib/Games/Risk/GUI/Startup.pm:196 lib/Games/Risk/GUI/Startup.pm:215
 msgid "Human"
 msgstr ""
 
-#: lib/Games/Risk/Controller.pm:542 lib/Games/Risk/GUI/Startup.pm:202
-#: lib/Games/Risk/GUI/Startup.pm:221
+#: lib/Games/Risk/Controller.pm:536 lib/Games/Risk/GUI/Startup.pm:196
+#: lib/Games/Risk/GUI/Startup.pm:215
 msgid "Computer, easy"
 msgstr ""
 
-#: lib/Games/Risk/Controller.pm:551 lib/Games/Risk/GUI/Startup.pm:202
-#: lib/Games/Risk/GUI/Startup.pm:221 lib/Games/Risk/GUI/Startup.pm:449
+#: lib/Games/Risk/Controller.pm:545 lib/Games/Risk/GUI/Startup.pm:196
+#: lib/Games/Risk/GUI/Startup.pm:215 lib/Games/Risk/GUI/Startup.pm:451
 msgid "Computer, hard"
 msgstr ""
 
-#: lib/Games/Risk/Tk/About.pm:21
-msgid "about"
+#: lib/Games/Risk/Tk/GameOver.pm:22
+msgid "Game over"
 msgstr ""
 
-#: lib/Games/Risk/Tk/About.pm:25 lib/Games/Risk/Tk/Help.pm:26
-#: lib/Games/Risk/Tk/Continents.pm:51 lib/Games/Risk/Tk/Cards.pm:63
-#: lib/Games/Risk/GUI/GameOver.pm:79
+#: lib/Games/Risk/Tk/GameOver.pm:23
+#, perl-format
+msgid "%s won!"
+msgstr ""
+
+#: lib/Games/Risk/Tk/GameOver.pm:24 lib/Games/Risk/Tk/About.pm:24
+#: lib/Games/Risk/Tk/Help.pm:25 lib/Games/Risk/Tk/Continents.pm:51
+#: lib/Games/Risk/Tk/Cards.pm:64
 msgid "Close"
 msgstr ""
 
-#: lib/Games/Risk/Tk/About.pm:28
+#: lib/Games/Risk/Tk/GameOver.pm:41
+msgid ""
+"Congratulations, you won!\n"
+"Maybe the artificial intelligences were not that hard?"
+msgstr ""
+
+#: lib/Games/Risk/Tk/GameOver.pm:42
+msgid ""
+"Unfortunately, you lost...\n"
+"Try harder next time!"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:168 lib/Games/Risk/Tk/Main.pm:923
+msgid "Attacking from ..."
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:185 lib/Games/Risk/Tk/Main.pm:944
+#, perl-format
+msgid "Attacking %s from %s"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:421 lib/Games/Risk/Tk/Main.pm:452
+msgid "Moving armies from..."
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:550 lib/Games/Risk/Tk/Main.pm:587
+#: lib/Games/Risk/Tk/Main.pm:866 lib/Games/Risk/Tk/Main.pm:1147
+#: lib/Games/Risk/Tk/Main.pm:1183
+#, perl-format
+msgid "%s armies left to place"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:636
+msgid "human"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:643
+#, perl-format
+msgid "computer - %s"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:667
+#, perl-format
+msgid "Player %s has lost"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:910
+#, perl-format
+msgid "Attacking ... from %s"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1048
+msgid "Moving armies from ..."
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1072
+#, perl-format
+msgid "Moving armies from %s to ..."
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1091
+#, perl-format
+msgid "Moving armies from %s to %s"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1277
+msgid "Game state: "
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1278
+msgid "place armies"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1279
+msgid "undo all"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1280
+msgid "ready for attack"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1281
+msgid "attack"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1282
+msgid "attack again"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1283
+msgid "consolidate"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1284
+msgid "move armies"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1285
+msgid "turn finished"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1329
+msgid "~New game"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1331
+msgid "~Close game"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1333
+msgid "~Quit"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1335
+msgid "~Game"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1339
+msgid "~Cards"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1340
+msgid "C~ontinents"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1342
+msgid "~View"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1346
+msgid "~Undo all"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1347
+msgid "~Attack"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1348
+msgid "~Re-attack"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1349
+msgid "~Consolidate"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1350
+msgid "~Finish turn"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1352
+msgid "~Actions"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1356 lib/Games/Risk/Tk/Main.pm:1359
+msgid "~Help"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1357
+msgid "~About"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1421 lib/Games/Risk/GUI/Startup.pm:333
+msgid "Players"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1429
+msgid "Dice arena"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1451
+msgid "Auto-reattack"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1457
+msgid ""
+"Automatically re-do last attack if attacker still has more than 3 armies"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1496 lib/Games/Risk/GUI/Startup.pm:310
+msgid "New game"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1498
+msgid "Close game"
+msgstr ""
+
+#: lib/Games/Risk/Tk/Main.pm:1499 lib/Games/Risk/GUI/Startup.pm:348
+msgid "Quit"
+msgstr ""
+
+#: lib/Games/Risk/Tk/About.pm:20
+msgid "about"
+msgstr ""
+
+#: lib/Games/Risk/Tk/About.pm:27
 msgid "Created by Jerome Quelin"
 msgstr ""
 
-#: lib/Games/Risk/Tk/About.pm:29
+#: lib/Games/Risk/Tk/About.pm:28
 msgid "Copyright (c) 2008 Jerome Quelin, all rights reserved"
 msgstr ""
 
-#: lib/Games/Risk/Tk/About.pm:31
+#: lib/Games/Risk/Tk/About.pm:30
 msgid ""
 "prisk is free software; you can redistribute it and/or modify it under the "
 "terms of the GPLv3."
 msgstr ""
 
-#: lib/Games/Risk/Tk/Help.pm:22
+#: lib/Games/Risk/Tk/Help.pm:21
 msgid "help"
 msgstr ""
 
-#: lib/Games/Risk/Tk/Help.pm:24
+#: lib/Games/Risk/Tk/Help.pm:23
 msgid "How to play?"
 msgstr ""
 
@@ -71,309 +271,1689 @@ msgstr ""
 msgid "Continents information"
 msgstr ""
 
-#: lib/Games/Risk/Tk/Continents.pm:210
+#: lib/Games/Risk/Tk/Continents.pm:214
 msgid "continent"
 msgstr ""
 
-#: lib/Games/Risk/Tk/Continents.pm:211
+#: lib/Games/Risk/Tk/Continents.pm:215
 msgid "bonus"
 msgstr ""
 
-#: lib/Games/Risk/Tk/Continents.pm:212
+#: lib/Games/Risk/Tk/Continents.pm:216
 msgid "# countries"
 msgstr ""
 
-#: lib/Games/Risk/Tk/Cards.pm:58
+#: lib/Games/Risk/Tk/Cards.pm:59
 msgid "cards"
 msgstr ""
 
-#: lib/Games/Risk/Tk/Cards.pm:60
+#: lib/Games/Risk/Tk/Cards.pm:61
 msgid "Cards available"
 msgstr ""
 
-#: lib/Games/Risk/Tk/Cards.pm:62
+#: lib/Games/Risk/Tk/Cards.pm:63
 msgid "Exchange"
 msgstr ""
 
-#: lib/Games/Risk/Tk/Cards.pm:122 lib/Games/Risk/Tk/Cards.pm:369
+#: lib/Games/Risk/Tk/Cards.pm:120 lib/Games/Risk/Tk/Cards.pm:259
+#: lib/Games/Risk/Tk/Cards.pm:371
 msgid "Select 3 cards"
 msgstr ""
 
-#: lib/Games/Risk/GUI/MoveArmies.pm:71
-msgid "Country invasion"
+#: lib/Games/Risk/Map/Roman_empire.pm:16
+msgid "Roman Empire"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:26 lib/Games/Risk/Map/Risk2210.pm:31
+#: lib/Games/Risk/Map/Godstorm.pm:29 lib/Games/Risk/Map/Risk.pm:29
+msgid "Africa"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:27 lib/Games/Risk/Map/Risk2210.pm:32
+#: lib/Games/Risk/Map/Risk.pm:30
+msgid "Asia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:28
+msgid "Gallia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:29
+msgid "Hispania"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:30
+msgid "Illyrium"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:31
+msgid "Italia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:39
+msgid "Aegyptus"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:40
+msgid "Africa proconsularis"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:41 lib/Games/Risk/Map/Godstorm.pm:63
+msgid "Cyrenaica"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:42
+msgid "Numidia inf."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:43
+msgid "Numidia sup."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:44
+msgid "Arabia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:45
+msgid "Bithynia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:46
+msgid "Cappadocia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:47
+msgid "Cilicia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:48
+msgid "Galatia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:49
+msgid "Lycia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:50
+msgid "Palestina"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:51
+msgid "Phrygia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:52
+msgid "Pontus"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:53
+msgid "Syria"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:54
+msgid "Aquitania"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:55
+msgid "Belgica"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:56
+msgid "Britannia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:57
+msgid "Germania inf."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:58
+msgid "Germania sup."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:59
+msgid "Lugdunensis"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:60
+msgid "Narbonensis"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:61
+msgid "Baetica"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:62
+msgid "Baleares"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:63
+msgid "Gallaecia et Asturia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:64
+msgid "Lusitania"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:65
+msgid "Mauretania"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:66
+msgid "Terraconensis"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:67
+msgid "Achaia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:68 lib/Games/Risk/Map/Godstorm.pm:39
+msgid "Dacia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:69 lib/Games/Risk/Map/Godstorm.pm:41
+msgid "Dalmatia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:70
+msgid "Epirus"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:71
+msgid "Macedonia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:72
+msgid "Moesia inf."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:73
+msgid "Moesia sup."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:74
+msgid "Pannonia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:75 lib/Games/Risk/Map/Godstorm.pm:40
+msgid "Thracia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:76 lib/Games/Risk/Map/Godstorm.pm:45
+msgid "Corsica"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:77
+msgid "Gallia Cisalpinia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:78
+msgid "Noricum"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:79
+msgid "Raetia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:80 lib/Games/Risk/Map/Godstorm.pm:43
+msgid "Roma"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:81
+msgid "Sardinia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:82 lib/Games/Risk/Map/Godstorm.pm:46
+msgid "Sicilia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:149
+msgid "Conquer the dioceses of Asia and Italia."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:150
+msgid ""
+"Conquer the dioceses of Gallia and Hispania and a third diocese of your "
+"choice."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:151
+msgid "Conquer the dioceses of Illyrium and Africa."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:152
+msgid ""
+"Conquer the dioceses of Illyrium and Hispania and a third diocese of your "
+"choice."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:153
+msgid "Conquer the dioceses of Gallia and Asia."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:154
+msgid "Conquer the dioceses of Italia and Africa."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:155
+msgid ""
+"Occupy 14 provinces of your choice and occupy each with at least 3 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:156
+msgid ""
+"Occupy 18 provinces of your choice and occupy each with at least 2 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:157
+msgid ""
+"Occupy 24 provinces of your choice and occupy each with at least 1 army."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:158
+msgid ""
+"Destroy all of Player1's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 14 provinces with "
+"at least 3 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:159
+msgid ""
+"Destroy all of Player2's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 14 provinces with "
+"at least 3 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:160
+msgid ""
+"Destroy all of Player3's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 14 provinces with "
+"at least 3 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:161
+msgid ""
+"Destroy all of Player4's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 14 provinces with "
+"at least 3 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:162
+msgid ""
+"Destroy all of Player5's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 14 provinces with "
+"at least 3 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:163
+msgid ""
+"Destroy all of Player6's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 14 provinces with "
+"at least 3 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:164
+msgid ""
+"Destroy all of Player1's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 18 provinces with "
+"at least 2 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:165
+msgid ""
+"Destroy all of Player2's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 18 provinces with "
+"at least 2 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:166
+msgid ""
+"Destroy all of Player3's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 18 provinces with "
+"at least 2 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:167
+msgid ""
+"Destroy all of Player4's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 18 provinces with "
+"at least 2 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:168
+msgid ""
+"Destroy all of Player5's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 18 provinces with "
+"at least 2 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:169
+msgid ""
+"Destroy all of Player6's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 18 provinces with "
+"at least 2 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:170
+msgid ""
+"Destroy all of Player1's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 provinces."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:171
+msgid ""
+"Destroy all of Player2's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 provinces."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:172
+msgid ""
+"Destroy all of Player3's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 provinces."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:173
+msgid ""
+"Destroy all of Player4's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 provinces."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:174
+msgid ""
+"Destroy all of Player5's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 provinces."
+msgstr ""
+
+#: lib/Games/Risk/Map/Roman_empire.pm:175
+msgid ""
+"Destroy all of Player6's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 provinces."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:18
+msgid "Risk 2210 A.D."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:28 lib/Games/Risk/Map/Risk.pm:26
+msgid "North America"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:29 lib/Games/Risk/Map/Risk.pm:27
+msgid "South America"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:30 lib/Games/Risk/Map/Risk.pm:28
+msgid "Europe"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:33 lib/Games/Risk/Map/Risk.pm:31
+msgid "Australia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:34
+msgid "US Pacific"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:35
+msgid "Asia Pacific"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:36
+msgid "North Atlantic"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:37
+msgid "South Atlantic"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:38
+msgid "Indian"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:46
+msgid "Northwestern Oil Emirate"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:47
+msgid "Nunavut"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:48
+msgid "Exiled States of America"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:49 lib/Games/Risk/Map/Risk.pm:41
+msgid "Alberta"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:50
+msgid "Canada"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:51
+msgid "République du Québec"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:52
+msgid "Continental Biospheres"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:53
+msgid "American Republic"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:54
+msgid "Mexico"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:55
+msgid "Nuevo Timoto"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:56
+msgid "Andean Nations"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:57
+msgid "Amazon Desert"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:58 lib/Games/Risk/Map/Risk.pm:51
+msgid "Argentina"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:59
+msgid "Iceland GRC"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:60
+msgid "Jotenheim"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:61
+msgid "Ukrayina"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:62
+msgid "New Avalon"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:63
+msgid "Warsaw Republic"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:64
+msgid "Andorra"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:65
+msgid "Imperial Balkania"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:66
+msgid "Saharan Empire"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:67 lib/Games/Risk/Map/Godstorm.pm:65
+#: lib/Games/Risk/Map/Risk.pm:60
+msgid "Egypt"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:68
+msgid "Zaire Military Zone"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:69
+msgid "Ministry of Djibouti"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:70
+msgid "Lesotho"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:71 lib/Games/Risk/Map/Risk.pm:64
+msgid "Madagascar"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:72 lib/Games/Risk/Map/Risk.pm:65
+msgid "Siberia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:73
+msgid "Enclave of the Bear"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:74
+msgid "Hong Kong"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:75 lib/Games/Risk/Map/Risk.pm:68
+msgid "Afghanistan"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:76 lib/Games/Risk/Map/Risk.pm:69
+msgid "Middle East"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:77
+msgid "United Indiastan"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:78
+msgid "Angkhor Wat"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:79
+msgid "Sakha"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:80
+msgid "Alden"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:81
+msgid "Khan Industrial State"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:82 lib/Games/Risk/Map/Risk.pm:75
+msgid "Japan"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:83
+msgid "Pevek"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:84
+msgid "Java Cartel"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:85 lib/Games/Risk/Map/Risk.pm:78
+msgid "New Guinea"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:86
+msgid "Aboriginal League"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:87
+msgid "Australian Testing Ground"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:88
+msgid "Sung Tzu"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:89
+msgid "Neo Tokyo"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:90
+msgid "Poseidon"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:91
+msgid "Hawaiian Preserve"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:92
+msgid "New Atlantis"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:93
+msgid "Western Ireland"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:94
+msgid "New York"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:95
+msgid "Nova Brasilia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:96
+msgid "Neo Paulo"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:97
+msgid "The Ivory Reef"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:98
+msgid "South Ceylon"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:99
+msgid "Microcorp"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:100
+msgid "Akara"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:178 lib/Games/Risk/Map/Risk.pm:145
+msgid "Conquer the continents of Asia and South America."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:179 lib/Games/Risk/Map/Risk.pm:146
+msgid ""
+"Conquer the continents of Europe and Australia and a third continent of your "
+"choice."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:180 lib/Games/Risk/Map/Risk.pm:147
+msgid "Conquer the continents of Asia and Africa."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:181 lib/Games/Risk/Map/Risk.pm:148
+msgid ""
+"Conquer the continents of Europe and South America and a third continent of "
+"your choice."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:182 lib/Games/Risk/Map/Risk.pm:149
+msgid "Conquer the continents of North America and Australia."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:183 lib/Games/Risk/Map/Risk.pm:150
+msgid "Conquer the continents of North America and Africa."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:184 lib/Games/Risk/Map/Godstorm.pm:157
+#: lib/Games/Risk/Map/Risk.pm:151
+msgid ""
+"Occupy 18 countries of your choice and occupy each with at least 2 armies."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:185 lib/Games/Risk/Map/Godstorm.pm:158
+#: lib/Games/Risk/Map/Risk.pm:152
+msgid ""
+"Occupy 24 countries of your choice and occupy each with at least 1 army."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:186 lib/Games/Risk/Map/Risk.pm:153
+msgid ""
+"Destroy all of Player1's Troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 countries."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:187 lib/Games/Risk/Map/Risk.pm:154
+msgid ""
+"Destroy all of Player2's Troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 countries."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:188 lib/Games/Risk/Map/Risk.pm:155
+msgid ""
+"Destroy all of Player3's Troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 countries."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:189 lib/Games/Risk/Map/Risk.pm:156
+msgid ""
+"Destroy all of Player4's Troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 countries."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:190 lib/Games/Risk/Map/Risk.pm:157
+msgid ""
+"Destroy all of Player5's Troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 countries."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk2210.pm:191 lib/Games/Risk/Map/Risk.pm:158
+msgid ""
+"Destroy all of Player6's Troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 countries."
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:18
+msgid "France"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:28
+msgid "Bretagne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:29
+msgid "Basse Normandie"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:30
+msgid "Haute Normandie"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:31
+msgid "Picardie"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:32
+msgid "Nord-Pas de Calais"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:33
+msgid "Champagne-Ardenne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:34
+msgid "Lorraine"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:35
+msgid "Alsace"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:36
+msgid "Franche-Comté"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:37
+msgid "Rhône-Alpes"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:38
+msgid "Provence-Alpes-Côte d'Azur"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:39
+msgid "Corse"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:40
+msgid "Languedoc-Roussillon"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:41
+msgid "Midi-Pyrénées"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:42
+msgid "Aquitaine"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:43
+msgid "Poitou-Charente"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:44
+msgid "Pays de la Loire"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:45
+msgid "Centre"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:46
+msgid "Ile de France"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:47
+msgid "Bourgogne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:48
+msgid "Auvergne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:49
+msgid "Limousin"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:57
+msgid "Ain"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:58
+msgid "Aisne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:59
+msgid "Allier"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:60
+msgid "Alpes de Haute Provence"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:61
+msgid "Hautes Alpes"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:62
+msgid "Alpes Maritimes"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:63
+msgid "Ardèche"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:64
+msgid "Ardennes"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:65
+msgid "Ariège"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:66
+msgid "Aube"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:67
+msgid "Aude"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:68
+msgid "Aveyron"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:69
+msgid "Bouches du Rhone"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:70
+msgid "Calvados"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:71
+msgid "Cantal"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:72
+msgid "Charente"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:73
+msgid "Charente Maritime"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:74
+msgid "Cher"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:75
+msgid "Corrèze"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:76
+msgid "Corse du Sud"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:77
+msgid "Cote d'Or"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:78
+msgid "Cotes d'Armor"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:79
+msgid "Creuse"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:80
+msgid "Dordogne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:81
+msgid "Doubs"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:82
+msgid "Drôme"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:83
+msgid "Eure"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:84
+msgid "Eure et Loire"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:85
+msgid "Finistère"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:86
+msgid "Gard"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:87
+msgid "Haute Garonne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:88
+msgid "Gers"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:89
+msgid "Gironde"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:90
+msgid "Hérault"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:91
+msgid "Ille et Vilaine"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:92
+msgid "Indre"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:93
+msgid "Indre et Loire"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:94
+msgid "Isère"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:95
+msgid "Jura"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:96
+msgid "Landes"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:97
+msgid "Loire et Cher"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:98
+msgid "Loire"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:99
+msgid "Haute Loire"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:100
+msgid "Loire Atlantique"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:101
+msgid "Loiret"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:102
+msgid "Lot"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:103
+msgid "Lot et Garonne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:104
+msgid "Lozère"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:105
+msgid "Maine et Loire"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:106
+msgid "Manche"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:107
+msgid "Marne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:108
+msgid "Haute Marne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:109
+msgid "Mayenne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:110
+msgid "Meurthe et Moselle"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:111
+msgid "Meuse"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:112
+msgid "Morbihan"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:113
+msgid "Moselle"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:114
+msgid "Nièvre"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:115
+msgid "Nord"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:116
+msgid "Oise"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:117
+msgid "Orne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:118
+msgid "Pas de Calais"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:119
+msgid "Puy de Dome"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:120
+msgid "Pyrénées Atlantiques"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:121
+msgid "Hautes Pyrénées"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:122
+msgid "Pyrénées Orientales"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:123
+msgid "Bas Rhin"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:124
+msgid "Haut Rhin"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:125
+msgid "Rhône"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:126
+msgid "Haute Saône"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:127
+msgid "Saône et Loire"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:128
+msgid "Sarthe"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:129
+msgid "Savoie"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:130
+msgid "Haute Savoie"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:131
+msgid "Paris"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:132
+msgid "Seine Maritime"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:133
+msgid "Seine et Marne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:134
+msgid "Yvelines"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:135
+msgid "Deux Sèvres"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:136
+msgid "Somme"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:137
+msgid "Tarn"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:138
+msgid "Tarn et Garonne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:139
+msgid "Var"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:140
+msgid "Vaucluse"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:141
+msgid "Vendée"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:142
+msgid "Vienne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:143
+msgid "Haute Vienne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:144
+msgid "Vosges"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:145
+msgid "Yonne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:146
+msgid "Territoire de Belfort"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:147
+msgid "Essonne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:148
+msgid "Hauts de Seine"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:149
+msgid "Seine Saint Denis"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:150
+msgid "Val de Marne"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:151
+msgid "Val d Oise"
+msgstr ""
+
+#: lib/Games/Risk/Map/France.pm:152
+msgid "Haute Corse"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:16
+msgid "Risk GodStorm"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:26
+msgid "Germania"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:27
+msgid "Atlantis"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:28
+msgid "Asia Minor"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:30
+msgid "Europa"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:31
+msgid "Hyrkania"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:42
+msgid "Liguria"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:44
+msgid "Apulia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:47
+msgid "Graecia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:48
+msgid "Minoa"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:49
+msgid "Ionia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:50
+msgid "Anatolia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:51
+msgid "Hibernia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:52
+msgid "Caledonia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:53
+msgid "Anglia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:54
+msgid "Thule"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:55
+msgid "Varangia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:56
+msgid "Galicia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:57
+msgid "Alemannia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:58
+msgid "Gaul"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:59
+msgid "Iberia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:60
+msgid "Atlas"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:61
+msgid "Carthage"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:62
+msgid "Gaitulia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:64
+msgid "Nubia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:66
+msgid "Kush"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:67
+msgid "Parthia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:68
+msgid "Sumer"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:69
+msgid "Assyria"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:70
+msgid "Phoenicia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:71
+msgid "Babylon"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:72
+msgid "Sheba"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:73
+msgid "Hesperide"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:74
+msgid "Tritonis"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:75
+msgid "Poseidonis"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:76
+msgid "Oricalcos"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:77
+msgid "Rus"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:78
+msgid "Scythia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:79
+msgid "Cimmeria"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:80
+msgid "Sarmathia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:151
+msgid "Conquer the continents of Europa and Atlantis."
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:152
+msgid ""
+"Conquer the continents of Asia Minor and Hyrkania and a third continent of "
+"your choice."
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:153
+msgid "Conquer the continents of Europa and Africa."
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:154
+msgid ""
+"Conquer the continents of Asia Minor and Atlantis and a third continent of "
+"your choice."
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:155
+msgid "Conquer the continents of Germania and Hyrkania."
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:156
+msgid "Conquer the continents of Germania and Africa."
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:159
+msgid ""
+"Destroy all of Player1's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 countries."
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:160
+msgid ""
+"Destroy all of Player2's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 countries."
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:161
+msgid ""
+"Destroy all of Player3's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 countries."
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:162
+msgid ""
+"Destroy all of Player4's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 countries."
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:163
+msgid ""
+"Destroy all of Player5's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 countries."
+msgstr ""
+
+#: lib/Games/Risk/Map/Godstorm.pm:164
+msgid ""
+"Destroy all of Player6's troops. If they are yours or they have already been "
+"destroyed by another player then your mission is: Occupy 24 countries."
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:16
+msgid "Risk"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:39
+msgid "Alaska"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:40
+msgid "North West Territory"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:42
+msgid "Western United States"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:43
+msgid "Central America"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:44
+msgid "Greenland"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:45
+msgid "Ontario"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:46
+msgid "Quebec"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:47
+msgid "Eastern United States"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:48
+msgid "Venezuela"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:49
+msgid "Peru"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:50
+msgid "Brazil"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:52
+msgid "Iceland"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:53
+msgid "Scandinavia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:54
+msgid "Ukraine"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:55
+msgid "Great Britain"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:56
+msgid "Northern Europe"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:57
+msgid "Western Europe"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:58
+msgid "Southern Europe"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:59
+msgid "North Africa"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:61
+msgid "Congo"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:62
+msgid "East Africa"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:63
+msgid "South Africa"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:66
+msgid "Ural"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:67
+msgid "China"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:70
+msgid "India"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:71
+msgid "Siam"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:72
+msgid "Yakutsk"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:73
+msgid "Irkutsk"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:74
+msgid "Mongolia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:76
+msgid "Kamchatka"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:77
+msgid "Indonesia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:79
+msgid "Western Australia"
+msgstr ""
+
+#: lib/Games/Risk/Map/Risk.pm:80
+msgid "Eastern Australia"
 msgstr ""
 
 #: lib/Games/Risk/GUI/MoveArmies.pm:72
-msgid "A country has been conquered!"
+msgid "Country invasion"
 msgstr ""
 
 #: lib/Games/Risk/GUI/MoveArmies.pm:73
+msgid "A country has been conquered!"
+msgstr ""
+
+#: lib/Games/Risk/GUI/MoveArmies.pm:74
 #, perl-format
 msgid "You have conquered %s while attacking from %s."
 msgstr ""
 
-#: lib/Games/Risk/GUI/MoveArmies.pm:113
+#: lib/Games/Risk/GUI/MoveArmies.pm:114
 msgid "Moving armies"
 msgstr ""
 
-#: lib/Games/Risk/GUI/MoveArmies.pm:114
+#: lib/Games/Risk/GUI/MoveArmies.pm:115
 msgid "Consolidate your positions"
 msgstr ""
 
-#: lib/Games/Risk/GUI/MoveArmies.pm:115
+#: lib/Games/Risk/GUI/MoveArmies.pm:116
 #, perl-format
 msgid "Moving armies from %s to %s."
 msgstr ""
 
-#: lib/Games/Risk/GUI/MoveArmies.pm:174
+#: lib/Games/Risk/GUI/MoveArmies.pm:175
 msgid "Armies to move"
 msgstr ""
 
-#: lib/Games/Risk/GUI/MoveArmies.pm:183
+#: lib/Games/Risk/GUI/MoveArmies.pm:184
 msgid "Move armies"
 msgstr ""
 
-#: lib/Games/Risk/GUI/GameOver.pm:62
-msgid "Game over"
-msgstr ""
-
-#: lib/Games/Risk/GUI/GameOver.pm:71
-#, perl-format
-msgid "%s won!"
-msgstr ""
-
-#: lib/Games/Risk/GUI/GameOver.pm:75
-msgid ""
-"Congratulations, you won!\n"
-"Maybe the artificial intelligences were not that hard?"
-msgstr ""
-
-#: lib/Games/Risk/GUI/GameOver.pm:76
-msgid ""
-"Unfortunately, you lost...\n"
-"Try harder next time!"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:136 lib/Games/Risk/GUI/Board.pm:1009
-msgid "Attacking from ..."
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:149 lib/Games/Risk/GUI/Board.pm:1036
-#, perl-format
-msgid "Attacking %s from %s"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:414 lib/Games/Risk/GUI/Board.pm:445
-msgid "Moving armies from..."
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:473 lib/Games/Risk/GUI/Board.pm:505
-#: lib/Games/Risk/GUI/Board.pm:967 lib/Games/Risk/GUI/Board.pm:1241
-#: lib/Games/Risk/GUI/Board.pm:1282
-#, perl-format
-msgid "%s armies left to place"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:547
-msgid "human"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:554
-#, perl-format
-msgid "computer - %s"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:574
-#, perl-format
-msgid "Player %s has lost"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:619
-msgid "~Game"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:621
-msgid "~Close"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:631
-msgid "~Quit"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:640
-msgid "~View"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:642
-msgid "~Cards"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:650
-msgid "C~ontinents"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:658 lib/Games/Risk/GUI/Board.pm:660
-msgid "~Help"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:668
-msgid "~About"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:688
-msgid "Game state: "
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:689
-msgid "place armies"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:700
-msgid "attack"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:711
-msgid "move armies"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:725
-msgid "undo all"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:726
-msgid "ready for attack"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:727
-msgid "attack again"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:728
-msgid "consolidate"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:729
-msgid "turn finished"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:767
-msgid "Players"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:774
-msgid "Dice arena"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:802
-msgid "Auto-reattack"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:806
-msgid ""
-"Automatically re-do last attack if attacker still has more than 3 armies"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:991
-#, perl-format
-msgid "Attacking ... from %s"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:1131
-msgid "Moving armies from ..."
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:1159
-#, perl-format
-msgid "Moving armies from %s to ..."
-msgstr ""
-
-#: lib/Games/Risk/GUI/Board.pm:1182
-#, perl-format
-msgid "Moving armies from %s to %s"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Startup.pm:45
+#: lib/Games/Risk/GUI/Startup.pm:48
 msgid "Napoleon Bonaparte"
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:46
+#: lib/Games/Risk/GUI/Startup.pm:49
 msgid "Staline"
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:47
+#: lib/Games/Risk/GUI/Startup.pm:50
 msgid "Alexander the Great"
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:48
+#: lib/Games/Risk/GUI/Startup.pm:51
 msgid "Julius Caesar"
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:49
+#: lib/Games/Risk/GUI/Startup.pm:52
 msgid "Attila"
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:50
+#: lib/Games/Risk/GUI/Startup.pm:53
 msgid "Genghis Kahn"
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:51
+#: lib/Games/Risk/GUI/Startup.pm:54
 msgid "Charlemagne"
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:52
+#: lib/Games/Risk/GUI/Startup.pm:55
 msgid "Saladin"
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:53
+#: lib/Games/Risk/GUI/Startup.pm:56
 msgid "Otto von Bismarck"
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:54
+#: lib/Games/Risk/GUI/Startup.pm:57
 msgid "Ramses II"
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:139
+#: lib/Games/Risk/GUI/Startup.pm:132
 msgid "Two players cannot have the same color."
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:146
+#: lib/Games/Risk/GUI/Startup.pm:139
 msgid "Two players cannot have the same name."
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:151
+#: lib/Games/Risk/GUI/Startup.pm:144
 msgid "Cannot have more than one human player."
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:152
+#: lib/Games/Risk/GUI/Startup.pm:145
 msgid "Game without any human player not (yet) supported."
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:155
+#: lib/Games/Risk/GUI/Startup.pm:148
 msgid "A player cannot have an empty name."
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:159
+#: lib/Games/Risk/GUI/Startup.pm:152
 msgid "Game should have at least 2 players."
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:296
+#: lib/Games/Risk/GUI/Startup.pm:294
 msgid "new game"
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:312
-msgid "New game"
+#: lib/Games/Risk/GUI/Startup.pm:322
+msgid "Map"
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:337
+#: lib/Games/Risk/GUI/Startup.pm:335
 msgid "New player..."
 msgstr ""
 
-#: lib/Games/Risk/GUI/Startup.pm:346
+#: lib/Games/Risk/GUI/Startup.pm:344
 msgid "Start game"
-msgstr ""
-
-#: lib/Games/Risk/GUI/Startup.pm:350
-msgid "Quit"
 msgstr ""
 
 #: lib/Games/Risk/AI/Blitzkrieg.pm:71

@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::AI;
 {
-  $Games::Risk::AI::VERSION = '3.112450';
+  $Games::Risk::AI::VERSION = '3.112590';
 }
 # ABSTRACT: base class for all ais
 
@@ -27,7 +27,7 @@ use constant K => $poe_kernel;
 use base qw{ Class::Accessor::Fast };
 __PACKAGE__->mk_accessors( qw{ game player } );
 
-use Games::Risk::Utils qw{ debug };
+use Games::Risk::Logger qw{ debug };
 
 #--
 # CLASS METHODS
@@ -115,7 +115,7 @@ sub exchange_cards {
     my ($self) = @_;
     my $me = $self->player;
 
-    my @cards = $me->cards;
+    my @cards = $me->cards->all;
     return if scalar(@cards) < 3;
 
     # dispatch cards on their type
@@ -298,7 +298,7 @@ Games::Risk::AI - base class for all ais
 
 =head1 VERSION
 
-version 3.112450
+version 3.112590
 
 =head1 SYNOPSIS
 
