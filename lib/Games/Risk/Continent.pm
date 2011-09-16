@@ -10,6 +10,8 @@ use Moose;
 use MooseX::Has::Sugar;
 use MooseX::SemiAffordanceAccessor;
 
+use Games::Risk::Logger qw{ debug };
+
 
 # -- attributes
 
@@ -50,7 +52,7 @@ has countries => ( rw, auto_deref, isa=>'ArrayRef[Games::Risk::Country]' );
 
 # -- finalizer
 
-sub DEMOLISH {  debug( "~continent " . $_[0]->name ."\n" ); }
+sub DEMOLISH { debug( "~continent " . $_[0]->name ."\n" ); }
 
 
 # -- public methods
