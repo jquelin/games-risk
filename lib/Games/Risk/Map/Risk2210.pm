@@ -3,7 +3,9 @@ use strict;
 use warnings;
 
 package Games::Risk::Map::Risk2210;
-# ABSTRACT: Risk 2210 Map
+# ABSTRACT: Risk 2210AD map
+
+use utf8;
 
 use Moose;
 use Games::Risk::I18n qw{ T };
@@ -13,7 +15,7 @@ extends 'Games::Risk::Map';
 # -- map  builders
 
 sub name   { "risk2210" }
-sub title  { T("Risk 2210 Map") }
+sub title  { T("Risk 2210 A.D.") }
 sub author { "Matthias Kuehl" }
 
 
@@ -46,7 +48,7 @@ return (
 [3, T("Exiled States of America"), 1, 222, 23, [2, 6, 14]],
 [4, T("Alberta"), 1, 85, 57, [1, 2, 5, 7]],
 [5, T("Canada"), 1, 125, 67, [2, 4, 6, 7, 8]],
-[6, T("Republique du Quebec"), 1, 175, 75, [3, 5, 8]],
+[6, T("République du Québec"), 1, 175, 75, [3, 5, 8]],
 [7, T("Continental Biospheres"), 1, 80, 100, [4, 5, 8, 9, 45]],
 [8, T("American Republic"), 1, 117, 121, [5, 6, 7, 9, 49]],
 [9, T("Mexico"), 1, 81, 161, [7, 8, 10]],

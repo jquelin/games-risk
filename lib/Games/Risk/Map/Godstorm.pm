@@ -14,7 +14,7 @@ extends 'Games::Risk::Map';
 
 sub name   { "godstorm" }
 sub title  { T("Risk GodStorm") }
-sub author { "map: godstorm.map" }
+sub author { "Yura Mamyrin" }
 
 
 # -- raw map information
@@ -173,4 +173,4 @@ __END__
 
 =head1 DESCRIPTION
 
-Risk GodStorm by map: godstorm.map.
+Risk GodStorm by Yura Mamyrin.

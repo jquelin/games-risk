@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::Map::Risk;
-# ABSTRACT: Risk Board Map
+# ABSTRACT: Risk board map
 
 use Moose;
 use Games::Risk::I18n qw{ T };
@@ -13,7 +13,7 @@ extends 'Games::Risk::Map';
 # -- map  builders
 
 sub name   { "risk" }
-sub title  { T("Risk Board Map") }
+sub title  { T("Risk") }
 sub author { "Yura Mamyrin" }
 
 

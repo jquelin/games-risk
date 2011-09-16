@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 package Games::Risk::Map::Roman_empire;
-# ABSTRACT: Roman Empire Map
+# ABSTRACT: Roman Empire map
 
 use Moose;
 use Games::Risk::I18n qw{ T };
@@ -13,7 +13,7 @@ extends 'Games::Risk::Map';
 # -- map  builders
 
 sub name   { "roman_empire" }
-sub title  { T("Roman Empire Map") }
+sub title  { T("Roman Empire") }
 sub author { "Adrien Schvalberg" }
 
 
