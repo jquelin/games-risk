@@ -12,10 +12,6 @@ use Moose;
 use MooseX::Has::Sugar;
 use MooseX::SemiAffordanceAccessor;
 
-use Games::Risk::Card;
-use Games::Risk::Continent;
-use Games::Risk::Country;
-use Games::Risk::Deck;
 use Games::Risk::Logger qw{ debug };
 use Games::Risk::Utils  qw{ $SHAREDIR };
 
@@ -57,6 +53,9 @@ sub DEMOLISH {  debug( "~map " . $_[0]->name ."\n" ) }
 
 sub _build_continents {
     my $self = shift;
+    require Games::Risk::Continent;
+    require Games::Risk::Country;
+
     my @continents;
 
     foreach my $raw ( $self->_raw_continents ) {
@@ -100,6 +99,9 @@ sub _build_continents {
 
 sub _build_cards {
     my $self = shift;
+    require Games::Risk::Card;
+    require Games::Risk::Deck;
+
     my @cards;
     foreach my $raw ( $self->_raw_cards ) {
         my ($type, $c) = @$raw;

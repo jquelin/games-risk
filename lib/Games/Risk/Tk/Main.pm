@@ -388,6 +388,7 @@ Sent when C<$player> has won the game.
         $self->_action('attack_done')->disable;
 
         # announce the winner
+        require Games::Risk::Tk::GameOver;
         Games::Risk::Tk::GameOver->new(
             parent => $mw,
             winner => $self->_curplayer,

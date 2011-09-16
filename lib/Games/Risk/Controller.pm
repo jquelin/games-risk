@@ -11,9 +11,6 @@ use Readonly;
 
 use Games::Risk::I18n      qw{ T };
 use Games::Risk::Logger    qw{ debug };
-use Games::Risk::Map;
-use Games::Risk::Player;
-use Games::Risk::Resources qw{ map_path };
 
 use constant K => $poe_kernel;
 
@@ -515,6 +512,7 @@ sub _onpriv_cards_exchange {
 #
 sub _onpriv_create_players {
     my $h = $_[HEAP];
+    require Games::Risk::Player;
 
     # create players according to startup information.
     my $players = delete $h->startup_info->{players};
