@@ -26,14 +26,8 @@ use Tk::ToolBar;
 
 with 'Tk::Role::HasWidgets';
 
-use Games::Risk::GUI::MoveArmies;
-use Games::Risk::GUI::Startup;
 use Games::Risk::I18n   qw{ T };
 use Games::Risk::Logger qw{ debug };
-use Games::Risk::Point;
-use Games::Risk::Tk::Cards;
-use Games::Risk::Tk::Continents;
-use Games::Risk::Tk::GameOver;
 use Games::Risk::Utils  qw{ $SHAREDIR };
 
 
@@ -477,6 +471,9 @@ action & statusbar.
         $self->_build_action_bar;
         $self->_build_player_bar;
         $self->_build_status_bar;
+        require Games::Risk::GUI::MoveArmies;
+        require Games::Risk::Tk::Cards;
+        require Games::Risk::Tk::Continents;
         Games::Risk::Tk::Cards->new({parent=>$mw});
         Games::Risk::Tk::Continents->new({parent=>$mw});
         Games::Risk::GUI::MoveArmies->spawn({parent=>$mw});
@@ -498,6 +495,7 @@ action & statusbar.
         my ($width, $height) = imgsize($bgpath);
 
         # store zoom information
+        require Games::Risk::Point;
         my $orig = Games::Risk::Point->new( { coordx=>$width, coordy=>$height } );
         my $zoom = Games::Risk::Point->new( { coordx=>1, coordy=>1 } );
         $self->_set_orig_bg_size( $orig );
@@ -787,6 +785,7 @@ Mark C<$player> as lost.
     # event: _new()
     # request for a new game to be started.
     event _new => sub {
+        require Games::Risk::GUI::Startup;
         Games::Risk::GUI::Startup->spawn;
     };
 
