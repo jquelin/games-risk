@@ -5,407 +5,236 @@ use warnings;
 package Games::Risk::Map;
 # ABSTRACT: map being played
 
-use File::Basename  qw{ fileparse };
+use Hash::NoRef;
 use List::Util      qw{ shuffle };
 use List::MoreUtils qw{ uniq };
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::SemiAffordanceAccessor;
 
-use aliased 'Games::Risk::Card';
-use aliased 'Games::Risk::Continent';
-use aliased 'Games::Risk::Country';
-
+use Games::Risk::Card;
+use Games::Risk::Continent;
+use Games::Risk::Country;
+use Games::Risk::Deck;
 use Games::Risk::Logger qw{ debug };
-
-use base qw{ Class::Accessor::Fast };
-__PACKAGE__->mk_accessors( qw{ background _cards greyscale _continents _countries _dirname } );
-
-my $id_continent;
+use Games::Risk::Utils  qw{ $SHAREDIR };
 
 
-#--
-# METHODS
+# -- attributes
+
+=attr continents
+
+=attr cards
+
+A L<Games::Risk::Deck> object holding the cards.
+
+=cut
+
+has continents => (
+    ro, lazy_build, auto_deref,
+    isa => 'ArrayRef[Games::Risk::Continent]',
+);
+
+has cards => ( ro, lazy_build, isa => 'Games::Risk::Deck' );
+
+# a hash containing weak references (thanks Hash::NoRef) to prevent
+# circular references to lock memory
+has _countries => (
+    ro, lazy_build,
+    isa     =>'HashRef',
+    traits  => [ 'Hash' ],
+    handles => {
+        countries    => 'values',
+        country_get  => 'get',
+        _country_set => 'set',
+    },
+);
+
+
+# -- initializers & finalizers
+
+sub DEMOLISH {  debug( "~map " . $_[0]->name ."\n" ) }
+
+sub _build_continents {
+    my $self = shift;
+    my @continents;
+
+    foreach my $raw ( $self->_raw_continents ) {
+        # create the continent
+        my ($id, $name, $bonus, $color) = @$raw;
+        debug( "new continent: $name\n" );
+        my $continent = Games::Risk::Continent->new( {
+                id    => $id,
+                name  => $name,
+                bonus => $bonus,
+                color => $color,
+                map   => $self,
+            } );
+        push @continents, $continent;
+
+        # populate the continent with the countries
+        my @raw_countries = grep { $_->[2] == $id } $self->_raw_countries;
+        my @countries;
+        foreach my $rawc ( @raw_countries ) {
+            # create the country
+            my ($id, $name, undef, $x, $y, $connections) = @$rawc;
+            debug( "new country: $name\n" );
+            my $country = Games::Risk::Country->new( {
+                    greyval     => $id,
+                    name        => $name,
+                    coordx      => $x,
+                    coordy      => $y,
+                    continent   => $continent,
+                    connections => $connections,
+                } );
+            push @countries, $country;
+
+            # store a cached value without increasing hash ref
+            $self->_country_set( $id => $country );
+        }
+        $continent->set_countries( \@countries );
+    }
+
+    return \@continents;
+}
+
+sub _build_cards {
+    my $self = shift;
+    my @cards;
+    foreach my $raw ( $self->_raw_cards ) {
+        my ($type, $c) = @$raw;
+        my $card = Games::Risk::Card->new( { type => $type } );
+        $card->set_country( $self->country_get($c) ) if defined $c;
+        push @cards, $card;
+    }
+    my $deck = Games::Risk::Deck->new( { cards => \@cards } );
+    return $deck;
+}
+
+sub _build__countries {
+    my %hash ;
+    tie %hash , 'Hash::NoRef';
+    return \%hash;
+}
+
+
+# -- class methods
+
+=method name
+
+    my $name = Games::Risk::Map::Foobar->name;
+
+The short map identifier, needs to be overriden by sub-classes.
+
+=method title
+
+    my $title = Games::Risk::Map::Foobar->title;
+
+The map title, needs to be overriden by sub-classes.
+
+=attr author
+
+    my $author = Games::Risk::Map::Foobar->author;
+
+The map author, needs to be overriden by sub-classes.
+
+=cut
+
+sub name   { die "name needs to be overriden" }
+sub title  { die "title needs to be overriden" }
+sub author { die "author needs to be overriden" }
+
 
 # -- public methods
 
-#
-# $map->destroy;
-#
-# Break all circular references in $map, to reclaim all continents and
-# countries objects.
-#
-sub destroy {
-    my ($self) = @_;
+=method sharedir
 
-    $_->destroy for @{ $self->_cards };
-    $_->destroy for $self->continents;
-    $_->destroy for $self->countries;
+    my $dir = $map->sharedir;
 
-    $self->_cards([]);
-    $self->_continents([]);
-    $self->_countries([]);
+Return the path to the private directory holding the map files.
+
+=cut
+
+sub sharedir { return $SHAREDIR->subdir( 'maps', $_[0]->name ); }
+
+
+=method background
+
+    my $bgpath = $map->background;
+
+Return the path to the background image for the board.
+
+=cut
+
+sub background {
+    my $self = shift;
+    my ($bg) = grep { /background/ } $self->sharedir->children;
+    return $bg->stringify;
 }
 
 
-#
-# my $card = $map->card_get;
-#
-# Return the next card from the card stack.
-#
-sub card_get {
-    my ($self) = @_;
+=attr greyscale
 
-    # get a card from the stack
-    my ($card, @cards) = @{ $self->_cards };
-    $self->_cards( \@cards );
+    my $gspath = $map->greyscale;
 
-    return $card;
+The path to the greyscale bitmap for the board.
+
+=cut
+
+sub greyscale {
+    my $self = shift;
+    my ($gs) = grep { /greyscale/ } $self->sharedir->children;
+    return $gs->stringify;
 }
 
 
-#
-# $map->card_return( $card );
-#
-# Push back $card in the card stack.
-#
-sub card_return {
-    my ($self, $card) = @_;
+=method continents_owned
 
-    my @cards = ( @{ $self->_cards }, $card );
-    $self->_cards( \@cards );
-}
+    my @owned = $map->continents_owned;
 
+Return a list with all continents that are owned by a single player.
 
-#
-# my @continents = $map->continents;
-#
-# Return the list of all continents in the $map.
-#
-sub continents {
-    my ($self) = @_;
-    return values %{ $self->_continents };
-}
+=cut
 
-
-#
-# my @owned = $map->continents_owned;
-#
-# Return a list with all continents that are owned by a single player.
-#
 sub continents_owned {
-    my ($self) = @_;
+    my $self = shift;
 
     my @owned = ();
     foreach my $continent ( $self->continents ) {
         my $nb = uniq map { $_->owner } $continent->countries;
         push @owned, $continent if $nb == 1;
     }
-
     return @owned;
 }
 
 
-#
-# my @countries = $map->countries;
-#
-# Return the list of all countries in the $map.
-#
-sub countries {
-    my ($self) = @_;
-    return values %{ $self->_countries };
-}
+=method countries
+
+    my @countries = $map->countries;
+
+Return the list of all countries in the C<$map>.
+
+=method country_get
+
+    my $country = $map->country_get($id);
+
+Return the country which id matches C<$id>.
+
+=cut
+
+# provided for free by handlers of _countries attribute
 
 
-#
-# my $country = $map->country_get($id);
-#
-# Return the country which id matches $id.
-#
-sub country_get {
-    my ($self, $id) = @_;
-    my ($country) = grep { $_->id == $id } $self->countries;
-    return $country;
-}
-
-
-sub load_file {
-    my ($self, $file) = @_;
-
-    my (undef, $dirname, undef) = fileparse($file);
-    $self->_dirname( $dirname );
-    $self->_continents({});
-    $self->_countries({});
-    $id_continent = 0; # reset continent id
-
-    open my $fh, '<', $file; # FIXME: error handling
-    my $section = '';
-    while ( defined( my $line = <$fh> ) ) {
-        $line =~ s/[\r\n]//g;  # remove all end of lines
-        $line =~ s/^\s+//;     # trim heading whitespaces
-        $line =~ s/\s+$//;     # trim trailing whitespaces
-        given ($line) {
-            when (/^\s*$/)    { } # empty lines
-            when (/^\s*[#;]/) { } # comments
-
-            when (/^\[([^]]+)\]$/) {
-                # changing [section]
-                $section = $1;
-            }
-
-            # further parsing
-            my $meth = "_parse_file_section_$section";
-            my $rv = $self->$meth($line);
-            if ( $rv ) {
-                debug( "parse error [$section]:$. $rv \t- line was: '$line'\n" );
-                # FIXME: error handling
-            }
-        }
-    }
-
-    # update the cards with the correct country
-    foreach my $card ( @{ $self->_cards } ) {
-        my $id = $card->country;
-        next unless defined $id;
-        my $country = $self->country_get($id);
-        if ( not defined $country ) {
-            debug( "cards parse error: country $id doesn't exist\n" );
-            next;
-        }
-        $card->country( $country );
-    }
-
-    #use Data::Dumper; say Dumper($self);
-    #use YAML; say Dump($self);
-}
-
-#--
-# SUBROUTINES
-
-# -- private subs
-
-# FIXME: the following are UGLY, UGLY, UGLY!
-
-sub _parse_file_section_ {
-    my ($self) = @_;
-    return 'wtf?';
-}
-
-sub _parse_file_section_borders {
-    my ($self, $line) = @_;
-    my ($id, @neighbours) = split /\s+/, $line;
-    my $country = $self->country_get($id);
-    return "country $id doesn't exist" unless defined $country;
-    foreach my $n ( @neighbours ) {
-        my $neighbour = $self->country_get($n);
-        return "country $n doesn't exist" unless defined $neighbour;
-        $country->neighbour_add($neighbour);
-    }
-    return;
-}
-
-sub _parse_file_section_continents {
-    my ($self, $line) = @_;
-
-    # get continent params
-    $id_continent++;
-    my ($name, $bonus, undef) = split /\s+/, $line;
-    $name =~ s/[-_]/ /g;
-
-    # create and store continent
-    my $continent = Continent->new({id=>$id_continent, name=>$name, bonus=>$bonus});
-    $self->_continents->{ $id_continent } = $continent;
-
-    return;
-}
-
-sub _parse_file_section_countries {
-    my ($self, $line) = @_;
-
-    # get country param
-    my ($greyval, $name, $idcont, $x, $y) = split /\s+/, $line;
-    $name =~ s/[-_]/ /g;
-    my $continent = $self->_continents->{$idcont};
-    return "continent '$idcont' does not exist" unless defined $continent;
-
-    # create and store country
-    my $country = Country->new({
-        greyval   => $greyval,
-        name      => $name,
-        continent => $continent,
-        coordx    => $x,
-        coordy    => $y
-    });
-    $self->_countries->{ $greyval } = $country;
-
-    # add cross-references
-    $continent->add_country($country);
-
-    return;
-}
-
-sub _parse_file_section_files {
-    my ($self, $line) = @_;
-    given ($line) {
-        when (/^map\s+(.*)$/) {
-            $self->greyscale( $self->_dirname . "/$1" );
-            return;
-        }
-        when (/^pic\s+(.*)$/) {
-            $self->background( $self->_dirname . "/$1" );
-            return;
-        }
-        when(/^crd\s+(.+)$/) {
-            my $file = $self->_dirname . "/$1";
-            open my $fh, '<', $file or die "cannot open '$file': $!";
-
-            my $section = '';
-            my @cards;
-            while ( defined( my $l = <$fh> ) ) {
-                $l =~ s/[\r\n]//g;  # remove all end of lines
-                $l =~ s/^\s+//;     # trim heading whitespaces
-                $l =~ s/\s+$//;     # trim trailing whitespaces
-
-                given ($l) {
-                    when (/^\s*$/)    { } # empty lines
-                    when (/^\s*[#;]/) { } # comments
-
-                    when (/^\[([^]]+)\]$/) {
-                        # changing [section]
-                        $section = $1;
-                    }
-
-                    # further parsing
-                    if ( $section eq 'cards' ) {
-                        my ($type, $id) = split /\s+/, lc $l;
-                        $type = 'artillery' if $type eq 'cannon';
-                        $type = 'joker'    if $type eq 'wildcard';
-                        push @cards, Card->new({ type=>$type, country=>$id });
-                    }
-
-                    # FIXME: parsing missions too in the same file
-                }
-            }
-            close $fh;
-            $self->_cards( [ shuffle @cards ] );
-            return;
-        }
-        return 'wtf?';
-    }
-}
-
+__PACKAGE__->meta->make_immutable;
 1;
-
 __END__
 
-
-
-=head1 SYNOPSIS
-
-    my $id = Games::Risk::Map->new(\%params);
-
+=for Pod::Coverage
+    DEMOLISH
 
 
 =head1 DESCRIPTION
 
 This module implements a map, pointing to the continents, the
 countries, etc. of the game currently in play.
-
-
-
-=head1 METHODS
-
-=head2 Constructor
-
-=over 4
-
-=item * my $player = Games::Risk::Map->new( \%params )
-
-
-=back
-
-
-=head2 Accessors
-
-
-The following accessors (acting as mutators, ie getters and setters) are
-available for C<Games::Risk::Map> objects:
-
-
-=over 4
-
-=item * background()
-
-the path to the background image for the board.
-
-
-=item * greyscale()
-
-the path to the greyscale bitmap for the board.
-
-
-=back
-
-
-=head2 Object methods
-
-=over 4
-
-=item * $map->destroy()
-
-Break all circular references in C<$map>, to prevent memory leaks.
-
-
-=item * my $card = $map->card_get()
-
-Return the next card from the cards stack.
-
-
-=item * $map->card_return( $card )
-
-Push back a $card in the card stack.
-
-
-=item * my @continents = $map->continents()
-
-Return the list of all continents in the C<$map>.
-
-
-=item * my @owned = $map->continents_owned;
-
-Return a list with all continents that are owned by a single player.
-
-
-=item * my @countries = $map->countries()
-
-Return the list of all countries in the C<$map>.
-
-
-=item * my $country = $map->country_get($id)
-
-Return the country which id matches C<$id>.
-
-
-=item * $map->load_file( \%params )
-
-=back
-
-
-
-=begin quiet_pod_coverage
-
-=item Card (inserted by aliased)
-
-=item Continent (inserted by aliased)
-
-=item Country (inserted by aliased)
-
-=end quiet_pod_coverage
-
-
-
-=head1 SEE ALSO
-
-L<Games::Risk>.
-
 

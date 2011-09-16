@@ -295,7 +295,7 @@ sub _onpub_cards_exchange {
     $h->send_to_one($player, 'card_del', @cards);
 
     # finally, put back the cards on the deck
-    $h->map->card_return($_) foreach @cards;
+    $h->map->cards->return($_) foreach @cards;
 }
 
 
@@ -412,8 +412,6 @@ sub _onpub_shutdown {
 
     # close all ais & windows
     $h->send_to_all('shutdown');
-
-    # remove all circular references
     $h->destroy;
 }
 

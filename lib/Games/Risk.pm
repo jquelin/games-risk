@@ -68,11 +68,10 @@ sub cards_reset {
 
     # return all distributed cards to the deck.
     foreach my $player ( $self->players ) {
-        my @cards = $player->cards;
-        $map->card_return($_) for @cards;
+        my @cards = $player->cards->all;
+        $map->cards->return($_) for @cards;
     }
 }
-
 
 #
 # $game->destroy;
@@ -91,11 +90,11 @@ sub destroy {
     $self->_players_turn_todo([]);
 
     # breaking map (& countries & continents) references
-    $self->map->destroy;
     $self->map(undef);
     $self->src(undef);
     $self->dst(undef);
 }
+
 
 
 #

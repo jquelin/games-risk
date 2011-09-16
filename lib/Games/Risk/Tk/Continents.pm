@@ -186,7 +186,7 @@ sub _build_gui {
     my ($self, $f) = @_;
 
     # populate continents list
-    my $map = Games::Risk->new->map;
+    my $map = Games::Risk->instance->map;
     my @continents =
         sort {
              $b->bonus <=> $a->bonus ||
@@ -217,10 +217,11 @@ sub _build_gui {
     $tm->tagCell( 'title', "0,$_" ) for 0..2;
     my $row = 0;
     foreach my $c ( @continents ) {
+        my @countries = $c->countries;
         $row++;
         $self->_set_value( "$row,0", $c->name );
         $self->_set_value( "$row,1", $c->bonus );
-        $self->_set_value( "$row,2", scalar( $c->countries ) );
+        $self->_set_value( "$row,2", scalar( @countries ) );
         $tm->tagCell( 'left', "$row,0" );
         $tm->tagCell( 'static', "$row,$_" ) for 1..2;
     }

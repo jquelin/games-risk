@@ -969,7 +969,7 @@ Mark C<$player> as lost.
             # in a game
             # create a new image resized to fit new dims
             my $magick = Image::Magick->new;
-            $magick->Read( $self->_map->background );
+            $magick->Read( $map->background );
             $magick->Scale(width=>$neww, height=>$newh);
 
             # install this new image inplace of previous background
@@ -991,7 +991,7 @@ Mark C<$player> as lost.
 
             # force country redraw, for them to be correctly placed on the new
             # map.
-            $K->yield('_country_redraw', $_) foreach $self->_map->countries;
+            $K->yield('_country_redraw', $_) foreach $map->countries;
 
         } else {
             # delete existing images
