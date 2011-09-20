@@ -31,7 +31,7 @@ sub opt_spec {
 sub execute {
     my ($self, $opts, $args) = @_;
     my $mapsdir  = dir( qw{ share maps } );
-    my $template = $mapsdir->file( "template" );
+    my $template = $SHAREDIR->file( qw{ maps template } );
 
     my $file   = file($opts->{input});
     my $mapdir = $file->parent;
