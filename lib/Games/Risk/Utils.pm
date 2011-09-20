@@ -11,7 +11,7 @@ use Path::Class;
  
 our @EXPORT_OK = qw{ $SHAREDIR debug };
 
-our $SHAREDIR = -e file("dist.ini") && -d dir("share")
+our $SHAREDIR = -e file("dist.ini") && file("dist.ini")->slurp !~ /Maps/
     ? dir ("share")
     : File::ShareDir::PathClass->dist_dir("Games-Risk");
 
