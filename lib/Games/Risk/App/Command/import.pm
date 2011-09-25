@@ -220,8 +220,8 @@ sub execute {
     $fh->print( $code );
     $fh->close;
 
-    my $bg = $sharedir->file( $background =~ s/^([^.]+)/background/r );
-    my $gs = $sharedir->file( $greyscale  =~ s/^([^.]+)/greyscale/r );
+    my $bg = $sharedir->file( $background->basename =~ s/^([^.]+)/background/r );
+    my $gs = $sharedir->file( $greyscale->basename  =~ s/^([^.]+)/greyscale/r );
     debug( "copying background to $bg\n" );
     debug( "copying greyscale  to $gs\n" );
     copy( $background, $bg->stringify );
