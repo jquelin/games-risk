@@ -6,14 +6,25 @@ package Games::Risk::Map::__MODULE_NAME__;
 # ABSTRACT: __MAP_TITLE__
 
 use Moose;
-use Games::Risk::I18n qw{ T };
 extends 'Games::Risk::Map';
+
+
+use Locale::Messages   qw{ :locale_h bind_textdomain_filter turn_utf_8_on };
+use Locale::TextDomain "Games-Risk-Map-__MODULE_NAME__";
+use Moose;
+
+extends 'Games::Risk::ExtraMaps::Imaginary';
+
+my $domain ="Games-Risk-Map-__MODULE_NAME__";
+bindtextdomain $domain, __PACKAGE__->localedir->stringify;
+bind_textdomain_codeset $domain, "utf-8";
+bind_textdomain_filter  $domain, sub { turn_utf_8_on($_[0]) };
 
 
 # -- map  builders
 
 sub name   { "__MAP_NAME__" }
-sub title  { T("__MAP_TITLE__") }
+sub title  { __("__MAP_TITLE__") }
 sub author { "__MAP_AUTHOR__" }
 
 
@@ -22,7 +33,7 @@ sub author { "__MAP_AUTHOR__" }
 sub _raw_continents {
 return (
 # id, name, bonus, color
-#   0, T('Europe'), 5, blue
+#   0, __('Europe'), 5, blue
 __MAP_CONTINENTS__
 );
 }
@@ -30,7 +41,7 @@ __MAP_CONTINENTS__
 sub _raw_countries {
 return (
 # greyscale, name, continent id, x, y, [connections]
-#   1, T('Alaska'), 1, 43, 67, [ 1,2,3,38 ]
+#   1, __('Alaska'), 1, 43, 67, [ 1,2,3,38 ]
 __MAP_COUNTRIES__
 );
 }
@@ -48,11 +59,11 @@ __MAP_CARDS__
 sub _raw_missions {
 return (
 # id player to destroy, nb coutnry to occupy + min armies, 3 x id of continents to occupy, description
-#   0, 0,0,5,2,0,T("Conquer the continents of ASIA and SOUTH AMERICA.")
-#   0, 0,0,3,6,*,T("Conquer the continents of EUROPE and AUSTRALIA and a third continent of your choice.")
-#   0,18,2,0,0,0,T("Occupy 18 countries of your choice and occupy each with at least 2 armies.")
-#   0,24,1,0,0,0,T("Occupy 24 countries of your choice and occupy each with at least 1 army.")
-#   1,24,1,0,0,0,T("Destroy all of PLAYER1's TROOPS. If they are yours or they have already been destroyed by another player then your mission is: Occupy 24 countries.")
+#   0, 0,0,5,2,0,__("Conquer the continents of ASIA and SOUTH AMERICA.")
+#   0, 0,0,3,6,*,__("Conquer the continents of EUROPE and AUSTRALIA and a third continent of your choice.")
+#   0,18,2,0,0,0,__("Occupy 18 countries of your choice and occupy each with at least 2 armies.")
+#   0,24,1,0,0,0,__("Occupy 24 countries of your choice and occupy each with at least 1 army.")
+#   1,24,1,0,0,0,__("Destroy all of PLAYER1's TROOPS. If they are yours or they have already been destroyed by another player then your mission is: Occupy 24 countries.")
 __MAP_MISSIONS__
 );
 }
