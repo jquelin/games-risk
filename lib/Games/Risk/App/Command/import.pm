@@ -1,4 +1,4 @@
-use 5.014;
+use 5.010;
 use strict;
 use warnings;
 
@@ -30,6 +30,9 @@ sub opt_spec {
 
 sub execute {
     my ($self, $opts, $args) = @_;
+    eval "use 5.014";
+    die $@ if $@;
+
     my $mapsdir  = dir( qw{ share maps } );
     my $template = $SHAREDIR->file( qw{ maps template } );
 
