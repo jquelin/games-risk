@@ -160,6 +160,17 @@ Return the path to the private directory holding the map files.
 sub sharedir { return $SHAREDIR->subdir( 'maps', $_[0]->name ); }
 
 
+=method localedir
+
+    my $dir = $map->localedir;
+
+Return the path to the private directory holding the locale files.
+
+=cut
+
+sub localedir { return $_[0]->sharedir->parent->parent->subdir("locale"); }
+
+
 =method background
 
     my $bgpath = $map->background;
