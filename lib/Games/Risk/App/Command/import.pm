@@ -235,7 +235,7 @@ sub _as_code {
         return unless $ctx->is_scalar;
         return unless defined $$ref;
         return unless $$ref =~ /^[A-Z]/;
-        return { dump => qq{T("$$ref")} };
+        return { dump => qq{__("$$ref")} };
     } );
     $code =~ s/\n//g;
     return "$code,";
