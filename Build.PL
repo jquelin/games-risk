@@ -20,7 +20,7 @@ my %module_build_args = (
     "Jerome Quelin"
   ],
   "dist_name" => "Games-Risk",
-  "dist_version" => "3.112590",
+  "dist_version" => "3.112690",
   "license" => "gpl",
   "module_name" => "Games::Risk",
   "recommends" => {},
@@ -81,9 +81,8 @@ my %module_build_args = (
     "YAML::Tiny" => 0,
     "base" => 0,
     "constant" => 0,
-    "perl" => "5.014",
+    "perl" => "5.010",
     "strict" => 0,
-    "utf8" => 0,
     "warnings" => 0
   },
   "script_files" => [

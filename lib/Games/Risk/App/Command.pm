@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::App::Command;
 {
-  $Games::Risk::App::Command::VERSION = '3.112590';
+  $Games::Risk::App::Command::VERSION = '3.112690';
 }
 # ABSTRACT: base class for prisk sub-commands
 
@@ -31,7 +31,7 @@ Games::Risk::App::Command - base class for prisk sub-commands
 
 =head1 VERSION
 
-version 3.112590
+version 3.112690
 
 =head1 DESCRIPTION
 

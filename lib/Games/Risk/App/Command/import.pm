@@ -7,13 +7,13 @@
 #
 #   The GNU General Public License, Version 3, June 2007
 #
-use 5.014;
+use 5.010;
 use strict;
 use warnings;
 
 package Games::Risk::App::Command::import;
 {
-  $Games::Risk::App::Command::import::VERSION = '3.112590';
+  $Games::Risk::App::Command::import::VERSION = '3.112690';
 }
 # ABSTRACT: import a map designed for other risk games
 
@@ -42,8 +42,11 @@ sub opt_spec {
 
 sub execute {
     my ($self, $opts, $args) = @_;
+    eval "use 5.014";
+    die $@ if $@;
+
     my $mapsdir  = dir( qw{ share maps } );
-    my $template = $mapsdir->file( "template" );
+    my $template = $SHAREDIR->file( qw{ maps template } );
 
     my $file   = file($opts->{input});
     my $mapdir = $file->parent;
@@ -229,8 +232,8 @@ sub execute {
     $fh->print( $code );
     $fh->close;
 
-    my $bg = $sharedir->file( $background =~ s/^([^.]+)/background/r );
-    my $gs = $sharedir->file( $greyscale  =~ s/^([^.]+)/greyscale/r );
+    my $bg = $sharedir->file( $background->basename =~ s/^([^.]+)/background/r );
+    my $gs = $sharedir->file( $greyscale->basename  =~ s/^([^.]+)/greyscale/r );
     debug( "copying background to $bg\n" );
     debug( "copying greyscale  to $gs\n" );
     copy( $background, $bg->stringify );
@@ -244,7 +247,7 @@ sub _as_code {
         return unless $ctx->is_scalar;
         return unless defined $$ref;
         return unless $$ref =~ /^[A-Z]/;
-        return { dump => qq{T("$$ref")} };
+        return { dump => qq{__("$$ref")} };
     } );
     $code =~ s/\n//g;
     return "$code,";
@@ -261,7 +264,7 @@ Games::Risk::App::Command::import - import a map designed for other risk games
 
 =head1 VERSION
 
-version 3.112590
+version 3.112690
 
 =head1 DESCRIPTION
 

@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk;
 {
-  $Games::Risk::VERSION = '3.112590';
+  $Games::Risk::VERSION = '3.112690';
 }
 # ABSTRACT: classical 'risk' board game
 
@@ -252,7 +252,7 @@ Games::Risk - classical 'risk' board game
 
 =head1 VERSION
 
-version 3.112590
+version 3.112690
 
 =head1 DESCRIPTION
 

@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Map;
 {
-  $Games::Risk::Map::VERSION = '3.112590';
+  $Games::Risk::Map::VERSION = '3.112690';
 }
 # ABSTRACT: map being played
 
@@ -140,6 +140,10 @@ sub sharedir { return $SHAREDIR->subdir( 'maps', $_[0]->name ); }
 
 
 
+sub localedir { return $_[0]->sharedir->parent->parent->subdir("locale"); }
+
+
+
 sub background {
     my $self = shift;
     my ($bg) = grep { /background/ } $self->sharedir->children;
@@ -184,7 +188,7 @@ Games::Risk::Map - map being played
 
 =head1 VERSION
 
-version 3.112590
+version 3.112690
 
 =head1 DESCRIPTION
 
@@ -230,6 +234,12 @@ The map title, needs to be overriden by sub-classes.
     my $dir = $map->sharedir;
 
 Return the path to the private directory holding the map files.
+
+=head2 localedir
+
+    my $dir = $map->localedir;
+
+Return the path to the private directory holding the locale files.
 
 =head2 background
 

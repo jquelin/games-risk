@@ -15,7 +15,7 @@ use warnings;
 
 package prisk;
 {
-  $prisk::VERSION = '3.112590';
+  $prisk::VERSION = '3.112690';
 }
 # ABSTRACT: classical Risk game written in perl
 
@@ -23,6 +23,7 @@ package prisk;
 $ENV{MOOSE_ERROR_STYLE} = "croak";
 
 use Find::Lib "../lib";
+use lib "lib";
 
 use Games::Risk::App;
 Games::Risk::App->run;
@@ -38,7 +39,7 @@ prisk - classical Risk game written in perl
 
 =head1 VERSION
 
-version 3.112590
+version 3.112690
 
 =head1 SYNOPSIS
 

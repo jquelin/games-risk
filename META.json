@@ -4,7 +4,7 @@
       "Jerome Quelin"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300000, CPAN::Meta::Converter version 2.112150",
+   "generated_by" : "Dist::Zilla version 4.300002, CPAN::Meta::Converter version 2.112150",
    "license" : [
       "gpl_3"
    ],
@@ -81,9 +81,8 @@
             "YAML::Tiny" : 0,
             "base" : 0,
             "constant" : 0,
-            "perl" : "5.014",
+            "perl" : "5.010",
             "strict" : 0,
-            "utf8" : 0,
             "warnings" : 0
          }
       },
@@ -98,151 +97,139 @@
    "provides" : {
       "Games::Risk" : {
          "file" : "lib/Games/Risk.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::AI" : {
          "file" : "lib/Games/Risk/AI.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::AI::Blitzkrieg" : {
          "file" : "lib/Games/Risk/AI/Blitzkrieg.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::AI::Dumb" : {
          "file" : "lib/Games/Risk/AI/Dumb.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::AI::Hegemon" : {
          "file" : "lib/Games/Risk/AI/Hegemon.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::App" : {
          "file" : "lib/Games/Risk/App.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::App::Command" : {
          "file" : "lib/Games/Risk/App/Command.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::App::Command::import" : {
          "file" : "lib/Games/Risk/App/Command/import.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::App::Command::play" : {
          "file" : "lib/Games/Risk/App/Command/play.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Card" : {
          "file" : "lib/Games/Risk/Card.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Config" : {
          "file" : "lib/Games/Risk/Config.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Continent" : {
          "file" : "lib/Games/Risk/Continent.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Controller" : {
          "file" : "lib/Games/Risk/Controller.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Country" : {
          "file" : "lib/Games/Risk/Country.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Deck" : {
          "file" : "lib/Games/Risk/Deck.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
+      },
+      "Games::Risk::ExtraMaps" : {
+         "file" : "lib/Games/Risk/ExtraMaps.pm",
+         "version" : "3.112690"
       },
       "Games::Risk::GUI" : {
          "file" : "lib/Games/Risk/GUI.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::GUI::MoveArmies" : {
          "file" : "lib/Games/Risk/GUI/MoveArmies.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::GUI::Startup" : {
          "file" : "lib/Games/Risk/GUI/Startup.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::I18n" : {
          "file" : "lib/Games/Risk/I18n.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Logger" : {
          "file" : "lib/Games/Risk/Logger.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Map" : {
          "file" : "lib/Games/Risk/Map.pm",
-         "version" : "3.112590"
-      },
-      "Games::Risk::Map::France" : {
-         "file" : "lib/Games/Risk/Map/France.pm",
-         "version" : "3.112590"
-      },
-      "Games::Risk::Map::Godstorm" : {
-         "file" : "lib/Games/Risk/Map/Godstorm.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Map::Risk" : {
          "file" : "lib/Games/Risk/Map/Risk.pm",
-         "version" : "3.112590"
-      },
-      "Games::Risk::Map::Risk2210" : {
-         "file" : "lib/Games/Risk/Map/Risk2210.pm",
-         "version" : "3.112590"
-      },
-      "Games::Risk::Map::Roman_empire" : {
-         "file" : "lib/Games/Risk/Map/Roman_empire.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Player" : {
          "file" : "lib/Games/Risk/Player.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Point" : {
          "file" : "lib/Games/Risk/Point.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Resources" : {
          "file" : "lib/Games/Risk/Resources.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Tk::About" : {
          "file" : "lib/Games/Risk/Tk/About.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Tk::Cards" : {
          "file" : "lib/Games/Risk/Tk/Cards.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Tk::Continents" : {
          "file" : "lib/Games/Risk/Tk/Continents.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Tk::GameOver" : {
          "file" : "lib/Games/Risk/Tk/GameOver.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Tk::Help" : {
          "file" : "lib/Games/Risk/Tk/Help.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Tk::Main" : {
          "file" : "lib/Games/Risk/Tk/Main.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Types" : {
          "file" : "lib/Games/Risk/Types.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       },
       "Games::Risk::Utils" : {
          "file" : "lib/Games/Risk/Utils.pm",
-         "version" : "3.112590"
+         "version" : "3.112690"
       }
    },
    "release_status" : "stable",
@@ -258,18 +245,18 @@
          "web" : "http://github.com/jquelin/games-risk"
       }
    },
-   "version" : "3.112590",
+   "version" : "3.112690",
    "x_Dist_Zilla" : {
       "plugins" : [
          {
             "class" : "Dist::Zilla::Plugin::AutoVersion",
             "name" : "@JQUELIN/AutoVersion",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::GatherDir",
             "name" : "@JQUELIN/GatherDir",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::CompileTests",
@@ -289,17 +276,17 @@
          {
             "class" : "Dist::Zilla::Plugin::MinimumVersionTests",
             "name" : "@JQUELIN/MinimumVersionTests",
-            "version" : "1.101421"
+            "version" : "2.0.1"
          },
          {
             "class" : "Dist::Zilla::Plugin::PodCoverageTests",
             "name" : "@JQUELIN/PodCoverageTests",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::PodSyntaxTests",
             "name" : "@JQUELIN/PodSyntaxTests",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::ReportVersions::Tiny",
@@ -309,37 +296,37 @@
          {
             "class" : "Dist::Zilla::Plugin::PruneCruft",
             "name" : "@JQUELIN/PruneCruft",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::PruneFiles",
             "name" : "@JQUELIN/PruneFiles",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::ManifestSkip",
             "name" : "@JQUELIN/ManifestSkip",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::AutoPrereqs",
             "name" : "@JQUELIN/AutoPrereqs",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::ExtraTests",
             "name" : "@JQUELIN/ExtraTests",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::NextRelease",
             "name" : "@JQUELIN/NextRelease",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::PkgVersion",
             "name" : "@JQUELIN/PkgVersion",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::PodWeaver",
@@ -354,12 +341,12 @@
          {
             "class" : "Dist::Zilla::Plugin::ExecDir",
             "name" : "@JQUELIN/ExecDir",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::ShareDir",
             "name" : "@JQUELIN/ShareDir",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::Bugtracker",
@@ -384,37 +371,37 @@
          {
             "class" : "Dist::Zilla::Plugin::MetaConfig",
             "name" : "@JQUELIN/MetaConfig",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::License",
             "name" : "@JQUELIN/License",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::MetaYAML",
             "name" : "@JQUELIN/MetaYAML",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::MetaJSON",
             "name" : "@JQUELIN/MetaJSON",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::ModuleBuild",
             "name" : "@JQUELIN/ModuleBuild",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::Readme",
             "name" : "@JQUELIN/Readme",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::Manifest",
             "name" : "@JQUELIN/Manifest",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::CheckChangeLog",
@@ -424,67 +411,67 @@
          {
             "class" : "Dist::Zilla::Plugin::Git::Check",
             "name" : "@JQUELIN/Git::Check",
-            "version" : "1.112380"
+            "version" : "1.112510"
          },
          {
             "class" : "Dist::Zilla::Plugin::Git::Commit",
             "name" : "@JQUELIN/Git::Commit",
-            "version" : "1.112380"
+            "version" : "1.112510"
          },
          {
             "class" : "Dist::Zilla::Plugin::Git::CommitBuild",
             "name" : "@JQUELIN/Git::CommitBuild",
-            "version" : "1.112380"
+            "version" : "1.112510"
          },
          {
             "class" : "Dist::Zilla::Plugin::Git::Tag",
             "name" : "@JQUELIN/TagMaster",
-            "version" : "1.112380"
+            "version" : "1.112510"
          },
          {
             "class" : "Dist::Zilla::Plugin::Git::Tag",
             "name" : "@JQUELIN/TagRelease",
-            "version" : "1.112380"
+            "version" : "1.112510"
          },
          {
             "class" : "Dist::Zilla::Plugin::Git::Push",
             "name" : "@JQUELIN/Git::Push",
-            "version" : "1.112380"
+            "version" : "1.112510"
          },
          {
             "class" : "Dist::Zilla::Plugin::UploadToCPAN",
             "name" : "@JQUELIN/UploadToCPAN",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::FinderCode",
             "name" : ":InstallModules",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::FinderCode",
             "name" : ":IncModules",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::FinderCode",
             "name" : ":TestFiles",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::FinderCode",
             "name" : ":ExecFiles",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::FinderCode",
             "name" : ":ShareFiles",
-            "version" : "4.300000"
+            "version" : "4.300002"
          },
          {
             "class" : "Dist::Zilla::Plugin::FinderCode",
             "name" : ":MainModule",
-            "version" : "4.300000"
+            "version" : "4.300002"
          }
       ],
       "zilla" : {
@@ -492,7 +479,7 @@
          "config" : {
             "is_trial" : "0"
          },
-         "version" : "4.300000"
+         "version" : "4.300002"
       }
    }
 }

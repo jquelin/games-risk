@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Tk::Cards;
 {
-  $Games::Risk::Tk::Cards::VERSION = '3.112590';
+  $Games::Risk::Tk::Cards::VERSION = '3.112690';
 }
 # ABSTRACT: cards listing
 
@@ -395,7 +395,7 @@ Games::Risk::Tk::Cards - cards listing
 
 =head1 VERSION
 
-version 3.112590
+version 3.112690
 
 =head1 DESCRIPTION
 

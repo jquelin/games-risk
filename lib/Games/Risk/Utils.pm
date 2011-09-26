@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Utils;
 {
-  $Games::Risk::Utils::VERSION = '3.112590';
+  $Games::Risk::Utils::VERSION = '3.112690';
 }
 # ABSTRACT: various utilities for prisk
 
@@ -23,7 +23,7 @@ use Path::Class;
  
 our @EXPORT_OK = qw{ $SHAREDIR debug };
 
-our $SHAREDIR = -e file("dist.ini") && -d dir("share")
+our $SHAREDIR = -e file("dist.ini") && file("dist.ini")->slurp !~ /Maps/
     ? dir ("share")
     : File::ShareDir::PathClass->dist_dir("Games-Risk");
 
@@ -38,7 +38,7 @@ Games::Risk::Utils - various utilities for prisk
 
 =head1 VERSION
 
-version 3.112590
+version 3.112690
 
 =head1 DESCRIPTION
 

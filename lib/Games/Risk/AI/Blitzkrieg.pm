@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::AI::Blitzkrieg;
 {
-  $Games::Risk::AI::Blitzkrieg::VERSION = '3.112590';
+  $Games::Risk::AI::Blitzkrieg::VERSION = '3.112690';
 }
 # ABSTRACT: easy ai that does blitzkrieg attacks
 
@@ -163,7 +163,7 @@ Games::Risk::AI::Blitzkrieg - easy ai that does blitzkrieg attacks
 
 =head1 VERSION
 
-version 3.112590
+version 3.112690
 
 =head1 SYNOPSIS
 

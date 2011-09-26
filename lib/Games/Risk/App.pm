@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::App;
 {
-  $Games::Risk::App::VERSION = '3.112590';
+  $Games::Risk::App::VERSION = '3.112690';
 }
 # ABSTRACT: prisk's App::Cmd
 
@@ -33,7 +33,7 @@ Games::Risk::App - prisk's App::Cmd
 
 =head1 VERSION
 
-version 3.112590
+version 3.112690
 
 =head1 DESCRIPTION
 

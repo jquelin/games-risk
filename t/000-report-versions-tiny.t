@@ -12,7 +12,7 @@ my $v = "\n";
 
 eval {                     # no excuses!
     # report our Perl details
-    my $want = '5.014';
+    my $want = '5.010';
     my $pv = ($^V || $]);
     $v .= "perl: $pv (wanted $want) on $^O from $^X\n\n";
 };
@@ -108,7 +108,6 @@ eval { $v .= pmver('YAML::Tiny','any version') };
 eval { $v .= pmver('base','any version') };
 eval { $v .= pmver('constant','any version') };
 eval { $v .= pmver('strict','any version') };
-eval { $v .= pmver('utf8','any version') };
 eval { $v .= pmver('warnings','any version') };
 
 
