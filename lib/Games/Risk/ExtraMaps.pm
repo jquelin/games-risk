@@ -14,7 +14,7 @@ extends 'Games::Risk::Map';
  
 # -- public method
 
-sub sharedir {
+sub sharebase {
     my $self  = shift;
     my $extra   = $self->extra_category;
     my $distini = file("dist.ini");
@@ -25,11 +25,12 @@ sub sharedir {
             if $line =~ /$extra/;
     }
 
-    return File::ShareDir::PathClass->dist_dir("Games-Risk-Maps-$extra");
+    return File::ShareDir::PathClass->dist_dir("Games-Risk-ExtraMaps-$extra");
 }
 
 
-
+no Moose;
+__PACKAGE__->meta->make_immutable;
 1;
 __END__
 

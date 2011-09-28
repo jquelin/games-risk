@@ -149,6 +149,17 @@ sub author { die "author needs to be overriden" }
 
 # -- public methods
 
+=method sharebase
+
+    my $dir = $self->sharebase;
+
+Return the path to the base share directory to use (either the
+games-risk one, or one of the extra maps dists).
+
+=cut
+
+sub sharebase { $SHAREDIR }
+
 =method sharedir
 
     my $dir = $map->sharedir;
@@ -157,7 +168,7 @@ Return the path to the private directory holding the map files.
 
 =cut
 
-sub sharedir { return $SHAREDIR->subdir( 'maps', $_[0]->name ); }
+sub sharedir { return $_[0]->sharebase->subdir( 'maps', $_[0]->name ); }
 
 
 =method localedir
@@ -168,7 +179,7 @@ Return the path to the private directory holding the locale files.
 
 =cut
 
-sub localedir { return $_[0]->sharedir->parent->parent->subdir("locale"); }
+sub localedir { return $_[0]->sharebase->subdir("locale"); }
 
 
 =method background
