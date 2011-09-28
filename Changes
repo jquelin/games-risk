@@ -1,5 +1,8 @@
 Revision history for Games::Risk.
 
+3.112710  2011-09-28 12:14:39 Europe/Paris
+ - fix sharedir retrieval for extra maps dists
+
 3.112690  2011-09-26 15:34:42 Europe/Paris
  - fixed rt#71214 - do not require 5.014 unless needed for import
  - moved france map to gr-extramaps-countries

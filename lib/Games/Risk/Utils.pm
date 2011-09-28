@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Utils;
 {
-  $Games::Risk::Utils::VERSION = '3.112690';
+  $Games::Risk::Utils::VERSION = '3.112710';
 }
 # ABSTRACT: various utilities for prisk
 
@@ -38,7 +38,7 @@ Games::Risk::Utils - various utilities for prisk
 
 =head1 VERSION
 
-version 3.112690
+version 3.112710
 
 =head1 DESCRIPTION
 

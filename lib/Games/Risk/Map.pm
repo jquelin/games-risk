@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Map;
 {
-  $Games::Risk::Map::VERSION = '3.112690';
+  $Games::Risk::Map::VERSION = '3.112710';
 }
 # ABSTRACT: map being played
 
@@ -136,11 +136,14 @@ sub author { die "author needs to be overriden" }
 # -- public methods
 
 
-sub sharedir { return $SHAREDIR->subdir( 'maps', $_[0]->name ); }
+sub sharebase { $SHAREDIR }
+
+
+sub sharedir { return $_[0]->sharebase->subdir( 'maps', $_[0]->name ); }
 
 
 
-sub localedir { return $_[0]->sharedir->parent->parent->subdir("locale"); }
+sub localedir { return $_[0]->sharebase->subdir("locale"); }
 
 
 
@@ -188,7 +191,7 @@ Games::Risk::Map - map being played
 
 =head1 VERSION
 
-version 3.112690
+version 3.112710
 
 =head1 DESCRIPTION
 
@@ -228,6 +231,13 @@ The short map identifier, needs to be overriden by sub-classes.
     my $title = Games::Risk::Map::Foobar->title;
 
 The map title, needs to be overriden by sub-classes.
+
+=head2 sharebase
+
+    my $dir = $self->sharebase;
+
+Return the path to the base share directory to use (either the
+games-risk one, or one of the extra maps dists).
 
 =head2 sharedir
 

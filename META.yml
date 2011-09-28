@@ -10,7 +10,7 @@ build_requires:
 configure_requires:
   Module::Build: 0.3601
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300002, CPAN::Meta::Converter version 2.112150'
+generated_by: 'Dist::Zilla version 4.300002, CPAN::Meta::Converter version 2.112621'
 license: gpl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -19,106 +19,106 @@ name: Games-Risk
 provides:
   Games::Risk:
     file: lib/Games/Risk.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::AI:
     file: lib/Games/Risk/AI.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::AI::Blitzkrieg:
     file: lib/Games/Risk/AI/Blitzkrieg.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::AI::Dumb:
     file: lib/Games/Risk/AI/Dumb.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::AI::Hegemon:
     file: lib/Games/Risk/AI/Hegemon.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::App:
     file: lib/Games/Risk/App.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::App::Command:
     file: lib/Games/Risk/App/Command.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::App::Command::import:
     file: lib/Games/Risk/App/Command/import.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::App::Command::play:
     file: lib/Games/Risk/App/Command/play.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Card:
     file: lib/Games/Risk/Card.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Config:
     file: lib/Games/Risk/Config.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Continent:
     file: lib/Games/Risk/Continent.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Controller:
     file: lib/Games/Risk/Controller.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Country:
     file: lib/Games/Risk/Country.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Deck:
     file: lib/Games/Risk/Deck.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::ExtraMaps:
     file: lib/Games/Risk/ExtraMaps.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::GUI:
     file: lib/Games/Risk/GUI.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::GUI::MoveArmies:
     file: lib/Games/Risk/GUI/MoveArmies.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::GUI::Startup:
     file: lib/Games/Risk/GUI/Startup.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::I18n:
     file: lib/Games/Risk/I18n.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Logger:
     file: lib/Games/Risk/Logger.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Map:
     file: lib/Games/Risk/Map.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Map::Risk:
     file: lib/Games/Risk/Map/Risk.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Player:
     file: lib/Games/Risk/Player.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Point:
     file: lib/Games/Risk/Point.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Resources:
     file: lib/Games/Risk/Resources.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Tk::About:
     file: lib/Games/Risk/Tk/About.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Tk::Cards:
     file: lib/Games/Risk/Tk/Cards.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Tk::Continents:
     file: lib/Games/Risk/Tk/Continents.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Tk::GameOver:
     file: lib/Games/Risk/Tk/GameOver.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Tk::Help:
     file: lib/Games/Risk/Tk/Help.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Tk::Main:
     file: lib/Games/Risk/Tk/Main.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Types:
     file: lib/Games/Risk/Types.pm
-    version: 3.112690
+    version: 3.112710
   Games::Risk::Utils:
     file: lib/Games/Risk/Utils.pm
-    version: 3.112690
+    version: 3.112710
 requires:
   App::Cmd::Setup: 0
   Carp: 0
@@ -182,7 +182,7 @@ resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Games-Risk
   homepage: http://search.cpan.org/dist/Games-Risk/
   repository: git://github.com/jquelin/games-risk.git
-version: 3.112690
+version: 3.112710
 x_Dist_Zilla:
   plugins:
     -
@@ -204,7 +204,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::KwaliteeTests
       name: '@JQUELIN/KwaliteeTests'
-      version: 1.101420
+      version: 2.020000
     -
       class: Dist::Zilla::Plugin::MinimumVersionTests
       name: '@JQUELIN/MinimumVersionTests'

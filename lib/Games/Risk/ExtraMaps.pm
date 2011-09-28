@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::ExtraMaps;
 {
-  $Games::Risk::ExtraMaps::VERSION = '3.112690';
+  $Games::Risk::ExtraMaps::VERSION = '3.112710';
 }
 # ABSTRACT: base class for exta maps
 
@@ -26,7 +26,7 @@ extends 'Games::Risk::Map';
  
 # -- public method
 
-sub sharedir {
+sub sharebase {
     my $self  = shift;
     my $extra   = $self->extra_category;
     my $distini = file("dist.ini");
@@ -37,11 +37,12 @@ sub sharedir {
             if $line =~ /$extra/;
     }
 
-    return File::ShareDir::PathClass->dist_dir("Games-Risk-Maps-$extra");
+    return File::ShareDir::PathClass->dist_dir("Games-Risk-ExtraMaps-$extra");
 }
 
 
-
+no Moose;
+__PACKAGE__->meta->make_immutable;
 1;
 
 
@@ -53,7 +54,7 @@ Games::Risk::ExtraMaps - base class for exta maps
 
 =head1 VERSION
 
-version 3.112690
+version 3.112710
 
 =head1 DESCRIPTION
 
@@ -64,6 +65,8 @@ now located in a place which is not L<Games::Risk>'s one.
 This class is therefore a base class for extra maps to allow smooth
 finding of the share directory, with an overloading of C<sharedir>
 method.
+
+=for Pod::Coverage extra_category
 
 =head1 AUTHOR
 

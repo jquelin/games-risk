@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Config;
 {
-  $Games::Risk::Config::VERSION = '3.112690';
+  $Games::Risk::Config::VERSION = '3.112710';
 }
 # ABSTRACT: prisk configuration
 
@@ -99,7 +99,7 @@ Games::Risk::Config - prisk configuration
 
 =head1 VERSION
 
-version 3.112690
+version 3.112710
 
 =head1 SYNOPSIS
 

@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Types;
 {
-  $Games::Risk::Types::VERSION = '3.112690';
+  $Games::Risk::Types::VERSION = '3.112710';
 }
 # ABSTRACT: various types used in the distribution
 
@@ -33,7 +33,7 @@ Games::Risk::Types - various types used in the distribution
 
 =head1 VERSION
 
-version 3.112690
+version 3.112710
 
 =head1 DESCRIPTION
 

@@ -15,7 +15,7 @@ use warnings;
 
 package prisk;
 {
-  $prisk::VERSION = '3.112690';
+  $prisk::VERSION = '3.112710';
 }
 # ABSTRACT: classical Risk game written in perl
 
@@ -39,7 +39,7 @@ prisk - classical Risk game written in perl
 
 =head1 VERSION
 
-version 3.112690
+version 3.112710
 
 =head1 SYNOPSIS
 
