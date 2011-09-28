@@ -33,6 +33,9 @@ sub sharedir {
 1;
 __END__
 
+=for Pod::Coverage
+    extra_category
+
 =head1 DESCRIPTION
 
 Due to the weight of extra maps (with images), those are deported in
