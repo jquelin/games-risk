@@ -65,7 +65,7 @@ msgid ""
 "Try harder next time!"
 msgstr ""
 "Sie haben leider verloren …\n"
-"Versuch's nochmal!"
+"Versuchen Sie es nochmal!"
 
 #: lib/Games/Risk/Tk/Main.pm:168
 #: lib/Games/Risk/Tk/Main.pm:923
@@ -171,7 +171,7 @@ msgstr "Spiel ~abbrechen"
 
 #: lib/Games/Risk/Tk/Main.pm:1333
 msgid "~Quit"
-msgstr "Programm ~beenden"
+msgstr "Programm ~schließen"
 
 #: lib/Games/Risk/Tk/Main.pm:1335
 msgid "~Game"
@@ -251,7 +251,7 @@ msgstr "Spiel abbrechen"
 #: lib/Games/Risk/Tk/Main.pm:1499
 #: lib/Games/Risk/GUI/Startup.pm:348
 msgid "Quit"
-msgstr "Program beenden"
+msgstr "Schließen"
 
 #: lib/Games/Risk/Tk/About.pm:20
 msgid "about"
@@ -675,7 +675,7 @@ msgstr "Landkarte"
 
 #: lib/Games/Risk/GUI/Startup.pm:335
 msgid "New player..."
-msgstr "Neuer Spieler …"
+msgstr "Weiterer Spieler …"
 
 #: lib/Games/Risk/GUI/Startup.pm:344
 msgid "Start game"
