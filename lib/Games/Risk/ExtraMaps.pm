@@ -21,8 +21,7 @@ sub sharebase {
 
     if ( -e $distini ) { 
         my ($line) = $distini->slurp;
-        return dir( qw{ share maps }, $self->name )
-            if $line =~ /$extra/;
+        return dir( "share" ) if $line =~ /$extra/;
     }
 
     return File::ShareDir::PathClass->dist_dir("Games-Risk-ExtraMaps-$extra");
