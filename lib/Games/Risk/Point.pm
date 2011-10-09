@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Point;
 {
-  $Games::Risk::Point::VERSION = '3.112710';
+  $Games::Risk::Point::VERSION = '3.112820';
 }
 # ABSTRACT: placeholder for a 2D point
 
@@ -42,7 +42,7 @@ Games::Risk::Point - placeholder for a 2D point
 
 =head1 VERSION
 
-version 3.112710
+version 3.112820
 
 =head1 DESCRIPTION
 

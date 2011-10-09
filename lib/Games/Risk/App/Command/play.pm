@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::App::Command::play;
 {
-  $Games::Risk::App::Command::play::VERSION = '3.112710';
+  $Games::Risk::App::Command::play::VERSION = '3.112820';
 }
 # ABSTRACT: play a risk game
 
@@ -50,7 +50,7 @@ Games::Risk::App::Command::play - play a risk game
 
 =head1 VERSION
 
-version 3.112710
+version 3.112820
 
 =head1 DESCRIPTION
 

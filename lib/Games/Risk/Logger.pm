@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Logger;
 {
-  $Games::Risk::Logger::VERSION = '3.112710';
+  $Games::Risk::Logger::VERSION = '3.112820';
 }
 # ABSTRACT: logging capacities for prisk
 
@@ -50,7 +50,7 @@ Games::Risk::Logger - logging capacities for prisk
 
 =head1 VERSION
 
-version 3.112710
+version 3.112820
 
 =head1 SYNOPSIS
 

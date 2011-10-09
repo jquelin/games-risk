@@ -1,5 +1,9 @@
 Revision history for Games::Risk.
 
+3.112820  2011-10-09 10:17:43 Europe/Paris
+ - updated german translation (Martin H. Sluka)
+ - fix sharebase when using local maps
+
 3.112710  2011-09-28 12:14:39 Europe/Paris
  - fix sharedir retrieval for extra maps dists
 

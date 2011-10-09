@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::App::Command::import;
 {
-  $Games::Risk::App::Command::import::VERSION = '3.112710';
+  $Games::Risk::App::Command::import::VERSION = '3.112820';
 }
 # ABSTRACT: import a map designed for other risk games
 
@@ -264,7 +264,7 @@ Games::Risk::App::Command::import - import a map designed for other risk games
 
 =head1 VERSION
 
-version 3.112710
+version 3.112820
 
 =head1 DESCRIPTION
 

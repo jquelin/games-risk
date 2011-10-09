@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Deck;
 {
-  $Games::Risk::Deck::VERSION = '3.112710';
+  $Games::Risk::Deck::VERSION = '3.112820';
 }
 # ABSTRACT: pandemic card deck
 
@@ -73,7 +73,7 @@ Games::Risk::Deck - pandemic card deck
 
 =head1 VERSION
 
-version 3.112710
+version 3.112820
 
 =head1 DESCRIPTION
 

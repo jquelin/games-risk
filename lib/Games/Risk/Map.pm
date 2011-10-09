@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::Map;
 {
-  $Games::Risk::Map::VERSION = '3.112710';
+  $Games::Risk::Map::VERSION = '3.112820';
 }
 # ABSTRACT: map being played
 
@@ -191,7 +191,7 @@ Games::Risk::Map - map being played
 
 =head1 VERSION
 
-version 3.112710
+version 3.112820
 
 =head1 DESCRIPTION
 

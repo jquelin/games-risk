@@ -13,7 +13,7 @@ use warnings;
 
 package Games::Risk::ExtraMaps;
 {
-  $Games::Risk::ExtraMaps::VERSION = '3.112710';
+  $Games::Risk::ExtraMaps::VERSION = '3.112820';
 }
 # ABSTRACT: base class for exta maps
 
@@ -33,8 +33,7 @@ sub sharebase {
 
     if ( -e $distini ) { 
         my ($line) = $distini->slurp;
-        return dir( qw{ share maps }, $self->name )
-            if $line =~ /$extra/;
+        return dir( "share" ) if $line =~ /$extra/;
     }
 
     return File::ShareDir::PathClass->dist_dir("Games-Risk-ExtraMaps-$extra");
@@ -54,7 +53,7 @@ Games::Risk::ExtraMaps - base class for exta maps
 
 =head1 VERSION
 
-version 3.112710
+version 3.112820
 
 =head1 DESCRIPTION
 

@@ -20,7 +20,7 @@ my %module_build_args = (
     "Jerome Quelin"
   ],
   "dist_name" => "Games-Risk",
-  "dist_version" => "3.112710",
+  "dist_version" => "3.112820",
   "license" => "gpl",
   "module_name" => "Games::Risk",
   "recommends" => {},
