@@ -7,8 +7,8 @@ package Games::Risk::Types;
 
 use Moose::Util::TypeConstraints;
 
-enum CardType   => qw{ artillery cavalry infantry joker };
-enum PlayerType => qw{ human ai };
+enum CardType   => [qw{ artillery cavalry infantry joker }];
+enum PlayerType => [qw{ human ai }];
 
 1;
 __END__
