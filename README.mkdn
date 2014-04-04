@@ -1,0 +1,190 @@
+# NAME
+
+Games::Risk - classical 'risk' board game
+
+# VERSION
+
+version 3.112821
+
+# DESCRIPTION
+
+Risk is a strategic turn-based board game. Players control armies, with
+which they attempt to capture territories from other players. The goal
+of the game is to control all the territories (`conquer the world`)
+through the elimination of the other players. Using area movement, Risk
+ignores realistic limitations, such as the vast size of the world, and
+the logistics of long campaigns.
+
+This distribution implements a graphical interface for this game.
+
+`Games::Risk` itself tracks everything needed for a risk game. It is
+also used as a heap for `Games::Risk::Controller` POE session.
+
+# METHODS
+
+## run
+
+    Games::Risk->run;
+
+Start the application, with an initial batch of `@modules` to build.
+
+## maps
+
+    my @modules = Games::Risk->maps;
+
+Return a list of module names under [Games::Risk::Map](https://metacpan.org/pod/Games::Risk::Map) namespace.
+
+# METHODS
+
+## Constructor
+
+- my $game = Games::Risk->new
+
+    Create a new risk game. No params needed. Note: this class implements a
+    singleton scheme.
+
+## Accessors
+
+The following accessors (acting as mutators, ie getters and setters) are
+available for `Games::Risk` objects:
+
+- armies()
+
+    armies left to be placed.
+
+- map()
+
+    the current `Games::Risk::Map` object of the game.
+
+## Public methods
+
+- $game->cards\_reset;
+
+    Put back all cards given to players to the deck.
+
+- $game->destroy;
+
+    Break all circular references in `$game`, to reclaim all objects
+    referenced.
+
+- $game->player\_lost( $player )
+
+    Remove $player from the list of active players.
+
+- my $player = $game->player\_next()
+
+    Return the next player to play, or undef if the turn is over. Of course,
+    players that have lost will never be returned.
+
+- my @players = $game->players()
+
+    Return the `Games::Risk::Player` objects of the current game. Note that
+    some of those players may have already lost.
+
+- my @players = $game->players\_active;
+
+    Return the list of active players (Games::Risk::Player objects).
+
+- $game->players\_reset( @players )
+
+    Remove all players, and replace them by `@players`.
+
+- $game->players\_reset\_turn()
+
+    Mark all players to be in "turn to do", effectively marking them as
+    still in play. Typically called during initial army placing, or real
+    game start.
+
+- $game->send\_to\_all($event, @params)
+
+    Send `$event` (with `@params`) to all players.
+
+- $game->send\_to\_one($player, $event, @params)
+
+    Send `$event` (with `@params`) to one `$player`.
+
+# TODO
+
+This is a work in progress. While there are steady improvements, here's
+a rough list (with no order implied whatsoever) of what you can expect
+in the future for `Games::Risk`:
+
+- screen to customize the new game to be played - DONE - 1.1.0
+- config save / restore
+- saving / loading game
+- network play
+- maps theming
+- i18n - DONE - 3.101370: gui, 3.112590: maps
+- better ais - DONE - 0.5.0: blitzkrieg ai, 0.5.1: hegemon ai
+- country cards - DONE - 0.6.0
+- continents bonus - DONE - 0.3.3
+- continents bonus localized
+- statistics
+- prettier map coloring
+- missions
+- remove all the FIXMEs in the code :-)
+- do-or-die mode (slanning's request) - DONE - 1.1.2
+- "attack trip" planning (slanning's request)
+- other...
+
+However, the game is already totally playable by now: reinforcements,
+continent bonus, country cards, different artificial intelligences...
+Therefore, version 1.0.0 has been released with those basic
+requirements. Except new features soon!
+
+# BUGS
+
+Please report any bugs or feature requests to `bug-games-risk at
+rt.cpan.org`, or through the web interface at
+[http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Games-Risk](http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Games-Risk).  I will be
+notified, and then you'll automatically be notified of progress on your
+bug as I make changes.
+
+# ACKNOWLEDGEMENTS
+
+I definitely recommend you to buy a `risk` board game and play with
+friends, you'll have an exciting time - much more than with this poor
+electronic copy.
+
+Some ideas  & artwork taken from project `jrisk`, available at
+[http://risk.sourceforge.net/](http://risk.sourceforge.net/). Others (ideas & artwork once again)
+taken from teg, available at [http://teg.sourceforge.net/](http://teg.sourceforge.net/)
+
+# SEE ALSO
+
+You can find more information on the classical `risk` game on wikipedia
+at [http://en.wikipedia.org/wiki/Risk\_game](http://en.wikipedia.org/wiki/Risk_game).
+
+You can find more information on this module at:
+
+- Search CPAN
+
+    [http://search.cpan.org/dist/Games-Risk](http://search.cpan.org/dist/Games-Risk)
+
+- See open / report bugs
+
+    [http://rt.cpan.org/NoAuth/Bugs.html?Dist=Games-Risk](http://rt.cpan.org/NoAuth/Bugs.html?Dist=Games-Risk)
+
+- Git repository
+
+    [http://github.com/jquelin/games-risk](http://github.com/jquelin/games-risk)
+
+- AnnoCPAN: Annotated CPAN documentation
+
+    [http://annocpan.org/dist/Games-Risk](http://annocpan.org/dist/Games-Risk)
+
+- CPAN Ratings
+
+    [http://cpanratings.perl.org/d/Games-Risk](http://cpanratings.perl.org/d/Games-Risk)
+
+# AUTHOR
+
+Jerome Quelin
+
+# COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by Jerome Quelin.
+
+This is free software, licensed under:
+
+    The GNU General Public License, Version 3, June 2007
