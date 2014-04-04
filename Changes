@@ -2,6 +2,11 @@ Revision history for Games::Risk.
 
 {{$NEXT}}
 
+4.000     2014-04-04 15:12:26+02:00 Europe/Paris
+ - fix Moose enum warning (rt#90683)
+ - make it work with dzil v5
+ - fix smartmatch warnings
+
 3.112820  2011-10-09 10:17:43 Europe/Paris
  - updated german translation (Martin H. Sluka)
  - fix sharebase when using local maps

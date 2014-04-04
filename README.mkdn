@@ -4,7 +4,7 @@ Games::Risk - classical 'risk' board game
 
 # VERSION
 
-version 3.112821
+version 4.000
 
 # DESCRIPTION
 
