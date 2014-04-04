@@ -259,14 +259,12 @@ sub _onpub_cards_exchange {
 
     # compute player's bonus
     my $combo = join '', sort map { substr $_->type, 0, 1 } @cards;
-    my $bonus;
-    given ($combo) {
-        when ( [ qw{ aci acj aij cij ajj cjj ijj jjj } ] ) { $bonus = 10; }
-        when ( [ qw{ aaa aaj } ] ) { $bonus = 8; }
-        when ( [ qw{ ccc ccj } ] ) { $bonus = 6; }
-        when ( [ qw{ iii iij } ] ) { $bonus = 4; }
-        default { $bonus = 0; }
-    }
+    my %bonus;
+    $bonus{$_} = 10 for qw{ aci acj aij cij ajj cjj ijj Jérôme Quelin };
+    $bonus{$_} = 8  for qw{ aaa aaj };
+    $bonus{$_} = 6  for qw{ ccc ccj };
+    $bonus{$_} = 4  for qw{ iii iij };
+    my $bonus = $bonus{ $combo } // 0;
 
     # wrong combo
     return if $bonus == 0;
@@ -524,37 +522,35 @@ sub _onpriv_create_players {
         die "player cannot have an empty name" unless $name;
 
         my $player;
-        given ($type) {
-            when ( $type eq T('Human') ) {         # FIXME 20100517 JQ: mix string & code
-                # human player
-                $player = Games::Risk::Player->new({
-                    name  => $name,
-                    color => $color,
-                    type  => 'human',
-                });
-            }
-            when ( $type eq T('Computer, easy') ) { # FIXME 20100517 JQ: mix string & code
-                # artificial intelligence
-                $player = Games::Risk::Player->new({
-                    name     => $name,
-                    color    => $color,
-                    type     => 'ai',
-                    ai_class => 'Games::Risk::AI::Blitzkrieg',
-                });
-            }
-            when ( $type eq T('Computer, hard') ) { # FIXME 20100517 JQ: mix string & code
-                # artificial intelligence
-                $player = Games::Risk::Player->new({
-                    name     => $name,
-                    color    => $color,
-                    type     => 'ai',
-                    ai_class => 'Games::Risk::AI::Hegemon',
-                });
-            }
-            default {
-                # error
-                die "unknown player type: $type";
-            }
+        if ( $type eq T('Human') ) {         # FIXME 20100517 JQ: mix string & code
+            # human player
+            $player = Games::Risk::Player->new({
+                name  => $name,
+                color => $color,
+                type  => 'human',
+            });
+        }
+        elsif ( $type eq T('Computer, easy') ) { # FIXME 20100517 JQ: mix string & code
+            # artificial intelligence
+            $player = Games::Risk::Player->new({
+                name     => $name,
+                color    => $color,
+                type     => 'ai',
+                ai_class => 'Games::Risk::AI::Blitzkrieg',
+            });
+        }
+        elsif ( $type eq T('Computer, hard') ) { # FIXME 20100517 JQ: mix string & code
+            # artificial intelligence
+            $player = Games::Risk::Player->new({
+                name     => $name,
+                color    => $color,
+                type     => 'ai',
+                ai_class => 'Games::Risk::AI::Hegemon',
+            });
+        }
+        else {
+            # error
+            die "unknown player type: $type";
         }
 
         # store new player

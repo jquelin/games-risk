@@ -72,78 +72,70 @@ sub execute {
         $line =~ s/[\r\n]//g;  # remove all end of lines
         $line =~ s/^\s+//;     # trim heading whitespaces
         $line =~ s/\s+$//;     # trim trailing whitespaces
-        given ($line) {
-            when (/^\s*$/)    { } # empty lines
-            when (/^\s*[#;]/) { } # comments
+        if ( $line =~ /^\s*$/ )      { } # empty lines
+        elsif ( $line=~ /^\s*[#;]/ ) { } # comments
 
-            when (/^\[([^]]+)\]$/) {
-                # changing [section]
-                $section = $1;
+        elsif ( $line =~ /^\[([^]]+)\]$/ ) {
+            # changing [section]
+            $section = $1;
+        }
+
+        #
+        if ( ! defined $section ) {
+            if ( $line =~ /^name\s+(.*)$/ ) {
+                $title = $1;
+                debug( " - map title $title\n" );
             }
-
-            #
-            given ($section) {
-                when ( undef ) {
-                    given ($line) {
-                        when ( /^name\s+(.*)$/ ) {
-                            $title = $1;
-                            debug( " - map title $title\n" );
-                        }
-                        default {
-                            debug( "parse error [head]:$noline\t- line was: '$line'\n" );
-                        }
-                    }
-                }
-                when ( "files" ) {
-                    given ($line) {
-                        when ( /^map\s+(.*)$/ ) {
-                            $greyscale = $mapdir->file($1);
-                            debug( " - greyscale:  $greyscale\n" );
-                        }
-                        when ( /^pic\s+(.*)$/ ) {
-                            $background = $mapdir->file($1);
-                            debug( " - background: $background\n" );
-                        }
-                        when ( /^crd\s+(.+)$/ ) {
-                            $cardfile = $mapdir->file($1);
-                            debug( " - cardfile:   $cardfile\n" );
-                        }
-                        when ( /^prv\s+/ ) { } # preview, not needed
-                        default {
-                            debug( "parse error [files]:$noline\t- line was: '$line'\n" );
-                        }
-                    }
-                }
-                when ( "continents" ) {
-                    # get continent params
-                    $id_continent++;
-                    my ($name, $bonus, $color) = split /\s+/, $line;
-                    $name =~ s/[-_]/ /g;
-                    push @continents, [ $id_continent, $name, $bonus, $color ];
-                }
-                when ( "countries" ) {
-                    # get country param
-                    my ($greyval, $name, $idcont, $x, $y) = split /\s+/, $line;
-                    $name =~ s/[-_]/ /g;
-                    debug( "parse error [countries]:$noline\t- continent $idcont does not exist\n" ), break
-                        if $idcont > $id_continent;
-                    debug( "parse error [countries]:$noline\t- country $greyval already exists\n" ), break
-                        if grep { $_->[0] == $greyval } @countries;
-                    push @countries, [ $greyval, $name, $idcont, $x, $y ];
-                }
-
-                when ( "borders" ) {
-                    my ($id, @neighbours) = split /\s+/, $line;
-                    my ($country) = grep { $_->[0] == $id } @countries;
-                    debug( "parse error [borders]:$noline - country $id doesn't exist" ), break
-                        unless defined $country;
-                    push @$country, \@neighbours;
-                }
-
-                default {
-                    debug( "parse error: how to parse $section?\n" );
-                }
+            else {
+                debug( "parse error [head]:$noline\t- line was: '$line'\n" );
             }
+        }
+        elsif ( $section eq "files" ) {
+            if ( $line =~ /^map\s+(.*)$/ ) {
+                $greyscale = $mapdir->file($1);
+                debug( " - greyscale:  $greyscale\n" );
+            }
+            elsif ( $line =~ /^pic\s+(.*)$/ ) {
+                $background = $mapdir->file($1);
+                debug( " - background: $background\n" );
+            }
+            elsif ( $line =~ /^crd\s+(.+)$/ ) {
+                $cardfile = $mapdir->file($1);
+                debug( " - cardfile:   $cardfile\n" );
+            }
+            elsif ( $line =~ /^prv\s+/ ) { } # preview, not needed
+            else {
+                debug( "parse error [files]:$noline\t- line was: '$line'\n" );
+            }
+        }
+        elsif ( $section eq "continents" ) {
+            # get continent params
+            $id_continent++;
+            my ($name, $bonus, $color) = split /\s+/, $line;
+            $name =~ s/[-_]/ /g;
+            push @continents, [ $id_continent, $name, $bonus, $color ];
+        }
+        elsif ( $section eq "countries" ) {
+            # get country param
+            my ($greyval, $name, $idcont, $x, $y) = split /\s+/, $line;
+            $name =~ s/[-_]/ /g;
+            debug( "parse error [countries]:$noline\t- continent $idcont does not exist\n" ), break
+                if $idcont > $id_continent;
+            debug( "parse error [countries]:$noline\t- country $greyval already exists\n" ), break
+                if grep { $_->[0] == $greyval } @countries;
+            push @countries, [ $greyval, $name, $idcont, $x, $y ];
+        }
+
+        elsif ( $section eq "borders" ) {
+            my ($id, @neighbours) = split /\s+/, $line;
+            my ($country) = grep { $_->[0] == $id } @countries;
+            debug( "parse error [borders]:$noline - country $id doesn't exist" ), break
+                unless defined $country;
+            push @$country, \@neighbours;
+        }
+
+        else {
+            debug( "parse error: how to parse $section?\n" );
         }
     }
     }}}
@@ -163,35 +155,31 @@ sub execute {
         $line =~ s/[\r\n]//g;  # remove all end of lines
         $line =~ s/^\s+//;     # trim heading whitespaces
         $line =~ s/\s+$//;     # trim trailing whitespaces
-        given ($line) {
-            when (/^\s*$/)    { } # empty lines
-            when (/^\s*[#;]/) { } # comments
+        if ( $line =~ /^\s*$/)    { } # empty lines
+        elsif ( $line =~ /^\s*[#;]/) { } # comments
 
-            when (/^\[([^]]+)\]$/) {
-                # changing [section]
-                $section = $1;
-            }
+        elsif ( $line =~ /^\[([^]]+)\]$/) {
+            # changing [section]
+            $section = $1;
+        }
 
-            #
-            given ($section) {
-                when ( undef ) {
-                    debug( "parse error [head]:$noline\t- line was: '$line'\n" );
-                }
-                when ( "cards" ) {
-                    my ($type, $id) = split /\s+/, lc $line;
-                    $type = 'artillery' if $type eq 'cannon';
-                    $type = 'joker'     if $type eq 'wildcard';
-                    push @cards, [ $type, $id ];
-                }
-                when ( "missions" ) {
-                    my ($player, $nbc, $armies, $idc1, $idc2, $idc3, $descr) =  split /\s+/, $line, 7;
-                    $descr =~ s/([A-Z]+)/ucfirst lc $1/ge;
-                    push @ missions, [$player, $nbc, $armies, $idc1, $idc2, $idc3, $descr];
-                }
-                default {
-                    debug( "parse error: how to parse $section?\n" );
-                }
-            }
+        #
+        if ( ! defined $section ) {
+            debug( "parse error [head]:$noline\t- line was: '$line'\n" );
+        }
+        elsif ( $section eq "cards" ) {
+            my ($type, $id) = split /\s+/, lc $line;
+            $type = 'artillery' if $type eq 'cannon';
+            $type = 'joker'     if $type eq 'wildcard';
+            push @cards, [ $type, $id ];
+        }
+        elsif ( $section eq "missions" ) {
+            my ($player, $nbc, $armies, $idc1, $idc2, $idc3, $descr) =  split /\s+/, $line, 7;
+            $descr =~ s/([A-Z]+)/ucfirst lc $1/ge;
+            push @ missions, [$player, $nbc, $armies, $idc1, $idc2, $idc3, $descr];
+        }
+        default {
+            debug( "parse error: how to parse $section?\n" );
         }
     }
     }}}

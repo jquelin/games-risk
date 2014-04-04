@@ -631,20 +631,15 @@ Create a label for C<$player>, with tooltip information.
 
         # associate tooltip
         my $tooltip = $player->name // '';
-        given ($player->type) {
-            when ('human') {
-                $tooltip .= ' (' . T('human') . ')';
-            }
-
-            when ('ai') {
-                my $ai = $player->ai;
-                my $difficulty  = $ai->difficulty;
-                my $description = $ai->description;
-                $tooltip .= ' (' . sprintf(T('computer - %s'), $difficulty). ")\n$description";
-            }
-
-            default { $tooltip = '?'; }
-        }
+        my $type = $player->type;
+        if ( $type eq 'human' ) {
+            $tooltip .= ' (' . T('human') . ')';
+        } elsif ( $type eq 'ai' ) {
+            my $ai = $player->ai;
+            my $difficulty  = $ai->difficulty;
+            my $description = $ai->description;
+            $tooltip .= ' (' . sprintf(T('computer - %s'), $difficulty). ")\n$description";
+        } else { $tooltip = '?'; }
         $self->_w('tooltip')->attach($label, -msg=>$tooltip);
     };
 

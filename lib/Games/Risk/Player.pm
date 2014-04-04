@@ -73,17 +73,16 @@ sub BUILD {
     my $self = shift;
 
     # update other object attributes
-    given ( $self->type ) {
-        when ('human') {
-            $K->post('risk', 'player_created', $self);
-        }
-        when ('ai') {
-            my $ai_class = $self->ai_class;
-            $ai_class->require;
-            my $ai = $ai_class->new({ player=>$self });
-            Games::Risk::AI->spawn($ai);
-            $self->set_ai($ai);
-        }
+    my $type = $self->type;
+    if ( $type eq 'human' ) {
+        $K->post('risk', 'player_created', $self);
+    }
+    elsif ( $type eq 'ai' ) {
+        my $ai_class = $self->ai_class;
+        $ai_class->require;
+        my $ai = $ai_class->new({ player=>$self });
+        Games::Risk::AI->spawn($ai);
+        $self->set_ai($ai);
     }
 }
 
